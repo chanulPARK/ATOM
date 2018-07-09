@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>기본 페이지</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../daterangepicker/daterangepicker-bs3.css">
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src='../lib/jquery.min.js'></script>
+
+    <link rel="stylesheet" href="../css/datepicker.css">
+
+
+    <style>
+        * {box-sizing: border-box;font-family: 'Nanum Gothic', sans-serif;}
+        body ,header{margin: 0px;}
+        header{
+            color: #fff!important;
+            border-bottom: 1px solid rgb(153, 153, 153);
+            height: 60px;
+            position: relative;
+            display: block;
+        }
+        aside{
+            margin-top: 30px;
+            left: 0px;
+            width: 250px;
+            height: 300px;
+            display: block;
+            position: absolute;
+            /* position: fixed; */
+            border-bottom: solid 1px rgb(222, 226, 230);
+            background: rgb(222, 226, 230);
+        }
+        section{
+            padding: 20px;
+            /* padding-left: 20px;
+            padding-right: 20px; */
+            background: rgb(255, 255, 255);
+            border-left: 1px solid rgb(222, 226, 230);
+            width: 100%-250px;
+            /* height: 500px; */
+            margin-left: 250px;
+            /* background : palegreen; */
+            min-height: 675px;
+            display: block;
+        }
+        footer{
+            width: 100%;
+            height: 40px;
+            border-top: 1px solid rgb(222, 226, 230);
+            display: block;
+        }
+        footer > p{
+            font-size: 12px;
+            text-align: end;
+            color: rgb(153, 153, 153);
+        }
+        /* border-bottom: solid 1px rgb(153, 153, 153); */
+        /* border-bottom: solid 1px rgb(222, 226, 230); */
+
+        .panel-footer{
+          min-height: 55px;
+        }
+    </style>
+  </head>
+  <body>
+
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                <!-- <a class="navbar-brand" href="#">Brand</a> -->
+                    <a class="navbar-brand" href="#">
+                        <img src="../login.png">
+                    </a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="../default.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+                    <li><a href="electronicApproval.html">전자결재</a></li>
+                    <li class="active"><a href="schedule.html">일정</a></li>
+                    <li><a href="#">업무관리</a></li>
+                    <li><a href="#">게시판</a></li>
+                    <li><a href="#">조직도</a></li>
+                    <li><a href="#">근태관리</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">마이페이지</a></li>
+                        <li><a href="#">설정</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">로그아웃</a></li>
+                    </ul>
+                    </li>
+                </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+    </header>
+
+    <aside>
+      <div class="sidebar">
+        <div class="" style="margin: 0px 10px">
+          <a href="./schedule.html" class="btn btn-primary btn-block ">돌아가기</a>
+        </div>
+      </div>
+    </aside>
+
+
+
+    <section>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              일정 등록
+            </div>
+            <div class="panel-body">
+              <div class="create-schedule-table">
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td>기간</td>
+                      <td>
+                        <div class="input-group">
+                          <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                          <input type="text" class="form-control" id="reservationtime">
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>제목</td>
+                      <td>
+                        <input id="schedule-name" class="form-control" placeholder="제목">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>장소</td>
+                      <td>
+                        <input id="schedule-place" class="form-control" placeholder="장소">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>반복</td>
+                      <td>
+                        <select class="form-control" id="repeat-select"style="width: 100%;">
+                          <option selected="selected">반복 없음</option>
+                          <option>매일</option>
+                          <option>주중</option>
+                          <option>매주(요일지정)</option>
+                          <option>매월(날짜기준)</option>
+                          <option>매월(요일기준)</option>
+                          <option>매년</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr id='repeat-cycle' hidden>
+                      <td>반복주기</td>
+                      <td>
+                        <select class="form-control" style="width:10%;display:inline">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                          <option>6</option>
+                          <option selected="selected">7</option>
+                          <option>8</option>
+                          <option>9</option>
+                          <option>10</option>
+                        </select>
+                        주/개월/년 &nbsp;
+                        <span id="day-checkbox" hidden>
+                        <label for="sunday"><input type="checkbox" name="dayOfWeek" value="" id="sunday">일</label>&nbsp;
+                        <label for="monday"><input type="checkbox" name="dayOfWeek" value="" id="monday">월</label>&nbsp;
+                        <label for="tuesday"><input type="checkbox" name="dayOfWeek" value="" id="tuesday">화</label>&nbsp;
+                        <label for="wednesday"><input type="checkbox" name="dayOfWeek" value="" id="wednesday">수</label>&nbsp;
+                        <label for="thursday"><input type="checkbox" name="dayOfWeek" value="" id="thursday">목</label>&nbsp;
+                        <label for="friday"><input type="checkbox" name="dayOfWeek" value="" id="friday">금</label>&nbsp;
+                        <label for="saturday"><input type="checkbox" name="dayOfWeek" value="" id="saturday">토</label>&nbsp;
+                        </span>
+                      </td>
+                    </tr>
+                    <tr id='repeat-end' hidden>
+                      <td>반복종료</td>
+                      <td>
+                        <div class="input-group">
+                          <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                          <input type="text" class="form-control" id="reservation">
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>내용</td>
+                      <td>
+                        <textarea name="schedule-content" rows="8" cols="80" class="form-control"></textarea>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>참여자</td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div> <!-- create-schedule-table -->
+
+            </div> <!-- panel-body -->
+            <div class="panel-footer">
+              <div class="buttons pull-right">
+                <button type="submit" class="btn btn-primary" id="submit">등록</button>
+                <button type="submit" class="btn btn-default">취소</button>
+              </div>
+
+            </div> <!-- panel-footer -->
+          </div> <!-- panel panel-default -->
+
+        </div> <!-- row -->
+      </div> <!-- container-fluid -->
+
+    </section>
+
+    <footer>
+        <p>COPYRIGHT @ ATOM ALL RIGHTS RESERVED</p>
+    </footer>
+
+    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
+    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+    <script src="../js/bootstrap.min.js"></script>
+
+    <script src="../daterangepicker/moment.min.js"></script>
+    <script src="../daterangepicker/daterangepicker.js"></script>
+    <script src="../js/datepicker.js"></script>
+
+
+    <script>
+    $(function(){
+      $('#reservation').datepicker();
+
+      $('#reservationtime').daterangepicker({
+        timePicker         : true,
+        timePickerIncrement: 30,
+        format             : 'MM/DD/YYYY h:mm A'
+      })
+    });
+    $('#submit').click(function(){
+      console.log($('#repeat-select option:selected').val());
+    });
+
+    $('#repeat-select').change(function(){
+      if($('#repeat-select option:selected').val() == '반복 없음'){
+        $('#repeat-cycle').hide();
+        $('#repeat-end').hide();
+      }else{
+        if($('#repeat-select option:selected').val() == '매주(요일지정)'){
+          $('#day-checkbox').show();
+        }else{
+          $('#day-checkbox').hide();
+        }
+        $('#repeat-cycle').show();
+        $('#repeat-end').show();
+      }
+    });
+
+
+
+
+
+
+    </script>
+
+  </body>
+</html>
