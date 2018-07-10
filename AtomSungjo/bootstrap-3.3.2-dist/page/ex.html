@@ -1,0 +1,168 @@
+<!-- table-header -->
+<div class="table-header">
+<div class="listinfo">
+
+<select name="pagePerRecord" title='페이지당 게시글 수'>
+
+  <option value="10" selected="selected">10</option>
+
+  <option value="15" >15</option>
+
+  <option value="20" >20</option>
+
+  <option value="30" >30</option>
+
+  <option value="40" >40</option>
+
+  <option value="50" >50</option>
+
+</select>
+
+<div class="totalnum">전체<span> 0</span>
+
+
+
+    &nbsp;&nbsp;&nbsp;<img src="/images/icon/ic_entrust2.png" alt="entrust" />&nbsp;위임
+
+    &nbsp;&nbsp;&nbsp;<img class="imgtable" src="/images/icon/ic_defer.png" alt="보류" />&nbsp;보류
+
+
+
+
+</div>
+<div class="table-search astatus">
+
+
+
+</div>
+</div>
+</div>
+<!-- table-header -->
+
+<!-- content-list approval -->
+<div class="content-list approval">
+
+<!-- listtable -->
+<div>
+<table class="table table-striped " id="listTable">
+<caption></caption>
+<colgroup>
+
+
+
+          <col width="3%"/>
+
+        <col width="4%"/>
+        <col width="8%"/>
+        <col width="10%"/>
+        <col width="7%"/>
+        <col width="*"/>
+        <col width="10%"/>
+        <col width="13%"/>
+        <col width="13%"/>
+        <col width="13%"/>
+
+
+
+  </colgroup>
+<thead>
+  <tr>
+
+      <th scope="col"><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="" /></th>
+
+    <th scope="col">NO</th>
+    <th scope="col">서식함</th>
+    <th scope="col">문서번호</th>
+
+
+      <th scope="col">유형</th>
+
+
+    <th scope="col">
+      <a onclick="f_Sort('apprTitle', '');"  href="#a">
+        문서제목
+
+
+
+            <i class="fa fa-caret-down"><span class="blind">내림차순</span></i>
+
+
+      </a>
+    </th>
+    <th scope="col">기안자</th>
+    <th scope="col">기안부서</th>
+    <th scope="col">
+      <a onclick="f_Sort('apprReqDate', '');"  href="#a">
+      기안일
+      </a>
+
+
+
+
+          <i class="fa fa-caret-down"><span class="blind">내림차순</span></i>
+
+
+    </th>
+
+    <th scope="col">
+
+
+
+
+
+          <a onclick="f_Sort('assignDate', 'DESC');"  href="#a">
+            배정일&nbsp;&nbsp;
+          </a>
+
+
+
+                <i class="fa fa-caret-down active"><span class="blind">내림차순</span></i>
+
+
+
+
+
+
+
+
+
+    </th>
+  </tr>
+</thead>
+<tbody>
+
+
+      <tr>
+
+
+              <td colspan="10" class="emptyRecord">검색 결과가 존재하지 않습니다.</td>
+
+
+
+      </tr>
+
+
+
+
+</tbody>
+
+</table>
+
+<!-- pagination -->
+
+
+<input  id="pageIndex" name="pageIndex" type="hidden" value="0" title="현재 페이지" />
+
+<!-- pagination -->
+
+</div>
+<!-- listtable -->
+
+</div>
+<!-- content-list approval -->
+
+
+
+<div class="btn-wrap">
+<button type="button" class="btn btn-color5 br" id="allApproval">일괄결재 </button>
+</div>
