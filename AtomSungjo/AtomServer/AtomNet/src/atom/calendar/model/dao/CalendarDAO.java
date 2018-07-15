@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import atom.calendar.model.vo.Calendar;
@@ -52,5 +54,40 @@ public class CalendarDAO {
 		close(pstmt);
 		
 		return result;
+	}
+	
+	public List<Calendar> selectEmpId(Connection conn, String empId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectEmpId");
+		Calendar s = null;
+		ArrayList<Calendar> lists = new ArrayList();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, empId);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				s = new Calendar();
+				s.setScheduleName(rs.getString("schedule_name"));
+				s.setStartDate(String.valueOf(rs.getDate("start_date")));
+				s.setEndDate(String.valueOf(rs.getDate("end_date")));
+				s.setEmpId(rs.getString("emp_id"));
+				s.setCategory(rs.getString("category"));
+				s.setContent(rs.getString("content"));
+				s.setPlace(rs.getString("place"));
+				s.setRepeatYN(rs.getString("repeat_yn").charAt(0));
+				s.setRepeatCategory(rs.getString("repeat_category"));
+				s.setRepeatCycle(rs.getInt("repeat_cycle"));
+				s.setRepeatEndDate(rs.getDate("repeat_end_date"));
+				lists.add(s);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close(rs);
+		close(pstmt);
+		return lists;
 	}
 }

@@ -1,7 +1,11 @@
+<%@page import="atom.calendar.model.vo.Calendar"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file = "/views/common/header.jsp" %>
-
+<%
+	ArrayList<Calendar> lists = (ArrayList)request.getAttribute("list");
+%>
 	<!-- fullCalendar 3.9.0 -->
     <script src="<%=request.getContextPath()%>\dist\lib\moment.min.js"></script>
     <script src="<%=request.getContextPath()%>\dist\js\fullcalendar.min.js"></script>
@@ -89,7 +93,7 @@
           editable : false, // 일정 드래그 설정
           eventLimit : true, // 칸을 넘어가는 일정은 more로 표시 설정
           events: [
-            {
+            /* {
               title: '홈페이지 이동',
               start: '2018-07-08T08:00:00',
               end : '2018-07-08T10:00:00',
@@ -99,8 +103,19 @@
               title: '뭐지',
               start: '2018-07-10',
               end : '2018-07-20'
-            }
+            }, */
+            <%for(Calendar s : lists)
+            {%>
+	            {
+	            	title : '<%=s.getScheduleName()%>',
+	            	start : '<%=s.getStartDate()%>',
+	            	end : '<%=s.getEndDate()%>'
+	            },
+            <%}%>
+            	
+            
           ]
+          
 
         });
       });
