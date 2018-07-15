@@ -16,16 +16,16 @@ import atom.calendar.model.service.CalendarService;
 import atom.calendar.model.vo.Calendar;
 
 /**
- * Servlet implementation class CalendarRegistrationFormEndServlet
+ * Servlet implementation class ScheduleInfoServlet
  */
-@WebServlet("/calendar/calendarRegistrationFormEnd")
-public class CalendarRegistrationFormEndServlet extends HttpServlet {
+@WebServlet("/calendar/calendarInfo")
+public class ScheduleInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CalendarRegistrationFormEndServlet() {
+    public ScheduleInfoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,51 +34,29 @@ public class CalendarRegistrationFormEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String scheduleName = request.getParameter("schedule-name");
-		String schedulePlace = request.getParameter("schedule-place");
-		String repeatSelect = request.getParameter("repeat-select");
-		int repeatCycle = 0;
-		Date repeatEndDate = null;
-		char repeatYN = 'N';
-		if(!repeatSelect.equals("반복 없음")) {
-			repeatYN = 'Y';
-			repeatCycle = Integer.parseInt(request.getParameter("repeat-cycle"));
-			repeatEndDate = transformDate(request.getParameter("repeat-end"));
-		}
-		String content = request.getParameter("schedule-content");
-		String scheduleDate= request.getParameter("schedule-date");
-		String[] scheduleDateSE = scheduleDate.split(" - ");
-		String startDate = scheduleDateSE[0];
-		String endDate = scheduleDateSE[1];
-		
-		Calendar s = new Calendar();
-		s.setScheduleName(scheduleName);
-		s.setStartDate(startDate);
-		s.setEndDate(endDate);
-		s.setCategory("부서명");
-		s.setEmpId("EMP_ID 01");
-		s.setContent(content);
-		s.setPlace(schedulePlace);
-		s.setRepeatYN(repeatYN);
-		s.setRepeatCategory(repeatSelect);
-		s.setRepeatCycle(repeatCycle);
-		s.setRepeatEndDate(repeatEndDate);
-		
-		int result = new CalendarService().insertSchedule(s);
-		
-		String msg="";
-		String loc="/schedule/scheduleList";
-		if(result>0)
+		int scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
+		Calendar s = new CalendarService().selectScheduleId(scheduleId);
+		String view="";
+		if(s!=null)
 		{
-			msg="일정 등록 성공";
+			if(s.getContent()==null){
+				s.setContent("");
+			}
+			if(s.getPlace()==null) {
+				s.setPlace("");
+			}
+			System.out.println(s);
+			request.setAttribute("calendar", s);
+			view="/views/ScheduleManagement/scheduleView.jsp";
 		}
 		else
 		{
-			msg="일정 등록 실패";
+			request.setAttribute("msg", "조회한 일정이 없습니다.");
+			request.setAttribute("loc", "/schedule/scheduleList");
+			view="/views/common/msg.jsp";
 		}
-		request.setAttribute("msg", msg);
-		request.setAttribute("loc", loc);
-		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+		request.getRequestDispatcher(view).forward(request, response);
+	
 	}
 
 	/**
@@ -89,7 +67,6 @@ public class CalendarRegistrationFormEndServlet extends HttpServlet {
 		doGet(request, response);
 	}
 	
-
 	public Date transformDate(String date)
     {
         SimpleDateFormat beforeFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -114,5 +91,5 @@ public class CalendarRegistrationFormEndServlet extends HttpServlet {
         
         return d;
     }
-	
+
 }

@@ -16,16 +16,16 @@ import atom.calendar.model.service.CalendarService;
 import atom.calendar.model.vo.Calendar;
 
 /**
- * Servlet implementation class CalendarRegistrationFormEndServlet
+ * Servlet implementation class CalendarUpdateServlet
  */
-@WebServlet("/calendar/calendarRegistrationFormEnd")
-public class CalendarRegistrationFormEndServlet extends HttpServlet {
+@WebServlet("/calendar/calendarUpdate")
+public class CalendarUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CalendarRegistrationFormEndServlet() {
+    public CalendarUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,6 +37,7 @@ public class CalendarRegistrationFormEndServlet extends HttpServlet {
 		String scheduleName = request.getParameter("schedule-name");
 		String schedulePlace = request.getParameter("schedule-place");
 		String repeatSelect = request.getParameter("repeat-select");
+		int scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
 		int repeatCycle = 0;
 		Date repeatEndDate = null;
 		char repeatYN = 'N';
@@ -51,7 +52,11 @@ public class CalendarRegistrationFormEndServlet extends HttpServlet {
 		String startDate = scheduleDateSE[0];
 		String endDate = scheduleDateSE[1];
 		
+		SimpleDateFormat sd = new SimpleDateFormat("MM/dd/yyyy hh:mm a",new Locale("en", "US"));
+		
+		
 		Calendar s = new Calendar();
+		s.setScheduleId(scheduleId);
 		s.setScheduleName(scheduleName);
 		s.setStartDate(startDate);
 		s.setEndDate(endDate);
@@ -64,17 +69,18 @@ public class CalendarRegistrationFormEndServlet extends HttpServlet {
 		s.setRepeatCycle(repeatCycle);
 		s.setRepeatEndDate(repeatEndDate);
 		
-		int result = new CalendarService().insertSchedule(s);
+		int result = new CalendarService().updateSchedule(s);
+		System.out.println("되는거여?");
 		
 		String msg="";
 		String loc="/schedule/scheduleList";
 		if(result>0)
 		{
-			msg="일정 등록 성공";
+			msg="일정 수정 성공";
 		}
 		else
 		{
-			msg="일정 등록 실패";
+			msg="일정 수정 실패";
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
@@ -88,7 +94,6 @@ public class CalendarRegistrationFormEndServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	
 
 	public Date transformDate(String date)
     {
@@ -114,5 +119,4 @@ public class CalendarRegistrationFormEndServlet extends HttpServlet {
         
         return d;
     }
-	
 }

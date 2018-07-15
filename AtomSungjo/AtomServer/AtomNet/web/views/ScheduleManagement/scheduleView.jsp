@@ -1,20 +1,19 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="atom.calendar.model.vo.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file = "/views/common/header.jsp" %>
+<%@ include file="/views/common/header.jsp"%>
+<%
+	Calendar s = (Calendar)request.getAttribute("calendar");
+	SimpleDateFormat sd = new SimpleDateFormat("MM/dd/yyyy");
 
-	<!-- niceidt -->
-    <script type="text/javascript">
-      bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
-    </script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/dist/js/nicEdit.js"></script>
-
+%>
 	<!-- daterangepicker -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/dist/css/daterangepicker-bs3.css">
 
 	<!-- 데이트피커 -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>\dist\css\datepicker.css">
     <link href="<%=request.getContextPath()%>/dist/css/bootstrap.min.css" rel="stylesheet"> <!-- 왜 두번선언해야하지.. -->
-
 
 	<style>
 		.panel-footer{
@@ -33,7 +32,7 @@
     <section>
       <div class="container-fluid">
         <div class="row">
-         <form action ="<%=request.getContextPath()%>/calendar/calendarRegistrationFormEnd">
+         <form action ="<%=request.getContextPath()%>/calendar/calendarUpdate">
           <div class="panel panel-default">
             <div class="panel-heading">일정 등록</div>
             <div class="panel-body"> <!-- panal body -->
@@ -45,27 +44,27 @@
                       <td>
                         <div class="input-group">
                           <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                          <input name="schedule-date" type="text" class="form-control" id="reservationtime" name="reservationtime" required>
+                          <input name="schedule-date" type="text" class="form-control" id="reservationtime" name="reservationtime" value="<%=s.getStartDate()%> - <%=s.getEndDate()%>" required>
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td>제목</td>
                       <td>
-                        <input id="schedule-name" name="schedule-name" class="form-control" placeholder="제목" required>
+                        <input id="schedule-name" name="schedule-name" class="form-control" placeholder="제목" value="<%=s.getScheduleName()%>" required>
                       </td>
                     </tr>
                     <tr>
                       <td>장소</td>
                       <td>
-                        <input id="schedule-place" name="schedule-place" class="form-control" placeholder="장소">
+                        <input id="schedule-place" name="schedule-place" class="form-control" placeholder="장소" value="<%=s.getPlace()%>">
                       </td>
                     </tr>
                     <tr>
                       <td>반복</td>
                       <td>
-                        <select class="form-control" id="repeat-select" name="repeat-select" style="width: 100%;">
-                          <option selected="selected">반복 없음</option>
+                        <select class="form-control" id="repeat-select" name="repeat-select" style="width: 100%";>
+                          <option>반복 없음</option>
                           <option>매일</option>
                           <option>주중</option>
                           <option>매주(요일지정)</option>
@@ -107,14 +106,16 @@
                       <td>
                         <div class="input-group">
                           <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                          <input name="repeat-end" type="text" class="form-control" id="reservation">
+                          <input name="repeat-end" type="text" class="form-control" id="reservation" <%if(s.getRepeatEndDate()!=null){%>
+                          value="<%=sd.format(s.getRepeatEndDate())%>
+                          <%}%>">
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td>내용</td>
                       <td>
-                        <textarea name="schedule-content" rows="8" cols="80" class="form-control" name="schedule-content"></textarea>
+                        <textarea name="schedule-content" rows="8" cols="80" class="form-control" name="schedule-content"><%=s.getContent() %></textarea>
                       </td>
                     </tr>
                     <tr>
@@ -128,9 +129,12 @@
             </div> <!-- panel-body -->
             <div class="panel-footer">
               <div class="buttons pull-right">
-                <button type="submit" class="btn btn-primary" id="submit">등록</button>
-                <button type="reset" onclick = "history.go(-1)" class="btn btn-default">취소</button>
+                <button type="submit" class="btn btn-primary" id="submit">수정</button>
+                <button type="button" class="btn btn-danger" id="delete">삭제</button>
+                <button type="reset" onclick="history.go(-1)"class="btn btn-default">취소</button>
               </div>
+              <input name="scheduleId" value="<%=s.getScheduleId()%>" hidden>
+              
 
             </div> <!-- panel-footer -->
           </div> <!-- panel panel-default -->
@@ -159,7 +163,20 @@
         timePickerIncrement: 30,
         format             : 'MM/DD/YYYY h:mm A'
       })
+      
+      $('#repeat-select').val('<%=s.getRepeatCategory()%>').attr("selected","selected");
+      
+      if($('#repeat-select').val()!='반복 없음'){
+    	  if($('#repeat-select option:selected').val() == '매주(요일지정)'){
+              $('#day-checkbox').show();
+            }else{
+              $('#day-checkbox').hide();
+            }
+            $('#repeat-cycle').show();
+            $('#repeat-end').show();
+      }
     });
+    
     $('#submit').click(function(){
       console.log($('#repeat-select option:selected').val());
     });
@@ -178,8 +195,15 @@
         $('#repeat-end').show();
       }
     });
+    
+    
 
     </script>
-    
-<%@ include file="/views/common/footer.jsp" %>
 
+
+
+
+
+
+
+<%@ include file="/views/common/footer.jsp"%>

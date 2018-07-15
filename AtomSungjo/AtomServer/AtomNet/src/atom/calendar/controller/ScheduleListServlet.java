@@ -34,13 +34,7 @@ public class ScheduleListServlet extends HttpServlet {
 		String empId = "EMP_ID 01";
 		List<Calendar> lists = new CalendarService().selectEmpId(empId);
 //		List<Calendar> lists = new CalendarService().selectDeptName();
-
-		for (Calendar s : lists) {
-			System.out.println(s);
-		}
 		request.setAttribute("list", lists);
-		
-		
 		
 		request.getRequestDispatcher("/views/ScheduleManagement/schedule.jsp").forward(request, response);
 	}

@@ -89,7 +89,7 @@
           },
           lang : 'ko',
           defaultDate: new Date(), // 디폴트 날짜 설정
-          navLinks : false, // 날짜 클릭시 일간목록 설정
+          navLinks : true, // 날짜 클릭시 일간목록 설정
           editable : false, // 일정 드래그 설정
           eventLimit : true, // 칸을 넘어가는 일정은 more로 표시 설정
           events: [
@@ -109,7 +109,8 @@
 	            {
 	            	title : '<%=s.getScheduleName()%>',
 	            	start : '<%=s.getStartDate()%>',
-	            	end : '<%=s.getEndDate()%>'
+	            	end : '<%=s.getEndDate()%>',
+	            	url : '<%=request.getContextPath()%>/calendar/calendarInfo?scheduleId=<%=s.getScheduleId()%>'
 	            },
             <%}%>
             	
