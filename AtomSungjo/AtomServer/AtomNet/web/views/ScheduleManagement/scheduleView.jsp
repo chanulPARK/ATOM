@@ -77,14 +77,14 @@
                     <tr id='repeat-cycle' hidden>
                       <td>반복주기</td>
                       <td>
-                        <select name="repeat-cycle" class="form-control" style="width:10%;display:inline">
+                        <select id="repeat-cycle" name="repeat-cycle" class="form-control" style="width:10%;display:inline">
                           <option>1</option>
                           <option>2</option>
                           <option>3</option>
                           <option>4</option>
                           <option>5</option>
                           <option>6</option>
-                          <option selected="selected">7</option>
+                          <option>7</option>
                           <option>8</option>
                           <option>9</option>
                           <option>10</option>
@@ -106,9 +106,8 @@
                       <td>
                         <div class="input-group">
                           <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                          <input name="repeat-end" type="text" class="form-control" id="reservation" <%if(s.getRepeatEndDate()!=null){%>
-                          value="<%=sd.format(s.getRepeatEndDate())%>
-                          <%}%>">
+                          <input name="repeat-end" type="text" class="form-control" id="repeat-end_date" <%if(s.getRepeatEndDate()!=null){%>
+                          value="<%=sd.format(s.getRepeatEndDate())%><%}%>">
                         </div>
                       </td>
                     </tr>
@@ -156,7 +155,7 @@
 
     <script>
     $(function(){
-      $('#reservation').datepicker();
+      $('#repeat-end_date').datepicker();
 
       $('#reservationtime').daterangepicker({
         timePicker         : true,
@@ -165,6 +164,7 @@
       })
       
       $('#repeat-select').val('<%=s.getRepeatCategory()%>').attr("selected","selected");
+      $('#repeat-cycle').val('<%=s.getRepeatCycle()%>').attr("selected","selected");
       
       if($('#repeat-select').val()!='반복 없음'){
     	  if($('#repeat-select option:selected').val() == '매주(요일지정)'){
@@ -174,6 +174,8 @@
             }
             $('#repeat-cycle').show();
             $('#repeat-end').show();
+            $('#repeat-end_date').attr("required",true);
+
       }
     });
     
@@ -193,7 +195,13 @@
         }
         $('#repeat-cycle').show();
         $('#repeat-end').show();
+        
+        $('#repeat-end_date').attr("required",true);
       }
+      
+      
+      
+      
     });
     
     
