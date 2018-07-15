@@ -3,10 +3,11 @@ package atom.calendar.model.vo;
 import java.sql.Date;
 
 public class Calendar {
+	
 	private int scheduleId;
 	private String scheduleName;
-	private Date startDate;
-	private Date endDate;
+	private String startDate;
+	private String endDate;
 	private String empId;
 	private String category;
 	private String content;
@@ -18,7 +19,7 @@ public class Calendar {
 	
 	public Calendar() {}
 
-	public Calendar(int scheduleId, String scheduleName, Date startDate, Date endDate, String empId, String category,
+	public Calendar(int scheduleId, String scheduleName, String startDate, String endDate, String empId, String category,
 			String content, String place, char repeatYN, String repeatCategory, int repeatCycle, Date repeatEndDate) {
 		super();
 		this.scheduleId = scheduleId;
@@ -51,19 +52,19 @@ public class Calendar {
 		this.scheduleName = scheduleName;
 	}
 
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 
@@ -131,5 +132,12 @@ public class Calendar {
 		this.repeatEndDate = repeatEndDate;
 	}
 	
+	@Override
+	public String toString() {
+		return "Calendar [scheduleId=" + scheduleId + ", scheduleName=" + scheduleName + ", startDate=" + startDate
+				+ ", endDate=" + endDate + ", empId=" + empId + ", category=" + category + ", content=" + content
+				+ ", place=" + place + ", repeatYN=" + repeatYN + ", repeatCategory=" + repeatCategory
+				+ ", repeatCycle=" + repeatCycle + ", repeatEndDate=" + repeatEndDate + "]";
+	}
 	
 }

@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file = "/views/common/header.jsp" %>
-	 
+
 	<!-- niceidt -->
     <script type="text/javascript">
       bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
     </script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/dist/js/nicEdit.js"></script>
-	
+
 	<!-- daterangepicker -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/dist/css/daterangepicker-bs3.css">
 
@@ -33,8 +33,7 @@
     <section>
       <div class="container-fluid">
         <div class="row">
-         <form action ="<%=request.getContextPath()%>/calendar/addCalendar">
-        
+         <form action ="<%=request.getContextPath()%>/calendar/calendarRegistrationFormEnd">
           <div class="panel panel-default">
             <div class="panel-heading">일정 등록</div>
             <div class="panel-body"> <!-- panal body -->
@@ -46,26 +45,26 @@
                       <td>
                         <div class="input-group">
                           <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                          <input type="text" class="form-control" id="reservationtime">
+                          <input name="schedule-date" type="text" class="form-control" id="reservationtime" name="reservationtime" required>
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td>제목</td>
                       <td>
-                        <input id="schedule-name" class="form-control" placeholder="제목">
+                        <input id="schedule-name" name="schedule-name" class="form-control" placeholder="제목" required>
                       </td>
                     </tr>
                     <tr>
                       <td>장소</td>
                       <td>
-                        <input id="schedule-place" class="form-control" placeholder="장소">
+                        <input id="schedule-place" name="schedule-place" class="form-control" placeholder="장소">
                       </td>
                     </tr>
                     <tr>
                       <td>반복</td>
                       <td>
-                        <select class="form-control" id="repeat-select"style="width: 100%;">
+                        <select class="form-control" id="repeat-select" name="repeat-select" style="width: 100%;">
                           <option selected="selected">반복 없음</option>
                           <option>매일</option>
                           <option>주중</option>
@@ -79,7 +78,7 @@
                     <tr id='repeat-cycle' hidden>
                       <td>반복주기</td>
                       <td>
-                        <select class="form-control" style="width:10%;display:inline">
+                        <select name="repeat-cycle" class="form-control" style="width:10%;display:inline">
                           <option>1</option>
                           <option>2</option>
                           <option>3</option>
@@ -92,7 +91,7 @@
                           <option>10</option>
                         </select>
                         주/개월/년 &nbsp;
-                        <span id="day-checkbox" hidden>
+                        <span id="day-checkbox" name="day-checkbox" hidden>
                         <label for="sunday"><input type="checkbox" name="dayOfWeek" value="" id="sunday">일</label>&nbsp;
                         <label for="monday"><input type="checkbox" name="dayOfWeek" value="" id="monday">월</label>&nbsp;
                         <label for="tuesday"><input type="checkbox" name="dayOfWeek" value="" id="tuesday">화</label>&nbsp;
@@ -108,14 +107,14 @@
                       <td>
                         <div class="input-group">
                           <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                          <input type="text" class="form-control" id="reservation">
+                          <input name="repeat-end" type="text" class="form-control" id="reservation">
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td>내용</td>
                       <td>
-                        <textarea name="schedule-content" rows="8" cols="80" class="form-control"></textarea>
+                        <textarea name="schedule-content" rows="8" cols="80" class="form-control" name="schedule-content"></textarea>
                       </td>
                     </tr>
                     <tr>
