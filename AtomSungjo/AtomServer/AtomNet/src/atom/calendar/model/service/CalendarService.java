@@ -42,4 +42,12 @@ public class CalendarService {
 		return result;
 	}
 
+	public int deleteSchedule(int scheduleId) {
+		Connection conn = getConnection();
+		int result = new CalendarDAO().deleteSchedule(conn,scheduleId);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		return result;
+	}
+
 }

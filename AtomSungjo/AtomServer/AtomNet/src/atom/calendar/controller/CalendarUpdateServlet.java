@@ -70,7 +70,6 @@ public class CalendarUpdateServlet extends HttpServlet {
 		s.setRepeatEndDate(repeatEndDate);
 		
 		int result = new CalendarService().updateSchedule(s);
-		System.out.println("되는거여?");
 		
 		String msg="";
 		String loc="/schedule/scheduleList";

@@ -129,7 +129,7 @@
             <div class="panel-footer">
               <div class="buttons pull-right">
                 <button type="submit" class="btn btn-primary" id="submit">수정</button>
-                <button type="button" class="btn btn-danger" id="delete">삭제</button>
+                <button type="button" class="btn btn-danger" id="delete" onclick="deleteButtonClick();">삭제</button>
                 <button type="reset" onclick="history.go(-1)"class="btn btn-default">취소</button>
               </div>
               <input name="scheduleId" value="<%=s.getScheduleId()%>" hidden>
@@ -198,11 +198,12 @@
         
         $('#repeat-end_date').attr("required",true);
       }
-      
-      
-      
-      
+            
     });
+    
+	function deleteButtonClick(){
+		location.href="<%=request.getContextPath()%>/calendar/calendarDelete?scheduleId=<%=s.getScheduleId()%>";
+	}
     
     
 

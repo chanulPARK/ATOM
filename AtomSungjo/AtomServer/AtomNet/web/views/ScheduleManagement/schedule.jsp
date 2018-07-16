@@ -34,15 +34,15 @@
               <div class="form-check">
                 <label for="schedule-group-check3" class="label label-info schedule-group"><input type="checkbox" name="schedule-group" id="schedule-group-check3"> 내 일정 </label>
               </div>
-              <div class="input-group">
+              <!-- <div class="input-group">
                 <input id="new-event" type="text" class="form-control" placeholder="일정 추가" style="width:73%">
 
                 <div class="input-group-append">
                   <button id="add-new-event" type="button" class="btn btn-primary" >추가</button>
                 </div>
-                <!-- /btn-group -->
+                /btn-group
               </div>
-              <!-- /input-group -->
+              /input-group -->
             </div>
           </div>
         </div>

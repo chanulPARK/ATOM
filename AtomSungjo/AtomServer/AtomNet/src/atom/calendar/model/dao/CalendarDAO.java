@@ -156,4 +156,21 @@ public class CalendarDAO {
 		
 		return result;
 	}
+	public int deleteSchedule(Connection conn, int scheduleId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteSchedule");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, scheduleId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close(pstmt);
+		
+		return result;
+	}
 }
