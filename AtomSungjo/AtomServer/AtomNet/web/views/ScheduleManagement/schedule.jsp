@@ -107,6 +107,8 @@
             <%for(Calendar s : lists)
             {%>
 	            {
+	            	//#d9534f 공지사항, #5cb85c 부서, #5bc0de 개인
+	            	color : "#d9534f",
 	            	title : '<%=s.getScheduleName()%>',
 	            	start : '<%=s.getStartDate()%>',
 	            	end : '<%=s.getEndDate()%>',

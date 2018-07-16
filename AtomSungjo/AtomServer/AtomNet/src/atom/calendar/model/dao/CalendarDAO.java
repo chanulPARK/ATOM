@@ -37,6 +37,8 @@ public class CalendarDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, s.getScheduleName());
+			System.out.println("startDate : "+ s.getStartDate());
+
 			pstmt.setString(2, s.getStartDate());
 			pstmt.setString(3, s.getEndDate());
 			pstmt.setString(4, s.getEmpId());
@@ -73,8 +75,9 @@ public class CalendarDAO {
 				s = new Calendar();
 				s.setScheduleId(rs.getInt("schedule_id"));
 				s.setScheduleName(rs.getString("schedule_name"));
-				s.setStartDate(String.valueOf(rs.getDate("start_date")));
-				s.setEndDate(String.valueOf(rs.getDate("end_date")));
+				s.setStartDate(rs.getString("start_date"));
+				System.out.println("start_" + rs.getString("start_date"));
+				s.setEndDate(rs.getString("end_date"));
 				s.setEmpId(rs.getString("emp_id"));
 				s.setCategory(rs.getString("category"));
 				s.setContent(rs.getString("content"));
@@ -98,8 +101,6 @@ public class CalendarDAO {
 		ResultSet rs = null;
 		String sql = prop.getProperty("selectScheduleId");
 		Calendar s = null;
-		
-		SimpleDateFormat sd = new SimpleDateFormat("MM/dd/yyyy hh:mm a",new Locale("en", "US"));
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -109,8 +110,8 @@ public class CalendarDAO {
 				s = new Calendar();
 				s.setScheduleId(rs.getInt("schedule_id"));
 				s.setScheduleName(rs.getString("schedule_name"));
-				s.setStartDate(sd.format(rs.getDate("start_date")));
-				s.setEndDate(sd.format(rs.getDate("end_date")));
+				s.setStartDate(rs.getString("start_date"));
+				s.setEndDate(rs.getString("end_date"));
 				s.setEmpId(rs.getString("emp_id"));
 				s.setCategory(rs.getString("category"));
 				s.setContent(rs.getString("content"));
@@ -173,4 +174,5 @@ public class CalendarDAO {
 		
 		return result;
 	}
+	
 }
