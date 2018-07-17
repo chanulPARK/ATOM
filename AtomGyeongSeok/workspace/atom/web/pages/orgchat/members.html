@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
+    <title>부트 스트랩</title>
+
+    <!-- 부트스트랩 -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+	
+ 	<!-- tree 적용 -->
+	<link rel="stylesheet" href="../../css/themes/proton/style.min.css" />
+	<script src="../../js/libs/jquery.js"></script>
+	<script src="../../js/jstree.min.js"></script> 
+	
+
+	
+    <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
+    <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+ 
+ <!-- 메인 스타일 적용  (파일 분리 예정) -->
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 600px}	/*원래 450px*/
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  
+  </style>
+ 
+ 
+ 
+  </head>
+  <body>
+   
+  
+ <!-- 헤더 바꾸는 부분  inverse는 검은색 바탕, default는 흰색 -->
+   <!-- fixed-top는 상단바 고정 하는것 (내용이 길어도 위에 계속 고정) -->
+   <nav class="navbar navbar-default"> 
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                <!-- <a class="navbar-brand" href="#">Brand</a> -->
+       				
+       				<!-- 추가부분!  -->
+       				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				        <span class="icon-bar"></span>	<!-- 모바일웹일때 3줄 보이게 하는것 -->
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>                        
+      				</button>    
+                    
+                    <!-- 로고 클릭시 메인 홈으로 이동 -->
+                    <a class="navbar-brand" href="../common/main.html">
+                       <img src="../../img/login.png">
+                    </a>
+                </div>
+            
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="myNavbar">
+               	<!-- 헤더안 내용 반응웹시 사라짐  -->
+                <ul class="nav navbar-nav">
+                    <!-- <li class="active"><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li> -->
+                    <li><a href="#">전자결재</a></li>
+                    <li><a href="#">일정</a></li>
+                    <li><a href="#">업무관리</a></li>
+                    <li><a href="#">게시판</a></li>
+                    <li><a href="../orgchat/orgchar.html">조직도</a></li>
+                    <li><a href="#">근태관리</a></li>
+                </ul>
+               
+               
+               <!-- 메인 오른쪽 톱니바퀴 -->
+                <ul class="nav navbar-nav navbar-right">
+                     <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">마이페이지</a></li>
+                        <li><a href="#">설정</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">로그아웃</a></li>
+                    </ul>
+                    </li>
+       				
+                </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+
+
+	<!-- 왼쪽 네비게이션 - 주 내용   -->
+   <div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav">	<!-- sm의미=전체 사이즈에서 차지하는 부분 8/2-->
+        
+        
+      	<!-- 트리  -->
+      <h4>조직도</h4>
+     
+      <p><a href="members.html">전체 구성원 목록</a></p>
+      <p><a href="#">조직도(트리구조)</a></p>
+      <p><a href="#">??</a></p>
+      <p><a href="#">??</a></p>
+   
+    </div>
+    
+    
+    <!-- 주 화면 -->
+    <div class="col-sm-8 text-left"> 
+     
+        
+     <h1>전체 구성원</h1>
+        <p></p>
+      
+     <h3>Test</h3>
+      <p>Lorem ipsum...</p>
+    
+     
+      <h4>조직그룹 테스트</h4>
+      <p>여기에는 무슨내용이</p>
+  
+    </div>
+   
+   
+   <!-- 오른쪽 그리드 적용 -->
+    <div class="col-sm-2 sidenav">
+      <div class="well">
+        <p>ADS</p>
+      </div>
+      <div class="well">
+        <p>ADS</p>
+      </div>
+    </div>
+  </div>
+</div>
+   
+   
+   <!-- 풋터  -->
+   <footer class="container-fluid text-center">
+ 		 <p> 아톰 그룹웨어는 잘 돌아 갈수 있을까..?</p>
+	</footer>
+   
+   
+    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+    <!-- 제이쿼리 3.3.1 qnxmtmxmfoq 3.7버전 -->
+    <script src="../../js/bootstrap.min.js"></script>
+    
+ 
+
+	<!-- tree 적용 -->
+	<link rel="stylesheet" href="../../css/themes/proton/style.min.css" />
+	<script src="../../js/libs/jquery.js"></script>
+	<script src="../../js/jstree.min.js"></script>
+    
+  </body>
+</html>
