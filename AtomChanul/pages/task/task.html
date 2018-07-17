@@ -173,10 +173,10 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+                    <li><a href="default.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
                     <li><a href="#">전자결재</a></li>
                     <li><a href="#">일정</a></li>
-                    <li><a href="#">업무관리</a></li>
+                    <li><a href="task.html">업무관리</a></li>
                     <li><a href="#">게시판</a></li>
                     <li><a href="#">조직도</a></li>
                     <li><a href="#">근태관리</a></li>
@@ -208,7 +208,7 @@
         </div>
         <div class="leftmenu_area">
             <div class="list-group">
-                <a href="#" class="list-group-item">업무 요청
+                <a href="#" class="list-group-item task_request">업무 요청
                     <span class="glyphicon glyphicon-chevron-down float-right"></span>
                 </a>
                 <a class="list-group-item">- 발신 업무 요청
@@ -246,7 +246,6 @@
                         </ul>
                     </ul>
                 </div>
-                <button id="create">부서 추가</button>
             </div>
         </div>
     </aside>
@@ -441,7 +440,7 @@
                 </nav>
                 <!-- /.pagination_wrap -->
                 <div class="btn-wrap">
-                    <button class="btn btn-primary btn-sm">업무 등록</button>
+                    <button class="btn btn-primary btn-sm" onclick="location='write.html'">업무 등록</button>
                     <button class="btn btn-primary btn-sm">업무 삭제</button>
                 </div>
             </div>
