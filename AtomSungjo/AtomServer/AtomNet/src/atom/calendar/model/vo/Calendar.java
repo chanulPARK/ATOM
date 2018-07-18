@@ -1,6 +1,7 @@
 package atom.calendar.model.vo;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class Calendar {
 	
@@ -14,13 +15,18 @@ public class Calendar {
 	private String place;
 	private char repeatYN;
 	private String repeatCategory;
-	private int repeatCycle;
+	private String dayOfWeek;
 	private Date repeatEndDate;
 	
-	public Calendar() {}
+	private SimpleDateFormat sd; 
+	
+	public Calendar() {
+		sd = new SimpleDateFormat("YYYY-MM-dd");		
+	}
 
-	public Calendar(int scheduleId, String scheduleName, String startDate, String endDate, String empId, String category,
-			String content, String place, char repeatYN, String repeatCategory, int repeatCycle, Date repeatEndDate) {
+	public Calendar(int scheduleId, String scheduleName, String startDate, String endDate, String empId,
+			String category, String content, String place, char repeatYN, String repeatCategory, String dayOfWeek,
+			Date repeatEndDate) {
 		super();
 		this.scheduleId = scheduleId;
 		this.scheduleName = scheduleName;
@@ -32,7 +38,7 @@ public class Calendar {
 		this.place = place;
 		this.repeatYN = repeatYN;
 		this.repeatCategory = repeatCategory;
-		this.repeatCycle = repeatCycle;
+		this.dayOfWeek = dayOfWeek;
 		this.repeatEndDate = repeatEndDate;
 	}
 
@@ -116,12 +122,12 @@ public class Calendar {
 		this.repeatCategory = repeatCategory;
 	}
 
-	public int getRepeatCycle() {
-		return repeatCycle;
+	public String getDayOfWeek() {
+		return dayOfWeek;
 	}
 
-	public void setRepeatCycle(int repeatCycle) {
-		this.repeatCycle = repeatCycle;
+	public void setDayOfWeek(String dayOfWeek) {
+		this.dayOfWeek = dayOfWeek;
 	}
 
 	public Date getRepeatEndDate() {
@@ -132,12 +138,50 @@ public class Calendar {
 		this.repeatEndDate = repeatEndDate;
 	}
 	
+	
+
 	@Override
 	public String toString() {
 		return "Calendar [scheduleId=" + scheduleId + ", scheduleName=" + scheduleName + ", startDate=" + startDate
 				+ ", endDate=" + endDate + ", empId=" + empId + ", category=" + category + ", content=" + content
 				+ ", place=" + place + ", repeatYN=" + repeatYN + ", repeatCategory=" + repeatCategory
-				+ ", repeatCycle=" + repeatCycle + ", repeatEndDate=" + repeatEndDate + "]";
+				+ ", dayOfWeek=" + dayOfWeek + ", repeatEndDate=" + repeatEndDate + "]";
 	}
+
+	public int getStartYear() {
+		System.out.println("aaaaa" + startDate);
+		String[] temp =startDate.split(" ");
+		System.out.println("dddddd" + temp[0]);
+		String[] date = temp[0].split("/");
+		return Integer.parseInt(date[2]);
+	}
+	
+	public int getStartMonth() {
+		String[] temp =startDate.split(" ");
+		String[] date = temp[0].split("/");
+		return Integer.parseInt(date[0]);
+	}
+	
+	public int getStartDay() {
+		String[] temp =startDate.split(" ");
+		String[] date = temp[0].split("/");
+		return Integer.parseInt(date[1]);
+	}
+	
+	public int getEndYear() {
+		String[] temp =sd.format(repeatEndDate).split("-");
+		return Integer.parseInt(temp[0]);
+	}
+	
+	public int getEndMonth() {
+		String[] temp =sd.format(repeatEndDate).split("-");
+		return Integer.parseInt(temp[1]);
+	}
+	
+	public int getEndDay() {
+		String[] temp =sd.format(repeatEndDate).split("-");
+		return Integer.parseInt(temp[2]);
+	}
+	
 	
 }

@@ -45,7 +45,6 @@ public class ScheduleInfoServlet extends HttpServlet {
 			if(s.getPlace()==null) {
 				s.setPlace("");
 			}
-			System.out.println(s);
 			request.setAttribute("calendar", s);
 			view="/views/ScheduleManagement/scheduleView.jsp";
 		}

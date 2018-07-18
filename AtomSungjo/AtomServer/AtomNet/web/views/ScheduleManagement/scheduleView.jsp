@@ -6,7 +6,9 @@
 <%
 	Calendar s = (Calendar)request.getAttribute("calendar");
 	SimpleDateFormat sd = new SimpleDateFormat("MM/dd/yyyy");
-
+	String[] dayOfWeeks = null;
+	if(s.getDayOfWeek() != null)
+		dayOfWeeks = s.getDayOfWeek().split(",");
 %>
 	<!-- daterangepicker -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/dist/css/daterangepicker-bs3.css">
@@ -34,7 +36,7 @@
         <div class="row">
          <form action ="<%=request.getContextPath()%>/calendar/calendarUpdate">
           <div class="panel panel-default">
-            <div class="panel-heading">일정 등록</div>
+            <div class="panel-heading">일정 정보</div>
             <div class="panel-body"> <!-- panal body -->
               <div class="create-schedule-table">
                 <table class="table table-bordered">
@@ -77,7 +79,7 @@
                     <tr id='repeat-cycle' hidden>
                       <td>반복주기</td>
                       <td>
-                        <select id="repeat-cycle" name="repeat-cycle" class="form-control" style="width:10%;display:inline">
+                        <!-- <select id="repeat-cycle" name="repeat-cycle" class="form-control" style="width:10%;display:inline">
                           <option>1</option>
                           <option>2</option>
                           <option>3</option>
@@ -89,15 +91,15 @@
                           <option>9</option>
                           <option>10</option>
                         </select>
-                        주/개월/년 &nbsp;
+                        주/개월/년 &nbsp; -->
                         <span id="day-checkbox" name="day-checkbox" hidden>
-                        <label for="sunday"><input type="checkbox" name="dayOfWeek" value="" id="sunday">일</label>&nbsp;
-                        <label for="monday"><input type="checkbox" name="dayOfWeek" value="" id="monday">월</label>&nbsp;
-                        <label for="tuesday"><input type="checkbox" name="dayOfWeek" value="" id="tuesday">화</label>&nbsp;
-                        <label for="wednesday"><input type="checkbox" name="dayOfWeek" value="" id="wednesday">수</label>&nbsp;
-                        <label for="thursday"><input type="checkbox" name="dayOfWeek" value="" id="thursday">목</label>&nbsp;
-                        <label for="friday"><input type="checkbox" name="dayOfWeek" value="" id="friday">금</label>&nbsp;
-                        <label for="saturday"><input type="checkbox" name="dayOfWeek" value="" id="saturday">토</label>&nbsp;
+                        <label for="sunday"><input type="checkbox" name="dayOfWeek" value="sun" id="sunday">일</label>&nbsp;
+                        <label for="monday"><input type="checkbox" name="dayOfWeek" value="mon" id="monday">월</label>&nbsp;
+                        <label for="tuesday"><input type="checkbox" name="dayOfWeek" value="tue" id="tuesday">화</label>&nbsp;
+                        <label for="wednesday"><input type="checkbox" name="dayOfWeek" value="wed" id="wednesday">수</label>&nbsp;
+                        <label for="thursday"><input type="checkbox" name="dayOfWeek" value="thu" id="thursday">목</label>&nbsp;
+                        <label for="friday"><input type="checkbox" name="dayOfWeek" value="fri" id="friday">금</label>&nbsp;
+                        <label for="saturday"><input type="checkbox" name="dayOfWeek" value="sat" id="saturday">토</label>&nbsp;
                         </span>
                       </td>
                     </tr>
@@ -106,7 +108,7 @@
                       <td>
                         <div class="input-group">
                           <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                          <input name="repeat-end" type="text" class="form-control" id="repeat-end_date" <%if(s.getRepeatEndDate()!=null){%>
+                          <input name="repeat-end" type="text" class="form-control" id="repeat_end_date" <%if(s.getRepeatEndDate()!=null){%>
                           value="<%=sd.format(s.getRepeatEndDate())%><%}%>">
                         </div>
                       </td>
@@ -155,7 +157,7 @@
 
     <script>
     $(function(){
-      $('#repeat-end_date').datepicker();
+      $('#repeat_end_date').datepicker();
 
       $('#reservationtime').daterangepicker({
         timePicker         : true,
@@ -164,18 +166,20 @@
       })
       
       $('#repeat-select').val('<%=s.getRepeatCategory()%>').attr("selected","selected");
-      $('#repeat-cycle').val('<%=s.getRepeatCycle()%>').attr("selected","selected");
-      
+<%--       $('#repeat-cycle').val('<%=s.getRepeatCycle()%>').attr("selected","selected");
+ --%>      
       if($('#repeat-select').val()!='반복 없음'){
     	  if($('#repeat-select option:selected').val() == '매주(요일지정)'){
               $('#day-checkbox').show();
-            }else{
-              $('#day-checkbox').hide();
-            }
-            $('#repeat-cycle').show();
-            $('#repeat-end').show();
-            $('#repeat-end_date').attr("required",true);
+              $('#repeat-cycle').show();
+          }else{
+          	$('#day-checkbox').hide();
+            $('#repeat-cycle').hide();
 
+          }
+          $('#repeat-end').show();
+
+          $('#repeat_end_date').attr("required",true);
       }
     });
     
@@ -185,18 +189,18 @@
 
     $('#repeat-select').change(function(){
       if($('#repeat-select option:selected').val() == '반복 없음'){
-        $('#repeat-cycle').hide();
         $('#repeat-end').hide();
       }else{
         if($('#repeat-select option:selected').val() == '매주(요일지정)'){
           $('#day-checkbox').show();
+          $('#repeat-cycle').show();
         }else{
           $('#day-checkbox').hide();
+          $('#repeat-cycle').hide();
         }
-        $('#repeat-cycle').show();
         $('#repeat-end').show();
         
-        $('#repeat-end_date').attr("required",true);
+        $('#repeat_end_date').attr("required",true);
       }
             
     });
@@ -204,6 +208,14 @@
 	function deleteButtonClick(){
 		location.href="<%=request.getContextPath()%>/calendar/calendarDelete?scheduleId=<%=s.getScheduleId()%>";
 	}
+	var list = [];
+	<%if(dayOfWeeks != null){for(int i =0;i<dayOfWeeks.length;i++){%>
+		list.push('<%=dayOfWeeks[i]%>');
+	<%}}%>
+	$('input:checkbox[name="dayOfWeek"]').each(function(){
+		if(jQuery.inArray( $(this).val(), list ) > -1)
+			$(this).attr("checked",true);
+    });
     
     
 
