@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>월별근태관리</title>
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../dist/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700" rel="stylesheet">
+
+    <link href="../../dist/fullcalendar-3.9.0/fullcalendar.min.css" rel="stylesheet">
+    <link href="../../dist/fullcalendar-3.9.0/fullcalendar.print.css" rel="stylesheet">
+    <script src="../../dist/fullcalendar-3.9.0/lib/moment.min.js"></script>
+    <script src="../../dist/fullcalendar-3.9.0/fullcalendar.min.js"></script>
+    <script src="../../dist/fullcalendar-3.9.0/lib/jquery.min.js"></script>
+
+    <style>
+        * {box-sizing: border-box;font-family: 'Nanum Gothic', sans-serif;}
+        body ,header{margin: 0px;}
+        header{
+            color: #fff!important;
+            /* border-bottom: 1px solid rgb(153, 153, 153); */
+            height: 52px;
+            position: relative;
+            display: block;
+        }
+        aside{
+            margin-top: 30px;
+            left: 0px;
+            width: 250px;
+            height: 300px;
+            display: block;
+            position: absolute;
+            /* position: fixed; */
+            border-bottom: solid 1px rgb(222, 226, 230);
+            background: rgb(222, 226, 230);
+        }
+        section{
+            padding: 20px;
+            /* padding-left: 20px;
+            padding-right: 20px; */
+            background: rgb(255, 255, 255);
+            border-left: 1px solid rgb(222, 226, 230);
+            width: 100%-250px;
+            /* height: 500px; */
+            margin-left: 250px;
+            /* background : palegreen; */
+            min-height: 675px;
+            display: block;
+        }
+        footer{
+            width: 100%;
+            height: 40px;
+            border-top: 1px solid rgb(222, 226, 230);
+            display: block;
+        }
+        footer > p{
+            font-size: 12px;
+            text-align: end;
+            color: rgb(153, 153, 153);
+        }
+        /* border-bottom: solid 1px rgb(153, 153, 153); */
+        /* border-bottom: solid 1px rgb(222, 226, 230); */
+    </style>
+    </head>
+    <body>
+    
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                <!-- <a class="navbar-brand" href="#">Brand</a> -->
+                    <a class="navbar-brand" href="#">
+                        <img src="../../dist/img/login.png">
+                    </a>
+                </div>
+            
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="../main.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+                    <li><a href="#">전자결재</a></li>
+                    <li><a href="#">일정</a></li>
+                    <li><a href="#">업무관리</a></li>
+                    <li><a href="#">게시판</a></li>
+                    <li><a href="#">조직도</a></li>
+                    <li><a href="att_user_day.html">근태관리</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">마이페이지</a></li>
+                        <li><a href="#">설정</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">로그아웃</a></li>
+                    </ul>
+                    </li>
+                </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+    </header>
+
+    <aside>
+        <div class='sidebar-nav navbar-default'>
+            <ul class="nav" id="side-menu">
+                <li>
+                    <a href="att_user_day.html" style="font-size: 17px">일일근태등록</a>
+                </li>
+                <li>
+                    <a href="att_user_month.html" style="font-size: 17px">월별근태현황</a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <section>
+        <div class="content">
+           <div class='col-lg-12'>
+                <h3 class="page-header">월별근태현황</h3>
+                <!-- 월별 현황(달력) -->
+                <div id='calendar' class="col-lg-8"></div>
+                <!-- 월별 출석 통계 조회 -->
+                <div class="panel panel-default">
+                    <div class='panel-heading' style="display: inline-flex">
+                        <h5>날짜 조회</h5>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <!-- 년 월 입력받아 조회 -->
+                        <div class='input-group col-md-4'>
+                            <select class='form-control' name="att" id="att">
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                                <option value="2015">2015</option>
+                            </select>
+                            <span class='input-group-addon' id='basic-addon2'>년</span>
+                                <select class='form-control' name="att" id="att">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                                <span class='input-group-addon' id='basic-addon2'>월</span>
+                        </div>
+                        <div class='col-md-4'>
+                            <button type='button' id='searchDate' class='btn btn-color5'>
+                                <i class='fa fa-search fa-fw'></i>검색
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>사원명</th>
+                                    <th>년</th>
+                                    <th>월</th>
+                                    <th>실 근무일수</th>
+                                    <th>출근일수</th>
+                                    <th>지각횟수</th>
+                                    <th>조퇴횟수</th>
+                                    <th>결근일수</th>
+                                    <th>총 근무시간</th>
+                                    <th>출근률</th>
+                                    <th>남은 휴가 수</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>영진</td>
+                                    <td>2018년</td>
+                                    <td>7월</td>
+                                    <td>20일</td>
+                                    <td>19일</td>
+                                    <td>1일</td>
+                                    <td>0일</td>
+                                    <td>0일</td>
+                                    <td>50:21</td>
+                                    <td>98.2%</td>
+                                    <td>13일</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="panel-footer"></div>
+                </div>
+            </div>
+        </div>
+    </section>                 
+
+
+
+    <footer>
+        <p>COPYRIGHT @ ATOM ALL RIGHTS RESERVED</p>
+    </footer>
+
+
+
+
+
+    <script>
+        $(function(){
+            $('#calendar').fullCalendar({
+            header    : {
+                left  : 'prev,next today',
+                center: 'title',
+                right : 'month,agendaWeek,agendaDay,listWeek'
+            },
+            buttonText: {
+                today: '오늘',
+                month: '월간',
+                week : '주간',
+                day  : '일간',
+                listWeek : '목록보기'
+            },
+            lang : 'ko',
+            defaultDate: new Date(), // 디폴트 날짜 설정
+            navLinks : false, // 날짜 클릭시 일간목록 설정
+            editable : false, // 일정 드래그 설정
+            eventLimit : true, // 칸을 넘어가는 일정은 more로 표시 설정
+            events: [
+                {
+                title: '홈페이지 이동',
+                start: '2018-07-08T08:00:00',
+                end : '2018-07-08T10:00:00',
+                },
+                {
+                title: '뭐지',
+                start: '2018-07-10',
+                end : '2018-07-20'
+                }
+            ]
+    
+        });
+    });
+    </script>
+
+
+   <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+    <script src="../../dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
