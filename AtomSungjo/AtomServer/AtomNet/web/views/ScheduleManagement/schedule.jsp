@@ -267,7 +267,28 @@
 		            		},
 		            	<%}%>
 	            		
-	            	<%}else if(s.getRepeatCategory().equals("매월(요일기준)")){%> // 매월(요일기준)		            		
+	            	<%}else if(s.getRepeatCategory().equals("매월(요일기준)")){%> // 매월(요일기준)	
+	            		
+	            	<%date1.setTime(new java.util.Date(s.getStartYear(),s.getStartMonth()-1,s.getStartDay()));
+            		date2.setTime(new java.util.Date(s.getEndYear(),s.getEndMonth()-1,s.getEndDay()));
+
+            		int dayOfWeekInMonth = date1.get(java.util.Calendar.DAY_OF_WEEK_IN_MONTH);
+            		for(;date2.after(date1);date1.add(java.util.Calendar.DATE, 7)){
+            			if(date1.get(java.util.Calendar.DAY_OF_WEEK_IN_MONTH) == dayOfWeekInMonth){
+            				System.out.println(date1.getTime());
+            				java.util.Date tempDate = date1.getTime();
+							tempDate.setYear(tempDate.getYear()-1900); 
+            			%>
+            				{
+    		            	//#d9534f 공지사항, #5cb85c 부서, #5bc0de 개인
+    		            	color : "#d9534f",
+    		            	title : '<%=s.getScheduleName()%>',
+    		            	start : '<%=sd2.format(tempDate) + " " + s.getStartTime()%>',
+    		            	end : '<%=sd2.format(tempDate) + " " + s.getEndTime()%>',
+    		            	url : '<%=request.getContextPath()%>/calendar/calendarInfo?scheduleId=<%=s.getScheduleId()%>',
+    	            		},
+            			<%}
+	            	}%>
 	            	<%}else if(s.getRepeatCategory().equals("매년")){%> // 매년		            		
 	            	<%}else{%> // 기본
 	            		{
