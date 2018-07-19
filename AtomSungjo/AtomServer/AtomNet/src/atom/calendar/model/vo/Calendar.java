@@ -166,6 +166,11 @@ public class Calendar {
 		return Integer.parseInt(date[1]);
 	}
 	
+	public String getStartTime() {
+		String[] temp =startDate.split(" ");
+		return temp[1] + " " + temp[2];
+	}
+		
 	public int getEndYear() {
 		String[] temp =sd.format(repeatEndDate).split("-");
 		return Integer.parseInt(temp[0]);
@@ -181,5 +186,9 @@ public class Calendar {
 		return Integer.parseInt(temp[2]);
 	}
 	
+	public String getEndTime() {
+		String[] temp =endDate.split(" ");
+		return temp[1] + " " + temp[2];
+	}
 	
 }

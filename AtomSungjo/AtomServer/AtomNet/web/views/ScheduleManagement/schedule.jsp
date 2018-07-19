@@ -8,7 +8,9 @@
 <%@ include file = "/views/common/header.jsp" %>
 <%
 	ArrayList<Calendar> lists = (ArrayList)request.getAttribute("list");
-	SimpleDateFormat sd = new SimpleDateFormat("YYYY-MM-dd");
+	SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+	SimpleDateFormat sd2 = new SimpleDateFormat("MM/dd/yyyy");
+
 	boolean chk = true;
 
 	
@@ -249,16 +251,21 @@
 	            		
 		            	<%date1.setTime(new java.util.Date(s.getStartYear(),s.getStartMonth()-1,s.getStartDay()));
 	            		date2.setTime(new java.util.Date(s.getEndYear(),s.getEndMonth()-1,s.getEndDay()));
-	            		int day =date1.get(java.util.Calendar.DAY_OF_MONTH);
-	            		System.out.println("day" + day);
-	            		%>
+	            		
+	            		GregorianCalendar temp = (GregorianCalendar)date1.clone();
+	            		for(int i = 1;date2.after(temp);temp = (GregorianCalendar)date1.clone(), temp.add(java.util.Calendar.MONTH, i++)){	
+	            			java.util.Date tempDate = temp.getTime();
+	            			tempDate.setYear(tempDate.getYear()-1900); 
+							%>
 	            			{
 	            			color : "#d9534f",
 	            			title : '<%=s.getScheduleName()%>',
-			            	start : '<%=s.getStartDate()%>',
-			            	end : '<%=s.getEndDate()%>',
+	            			
+			            	start : '<%=sd2.format(tempDate) + " " + s.getStartTime()%>',
+			            	end : '<%=sd2.format(tempDate) + " " + s.getEndTime()%>',
 			            	url : '<%=request.getContextPath()%>/calendar/calendarInfo?scheduleId=<%=s.getScheduleId()%>',
 		            		},
+		            	<%}%>
 	            		
 	            	<%}else if(s.getRepeatCategory().equals("매월(요일기준)")){%> // 매월(요일기준)		            		
 	            	<%}else if(s.getRepeatCategory().equals("매년")){%> // 매년		            		
