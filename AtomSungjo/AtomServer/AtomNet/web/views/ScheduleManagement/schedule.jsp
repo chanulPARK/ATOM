@@ -162,8 +162,7 @@
 	            	<%}else if(s.getRepeatCategory().equals("주중")){%> // 주중
 	            		
 	            		<%date1.setTime(new java.util.Date(s.getStartYear(),s.getStartMonth()-1,s.getStartDay()));
-	            		date2.setTime(new java.util.Date(s.getEndYear(),s.getEndMonth()-1,s.getEndDay()));
-	            		System.out.print(" 요일"+date1.get(GregorianCalendar.DAY_OF_WEEK));%>
+	            		date2.setTime(new java.util.Date(s.getEndYear(),s.getEndMonth()-1,s.getEndDay()));%>
  	            		 	            		
 						<%for(;!date1.equals(date2);date1.add(java.util.Calendar.DATE,1)){
 							if(date1.get(GregorianCalendar.DAY_OF_WEEK) >2){//주말이 아니면
@@ -174,7 +173,6 @@
 									color : "#d9534f",
 					            	title : '<%=s.getScheduleName()%>',
 					            	start : '<%=sd.format(tempDate)%>', 	
-									<%System.out.println("temp2 : " + sd.format(tempDate));%>
 
 								<%}								
 				            	if(date1.get(GregorianCalendar.DAY_OF_WEEK) == 7){
@@ -196,7 +194,6 @@
 							date2.add(java.util.Calendar.DATE, 1);
 							java.util.Date tempDate = date2.getTime();
 							tempDate.setYear(tempDate.getYear()-1900);
-							System.out.print("또왜:"+ sd.format(tempDate));
 			            	chk = true;
 						%> 
 							end : '<%=sd.format(tempDate)%>',
@@ -210,14 +207,65 @@
 		            	start : '<%=s.getStartDate()%>', 
 		            	end : '<%=sd.format(s.getRepeatEndDate())%>',
 		            	url : '<%=request.getContextPath()%>/calendar/calendarInfo?scheduleId=<%=s.getScheduleId()%>', --%>
-		            			
-		            			
- 	            		
+         		          		
+	            	<%}else if(s.getRepeatCategory().equals("매주(요일지정)")){%> // 매주(요일지정)
+	            		<%date1.setTime(new java.util.Date(s.getStartYear(),s.getStartMonth()-1,s.getStartDay()));
+	            		date2.setTime(new java.util.Date(s.getEndYear(),s.getEndMonth()-1,s.getEndDay()));
+	            		int day_of_week = date1.get(java.util.Calendar.DAY_OF_WEEK);
+	            		
+	            		%>
+						
+	            		<%
+	            		String[] days = s.getDayOfWeek().split(",");
+	            		for(;!date1.equals(date2);date1.add(java.util.Calendar.DATE,1)){
+	            			for(int i=0;i < days.length;i++){
+	            				if(Integer.parseInt(days[i]) == date1.get(java.util.Calendar.DAY_OF_WEEK)){
+	            					java.util.Date tempDate = date1.getTime();
+									tempDate.setYear(tempDate.getYear()-1900);     			
+	            		%>
+			            			{
+			            			color : "#d9534f",
+					            	title : '<%=s.getScheduleName()%>',
+					            	start : '<%=sd.format(tempDate)%>', 
+					            	end : '<%=sd.format(tempDate)%>',
+					            	url : '<%=request.getContextPath()%>/calendar/calendarInfo?scheduleId=<%=s.getScheduleId()%>',
+				            		},
+	            				<%}
+	            			}
+	            		}
+	            		for(int i=0;i < days.length;i++){ // 마지막날 데이터 
+	            			if(Integer.parseInt(days[i]) == date2.get(java.util.Calendar.DAY_OF_WEEK)){%>
+	            				{
+		            			color : "#d9534f",
+				            	title : '<%=s.getScheduleName()%>',
+				            	start : '<%=sd.format(s.getRepeatEndDate())%>', 
+				            	end : '<%=sd.format(s.getRepeatEndDate())%>',
+				            	url : '<%=request.getContextPath()%>/calendar/calendarInfo?scheduleId=<%=s.getScheduleId()%>',
+			            		},
+	            			<%}
+	            		}
+	            		%>
+	            	<%}else if(s.getRepeatCategory().equals("매월(날짜기준)")){%> // 매월(날짜기준)
+	            		
+		            	<%date1.setTime(new java.util.Date(s.getStartYear(),s.getStartMonth()-1,s.getStartDay()));
+	            		date2.setTime(new java.util.Date(s.getEndYear(),s.getEndMonth()-1,s.getEndDay()));
+	            		int day =date1.get(java.util.Calendar.DAY_OF_MONTH);
+	            		System.out.println("day" + day);
+	            		%>
+	            			{
+	            			color : "#d9534f",
+	            			title : '<%=s.getScheduleName()%>',
+			            	start : '<%=s.getStartDate()%>',
+			            	end : '<%=s.getEndDate()%>',
+			            	url : '<%=request.getContextPath()%>/calendar/calendarInfo?scheduleId=<%=s.getScheduleId()%>',
+		            		},
+	            		
+	            	<%}else if(s.getRepeatCategory().equals("매월(요일기준)")){%> // 매월(요일기준)		            		
+	            	<%}else if(s.getRepeatCategory().equals("매년")){%> // 매년		            		
 	            	<%}else{%> // 기본
 	            		{
 		            	//#d9534f 공지사항, #5cb85c 부서, #5bc0de 개인
 		            	color : "#d9534f",
-		            	
 		            	title : '<%=s.getScheduleName()%>',
 		            	start : '<%=s.getStartDate()%>',
 		            	end : '<%=s.getEndDate()%>',

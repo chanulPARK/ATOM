@@ -149,9 +149,7 @@ public class Calendar {
 	}
 
 	public int getStartYear() {
-		System.out.println("aaaaa" + startDate);
 		String[] temp =startDate.split(" ");
-		System.out.println("dddddd" + temp[0]);
 		String[] date = temp[0].split("/");
 		return Integer.parseInt(date[2]);
 	}

@@ -92,13 +92,13 @@
                         </select>
                         주/개월/년 &nbsp; -->
                         <span id="day-checkbox" name="day-checkbox" hidden>
-	                        <label for="sunday"><input type="checkbox" name="dayOfWeek" value="sun" id="sunday">일</label>&nbsp;
-	                        <label for="monday"><input type="checkbox" name="dayOfWeek" value="mon" id="monday">월</label>&nbsp;
-	                        <label for="tuesday"><input type="checkbox" name="dayOfWeek" value="tue" id="tuesday">화</label>&nbsp;
-	                        <label for="wednesday"><input type="checkbox" name="dayOfWeek" value="wed" id="wednesday">수</label>&nbsp;
-	                        <label for="thursday"><input type="checkbox" name="dayOfWeek" value="thu" id="thursday">목</label>&nbsp;
-	                        <label for="friday"><input type="checkbox" name="dayOfWeek" value="fri" id="friday">금</label>&nbsp;
-	                        <label for="saturday"><input type="checkbox" name="dayOfWeek" value="sat" id="saturday">토</label>&nbsp;
+	                        <label for="sunday"><input type="checkbox" name="dayOfWeek" value="2" id="sunday">일</label>&nbsp;
+	                        <label for="monday"><input type="checkbox" name="dayOfWeek" value="3" id="monday">월</label>&nbsp;
+	                        <label for="tuesday"><input type="checkbox" name="dayOfWeek" value="4" id="tuesday">화</label>&nbsp;
+	                        <label for="wednesday"><input type="checkbox" name="dayOfWeek" value="5" id="wednesday">수</label>&nbsp;
+	                        <label for="thursday"><input type="checkbox" name="dayOfWeek" value="6" id="thursday">목</label>&nbsp;
+	                        <label for="friday"><input type="checkbox" name="dayOfWeek" value="7" id="friday">금</label>&nbsp;
+	                        <label for="saturday"><input type="checkbox" name="dayOfWeek" value="1" id="saturday">토</label>&nbsp;
                         </span>
                       </td>
                     </tr>

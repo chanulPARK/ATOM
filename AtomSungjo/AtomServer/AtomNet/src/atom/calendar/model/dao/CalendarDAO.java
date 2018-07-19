@@ -37,8 +37,6 @@ public class CalendarDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, s.getScheduleName());
-			System.out.println("startDate : "+ s.getStartDate());
-
 			pstmt.setString(2, s.getStartDate());
 			pstmt.setString(3, s.getEndDate());
 			pstmt.setString(4, s.getEmpId());
@@ -76,15 +74,17 @@ public class CalendarDAO {
 				s.setScheduleId(rs.getInt("schedule_id"));
 				s.setScheduleName(rs.getString("schedule_name"));
 				
-				String[] Dates = null;
-				if(!rs.getString("repeat_category").equals("주중")){
-					Dates = alldayChk(rs.getString("start_date"), rs.getString("end_date"));
+				String[] Dates = alldayChk(rs.getString("start_date"), rs.getString("end_date"));
+				if(!(rs.getString("repeat_category").equals("반복 없음") || rs.getString("repeat_category").equals("매일")) ){ // 주중, 매주(요일지정)
+					Dates = null;
 				}
 				
-				if(Dates == null) {
+				
+				
+				if(Dates == null) { // 주중이면 
 					s.setStartDate(rs.getString("start_date"));
 					s.setEndDate(rs.getString("end_date"));
-				}else {
+				}else { //주중이 아니면
 					s.setStartDate(Dates[0]);
 					s.setEndDate(Dates[1]);
 				}
