@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>기본 페이지</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>공지사항</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700" rel="stylesheet">
     <style>
@@ -52,12 +52,26 @@
             text-align: end;
             color: rgb(153, 153, 153);
         }
+        button.left{
+            float: left;
+        }
+        div.right{
+            float:right;
+        }
+        aside>a{
+            margin-left:20px;
+            text-decoration: none;
+            color:black;
+        }
+        .left>button>a{
+            color:black;
+            text-decoration:none;
+        }
         /* border-bottom: solid 1px rgb(153, 153, 153); */
         /* border-bottom: solid 1px rgb(222, 226, 230); */
     </style>
-  </head>
-  <body>
-    
+</head>
+<body>
     <header>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -96,12 +110,24 @@
         </nav>
     </header>
 
-    <aside></aside>
+    <aside id='show'>
+        <script>
+            var doc = document.getElementById("show");
+            var item = ['공지사항', '자유게시판', '자료실', '설문조사', '게시판 생성', '게시판 삭제'];
+            var home = ['notice.html', 'freeboard.html', 'data.html',
+                'question.html', 'newboard.html', 'delboard.html'];
+            doc.innerHTML = "<br>";
+
+            for(var i=0;i<item.length;i++){
+                doc.innerHTML += "<a href='"+home[i]+"'>"+item[i]+"</a><br><br>";
+            }
+        </script>
+    </aside>
 
     <section>
         <div class="content">
             <div class="col-md-8">
-                <h3>게시판</h3>
+                <h3>공지사항</h3>
                 <table class="table table-hover">
                     <colgroup>
                         <col style="width: 50px;"/>
@@ -113,97 +139,14 @@
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">번호</th>
-                            <th scope="col"  class="text-center">제목</th>
-                            <th scope="col"  class="text-center">작성일</th>
-                            <th scope="col"  class="text-center">작성자</th>
-                            <th scope="col"  class="text-center">조회수</th>
+                            <th scope="col" class="text-center">제목</th>
+                            <th scope="col" class="text-center">작성일</th>
+                            <th scope="col" class="text-center">작성자</th>
+                            <th scope="col" class="text-center">조회수</th>
                         </tr>
                     </thead>
                     <tbody class="table-condensed">
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">1</td>
-                        </tr>
+                        
                     </tbody>
                 </table>
                 <nav style="text-align: center">
@@ -214,10 +157,6 @@
                         </a>
                         </li>
                         <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
                         <li>
                         <a href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
@@ -225,11 +164,25 @@
                         </li>
                     </ul>
                 </nav>
+                <div class='left'>
+                    <button>
+                        <a href="newnotice.html">새 글 쓰기</a>
+                    </button>
+                </div>
+                <div class='right'>
+                    <select>
+                        <option>제목</option>
+                        <option>작성일</option>
+                        <option>작성자</option>
+                    </select>
+                    <input type='text'>
+                    <button>검색</button>
+                </div>
             </div>
         </div>
-
+        <br>
         <div class="container-fluid">
-
+            
         </div>
 
     </section>
@@ -238,16 +191,9 @@
         <p>COPYRIGHT @ ATOM ALL RIGHTS RESERVED</p>
     </footer>
 
-
-
-
-
-
-
-
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="js/bootstrap.min.js"></script>
-  </body>
+</body>
 </html>
