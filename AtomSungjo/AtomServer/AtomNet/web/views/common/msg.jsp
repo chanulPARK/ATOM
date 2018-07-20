@@ -10,6 +10,7 @@
 	String msg = (String)request.getAttribute("msg");
 	String loc = request.getContextPath()+(String)request.getAttribute("loc");
 	String script = (String)request.getAttribute("script");
+	System.out.println("세서ㅕㄴ"+session.getAttribute("empLoggedIn"));
 %>
 <body>
 	<script>
