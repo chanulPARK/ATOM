@@ -1,5 +1,9 @@
+<%@page import="atom.employee.model.vo.Employee"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%
+    System.out.println("헤더"+session.getAttribute("empLoggedIn"));
+    %>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -98,26 +102,27 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="<%=request.getContextPath()%>/views/default.jsp"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
-                    <li><a href="electronicApproval.jsp">전자결재</a></li>
-                    <li><a href="<%=request.getContextPath()%>/schedule/scheduleList">일정</a></li>
-                    <li><a href="#">업무관리</a></li>
-                    <li><a href="#">게시판</a></li>
-                    <li><a href="#">조직도</a></li>
-                    <li><a href="#">근태관리</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">마이페이지</a></li>
-                        <li><a href="#">설정</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">로그아웃</a></li>
-                    </ul>
-                    </li>
-                </ul>
+	                <ul class="nav navbar-nav">
+	                    <li><a href="<%=request.getContextPath()%>/views/default.jsp"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+	                    <li><a href="electronicApproval.jsp">전자결재</a></li>
+	                    <li><a href="<%=request.getContextPath()%>/schedule/scheduleList">일정</a></li>
+	                    <li><a href="#">업무관리</a></li>
+	                    <li><a href="#">게시판</a></li>
+	                    <li><a href="#">조직도</a></li>
+	                    <li><a href="#">근태관리</a></li>
+	                </ul>
+	                <ul class="nav navbar-nav navbar-right">
+	                <%-- 	<li><h5 style='color:#777;margin-top:15px;'><%=empLoggedIn.getEmpId().equals("admin")?"":"00부 인턴"%> <%=empLoggedIn.getEmpName()%>님 안녕하세요&nbsp;</p></li> --%>
+	                    <li class="dropdown">
+		                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+		                    <ul class="dropdown-menu" role="menu">
+		                        <li><a href="#">마이페이지</a></li>
+		                        <li><a href="#">설정</a></li>
+		                        <li class="divider"></li>
+		                        <li><a href="<%=request.getContextPath()%>/logout">로그아웃</a></li>
+		                    </ul>
+	                    </li>
+	                </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>

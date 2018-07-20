@@ -275,9 +275,8 @@
             		int dayOfWeekInMonth = date1.get(java.util.Calendar.DAY_OF_WEEK_IN_MONTH);
             		for(;date2.after(date1);date1.add(java.util.Calendar.DATE, 7)){
             			if(date1.get(java.util.Calendar.DAY_OF_WEEK_IN_MONTH) == dayOfWeekInMonth){
-            				System.out.println(date1.getTime());
             				java.util.Date tempDate = date1.getTime();
-							tempDate.setYear(tempDate.getYear()-1900); 
+							tempDate.setYear(tempDate.getYear()-1900);  
             			%>
             				{
     		            	//#d9534f 공지사항, #5cb85c 부서, #5bc0de 개인
@@ -289,8 +288,27 @@
     	            		},
             			<%}
 	            	}%>
-	            	<%}else if(s.getRepeatCategory().equals("매년")){%> // 매년		            		
-	            	<%}else{%> // 기본
+	            	<%}else if(s.getRepeatCategory().equals("매년")){%> // 매년	
+	            	<%date1.setTime(new java.util.Date(s.getStartYear(),s.getStartMonth()-1,s.getStartDay()));
+            		date2.setTime(new java.util.Date(s.getEndYear(),s.getEndMonth()-1,s.getEndDay()));
+            		date2.add(java.util.Calendar.DATE, 1); // 반복종료일이 포함되게 하기위해
+            		
+            		for(;date2.after(date1);date1.add(java.util.Calendar.YEAR, 1)){
+            			java.util.Date tempDate = date1.getTime();
+						tempDate.setYear(tempDate.getYear()-1900);  
+            			System.out.println("tempDate : "+ sd2.format(tempDate));%>
+            			{
+		            	//#d9534f 공지사항, #5cb85c 부서, #5bc0de 개인
+		            	color : "#d9534f",
+		            	title : '<%=s.getScheduleName()%>',
+		            	start : '<%=sd2.format(tempDate) + " " + s.getStartTime()%>',
+		            	end : '<%=sd2.format(tempDate) + " " + s.getEndTime()%>',
+		            	url : '<%=request.getContextPath()%>/calendar/calendarInfo?scheduleId=<%=s.getScheduleId()%>',
+	            		},
+
+	            		
+	            	<%}
+	            	}else{%> // 기본
 	            		{
 		            	//#d9534f 공지사항, #5cb85c 부서, #5bc0de 개인
 		            	color : "#d9534f",
