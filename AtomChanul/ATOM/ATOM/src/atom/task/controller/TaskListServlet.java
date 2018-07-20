@@ -1,0 +1,117 @@
+package atom.task.controller;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import atom.employee.model.vo.Employee;
+import atom.task.model.service.TaskService;
+import atom.task.model.vo.Task;
+
+/**
+ * Servlet implementation class TaskListServlet
+ */
+@WebServlet("/task/taskList")
+public class TaskListServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public TaskListServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Employee emp = (Employee)request.getSession().getAttribute("empLoggedIn");
+		
+		
+		// 페이징 처리
+		int numPerPage;
+		int cPage;
+		
+		try {
+			cPage = Integer.parseInt(request.getParameter("cPage")); 
+		}
+		catch (NumberFormatException e) {
+			cPage = 1;
+		}
+		try {
+			numPerPage = Integer.parseInt(request.getParameter("numPerPage")) ;
+			System.out.println(numPerPage);
+		} catch(NumberFormatException e) {
+			numPerPage = 10;
+		}
+		
+		List<Task> list = new TaskService().selectTaskList(cPage, numPerPage);
+		
+		// 전체 page
+		int totalContent = new TaskService().selectTaskCount();
+		int totalPage =  (int)Math.ceil((double)totalContent/numPerPage);
+		int barSiza = 3;
+		String pageBar = "";
+		int pageNo = ((cPage-1)/barSiza)*barSiza+1;
+		int pageEnd = pageNo+barSiza-1;
+		
+		// page bar
+		pageBar += "<ul class='pagination pagination-sm'><li>";
+		
+		// 이전
+		if(pageNo==1) {
+			pageBar += "<span aria-hidden='true'>&laquo;</span>";
+		}
+		else {
+			pageBar += "<a href='"+request.getContextPath()+"/task/taskList?cPage="+(pageNo-1)+"&numPerPage="+numPerPage+"'><span aria-hidden='true'>&laquo;</span></a>";
+		}
+		
+		pageBar += "</li>";
+		
+		// 이동할 숫자
+		while(!(pageNo>pageEnd||pageNo>totalPage)) {
+			if(cPage==pageNo) {
+				pageBar += "<li class='active'><a href='#'>"+pageNo+"</a></li>";
+			}
+			else {
+				pageBar += "<li><a href='"+request.getContextPath()+"/task/taskList?cPage="+pageNo+"&numPerPage="+numPerPage+"'>"+pageNo+"</a></li>";
+			}
+			pageNo++;
+		}
+		
+		pageBar += "<li>";
+		
+		// 다음
+		if(pageNo>totalPage) {
+			pageBar += "<span aria-hidden='true'>&raquo</span>";
+		}
+		else {
+			pageBar += "<a href='"+request.getContextPath()+"/task/taskList?cPage="+pageNo+"&numPerPage="+numPerPage+"' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a>";
+		}
+		
+		pageBar += "</li></ul>";
+		
+		request.setAttribute("list", list);
+		request.setAttribute("pageBar", pageBar);
+		request.setAttribute("cPage", cPage);
+		request.setAttribute("totalContent", totalContent);
+		request.setAttribute("numPerPage", numPerPage);
+		request.getRequestDispatcher("/views/task/taskList.jsp").forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

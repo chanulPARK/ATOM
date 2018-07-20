@@ -7,6 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>기본 페이지</title>
 
+    <!-- jstree CSS -->
+    <link href="dist/jstree/css/jstree.min.css" rel="stylesheet">
+
+
+    <!-- MetisMenu CSS -->
+    <!-- <link href="/vendor/metismenu/css/새 폴더/metisMenu.min.css" rel="stylesheet"> -->
+    <link href="./vendor/metismenu/css/새 폴더/mm-vertical.css" rel="stylesheet">
+    <link href="./vendor/metismenu/css/새 폴더/mm-folder.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.1/metisMenu.min.css"> -->
+    
     <!-- font -->
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700" rel="stylesheet">
 
@@ -17,13 +27,16 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <!-- awesome Fonts -->
-    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- MetisMenu CSS -->
-    <link href="/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="./vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- Custom CSS -->
-    <link href="/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="./dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- metismenu -->
+    <!-- <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.4/metisMenu.min.css">
+    <link rel="stylesheet" href="vendor/metismenu/css/MetisMenu.css">
+    <!-- <link rel="stylesheet" href="assets/css/styles.css"> -->
 
 
     <style>
@@ -197,92 +210,6 @@
     </header>
 
     <aside>
-        <div class="navbar-default sidebar" role="navigation">
-            <div class="sidebar-nav navbar-collapse">
-                <ul class="nav" id="side-menu">
-                    <li>
-                        <a href="#"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#">Flot Charts</a>
-                            </li>
-                            <li>
-                                <a href="#">Morris.js Charts</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-table fa-fw"></i> Tables</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-edit fa-fw"></i> Forms</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#">Panels and Wells</a>
-                            </li>
-                            <li>
-                                <a href="#">Buttons</a>
-                            </li>
-                            <li>
-                                <a href="#">Notifications</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#">Second Level Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Second Level Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Third Level <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li>
-                                        <a href="#">Third Level Item</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level Item</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level Item</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level Item</a>
-                                    </li>
-                                </ul>
-                                <!-- /.nav-third-level -->
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="blank.html">Blank Page</a>
-                            </li>
-                            <li>
-                                <a href="login.html">Login Page</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-                </ul>
-            </div>
-            <!-- /.sidebar-collapse -->
-        </div>
-        <!-- /.navbar-static-side -->
     </aside>
 
     <section>
@@ -346,7 +273,7 @@
                     </tbody>
                 </table>
                 <div>
-                    <textarea name="area2" style="width: 100%; height: 500px;">
+                    <textarea name="area2" style="width: 100%; height: 300px;">
 
                     </textarea>
                 </div>
@@ -367,7 +294,7 @@
 
     
 
-    <script>
+    <!-- <script>
         $('#demo').daterangepicker({
         "singleDatePicker": true,
         "linkedCalendars": false,
@@ -379,7 +306,7 @@
     }, function(start, end, label) {
     console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
     });
-    </script>
+    </script> -->
 
     <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script> <script type="text/javascript">
         bkLib.onDomLoaded(function() {
@@ -387,6 +314,26 @@
         });
     </script>
 
+    <script>
+        $('#tree').jstree();
+    </script>
+
+    <!-- <script>
+        $("#menu").metisMenu();
+    </script> -->
+
+    <script>
+        $(function () {
+            $('#menu2').metisMenu({ toggle: false });
+        });
+      </script>
+
+    <!-- Metis JavaScript -->
+    <!-- <script src="/vendor/metismenu/js/metisMenu.min.js"></script>
+    <script src="/vendor/metismenu/js/mm-vertical.js"></script>
+    <script src="/vendor/metismenu/js/mm-folder.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.1/metisMenu.min.js"></script> -->
 
     <!-- date-picker -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
@@ -394,16 +341,27 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="/vendor/metisMenu/metisMenu.min.js"></script>
+    <!-- <script src="./vendor/metisMenu/js/MetisMenu.js"></script> -->
 
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script>    -->
 
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="../../dist/js/bootstrap.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="/dist/js/sb-admin-2.js"></script>
+    <script src="./dist/js/sb-admin-2.js"></script>
+
+    <!-- metis menu -->
+    <!-- <script src="assets/bootstrap/js/bootstrap.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.4/metisMenu.min.js"></script>
+    <!-- <script src="./vendor/metismenu/js/MetisMenu.js"></script> -->
+
+    <!-- jstree JavaScript -->
+    <script src="./dist/jstree/js/jstree.min.js"></script>
+    
+
 </body>
 
 </html>

@@ -38,13 +38,16 @@ public class CalendarUpdateServlet extends HttpServlet {
 		String schedulePlace = request.getParameter("schedule-place");
 		String repeatSelect = request.getParameter("repeat-select");
 		int scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
-		int repeatCycle = 0;
 		Date repeatEndDate = null;
 		char repeatYN = 'N';
+		String[] dayOfWeeks = null;
+		String dayOfWeek ="";
 		if(!repeatSelect.equals("반복 없음")) {
 			repeatYN = 'Y';
-			repeatCycle = Integer.parseInt(request.getParameter("repeat-cycle"));
 			repeatEndDate = transformDate(request.getParameter("repeat-end"));
+			dayOfWeeks = request.getParameterValues("dayOfWeek");	
+			if(repeatSelect.equals("매주(요일지정)"))
+				dayOfWeek += String.join(",", dayOfWeeks);
 		}
 		String content = request.getParameter("schedule-content");
 		String scheduleDate= request.getParameter("schedule-date");
@@ -65,8 +68,8 @@ public class CalendarUpdateServlet extends HttpServlet {
 		s.setContent(content);
 		s.setPlace(schedulePlace);
 		s.setRepeatYN(repeatYN);
+		s.setDayOfWeek(dayOfWeek);
 		s.setRepeatCategory(repeatSelect);
-		s.setRepeatCycle(repeatCycle);
 		s.setRepeatEndDate(repeatEndDate);
 		
 		int result = new CalendarService().updateSchedule(s);
