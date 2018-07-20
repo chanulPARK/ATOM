@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>기본 페이지</title>
+
+    <!-- jstree CSS -->
+    <link href="dist/jstree/css/jstree.min.css" rel="stylesheet">
+
+
+    <!-- MetisMenu CSS -->
+    <!-- <link href="/vendor/metismenu/css/새 폴더/metisMenu.min.css" rel="stylesheet"> -->
+    <link href="./vendor/metismenu/css/새 폴더/mm-vertical.css" rel="stylesheet">
+    <link href="./vendor/metismenu/css/새 폴더/mm-folder.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.1/metisMenu.min.css"> -->
+    
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700" rel="stylesheet">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- date-picker -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <!-- awesome Fonts -->
+    <link href="./vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom CSS -->
+    <link href="./dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- metismenu -->
+    <!-- <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.4/metisMenu.min.css">
+    <link rel="stylesheet" href="vendor/metismenu/css/MetisMenu.css">
+    <!-- <link rel="stylesheet" href="assets/css/styles.css"> -->
+
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+
+        body,
+        header {
+            margin: 0px;
+        }
+
+        header {
+            color: #fff !important;
+            /* border-bottom: 1px solid rgb(153, 153, 153); */
+            height: 52px;
+            position: relative;
+            display: block;
+        }
+
+        aside {
+            /* margin-top: 30px; */
+            left: 0px;
+            width: 250px;
+            height: 300px;
+            display: block;
+            position: absolute;
+            /* position: fixed; */
+            border-bottom: solid 1px rgb(222, 226, 230);
+            background: rgb(245, 245, 245);
+        }
+
+        section {
+            padding: 20px;
+            /* padding-left: 20px;
+            padding-right: 20px; */
+            background: rgb(255, 255, 255);
+            border-left: 1px solid rgb(222, 226, 230);
+            width: 100%-250px;
+            /* height: 500px; */
+            margin-left: 250px;
+            /* background : palegreen; */
+            min-height: 675px;
+            display: block;
+        }
+
+        footer {
+            width: 100%;
+            height: 40px;
+            border-top: 1px solid rgb(222, 226, 230);
+            display: table;
+            vertical-align: middle;
+        }
+
+        footer>p {
+            font-size: 12px;
+            text-align: end;
+            color: rgb(153, 153, 153);
+        }
+
+        /* border-bottom: solid 1px rgb(153, 153, 153); */
+        /* border-bottom: solid 1px rgb(222, 226, 230); */
+
+        .table {
+            margin: 0;
+            
+        }
+        tbody tr th {
+            background: rgb(245, 245, 245);
+            width: 150px; height: 40px;
+            vertical-align: middle!important;
+            padding-left: 15px!important;
+        }
+        tbody tr td {
+            vertical-align: middle!important;
+        }
+        tbody tr td * {
+            font-weight: 100!important;
+            font-size: 13px;
+        }
+        .btn-wrap{
+            margin: 10px 0;
+        }
+        .float-right{
+            float: right;
+        }
+        .sidebar .sidebar-nav.navbar-collapse {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .sidebar .sidebar-search {
+            padding: 15px;
+        }
+        .sidebar ul li {
+            border-bottom: 1px solid #e7e7e7;
+        }
+        .sidebar ul li a.active {
+            background-color: #eeeeee;
+        }
+        .sidebar .arrow {
+            float: right;
+        }
+        .sidebar .fa.arrow:before {
+            content: "\f104";
+        }
+        .sidebar .active > a > .fa.arrow:before {
+            content: "\f107";
+        }
+        .sidebar .nav-second-level li,
+        .sidebar .nav-third-level li {
+            border-bottom: none !important;
+        }
+        .sidebar .nav-second-level li a {
+            padding-left: 37px;
+        }
+        .sidebar .nav-third-level li a {
+            padding-left: 52px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <!-- <a class="navbar-brand" href="#">Brand</a> -->
+                    <a class="navbar-brand" href="#">
+                        <img src="../../dist/img/login.png">
+                    </a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="default.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+                        <li><a href="#">전자결재</a></li>
+                        <li><a href="#">일정</a></li>
+                        <li><a href="task.html">업무관리</a></li>
+                        <li><a href="#">게시판</a></li>
+                        <li><a href="#">조직도</a></li>
+                        <li><a href="#">근태관리</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">마이페이지</a>
+                                </li>
+                                <li>
+                                    <a href="#">설정</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">로그아웃</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+    </header>
+
+    <aside>
+    </aside>
+
+    <section>
+        <div class="content">
+            <div class="col-md-12">
+                <h4>업무 등록</h4>
+                <table class="table table-condensed">
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                <span style="color: red">* </span>제목</th>
+                            <td>
+                                <div style="position: relative;">
+                                    <input type="text" class="form-control input-sm" placeholder="제목을 입력하세요." aria-required="true">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <span style="color: red">* </span>업무 형태</th>
+                            <td>
+                                <div class="label-group">
+                                    <label class="radio-inline"><input type="radio" class="fnone valid" id="type1" name="taskType" title="업무 요청" value="1"> 업무 요청</label>
+                                    <label class="radio-inline"><input type="radio" class="fnone valid" id="type2" name="taskType" title="업무 보고" value="2" checked="checked"> 업무 보고</label>
+                                    <label class="radio-inline"><input type="radio" class="fnone valid" id="type3" name="taskType" title="업무 일지" value="3"> 업무 일지</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr id="isTermlessTR">
+                            <th scope="row">
+                                <span style="color: red">* </span>업무 기한
+                            </th>
+                            <td>
+                                <div class="form-inline">
+                                    <input type="text" class="form-control input-sm" placeholder="18/07/18" disabled>
+                                    <span class="label-group ml10">
+                                        <input type="checkbox" id="isTermless" title="기한없음" name="isTermless" value="0" checked="checked">
+                                        <label>기한없음</label>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr id="workerTR">
+                            <th id="workerTH1" scope="row">담당자</th>
+                            <td>
+                                <div id="selectUser1" class="input-group organization">
+                                    <input type="text" class="form-control input-sm" placeholder="사용자">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr id="folderTR">
+                            <th scope="row">
+                                <label for="folderI">업무 보관함</label>
+                            </th>
+                            <td id="selectFolder">
+                                <input type="hidden" id="folderId" name="folderId" value="">
+                                <input type="hidden" id="folderNmae" name="folderName" value="">
+                                <button type="button" class="btn btn-default btn-sm" onclick="javascript:listTodoFolderViewPopup();">업무 보관함</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <textarea name="area2" style="width: 100%; height: 300px;">
+
+                    </textarea>
+                </div>
+                <div class="btn-wrap float-right">
+                    <button type="button" class="btn btn-sm btn-primary" id="saveButton">저장</button>
+                    <button type="button" class="btn btn-sm btn-default" id="taskTempButton">임시저장</button>
+                    <button type="button" class="btn btn-sm btn-default">취소</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>COPYRIGHT @ ATOM ALL RIGHTS RESERVED</p>
+    </footer>
+
+
+
+    
+
+    <!-- <script>
+        $('#demo').daterangepicker({
+        "singleDatePicker": true,
+        "linkedCalendars": false,
+        "autoUpdateInput": false,
+        "showCustomRangeLabel": false,
+        "parentEl": "input",
+        "startDate": "07/05/2018",
+        "endDate": "07/11/2018"
+    }, function(start, end, label) {
+    console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+    });
+    </script> -->
+
+    <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script> <script type="text/javascript">
+        bkLib.onDomLoaded(function() {
+            nicEditors.allTextAreas()
+        });
+    </script>
+
+    <script>
+        $('#tree').jstree();
+    </script>
+
+    <!-- <script>
+        $("#menu").metisMenu();
+    </script> -->
+
+    <script>
+        $(function () {
+            $('#menu2').metisMenu({ toggle: false });
+        });
+      </script>
+
+    <!-- Metis JavaScript -->
+    <!-- <script src="/vendor/metismenu/js/metisMenu.min.js"></script>
+    <script src="/vendor/metismenu/js/mm-vertical.js"></script>
+    <script src="/vendor/metismenu/js/mm-folder.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.1/metisMenu.min.js"></script> -->
+
+    <!-- date-picker -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <!-- <script src="./vendor/metisMenu/js/MetisMenu.js"></script> -->
+
+    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script>    -->
+
+    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+    <script src="../../dist/js/bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="./dist/js/sb-admin-2.js"></script>
+
+    <!-- metis menu -->
+    <!-- <script src="assets/bootstrap/js/bootstrap.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.4/metisMenu.min.js"></script>
+    <!-- <script src="./vendor/metismenu/js/MetisMenu.js"></script> -->
+
+    <!-- jstree JavaScript -->
+    <script src="./dist/jstree/js/jstree.min.js"></script>
+    
+
+</body>
+
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>업무 관리</title>
+    
+    <!-- 부트스트랩 -->
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700" rel="stylesheet">
+
+    <!-- js tree -->
+    <link rel="stylesheet" href="dist/themes/default/style.min.css" />
+
+    <!-- modal -->
+    <link rel="stylesheet" href="vendor/css/bootstrap.min.css" />
+    
+    
+  
+
+    <style>
+        * {box-sizing: border-box; font-family: 'Nanum Gothic', sans-serif;}
+        body ,header{margin: 0px;}
+        header{
+            color: #fff!important;
+            /* border-bottom: 1px solid rgb(153, 153, 153); */
+            height: 52px;
+            position: relative;
+            display: block;
+        }
+        aside{
+            left: 0px;
+            width: 250px;
+            height: 300px;
+            display: block;
+            position: absolute;
+            border-bottom: solid 1px rgb(222, 226, 230);
+            /* aside역영 확인을 위한 배경색 */
+            /* background: rgb(247, 247, 247); */
+        }
+        section{
+            padding: 20px;
+            /* padding-left: 20px;
+            padding-right: 20px; */
+            background: rgb(255, 255, 255);
+            border-left: 1px solid rgb(222, 226, 230);
+            width: 100%-250px;
+            /* height: 500px; */
+            margin-left: 250px;
+            min-height: 675px;
+            display: block;
+            /* aside역영 확인을 위한 배경색 */
+            /* background : palegreen; */
+        }
+        footer{
+            width: 100%;
+            height: 40px;
+            border-top: 1px solid rgb(222, 226, 230);
+            display: block;
+        }
+        footer > p{
+            font-size: 12px;
+            text-align: end;
+            color: rgb(153, 153, 153);
+        }
+
+        aside div.leftmenu_top {
+            background: #353b47;
+            color: #fff;
+            text-align: center;
+            height: 50px;
+        }
+        aside div.leftmenu_top h3{
+            padding-top: 10px;
+            margin: 0;
+        }
+        aside div.leftmenu_top h3 a{
+            font-size: 20px;
+            text-decoration: none;
+            padding: 0 10px;
+        }
+        aside div.leftmenu_top h3 a:hover{
+            text-decoration: none;
+            color: #fff;
+        }
+        aside div.leftmenu_top h3 a:active{
+            text-decoration: none;
+            color: #fff;
+        }
+        aside div.leftmenu_top h3 a:visited{
+            text-decoration: none;
+            color: #fff;
+        }
+        aside div.leftmenu_top h3 a:link{
+            text-decoration: none;
+            color: #fff;
+        }
+        .leftmenu-btn{
+            padding: 10px;
+        }
+        /* .a_default:hover{
+            text-decoration: none;
+            color: #000;
+        }
+        .a_default:active{
+            text-decoration: none;
+            color: #000;
+        }
+        .a_default:visited{
+            text-decoration: none;
+            color: #000;
+        }
+        .a_default:link{
+            text-decoration: none;
+            color: #000;
+        } */
+        .float-right{
+            float: right;
+        }
+        .table{
+            margin: 0;
+        }
+        thead tr th{
+            font-weight: bold;
+            font-size: 13px;
+            text-align: center;
+        }
+        tbody tr td{
+            font-size: 13px;
+            text-align: center;
+        }
+        .table-header{
+            border-top: 1px solid rgb(192, 192, 192);
+            padding-top: 8px;
+            border-bottom: 2px solid rgb(192, 192, 192);
+            padding-bottom: 8px;
+        }
+        .table-header div.row div{
+            padding: 1px;
+        }
+        .pagination_wrap{
+            text-align: center;
+            border-top: 1px solid rgb(192, 192, 192);
+            padding-top: 8px;
+            border-bottom: 1px solid rgb(192, 192, 192);
+            padding-bottom: 8px;
+        }
+        .pagination{
+            margin: 0;
+            vertical-align: middle;
+        }
+        .btn-wrap{
+            margin: 10px 0;
+        }
+    </style>
+  </head>
+  <body>
+    
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                <!-- <a class="navbar-brand" href="#">Brand</a> -->
+                    <a class="navbar-brand" href="#">
+                        <img src="../../dist/img/login.png">
+                    </a>
+                </div>
+            
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="default.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+                    <li><a href="#">전자결재</a></li>
+                    <li><a href="#">일정</a></li>
+                    <li><a href="task.html">업무관리</a></li>
+                    <li><a href="#">게시판</a></li>
+                    <li><a href="#">조직도</a></li>
+                    <li><a href="#">근태관리</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">마이페이지</a></li>
+                        <li><a href="#">설정</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">로그아웃</a></li>
+                    </ul>
+                    </li>
+                </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+    </header>
+
+    <aside>
+        <div class="leftmenu_top">
+            <h3>
+                <a href="#">업무관리</a>
+            </h3>
+        </div>
+        <div class="leftmenu-btn">
+            <a class="btn btn-default btn-block" href="write.html" role="button">업무 등록</a>
+        </div>
+        <div class="leftmenu_area">
+            <div class="list-group">
+                <a href="#" class="list-group-item task_request">업무 요청
+                    <span class="glyphicon glyphicon-chevron-down float-right"></span>
+                </a>
+                <a class="list-group-item">- 발신 업무 요청
+                    <span class="badge">2</span>
+                </a>
+                <a class="list-group-item">- 수신 업무 요청
+                    <span class="badge">1</span>
+                </a>
+
+                <a href="#" class="list-group-item">업무 보고
+                    <span class="glyphicon glyphicon-chevron-down float-right"></span>
+                </a>
+                <a class="list-group-item">- 발신 업무 보고
+                </a>
+                <a class="list-group-item">- 수신 업무 보고
+                    <span class="badge">3</span>
+                </a>
+
+                <a href="#" class="list-group-item">업무 보관함
+                    <span class="glyphicon glyphicon-chevron-down float-right"></span>
+                </a>
+                <div id="jstree">
+                    <ul>
+                        <li>영업부
+                        <ul>
+                            <li id="child_node_1">영업 1팀</li>
+                            <li>영업 2팀</li>
+                        </ul>
+                        </li>
+                        <li>생산부</li>
+                        <li>관리부</li>
+                        <ul>
+                            <li id="child_node_1">인사팀</li>
+                            <li>총무팀</li>
+                        </ul>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <section>
+        <div class="content">
+            <div class="col-md-12">
+                <h4>업무관리</h4>
+                <div class="table-header">
+                    <div class="row">
+                        <div class="col-md-1" style="width: 45px; margin: 0 0 0 15px;">
+                            <select class="form-control input-sm" style="padding: 0">
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20" selected="selected">20</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1" style="margin: 0 0 0 10px;"><p style="font-size: 12px; color: rgb(160, 160, 160); margin: 6px 0px;">전체 10</p></div>
+
+                        <form class="form-inline">
+                            <div class="col-md-7" style="float: right;">
+                                <input class="form-control input-sm" placeholder="From" value=""><button type="button" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-calendar"></i></button>
+                                ~
+                                <input class="form-control input-sm" placeholder="To"><button type="button" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-calendar"></i></button>
+                                <select class="form-control input-sm" style="padding: 0">
+                                    <option value="searchUser">요청자</option>
+                                    <option value="searchTitle">제목</option>
+                                    <option value="searchTContents">업무내용</option>
+                                </select>
+                                <input type="text" class="form-control input-sm" placeholder="검색어">
+                                <button type="submit" class="btn btn-primary btn-sm floa">검색</button>
+                            </div>
+                        </form>
+                    </div> 
+                </div>
+
+                <table class="table table-striped">
+                <colgroup>
+                    <col style="width: 40px;">
+                    <col style="width: 50px;">
+                    <col style="width: 120px;">
+                    <col style="min-width: 200px;">
+                    <col style="width: 100px;">
+                    <col style="width: 100px;">
+                    <col style="width: 100px;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col"><input id="checkAll" name="" onclick="selectAllTodo()" type="checkbox" value="" title="checkAll" aria-invalid="false"></th>
+                        <th scope="col">번호</th>
+                        <th scope="col">
+                            <a data-sortcolumn="FOLDER" href="#">업무 보관함<i class="glyphicon glyphicon-triangle-top"></i></a>
+                        </th>
+                        <th scope="col">
+                            <a data-sortcolumn="TITLE" href="#">제목<i class="glyphicon glyphicon-triangle-top"></i></a>
+                        </th>
+                        <th scope="col">
+                            <a data-sortcolumn="REGISTERNAME" href="#">요청자<i class="glyphicon glyphicon-triangle-top"></i></a>
+                        </th>
+                        <th scope="col">
+                            <a data-sortcolumn="INSERTDATE" href="#">요청일<i class="glyphicon glyphicon-triangle-top"></i></a>
+                        </th>
+                        <th scope="col">
+                            <a data-sortcolumn="DUEDATE" href="#">마감일<i class="glyphicon glyphicon-triangle-top"></i></a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox" title="checkbox" value="" ></td>
+                        <td>1</td>
+                        <td class="ellipsis">영업부</td>
+                        <td class="text-left">18년 7월 15일 업무보고</td>
+                        <td><a href="#" data-toggle="modal" data-target="#myModal">한예슬</a></td>
+                        <td>2018.07.15</td>
+                        <td>기한없음</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" title="checkbox" value="" ></td>
+                        <td>1</td>
+                        <td class="ellipsis">영업부</td>
+                        <td class="text-left">18년 7월 15일 업무보고</td>
+                        <td><a href="#" >박찬울</a></td>
+                        <td>2018.07.15</td>
+                        <td>기한없음</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" title="checkbox" value="" ></td>
+                        <td>1</td>
+                        <td class="ellipsis">영업부</td>
+                        <td class="text-left">18년 7월 15일 업무보고</td>
+                        <td><a href="#" >박찬울</a></td>
+                        <td>2018.07.15</td>
+                        <td>기한없음</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" title="checkbox" value="" ></td>
+                        <td>1</td>
+                        <td class="ellipsis">영업부</td>
+                        <td class="text-left">18년 7월 15일 업무보고</td>
+                        <td><a href="#" >박찬울</a></td>
+                        <td>2018.07.15</td>
+                        <td>기한없음</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" title="checkbox" value="" ></td>
+                        <td>1</td>
+                        <td class="ellipsis">영업부</td>
+                        <td class="text-left">18년 7월 15일 업무보고</td>
+                        <td><a href="#" >박찬울</a></td>
+                        <td>2018.07.15</td>
+                        <td>기한없음</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" title="checkbox" value="" ></td>
+                        <td>1</td>
+                        <td class="ellipsis">영업부</td>
+                        <td class="text-left">18년 7월 15일 업무보고</td>
+                        <td><a href="#" >박찬울</a></td>
+                        <td>2018.07.15</td>
+                        <td>기한없음</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" title="checkbox" value="" ></td>
+                        <td>1</td>
+                        <td class="ellipsis">영업부</td>
+                        <td class="text-left">18년 7월 15일 업무보고</td>
+                        <td><a href="#" >박찬울</a></td>
+                        <td>2018.07.15</td>
+                        <td>기한없음</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" title="checkbox" value="" ></td>
+                        <td>1</td>
+                        <td class="ellipsis">영업부</td>
+                        <td class="text-left">18년 7월 15일 업무보고</td>
+                        <td><a href="#" >박찬울</a></td>
+                        <td>2018.07.15</td>
+                        <td>기한없음</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" title="checkbox" value="" ></td>
+                        <td>1</td>
+                        <td class="ellipsis">영업부</td>
+                        <td class="text-left">18년 7월 15일 업무보고</td>
+                        <td><a href="#" >박찬울</a></td>
+                        <td>2018.07.15</td>
+                        <td>기한없음</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" title="checkbox" value="" ></td>
+                        <td>1</td>
+                        <td class="ellipsis">영업부</td>
+                        <td class="text-left">18년 7월 15일 업무보고</td>
+                        <td><a href="#" >박찬울</a></td>
+                        <td>2018.07.15</td>
+                        <td>기한없음</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" title="checkbox" value="" disabled="disabled" readonly="readonly"></td>
+                        <td>1</td>
+                        <td class="ellipsis">영업부</td>
+                        <td class="text-left">18년 7월 15일 업무보고</td>
+                        <td><a href="#" >박찬울</a></td>
+                        <td>2018.07.15</td>
+                        <td>기한없음</td>
+                    </tr>
+                </tbody>
+                </table>
+                <nav class="pagination_wrap">
+                    <ul class="pagination pagination-sm">
+                        <li>
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                        </li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                        </li>
+                    </ul>
+                    <!-- /.pagination -->
+                </nav>
+                <!-- /.pagination_wrap -->
+                <div class="btn-wrap">
+                    <button class="btn btn-primary btn-sm" onclick="location='write.html'">업무 등록</button>
+                    <button class="btn btn-primary btn-sm">업무 삭제</button>
+                </div>
+            </div>
+            <!-- /.col-md-12 -->
+        </div>
+        <!-- /.content -->
+
+
+    <!-- Button trigger modal -->
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+            Launch Demo Modal
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">사원 정보</h4>
+                </div>
+                <div class="modal-body">
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle" src="../../dist/img/profile.jpg" alt="User profile picture">
+                        </div>
+                            <h3 class="profile-username text-center">한예슬</h3>
+                            <p class="text-muted text-center">Software Engineer</p>
+                
+                            <table width="200px;">
+                                <tr>
+                                    <th scope="row">부서</th>
+                                    <td>영업부 / 영업 2팀</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">직책</th>
+                                    <td>사원</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">전화번호</th>
+                                    <td>01000000006 / </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">메일</th>
+                                    <td>atom@naver.com</td>
+                                </tr>
+                            </table>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary">자세히 보기</button>
+                </div> -->
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    </section>
+
+    <footer>
+        <p>COPYRIGHT @ ATOM ALL RIGHTS RESERVED</p>
+    </footer>
+
+
+    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+    <script src="../../dist/js/bootstrap.min.js"></script>
+
+    <!-- js tree -->
+    <script src="./dist/jstree.min.js"></script>
+
+    <!-- modal -->
+    <script src="./vendor/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function () {
+            $('#jstree').jstree();
+            $('#jstree').on("changed.jstree", function (e, data) {
+            console.log(data.selected);
+            });
+            $('button[id=create]').on('click', function () {
+            $('#jstree').jstree(true).select_node('child_node_1');
+            $('#jstree').jstree('select_node', 'child_node_1');
+            $.jstree.reference('#jstree').select_node('child_node_1');
+            });
+        });
+    </script>
+  </body>
+</html>

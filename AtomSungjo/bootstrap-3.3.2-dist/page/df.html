@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <textarea id="reqcontent" name="name" rows="8" cols="80"></textarea>
+  </body>
+  <script type="text/javascript" src="../js/nicEdit.js">
+
+  </script>
+  <<script type="text/javascript">
+    bkLib.onDomLoaded(function() {
+      myNicEditor = new nicEditor({
+        fullPanel : true
+      }).panelInstance('reqcontent');
+    });
+  </script>
+</html>
