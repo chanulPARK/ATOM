@@ -18,6 +18,10 @@
 			document.numPerPageFrm.submit();
 			});
 	});
+	
+	function fn_goTaskWrite() {
+		location.href="<%=request.getContextPath()%>/board/boardForm";
+	}
 </script>
 
     <section>
@@ -105,7 +109,7 @@
                 <nav class="pagination_wrap"><%=pageBar %></nav>
                 <!-- /.pagination_wrap -->
                 <div class="btn-wrap">
-                    <button class="btn btn-primary btn-sm" onclick="location='write.html'">업무 등록</button>
+                    <button class="btn btn-primary btn-sm" onclick="fn_goTaskWrite()">업무 등록</button>
                     <button class="btn btn-primary btn-sm">업무 삭제</button>
                 </div>
             </div>
