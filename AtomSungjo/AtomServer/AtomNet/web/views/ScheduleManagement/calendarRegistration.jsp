@@ -168,15 +168,32 @@
     $('#repeat-select').change(function(){
       if($('#repeat-select option:selected').val() == '반복 없음'){
         $('#repeat-end').hide();
+        $('#repeat-cycle').hide();      
         $('#repeat_end_date').attr("required",false);
+        $('#repeat-select').attr("required",false);
+        $('input:checkbox[name="dayOfWeek"]').attr("required", false); 
 
       }else{
         if($('#repeat-select option:selected').val() == '매주(요일지정)'){
           $('#day-checkbox').show();
           $('#repeat-cycle').show();
+          $('input:checkbox[name="dayOfWeek"]').attr("required", true); 
+          $('input:checkbox[name="dayOfWeek"]').change(function(){
+        	  $('input:checkbox[name="dayOfWeek"]').each(function(){
+        		  if($('input:checkbox[name="dayOfWeek"]').is(":checked") == true){
+        	          $('input:checkbox[name="dayOfWeek"]').attr("required", false); 
+        		  }else{
+        	          $('input:checkbox[name="dayOfWeek"]').attr("required", true); 
+
+        		  }
+        	  });
+          });
         }else{
           $('#day-checkbox').hide();
-          $('#repeat-cycle').hide();          
+          $('#repeat-cycle').hide();         
+          $('#day-checkbox').attr("required",false);
+          $('input:checkbox[name="dayOfWeek"]').attr("required", false); 
+          
         }
         $('#repeat-end').show();
         

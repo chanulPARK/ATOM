@@ -11,9 +11,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import atom.calendar.model.service.CalendarService;
 import atom.calendar.model.vo.Calendar;
+import atom.employee.model.vo.Employee;
 
 /**
  * Servlet implementation class CalendarUpdateServlet
@@ -57,14 +59,15 @@ public class CalendarUpdateServlet extends HttpServlet {
 		
 		SimpleDateFormat sd = new SimpleDateFormat("MM/dd/yyyy hh:mm a",new Locale("en", "US"));
 		
-		
+		HttpSession session = request.getSession();
+		Employee e = (Employee)session.getAttribute("empLoggedIn");
 		Calendar s = new Calendar();
 		s.setScheduleId(scheduleId);
 		s.setScheduleName(scheduleName);
 		s.setStartDate(startDate);
 		s.setEndDate(endDate);
-		s.setCategory("부서명");
-		s.setEmpId("EMP_ID 01");
+		s.setCategory(e.getDeptCode());
+		s.setEmpId(e.getEmpId());
 		s.setContent(content);
 		s.setPlace(schedulePlace);
 		s.setRepeatYN(repeatYN);
