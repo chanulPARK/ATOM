@@ -56,6 +56,12 @@
                       </td>
                     </tr>
                     <tr>
+                      <td>작성자</td>
+                      <td>
+                        <label><%=empLoggedIn.getEmpId() %></label>
+                      </td>
+                    </tr>
+                    <tr>
                       <td>장소</td>
                       <td>
                         <input id="schedule-place" name="schedule-place" class="form-control" placeholder="장소">
@@ -160,9 +166,6 @@
         format             : 'MM/DD/YYYY h:mm A'
       })
   
-    });
-    $('#submit').click(function(){
-      console.log($('#repeat-select option:selected').val());
     });
 
     $('#repeat-select').change(function(){

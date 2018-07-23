@@ -57,6 +57,12 @@
                       </td>
                     </tr>
                     <tr>
+                      <td>작성자</td>
+                      <td>
+                        <label><%=s.getEmpId() %></label>
+                      </td>
+                    </tr>
+                    <tr>
                       <td>장소</td>
                       <td>
                         <input id="schedule-place" name="schedule-place" class="form-control" placeholder="장소" value="<%=s.getPlace()%>">
@@ -196,20 +202,38 @@
     });
 
     $('#repeat-select').change(function(){
-      if($('#repeat-select option:selected').val() == '반복 없음'){
-        $('#repeat-end').hide();
-      }else{
-        if($('#repeat-select option:selected').val() == '매주(요일지정)'){
-          $('#day-checkbox').show();
-          $('#repeat-cycle').show();
+        if($('#repeat-select option:selected').val() == '반복 없음'){
+          $('#repeat-end').hide();
+          $('#repeat-cycle').hide();      
+          $('#repeat_end_date').attr("required",false);
+          $('#repeat-select').attr("required",false);
+          $('input:checkbox[name="dayOfWeek"]').attr("required", false); 
+
         }else{
-          $('#day-checkbox').hide();
-          $('#repeat-cycle').hide();
+          if($('#repeat-select option:selected').val() == '매주(요일지정)'){
+            $('#day-checkbox').show();
+            $('#repeat-cycle').show();
+            $('input:checkbox[name="dayOfWeek"]').attr("required", true); 
+            $('input:checkbox[name="dayOfWeek"]').change(function(){
+          	  $('input:checkbox[name="dayOfWeek"]').each(function(){
+          		  if($('input:checkbox[name="dayOfWeek"]').is(":checked") == true){
+          	          $('input:checkbox[name="dayOfWeek"]').attr("required", false); 
+          		  }else{
+          	          $('input:checkbox[name="dayOfWeek"]').attr("required", true); 
+          		  }
+          	  });
+            });
+          }else{
+            $('#day-checkbox').hide();
+            $('#repeat-cycle').hide();         
+            $('#day-checkbox').attr("required",false);
+            $('input:checkbox[name="dayOfWeek"]').attr("required", false); 
+            
+          }
+          $('#repeat-end').show();
+          
+          $('#repeat_end_date').attr("required",true);
         }
-        $('#repeat-end').show();
-        
-        $('#repeat_end_date').attr("required",true);
-      }
             
     });
     
