@@ -1,62 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/views/common/header.jsp"%>
 
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>기본 페이지</title>
-    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../dist/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <script type="text/javascript" src="../../dist/js/nicEdit.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700" rel="stylesheet">
-    <style>
-        * {box-sizing: border-box;font-family: 'Nanum Gothic', sans-serif;}
-        body ,header{margin: 0px;}
-        header{
-            color: #fff!important;
-            border-bottom: 1px solid rgb(153, 153, 153);
-            height: 60px;
-            position: relative;
-            display: block;
-        }
-        aside{
-            margin-top: 30px;
-            left: 0px;
-            width: 250px;
-            /* height: 300px; */
-            display: block;
-            position: absolute;
-            /* position: fixed; */
-            border-bottom: solid 1px rgb(222, 226, 230);
-            /* background: rgb(222, 226, 230); */
-            background: #f1f1f1;
-        }
-        section{
-            padding: 20px;
-            /* padding-left: 20px;
-            padding-right: 20px; */
-            background: rgb(255, 255, 255);
-            border-left: 1px solid rgb(222, 226, 230);
-            width: 100%-250px;
-            /* height: 500px; */
-            margin-left: 250px;
-            /* background : palegreen; */
-            min-height: 675px;
-            display: block;
-        }
-        footer{
-            width: 100%;
-            height: 40px;
-            border-top: 1px solid rgb(222, 226, 230);
-            display: block;
-        }
-        footer > p{
-            font-size: 12px;
-            text-align: end;
-            color: rgb(153, 153, 153);
-        }
 
+
+
+
+
+
+
+<head>
+<style>
 
 /* Style the sidenav links and the dropdown button */
 .sidenav a, .dropdown-btn {
@@ -150,47 +104,9 @@ h4{
         /* border-bottom: solid 1px rgb(222, 226, 230); */
     </style>
   </head>
-  <body>
 
-    <header>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                <!-- <a class="navbar-brand" href="#">Brand</a> -->
-                    <a class="navbar-brand" href="#">
-                        <img src="../login.png">
-                    </a>
-                </div>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="../default.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
-                    <li class="active"><a href="electronicApproval.html">전자결재</a></li>
-                    <li><a href="schedule.html">일정</a></li>
-                    <li><a href="#">업무관리</a></li>
-                    <li><a href="#">게시판</a></li>
-                    <li><a href="#">조직도</a></li>
-                    <li><a href="#">근태관리</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">마이페이지</a></li>
-                        <li><a href="#">설정</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">로그아웃</a></li>
-                    </ul>
-                    </li>
-                </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
-    </header>
-
-    <aside>
+<aside>
       <div class="sidenav">
         <div class="sidemenu">
           <button class="dropdown-btn">기안
@@ -335,7 +251,7 @@ h4{
       							<tr>
       								<th><span class="text-point-b">*</span>문서제목</th>
       								<td colspan="3">
-                        <input type="text" title="문서제목"  name="apprTitle" value="" class="inputbox w100p" maxlength="100" placeholder="문서제목을 입력하세요. " />
+                       					 <input type="text" title="문서제목"  name="apprTitle" value="" class="form-control inputbox w100p" maxlength="100" placeholder="문서제목을 입력하세요. " />
       								</td>
       							</tr>
       						</tbody>
@@ -420,14 +336,4 @@ h4{
       });
     </script>
 
-
-
-
-
-    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-
-    <script src="../js/bootstrap.min.js"></script>
-  </body>
-</html>
+<%@ include file="/views/common/footer.jsp"%>

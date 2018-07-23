@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%
-    System.out.println("헤더"+session.getAttribute("empLoggedIn"));
+    	Employee empLoggedIn = (Employee)session.getAttribute("empLoggedIn");
     %>
 <head>
     <meta charset="utf-8">
@@ -104,7 +104,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	                <ul class="nav navbar-nav">
 	                    <li><a href="<%=request.getContextPath()%>/views/default.jsp"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
-	                    <li><a href="electronicApproval.jsp">전자결재</a></li>
+	                    <li><a href="<%=request.getContextPath()%>/electronic/electronicWaitingBox">전자결재</a></li>
 	                    <li><a href="<%=request.getContextPath()%>/schedule/scheduleList">일정</a></li>
 	                    <li><a href="#">업무관리</a></li>
 	                    <li><a href="#">게시판</a></li>
@@ -112,7 +112,7 @@
 	                    <li><a href="#">근태관리</a></li>
 	                </ul>
 	                <ul class="nav navbar-nav navbar-right">
-	                <%-- 	<li><h5 style='color:#777;margin-top:15px;'><%=empLoggedIn.getEmpId().equals("admin")?"":"00부 인턴"%> <%=empLoggedIn.getEmpName()%>님 안녕하세요&nbsp;</p></li> --%>
+	                	<li><h5 style='color:#777;margin-top:15px;'><%=empLoggedIn.getEmpId().equals("admin")?"":"00부 인턴"%> <%=empLoggedIn.getEmpName()%>님 안녕하세요&nbsp;</p></li>
 	                    <li class="dropdown">
 		                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
 		                    <ul class="dropdown-menu" role="menu">
