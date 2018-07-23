@@ -13,32 +13,32 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>login page</title>
-    <link rel="stylesheet" href="./dist/css/login.css" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
-	<script src='http://code.jquery.com/jquery-latest.min.js'></script>
-    <style>
-      input[id="saveId"] {   /*체크박스*/
-        position: relative;
-        top: -30px;
-        left: -150px;
-      }
-      label[for="saveId"] {   /*아이디 저장*/
-        position: relative;
-        top: -5px;
-        left:40px;
-      }
-      .loginbox input[type='submit']{
-	    position:relative;
-	    top:-20px;
-	    margin-bottom:0;
-	    bottom:20px;
-		}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>login page</title>
+<link rel="stylesheet" href="./dist/css/login.css" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
+<script src='http://code.jquery.com/jquery-latest.min.js'></script>
+<style>
+    input[id="saveId"] {   /*체크박스*/
+      position: relative;
+      top: -30px;
+      left: -150px;
+    }
+    label[for="saveId"] {   /*아이디 저장*/
+      position: relative;
+      top: -5px;
+      left:40px;
+    }
+    .loginbox input[type='submit']{
+	   position:relative;
+	   top:-20px;
+	   margin-bottom:0;
+	   bottom:20px;
+	}
+</style>
 </head>
 <body>
     <div class="loginbox">

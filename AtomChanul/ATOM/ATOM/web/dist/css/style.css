@@ -70,18 +70,15 @@
         .leftmenu-btn{
             padding: 10px;
         }
-        .float-right{
-            float: right;
-        }
         .table{
             margin: 0;
         }
-        thead tr th{
+        .tableTL thead tr th{
             font-weight: bold;
             font-size: 13px;
             text-align: center;
         }
-        tbody tr td{
+        .tableTL tbody tr td{
             font-size: 13px;
             text-align: center;
         }
@@ -104,6 +101,19 @@
         .pagination{
             margin: 0;
             vertical-align: middle;
+        }
+        .tableTR tbody tr th {
+            background: rgb(245, 245, 245);
+            width: 150px; height: 40px;
+            vertical-align: middle!important;
+            padding-left: 15px!important;
+        }
+        .tableTR tbody tr td {
+            vertical-align: middle!important;
+        }
+        .tableTR tbody tr td * {
+            font-weight: 100!important;
+            font-size: 13px;
         }
         .btn-wrap{
             margin: 10px 0;
