@@ -9,13 +9,6 @@
 
     <!-- jstree CSS -->
     <link href="dist/jstree/css/jstree.min.css" rel="stylesheet">
-
-
-    <!-- MetisMenu CSS -->
-    <!-- <link href="/vendor/metismenu/css/새 폴더/metisMenu.min.css" rel="stylesheet"> -->
-    <link href="./vendor/metismenu/css/새 폴더/mm-vertical.css" rel="stylesheet">
-    <link href="./vendor/metismenu/css/새 폴더/mm-folder.css" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.1/metisMenu.min.css"> -->
     
     <!-- font -->
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700" rel="stylesheet">
@@ -24,7 +17,8 @@
     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- date-picker -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="./dist/css/datepicker.css" />
+    <link rel="stylesheet" type="text/css" href="./dist/css/daterangepicker-bs3.css" />
 
     <!-- awesome Fonts -->
     <link href="./vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -32,24 +26,10 @@
     <!-- Custom CSS -->
     <link href="./dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- metismenu -->
-    <!-- <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.4/metisMenu.min.css">
-    <link rel="stylesheet" href="vendor/metismenu/css/MetisMenu.css">
-    <!-- <link rel="stylesheet" href="assets/css/styles.css"> -->
-
 
     <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Nanum Gothic', sans-serif;
-        }
-
-        body,
-        header {
-            margin: 0px;
-        }
-
+        * { box-sizing: border-box; font-family: 'Nanum Gothic', sans-serif;}
+        body, header {margin: 0px;}
         header {
             color: #fff !important;
             /* border-bottom: 1px solid rgb(153, 153, 153); */
@@ -57,7 +37,6 @@
             position: relative;
             display: block;
         }
-
         aside {
             /* margin-top: 30px; */
             left: 0px;
@@ -69,7 +48,6 @@
             border-bottom: solid 1px rgb(222, 226, 230);
             background: rgb(245, 245, 245);
         }
-
         section {
             padding: 20px;
             /* padding-left: 20px;
@@ -83,7 +61,6 @@
             min-height: 675px;
             display: block;
         }
-
         footer {
             width: 100%;
             height: 40px;
@@ -91,30 +68,25 @@
             display: table;
             vertical-align: middle;
         }
-
         footer>p {
             font-size: 12px;
             text-align: end;
             color: rgb(153, 153, 153);
         }
 
-        /* border-bottom: solid 1px rgb(153, 153, 153); */
-        /* border-bottom: solid 1px rgb(222, 226, 230); */
-
-        .table {
+        .tableTR {
             margin: 0;
-            
         }
-        tbody tr th {
+        .tableTR tbody tr th {
             background: rgb(245, 245, 245);
             width: 150px; height: 40px;
             vertical-align: middle!important;
             padding-left: 15px!important;
         }
-        tbody tr td {
+        .tableTR tbody tr td {
             vertical-align: middle!important;
         }
-        tbody tr td * {
+        .tableTR tbody tr td * {
             font-weight: 100!important;
             font-size: 13px;
         }
@@ -210,41 +182,73 @@
     </header>
 
     <aside>
+        <div class="content-fluid">
+            <div class="panel-group">
+                <div class="panel panel-default">
+    
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse1">자원 예약 메뉴</a>
+                        </h4>
+                    </div>
+    
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <a href="#">자원 예약 홈</a>
+                        </div>
+    
+                        <div class="panel-footer">
+                            <a href="#">나의 예약 리스트</a>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
     </aside>
 
     <section>
         <div class="content">
             <div class="col-md-12">
                 <h4>업무 등록</h4>
-                <table class="table table-condensed">
+                <table class="tableTR table table-condensed">
                     <tbody>
                         <tr>
-                            <th scope="row">
+                            <th>
                                 <span style="color: red">* </span>제목</th>
                             <td>
-                                <div style="position: relative;">
+                                <div>
                                     <input type="text" class="form-control input-sm" placeholder="제목을 입력하세요." aria-required="true">
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">
+                            <th>
                                 <span style="color: red">* </span>업무 형태</th>
                             <td>
                                 <div class="label-group">
-                                    <label class="radio-inline"><input type="radio" class="fnone valid" id="type1" name="taskType" title="업무 요청" value="1"> 업무 요청</label>
-                                    <label class="radio-inline"><input type="radio" class="fnone valid" id="type2" name="taskType" title="업무 보고" value="2" checked="checked"> 업무 보고</label>
-                                    <label class="radio-inline"><input type="radio" class="fnone valid" id="type3" name="taskType" title="업무 일지" value="3"> 업무 일지</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" class="fnone valid" id="type1" name="taskType" title="업무 요청" value="1"> 업무 요청</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" class="fnone valid" id="type2" name="taskType" title="업무 보고" value="2"
+                                            checked="checked"> 업무 보고</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" class="fnone valid" id="type3" name="taskType" title="업무 일지" value="3"> 업무 일지</label>
                                 </div>
                             </td>
                         </tr>
                         <tr id="isTermlessTR">
-                            <th scope="row">
+                            <th>
                                 <span style="color: red">* </span>업무 기한
                             </th>
                             <td>
                                 <div class="form-inline">
-                                    <input type="text" class="form-control input-sm" placeholder="18/07/18" disabled>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon2">
+                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        </span>
+                                        <input type="text" class="form-control" id="reservationtime">
+                                    </div>
                                     <span class="label-group ml10">
                                         <input type="checkbox" id="isTermless" title="기한없음" name="isTermless" value="0" checked="checked">
                                         <label>기한없음</label>
@@ -253,15 +257,15 @@
                             </td>
                         </tr>
                         <tr id="workerTR">
-                            <th id="workerTH1" scope="row">담당자</th>
+                            <th id="workerTH1">담당자</th>
                             <td>
-                                <div id="selectUser1" class="input-group organization">
-                                    <input type="text" class="form-control input-sm" placeholder="사용자">
+                                <div>
+                                    <input type="text" class="form-control input-sm" placeholder="사용자" aria-required="true">
                                 </div>
                             </td>
                         </tr>
                         <tr id="folderTR">
-                            <th scope="row">
+                            <th>
                                 <label for="folderI">업무 보관함</label>
                             </th>
                             <td id="selectFolder">
@@ -274,8 +278,8 @@
                 </table>
                 <div>
                     <textarea name="area2" style="width: 100%; height: 300px;">
-
-                    </textarea>
+    
+                        </textarea>
                 </div>
                 <div class="btn-wrap float-right">
                     <button type="button" class="btn btn-sm btn-primary" id="saveButton">저장</button>
@@ -294,19 +298,18 @@
 
     
 
-    <!-- <script>
-        $('#demo').daterangepicker({
-        "singleDatePicker": true,
-        "linkedCalendars": false,
-        "autoUpdateInput": false,
-        "showCustomRangeLabel": false,
-        "parentEl": "input",
-        "startDate": "07/05/2018",
-        "endDate": "07/11/2018"
-    }, function(start, end, label) {
-    console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
-    });
-    </script> -->
+    <script>
+        $(function () {
+                $('#reservation').datepicker();
+
+                $('#reservationtime').daterangepicker({
+                    timePicker: true,
+                    timePickerIncrement: 30,
+                    format: 'MM/DD/YYYY h:mm A'
+                })
+            });
+
+    </script>
 
     <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script> <script type="text/javascript">
         bkLib.onDomLoaded(function() {
@@ -326,22 +329,11 @@
         $(function () {
             $('#menu2').metisMenu({ toggle: false });
         });
-      </script>
-
-    <!-- Metis JavaScript -->
-    <!-- <script src="/vendor/metismenu/js/metisMenu.min.js"></script>
-    <script src="/vendor/metismenu/js/mm-vertical.js"></script>
-    <script src="/vendor/metismenu/js/mm-folder.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
-    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.1/metisMenu.min.js"></script> -->
+    </script>
 
     <!-- date-picker -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <!-- <script src="./vendor/metisMenu/js/MetisMenu.js"></script> -->
+    <script type="text/javascript" src="./dist/js/datepicker.js"></script>
+    <script type="text/javascript" src="./dist/js/daterangepicker.js"></script>
 
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -352,11 +344,6 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="./dist/js/sb-admin-2.js"></script>
-
-    <!-- metis menu -->
-    <!-- <script src="assets/bootstrap/js/bootstrap.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.4/metisMenu.min.js"></script>
-    <!-- <script src="./vendor/metismenu/js/MetisMenu.js"></script> -->
 
     <!-- jstree JavaScript -->
     <script src="./dist/jstree/js/jstree.min.js"></script>

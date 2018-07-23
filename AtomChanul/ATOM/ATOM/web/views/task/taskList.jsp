@@ -20,7 +20,7 @@
 	});
 	
 	function fn_goTaskWrite() {
-		location.href="<%=request.getContextPath()%>/board/boardForm";
+		location.href="<%=request.getContextPath()%>/task/taskWrite";
 	}
 </script>
 
@@ -60,7 +60,7 @@
                     </div> 
                 </div>
 
-                <table class="table table-striped">
+                <table class="tableTL table table-striped">
 	                <colgroup>
 	                    <col style="width: 40px;">
 	                    <col style="width: 50px;">
