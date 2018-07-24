@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ElectronicWaitingBoxServlet
+ * Servlet implementation class ElectronicRequestBoxServlet
  */
-@WebServlet("/electronic/electronicWaitingBox")
-public class ElectronicWaitingBoxServlet extends HttpServlet {
+@WebServlet("/electronic/electronicRequestBox")
+public class ElectronicRequestBoxServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ElectronicWaitingBoxServlet() {
+    public ElectronicRequestBoxServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,14 +26,8 @@ public class ElectronicWaitingBoxServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		
-		
-		
-		
-		
-		request.getRequestDispatcher("/views/ElectronicApprovalManagement/electronicWaitingBox.jsp").forward(request, response);	
+		// TODO Auto-generated method stub
+		request.getRequestDispatcher("/views/ElectronicApprovalManagement/electronicRequestBox.jsp").forward(request, response);	
 	}
 
 	/**

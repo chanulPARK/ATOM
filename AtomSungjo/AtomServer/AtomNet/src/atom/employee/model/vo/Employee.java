@@ -11,8 +11,11 @@ public class Employee {
 	private String phone;
 	private String addr;
 	private String deptCode;
+	private String deptName;
 	private String jobCode;
+	private String jobName;
 	private String adminCode;
+	private String adminName;
 	private String managerId;
 	private Date hireDate;
 	private Date entDate;
@@ -20,11 +23,38 @@ public class Employee {
 	private String empPr;
 	private String empImg;
 	
+	
+	
+	
 	public Employee() {}
 
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+	public String getJobName() {
+		return jobName;
+	}
+
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
+	}
+
+	public String getAdminName() {
+		return adminName;
+	}
+
+	public void setAdminName(String adminName) {
+		this.adminName = adminName;
+	}
+
 	public Employee(String empId, String empPw, String empName, String empNo, String email, String phone, String addr,
-			String deptCode, String jobCode, String adminCode, String managerId, Date hireDate, Date entDate,
-			String entYn, String empPr, String empImg) {
+			String deptCode, String deptName, String jobCode, String jobName, String adminCode, String adminName,
+			String managerId, Date hireDate, Date entDate, String entYn, String empPr, String empImg) {
 		super();
 		this.empId = empId;
 		this.empPw = empPw;
@@ -34,8 +64,11 @@ public class Employee {
 		this.phone = phone;
 		this.addr = addr;
 		this.deptCode = deptCode;
+		this.deptName = deptName;
 		this.jobCode = jobCode;
+		this.jobName = jobName;
 		this.adminCode = adminCode;
+		this.adminName = adminName;
 		this.managerId = managerId;
 		this.hireDate = hireDate;
 		this.entDate = entDate;
@@ -43,6 +76,8 @@ public class Employee {
 		this.empPr = empPr;
 		this.empImg = empImg;
 	}
+
+
 
 	public String getEmpId() {
 		return empId;
@@ -175,9 +210,10 @@ public class Employee {
 	@Override
 	public String toString() {
 		return "Employee [empId=" + empId + ", empPw=" + empPw + ", empName=" + empName + ", empNo=" + empNo
-				+ ", email=" + email + ", phone=" + phone + ", addr=" + addr + ", deptCode=" + deptCode + ", jobCode="
-				+ jobCode + ", adminCode=" + adminCode + ", managerId=" + managerId + ", hireDate=" + hireDate
-				+ ", entDate=" + entDate + ", entYn=" + entYn + ", empPr=" + empPr + ", empImg=" + empImg + "]";
+				+ ", email=" + email + ", phone=" + phone + ", addr=" + addr + ", deptCode=" + deptCode + ", deptName="
+				+ deptName + ", jobCode=" + jobCode + ", jobName=" + jobName + ", adminCode=" + adminCode
+				+ ", adminName=" + adminName + ", managerId=" + managerId + ", hireDate=" + hireDate + ", entDate="
+				+ entDate + ", entYn=" + entYn + ", empPr=" + empPr + ", empImg=" + empImg + "]";
 	}
 
 	

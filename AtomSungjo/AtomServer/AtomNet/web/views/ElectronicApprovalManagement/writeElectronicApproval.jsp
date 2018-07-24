@@ -1,10 +1,14 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
-
+<%@ include file="/views/common/approvalAside.jsp"%>
+<%
+	Date date = new Date();
+	SimpleDateFormat sd = new SimpleDateFormat("YYYY.MM.dd");
+%>
 <head>
-
-
 <style>
 
 /* Style the sidenav links and the dropdown button */
@@ -81,9 +85,7 @@ h4{
   padding:0.7em 0em;
 }
 
-.appline-wrap td{
 
-}
 
 #first-td{
   width:1.3em;padding:0.7em 0em;
@@ -93,48 +95,14 @@ h4{
   height:1px;width:5.5em;
 }
 
-
-
-        /* border-bottom: solid 1px rgb(153, 153, 153); */
-        /* border-bottom: solid 1px rgb(222, 226, 230); */
     </style>
-    
-    
-    
     <!-- niceidt -->
     
-    <script type="text/javascript" src="<%=request.getContextPath()%>/dist/js/nicEdit.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/dist/js/nicEdita.js"></script>
     <script type="text/javascript">
       bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
     </script>
    </head>
-
-
-<aside>
-      <div class="sidenav">
-        <div class="sidemenu">
-          <button class="dropdown-btn">기안
-            <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="dropdown-container">
-            <a href="#">기안문작성</a>
-            <a href="#">결재요청함</a>
-          </div>
-        </div>
-        <div class="sidemenu">
-          <button class="dropdown-btn">결재
-            <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="dropdown-container">
-            <a href="#">결재대기함</a>
-            <a href="#">결재진행함</a>
-            <a href="#">완료분서함</a>
-            <a href="#">반려문서함</a>
-          </div>
-        </div>
-      </div>
-    </aside>
-
     <section>
         <div class="content">
           <div class="row">
@@ -142,118 +110,102 @@ h4{
               <hr>
           </div>
           <div class="row" >
-
-
-          <div id="formButtonDiv" class="btn-wrap pt10 pull-right">
-      	    <button id="addApprLineButton" type="button" class="btn btn-">결재선</button>
-      	    <button id="createApprDocButton" type="button" class="btn btn-color5 br">결재요청</button>
-      	    <!-- <button id="addApprRefInfoButton" type="button" class="btn btn-default">기결재첨부</button> -->
-      			<!-- <button id="createApprDocTemporayButton" type="button" class="btn btn-default">임시저장</button> -->
-      			<button id="listApprDocButton" type="button" class="btn btn-default">취소</button>
-      	  </div>
-
-
-      	<div class="content-wrap approval responsive">
-      		<div class="content-write">
-      			<form id="apprDocForm" name="apprDocForm" method="post" action="/approval/createApprDoc.do">
-
-      				<h3 style="margin: 2% 45%">기안용지</h3>
-
-      				<div class="appline-wrap pull-right">
-                <table border="1" style="text-align:center">
-                  <tbody>
-                    <tr>
-                      <td id="first-td" rowspan="2">결<br><br>재</td>
-                      <td>기안</td>
-                      <td>기안</td>
-                    </tr>
-                    <tr>
-                      <td id="second-td">김올레</td>
-                      <td>김올레</td>
-                    </tr>
-                  </tbody>
-                </table>
-      				</div>
-
-
-
-      				<div class="form-block bdr-t">
-
-      					<table class="table separate">
-      						<caption></caption>
-      						<colgroup>
-      							<col style="width: 15%;"/>
-      							<col style="width: 35%;"/>
-      							<col style="width: 15%;"/>
-      							<col style="width: 35%;"/>
-      						</colgroup>
-      						<tbody>
-      							<tr>
-      								<th>문서번호</th>
-      								<td>자동채번</td>
-      								<th>기안일자</th>
-      								<td>2018.07.12</td>
-      							</tr>
-      							<tr>
-      								<th>기안자</th>
-      								<td>김올레</td>
-      								<th>기안부서</th>
-      								<td>해외영업팀</td>
-      							</tr>
-
-      							<tr>
-      								<th>참조자</th>
-      								<td>
-      									<div id="selectReferenceId" class="input-group organization"></div>
-      								</td>
-      								<th></th>
-      								<td>
-      							        <span id="apprRefInfoUl"></span>
-      								</td>
-      							</tr>
-
-      							<tr>
-      								<th><span class="text-point-b">*</span>문서제목</th>
-      								<td colspan="3">
-                       					 <input type="text" title="문서제목"  name="apprTitle" value="" class="form-control inputbox w100p" maxlength="100" placeholder="문서제목을 입력하세요. " />
-      								</td>
-      							</tr>
-      						</tbody>
-      					</table>
-      				</div>
-
-              <div class="">
-                <textarea id="reqcontent" name="name" rows="25" cols="80" style="width:100%"></textarea>
-              </div>
-      		        <!--  template의 jsp 호출 시작-->
-
-      				<!--  template의 jsp 호출 끝-->
-
-      					
-      			</form>
-      		</div>
-      	</div>
-
-      	<div id="formButtonDiv" class="btn-wrap pull-right">
-      	    <button id="addApprLineButton" type="button" class="btn btn-color5 br">결재선</button>
-
-      	    <button id="createApprDocButton" type="button" class="btn btn-color5 br">결재요청</button>
-      			<button id="listApprDocButton" type="button" class="btn btn-color7 br">취소</button>
-
-      	</div>
-
-      <div class="blockBlank_10px"></div>
-      <div class="blockBlank_20px"></div>
-      		</div>
-      	</div>
-
+	          <div id="formButtonDiv" class="btn-wrap pull-right">
+	      	    <button id="addApprLineButton" type="button" class="btn btn-">결재선</button>
+	      	    <button id="createApprDocButton" type="button" class="btn btn-color5 br">결재요청</button>
+	      		<!-- <button id="createApprDocTemporayButton" type="button" class="btn btn-default">임시저장</button> -->
+	      		<button id="listApprDocButton" type="button" class="btn btn-default">취소</button>
+	      	  </div>
+	      	  <div class="content-wrap approval responsive">
+	      		<div class="content-write">
+	      			<form id="apprDocForm" name="apprDocForm" method="post" action="<%=request.getContextPath()%>/approval/createApprDoc.do">
+	      				<h3 style="margin: 2% 45%">기안용지</h3>
+	      				<div class="appline-wrap pull-right">
+	                		<table border="1" style="text-align:center">
+	                  			<tbody>
+				                    <tr>
+				                      <td id="first-td" rowspan="2">결<br><br>재</td>
+				                      <td>기안</td>
+				                      <td>대리</td>
+				                      <td>사장</td>
+				                    </tr>
+				                    <tr>
+				                      <td>
+					                      <span style="font-size:0.9em">김올레<br></span>
+					                      <span style="font-size:1em">반려<br></span>
+					                      <span style="font-size:0.8em">07.27 12:00</span>
+				                      </td>
+				                      <td>
+					                      <span style="font-size:0.9em">김올레<br></span>
+					                      <span style="font-size:1em">대기<br></span>
+					                      <span style="font-size:0.8em">07.27 12:00</span>
+				                      </td>
+				                      <td>
+					                      <span style="font-size:0.9em">김올레<br></span>
+					                      <span style="font-size:1em">승인<br></span>
+					                      <span style="font-size:0.8em">07.27 12:00</span>
+				                      </td>
+				                    </tr>
+				                </tbody>
+	                		</table>
+	      				</div> <%-- appline-wrap --%>
+	      				<div class="form-block">
+	      					<table class="table separate">
+	      						<caption></caption>
+	      						<colgroup>
+	      							<col style="width: 15%;"/>
+	      							<col style="width: 35%;"/>
+	      							<col style="width: 15%;"/>
+	      							<col style="width: 35%;"/>
+	      						</colgroup>
+	      						<tbody>
+	      							<tr>
+	      								<th>문서번호</th>
+	      								<td>자동채번</td>
+	      								<th>기안일자</th>
+	      								<td><%=sd.format(date) %></td>
+	      							</tr>
+	      							<tr>
+	      								<th>기안자</th>
+	      								<td><%=empLoggedIn.getEmpName() %></td>
+	      								<th>기안부서</th>
+	      								<td><%=empLoggedIn.getDeptName() %></td>
+	      							</tr>
+	      							<tr>
+	      								<th>참조자</th>
+	      								<td colspan='3'>
+		      								<div class="input-group" >
+											  <input style="width:95%" type="text" class="form-control">
+											  <span style="width:5%;height:2.45em" class="input-group-addon" id="basic-addon2"><i class="fa fa-user-plus"></i></span>
+											</div>	
+	      								</td>
+	      							</tr>
+	      							<tr>
+	      								<th><span style="color: red">* </span>문서제목</th>
+	      								<td colspan="3">
+	                       					 <input type="text" title="문서제목"  name="apprTitle" value="" class="form-control inputbox w100p" maxlength="100" placeholder="문서제목을 입력하세요. " />
+	      								</td>
+	      							</tr>
+	      						</tbody>
+	      					</table>
+	      				</div>
+	              		<div class="">
+	              			<textarea id="apprContent" name="apprContent" rows="25" cols="80" style="width:100%"></textarea>
+	              		</div>
+	      			
+	      		</div>
+	      	</div> <!-- content-wrap approval responsive -->
+	
+	      	<div id="formButtonDiv" class="btn-wrap pull-right">
+	      	    <button id="" type="button" class="btn">결재선</button>
+	      	    <button id="" type="submit" class="btn">결재요청</button>
+	      		<button id="" type="reset"  onclick="history.go(-1)" class="btn">취소</button>
+	      	</div>
+	      	</form>
+      </div> <%--row--%>
+     </div> <%--content--%>
 
     </section>
-
-    <footer>
-        <p>COPYRIGHT @ ATOM ALL RIGHTS RESERVED</p>
-    </footer>
-
 
     <script>
     var dropdown = document.getElementsByClassName("dropdown-btn");
@@ -272,13 +224,5 @@ h4{
     }
     </script>
 
-    <!-- nicedit 호출 -->
-   <!--  <script type="text/javascript">
-      bkLib.onDomLoaded(function() {
-        myNicEditor = new nicEditor({
-          fullPanel : true
-        }).panelInstance('reqcontent');
-      }); -->
-    </script>
 
 <%@ include file="/views/common/footer.jsp"%>

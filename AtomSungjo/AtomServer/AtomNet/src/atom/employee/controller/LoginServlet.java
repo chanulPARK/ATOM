@@ -48,9 +48,6 @@ public class LoginServlet extends HttpServlet {
 				
 				HttpSession session = request.getSession();
 				session.setAttribute("empLoggedIn", e);
-				System.out.println(session.getAttribute("empLoggedIn"));
-				request.setAttribute("empLoggedIn", e);
-				session.setAttribute("hi", "gd");
 				
 				String saveId = request.getParameter("saveId");
 				if(saveId!=null) {

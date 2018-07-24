@@ -112,7 +112,7 @@
 	                    <li><a href="#">근태관리</a></li>
 	                </ul>
 	                <ul class="nav navbar-nav navbar-right">
-	                	<li><h5 style='color:#777;margin-top:15px;'><%=empLoggedIn.getEmpId().equals("admin")?"":empLoggedIn.getJobCode()+"부 " + empLoggedIn.getJobCode()%> <%=empLoggedIn.getEmpName()%>님 안녕하세요&nbsp;</p></li>
+	                	<li><h5 style='color:#777;margin-top:15px;'><%=empLoggedIn.getEmpId().equals("admin")?"":empLoggedIn.getDeptName() + " " + empLoggedIn.getJobName()%> <%=empLoggedIn.getEmpName()%>님 안녕하세요&nbsp;</p></li>
 	                    <li class="dropdown">
 		                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
 		                    <ul class="dropdown-menu" role="menu">

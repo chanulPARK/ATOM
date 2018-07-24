@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
+<%@ include file="/views/common/approvalAside.jsp"%>
 
 
 <head>
@@ -86,35 +87,17 @@ h4{
   text-align: center;
 }
 	
+#listTable td{
+ text-overflow:ellipsis;
+ overflow:hidden;
+  white-space:nowrap;
+}
+	
 	</style>
 </head>
 
 
-	<aside>
-      <div class="sidenav">
-        <div class="sidemenu">
-          <button class="dropdown-btn">기안
-            <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="dropdown-container">
-            <a href="<%=request.getContextPath()%>/electronic/electronicApprovalForm">기안문작성</a>
-            <a href="#">결재요청함</a>
-          </div>
-        </div>
-        <div class="sidemenu">
-          <button class="dropdown-btn">결재
-            <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="dropdown-container">
-            <a href="#">결재대기함</a>
-            <a href="#">결재진행함</a>
-            <a href="#">완료분서함</a>
-            <a href="#">반려문서함</a>
-          </div>
-        </div>
-      </div>
-    </aside>
-
+	
     <section>
         <div class="content">
           <div class="row">
@@ -200,51 +183,109 @@ h4{
 
             </div>
             <!--  listable-->
-            <table class="table table-striped" id="listTable">
+            <table class="table table-striped" id="listTable" style = "text-align: center;table-layout:fixed;">
               <caption></caption>
               <colgroup>
+                      <col width="1%"/>
                       <col width="3%"/>
-                      <col width="4%"/>
+                      <col width="9%"/>
+                      <col width="3%"/>
+                      <col width="25%"/>
+                      <col width="3%"/>
+                      <col width="5%"/>
                       <col width="8%"/>
-                      <col width="10%"/>
-                      <col width="7%"/>
-                      <col width="*"/>
-                      <col width="10%"/>
-                      <col width="13%"/>
-                      <col width="13%"/>
-                      <col width="13%"/>
               </colgroup>
               <thead>
                 <tr>
                   <th scope="col"><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="" /></th>
                   <th scope="col">NO</th>
-                  <th scope="col">서식함</th>
                   <th scope="col">문서번호</th>
                   <th scope="col">유형</th>
                   <th scope="col">
-                    <a onclick="" href="#" style="">
-                      문서제목<i class="fa fa-caret-down"></i>
-                    </a>
+                    <a onclick="" href="#" style="">문서제목<i class="fa fa-caret-down"></i></a>
                   </th>
                   <th scope="col">기안자</th>
                   <th scope="col">기안부서</th>
                   <th scope="col">
-                    <a onclick=""  href="#a">
-                    기안일<i class="fa fa-caret-down"><span class="blind"></span></i>
-                    </a>
-                  </th>
-                  <th scope="col">
-                        <a onclick=""  href="#a">
-                          배정일<i class="fa fa-caret-down active"><span class="blind"></span></i>
-                        </a>
-
+                    <a onclick=""  href="#a">기안일<i class="fa fa-caret-down"><span class="blind"></span></i></a>
                   </th>
                 </tr>
+                
               </thead>
               <tbody>
-                    <tr>
+              <tr>
+	                <td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="" /></td>
+	                <td>00004</td>
+	                <td>F01USER2018072414</td>
+	                <td>결재</td>
+	                <td>휴가신청서</td>
+					<td>USER</td>
+	                <td>해외개발 1팀</td>
+	                <td>2018-07-24 12:48</td>
+                </tr>
+                <tr>
+	                <td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="" /></td>
+	                <td>00004</td>
+	                <td>F01USER2018072414</td>
+	                <td>결재</td>
+	                <td>휴가신청서</td>
+					<td>USER</td>
+	                <td>해외개발 1팀</td>
+	                <td>2018-07-24 12:48</td>
+                </tr>
+                <tr>
+	                <td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="" /></td>
+	                <td>00004</td>
+	                <td>F01USER2018072414</td>
+	                <td>결재</td>
+	                <td>휴가신청집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를서</td>
+					<td>USER</td>
+	                <td>해외개발 1팀</td>
+	                <td>2018-07-24 12:48</td>
+                </tr>
+                <tr>
+	                <td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="" /></td>
+	                <td>00004</td>
+	                <td>F01USER2018072414</td>
+	                <td>결재</td>
+	                <td>집에가고싶은데집에를 보내주333333333333지않네?집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를 보내주333333333333지않네?</td>
+					<td>USER</td>
+	                <td>해외개발 1팀</td>
+	                <td>2018-07-24 12:48</td>
+                </tr>
+                <tr>
+	                <td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="" /></td>
+	                <td>00004</td>
+	                <td>F01USER2018072414</td>
+	                <td>결재</td>
+	                <td>휴가신청서</td>
+					<td>USER</td>
+	                <td>해외개발 1팀</td>
+	                <td>2018-07-24 12:48</td>
+                </tr>
+                <tr>
+	                <td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="" /></td>
+	                <td>00004</td>
+	                <td>F01USER2018072414</td>
+	                <td>결재</td>
+	                <td>휴가신청서</td>
+					<td>USER</td>
+	                <td>해외개발 1팀</td>
+	                <td>2018-07-24 12:48</td>
+                </tr>
+                <tr>
+	                <td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="" /></td>
+	                <td>00004</td>
+	                <td>F01USER2018072414</td>
+	                <td>결재</td>
+	                <td>휴가신청서</td>
+					<td>USER</td>
+	                <td>해외개발 1팀</td>
+	                <td>2018-07-24 12:48</td>
+                </tr>
+                    <!-- <tr>
                       <td colspan="10" class="emptyRecord">검색 결과가 존재하지 않습니다.</td>
-                    </tr>
+                    </tr> -->
               </tbody>
             </table>
             <div class="btn-wrap">
