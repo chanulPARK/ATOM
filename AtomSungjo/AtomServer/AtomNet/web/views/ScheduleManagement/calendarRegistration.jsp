@@ -2,12 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ include file = "/views/common/header.jsp" %>
 
-	<!-- niceidt -->
-    <script type="text/javascript">
-      bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
-    </script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/dist/js/nicEdit.js"></script>
-
 	<!-- daterangepicker -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/dist/css/daterangepicker-bs3.css">
 

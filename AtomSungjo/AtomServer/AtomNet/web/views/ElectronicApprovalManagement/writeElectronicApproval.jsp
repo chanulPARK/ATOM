@@ -2,14 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
 
-
-
-
-
-
-
-
 <head>
+
+
 <style>
 
 /* Style the sidenav links and the dropdown button */
@@ -103,7 +98,16 @@ h4{
         /* border-bottom: solid 1px rgb(153, 153, 153); */
         /* border-bottom: solid 1px rgb(222, 226, 230); */
     </style>
-  </head>
+    
+    
+    
+    <!-- niceidt -->
+    
+    <script type="text/javascript" src="<%=request.getContextPath()%>/dist/js/nicEdit.js"></script>
+    <script type="text/javascript">
+      bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
+    </script>
+   </head>
 
 
 <aside>
@@ -151,47 +155,7 @@ h4{
 
       	<div class="content-wrap approval responsive">
       		<div class="content-write">
-      			<form id="apprDocForm" name="apprDocForm" method="post" action="/groupware/approval/work/apprWorkDoc/createApprDoc.do">
-      				<input name="msie" type="hidden" value="0" />
-      		        <input type="hidden" name="systemId" value="GW"/>
-      		        <input type="hidden" name="formId" value="389922"/>
-      		        <input type="hidden" name="formVersion" value="1"/>
-      		        <input type="hidden" name="apprDocType" value="0"/>
-      		        <textarea title="formLayoutData" name="formLayoutData" style="display:none;"></textarea>
-      		        <input type="hidden" name="isLinkUrl" value="0"/>
-      		        <input type="hidden" name="linkDataType" value="0"/>
-      		        <textarea title="formData" name="formData" style="display:none;"></textarea>
-      		        <input type="hidden" name="defLineId" value="" />
-      		        <input type="hidden" name="defLineUse" value="0" />
-      		        <input type="hidden" name="isDefLineUpdate" value="0" />
-      		        <input type="hidden" name="isRequestForm" value="0"/>
-      		        <input type="hidden" name="apprId" value=""/>
-      		        <input type="hidden" name="registerJobTitle" value="회장"/>
-      		        <textarea title="formLinkedData" name="formLinkedData" style="display:none;"></textarea>
-      		        <input type="hidden" name="apprLineType" value="0"/>
-      		        <input type="hidden" name="apprLine"/>
-      		        <input type="hidden" name="referenceId"/>
-      		        <input type="hidden" name="readId"/>
-      		        <input type="hidden" name="apprReceiveLine"/>
-      		        <input type="hidden" name="apprDocStatus" value="1"/>
-      		        <input type="hidden" name="isApprReceive" value="0" />
-      		        <input type="hidden" name="listType" value="listApprForm"/>
-      		        <input type="hidden" name="registerMessage" />
-      		        <input type="hidden" name="apprRefId" />
-      		        <input type="hidden" name="mode" value="new"/>
-      		        <input type="hidden" name="linkType" value=""/>
-      		        <input type="hidden" name="popupYn" value="false"/>
-      		        <input type="hidden" name="modalYn" value="Y"/>
-      		        <input type="hidden" name="isEmergency"/>
-      		        <input type="hidden" name="appKey01" value=""/>
-      		        <input type="hidden" name="appKey02" value=""/>
-      		        <input type="hidden" name="appKey03" value=""/>
-      		        <input type="hidden" name="appKey04" value=""/>
-      		        <input type="hidden" name="appKey05" value=""/>
-      		        <input type="hidden" name="isOfficial" value="0" />
-      		        <input type="hidden" name="systemType" value="0" />
-      		        <textarea title="formHtmlData" name="formHtmlData" style="display:none;"></textarea>
-
+      			<form id="apprDocForm" name="apprDocForm" method="post" action="/approval/createApprDoc.do">
 
       				<h3 style="margin: 2% 45%">기안용지</h3>
 
@@ -242,7 +206,7 @@ h4{
       								<td>
       									<div id="selectReferenceId" class="input-group organization"></div>
       								</td>
-      								<th>빈칸?</th>
+      								<th></th>
       								<td>
       							        <span id="apprRefInfoUl"></span>
       								</td>
@@ -259,32 +223,13 @@ h4{
       				</div>
 
               <div class="">
-                <textarea id="reqcontent" name="name" rows="8" cols="80" style="width:100%"></textarea>
+                <textarea id="reqcontent" name="name" rows="25" cols="80" style="width:100%"></textarea>
               </div>
       		        <!--  template의 jsp 호출 시작-->
 
       				<!--  template의 jsp 호출 끝-->
 
-      				<div id="formLinkedHtmlDataDiv" style="border: 1px solid #e0e0e0;" class="mt10 padding10 none"></div>
-      					<div class="border_t1" style="border-top:none !important;">
-      				        <div id="editorDiv">
-      				        	<textarea id="formEditorData" title="formEditorData" name="formEditorData" style="display:none;"></textarea>
-      				        </div>
-      				    </div>
-      			</form>
-
-      			<form id="listForm" name="listForm" method="get" action="/groupware/approval/work/apprWorkForm/listApprForm.do">
-      			    <input type="hidden" name="topFormParentId" value="389919" />
-      			    <input type="hidden" name="formParentId" value="389919" />
-      			    <input type="hidden" name="formId" value="389922" />
-      			    <input type="hidden" name="actionType" value="" />
-      			    <input type="hidden" name="sortColumn" value="" />
-      			    <input type="hidden" name="sortType" value="" />
-      			    <input type="hidden" name="usage" value="0"/>
-      			    <input type="hidden" name="searchWord" value=""/>
-      			    <input type="hidden" name="pageIndex" value="1"/>
-      			    <input type="hidden" name="pagePerRecord" value="10"/>
-      			    <input type="hidden" name="linkType" value=""/>
+      					
       			</form>
       		</div>
       	</div>
@@ -328,12 +273,12 @@ h4{
     </script>
 
     <!-- nicedit 호출 -->
-    <script type="text/javascript">
+   <!--  <script type="text/javascript">
       bkLib.onDomLoaded(function() {
         myNicEditor = new nicEditor({
           fullPanel : true
         }).panelInstance('reqcontent');
-      });
+      }); -->
     </script>
 
 <%@ include file="/views/common/footer.jsp"%>
