@@ -10,6 +10,15 @@
     <link href="../../dist/css/default.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700" rel="stylesheet">
   </head>
+  <style>
+      .mypage .mypage-tbl tr th {
+          background: rgb(240, 240, 240);
+          height: 40px;
+      }
+      .mypage .mypage-btnwrap {
+          float: right;
+      }
+  </style>
   <body>
     <header>
         <nav class="navbar navbar-default">
@@ -53,58 +62,63 @@
 
     <section>
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>메인 화면</h3>
-                    <table class="table table-hover">
-                        <colgroup>
-                            <col style="width: 50px;"/>
-                            <col style="min-width: 200px;"/>
-                            <col style="width: 90px;"/>
-                            <col style="width: 120px;"/>
-                            <col style="width: 60px;"/>
-                        </colgroup>
-                        <thead>
-                            <h5>미결재 문서</h5>
-                            <tr>
-                                <th scope="col" class="text-center">번호</th>
-                                <th scope="col"  class="text-center">제목</th>
-                                <th scope="col"  class="text-center">작성일</th>
-                                <th scope="col"  class="text-center">작성자</th>
-                                <th scope="col"  class="text-center">조회수</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-condensed">
-                            <tr>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="row mypage">
+                <div class="col-md-8">
+                    <h3>마이 페이지</h3>
+                    <form action="">
+                        <table class="table table-default mypage-tbl">
+                            <tbody class="table-condensed">
+                                <colgroup>
+                                    <col style="width: 100px;">
+                                    <col style="width: 200px;">
+                                    <col style="width: 100px;">
+                                    <col style="width: 200px;">
+                                </colgroup>
+                                <tr>
+                                    <th scope="col" class="text-center">사원번호</th>
+                                    <td class="text-center" colspan="2">AT20180001</td>
+                                    <td class="text-center" rowspan="4">
+                                        <img class="img-fluid img-circle" src="../../dist/img/profile.jpg" alt="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="col"  class="text-center">비밀번호</th>
+                                    <td class="text-center" colspan="2">********</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col"  class="text-center">사원이름</th>
+                                    <td class="text-center" colspan="2">박찬울</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col"  class="text-center">주민등록번호</th>
+                                    <td class="text-center" colspan="2">911115-1******</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col"  class="text-center">이메일</th>
+                                    <td class="text-center">ATOM@naver.com</td>
+                                    <th scope="col"  class="text-center">연락처</th>
+                                    <td class="text-center">010-1234-5678</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col"  class="text-center">주소</th>
+                                    <td class="text-center" colspan="3">경기도 남양주시</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col"  class="text-center">부서</th>
+                                    <td class="text-center">영업 1팀</td>
+                                    <th scope="col"  class="text-center">직급</th>
+                                    <td class="text-center">대리</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col"  class="text-center">입사일</th>
+                                    <td class="text-center">2016-04-05</td>
+                                    <th scope="col"  class="text-center">퇴사일</th>
+                                    <td class="text-center">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="submit" class="btn btn-default mypage-btnwrap">저장</button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -25,7 +25,7 @@
     <div class="content">
         <div class="col-md-12">
             <h4>업무 등록</h4>
-        	<form action="<%=request.getContextPath()%>/task/taskWriteEnd" method="post" enctype="multipart/form-data">
+        	<form action="<%=request.getContextPath()%>/task/taskWriteEnd" method="post">
         		<input type="hidden" name="userId" value="<%=emp.getEmpNo() %>">
         		<input type="hidden" name="userName" value="<%=emp.getEmpName() %>">
         		<input type="hidden" name="deptCode" value="<%=emp.getDeptCode() %>">
@@ -88,16 +88,11 @@
 	                            <button type="button" class="btn btn-default btn-sm">업무 보관함</button>
 	                        </td>
 	                    </tr>
-	                    <tr>
-							<th>첨부파일</th>
-							<td><input type="file" name="up_file"></td>
-						</tr>
 	                </tbody>
 	            </table>
 	            <div>
-	                <textarea name="area2" style="width: 100%; height: 300px;"></textarea>
+	                <textarea name="area2" style="width: 100%; height: 350px;"></textarea>
 	            </div>
-	            
             <div class="btn-wrap float-right">
                 <button type="submit" class="btn btn-sm btn-primary">저장</button>
                 <button type="button" class="btn btn-sm btn-default">임시저장</button>

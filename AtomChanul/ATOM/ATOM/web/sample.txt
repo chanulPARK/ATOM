@@ -1,0 +1,8 @@
+INSERT INTO task VALUES ('user1','사원1','영업 1팀',1,'업무 보고','사원1','18년 6월 1일 업무보고','18년 6월 1일 업무보고','ORIGINAL_NAME','RENAME_NAME',to_date('18/06/01','RR/MM/DD'),to_date('18/06/01','RR/MM/DD'),'완료',1);
+INSERT INTO task VALUES ('user2','사원2','영업 2팀',2,'업무 보고','사원2','18년 6월 2일 업무보고','18년 6월 2일 업무보고','ORIGINAL_NAME','RENAME_NAME',to_date('18/06/02','RR/MM/DD'),to_date('18/06/02','RR/MM/DD'),'완료',1);
+INSERT INTO task VALUES ('user3','사원3','생산부',3,'업무 보고','사원3','18년 6월 3일 업무보고','18년 6월 3일 업무보고','ORIGINAL_NAME','RENAME_NAME',to_date('18/06/03','RR/MM/DD'),to_date('18/06/03','RR/MM/DD'),'완료',1);
+INSERT INTO task VALUES ('user4','사원4','인사팀',4,'업무 보고','사원4','18년 6월 4일 업무보고','18년 6월 4일 업무보고','ORIGINAL_NAME','RENAME_NAME',to_date('18/06/04','RR/MM/DD'),to_date('18/06/04','RR/MM/DD'),'완료',1);
+INSERT INTO task VALUES ('user5','사원5','총무팀',5,'업무 보고','사원5','18년 6월 5일 업무보고','18년 6월 5일 업무보고','ORIGINAL_NAME','RENAME_NAME',to_date('18/06/05','RR/MM/DD'),to_date('18/06/05','RR/MM/DD'),'완료',1);
+INSERT INTO task VALUES ('user6','사원6','영업 1팀',6,'업무 보고','사원6','18년 6월 6일 업무보고','18년 6월 6일 업무보고','ORIGINAL_NAME','RENAME_NAME',to_date('18/06/06','RR/MM/DD'),to_date('18/06/06','RR/MM/DD'),'완료',1);
+INSERT INTO task VALUES ('user7','사원7','영업 2팀',7,'업무 보고','사원7','18년 6월 7일 업무보고','18년 6월 7일 업무보고','ORIGINAL_NAME','RENAME_NAME',to_date('18/06/07','RR/MM/DD'),to_date('18/06/07','RR/MM/DD'),'완료',1);
+INSERT INTO task VALUES ('user8','사원8','생산부',8,'업무 보고','사원8','18년 6월 8일 업무보고','18년 6월 8일 업무보고','ORIGINAL_NAME','RENAME_NAME',to_date('18/06/08','RR/MM/DD'),to_date('18/06/08','RR/MM/DD'),'완료',1);

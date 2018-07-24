@@ -13,21 +13,19 @@
 <title>기본 페이지</title>
 
 <!-- 부트스트랩 -->
-<link href="<%=request.getContextPath()%>/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="<%=request.getContextPath()%>/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- font -->
-<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700" rel="stylesheet">
 
 <!-- awesome font -->
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/dist/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/dist/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 
 <!-- style css -->
-<link href="<%=request.getContextPath()%>/dist/css/style.css"
-	rel="stylesheet">
+<link href="<%=request.getContextPath()%>/dist/css/style.css" rel="stylesheet">
 
+<!-- jstree css -->
+<link href="<%=request.getContextPath()%>/dist/css/jstree/style.min.css" rel="stylesheet">
 
 <!-- jquery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -63,7 +61,7 @@
 							data-toggle="dropdown" role="button" aria-expanded="false"><span
 								class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">마이페이지</a></li>
+								<li><a href='<%=request.getContextPath()%>/empView?userId=<%=empLoggedIn.getEmpName() %>'>마이페이지</a></li>
 								<li><a href="#">설정</a></li>
 								<li class="divider"></li>
 								<li><a href="<%=request.getContextPath()%>/logout">로그아웃</a></li>

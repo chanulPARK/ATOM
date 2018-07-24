@@ -50,11 +50,10 @@ public class TaskDAO {
 				t.setEmpName(rs.getString("EMP_NAME"));
 				t.setDeptName(rs.getString("DEPT_NAME"));
 				t.setTaskNo(rs.getInt("TASK_NO"));
-				t.setCategory(rs.getString("CATEGORY"));
-				t.setTitle(rs.getString("TITLE"));
-				t.setContents(rs.getString("CONTENT"));
+				t.setCategoryName(rs.getString("CATEGORY_NAME"));
+				t.setTaskTitle(rs.getString("TASK_TITLE"));
+				t.setTaskContent(rs.getString("TASK_CONTENT"));
 				t.setEnrollDate(rs.getDate("ENROLL_DATE"));
-				t.setReportDate(rs.getDate("REPORT_DATE"));
 				list.add(t);
 			}	
 		} catch (Exception e) {
@@ -86,6 +85,33 @@ public class TaskDAO {
 		close(rs);
 		close(pstmt);
 		
+		return result;
+	}
+	
+	public int insertTask(Connection conn, Task t) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertTask");
+		
+		try 
+		{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, t.getEmpId());
+			pstmt.setString(2, t.getEmpName());
+			pstmt.setString(3, t.getDeptName());
+			pstmt.setString(4, t.getCategoryName());
+			pstmt.setString(5, t.getTaskTitle());
+			pstmt.setString(6, t.getTaskContent());
+			
+//			pstmt.setString(4, t.getOriginalFileName());
+//			pstmt.setString(5, t.getRenamedFileName());
+			
+			result = pstmt.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		close(pstmt);
 		return result;
 	}
 }
