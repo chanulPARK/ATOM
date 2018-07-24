@@ -12,6 +12,7 @@ public class Employee {
 	private String addr;
 	private String deptCode;
 	private String jobCode;
+	private String adminCode;
 	private String managerId;
 	private Date hireDate;
 	private Date entDate;
@@ -22,8 +23,8 @@ public class Employee {
 	public Employee() {}
 
 	public Employee(String empId, String empPw, String empName, String empNo, String email, String phone, String addr,
-			String deptCode, String jobCode, String managerId, Date hireDate, Date entDate, String entYn, String empPr,
-			String empImg) {
+			String deptCode, String jobCode, String adminCode, String managerId, Date hireDate, Date entDate,
+			String entYn, String empPr, String empImg) {
 		super();
 		this.empId = empId;
 		this.empPw = empPw;
@@ -34,6 +35,7 @@ public class Employee {
 		this.addr = addr;
 		this.deptCode = deptCode;
 		this.jobCode = jobCode;
+		this.adminCode = adminCode;
 		this.managerId = managerId;
 		this.hireDate = hireDate;
 		this.entDate = entDate;
@@ -114,6 +116,14 @@ public class Employee {
 		this.jobCode = jobCode;
 	}
 
+	public String getAdminCode() {
+		return adminCode;
+	}
+
+	public void setAdminCode(String adminCode) {
+		this.adminCode = adminCode;
+	}
+
 	public String getManagerId() {
 		return managerId;
 	}
@@ -166,8 +176,10 @@ public class Employee {
 	public String toString() {
 		return "Employee [empId=" + empId + ", empPw=" + empPw + ", empName=" + empName + ", empNo=" + empNo
 				+ ", email=" + email + ", phone=" + phone + ", addr=" + addr + ", deptCode=" + deptCode + ", jobCode="
-				+ jobCode + ", managerId=" + managerId + ", hireDate=" + hireDate + ", entDate=" + entDate + ", entYn="
-				+ entYn + ", empPr=" + empPr + ", empImg=" + empImg + "]";
+				+ jobCode + ", adminCode=" + adminCode + ", managerId=" + managerId + ", hireDate=" + hireDate
+				+ ", entDate=" + entDate + ", entYn=" + entYn + ", empPr=" + empPr + ", empImg=" + empImg + "]";
 	}
+
+	
 	
 }

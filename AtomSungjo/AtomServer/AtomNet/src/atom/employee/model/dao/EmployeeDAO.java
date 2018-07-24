@@ -43,6 +43,7 @@ public class EmployeeDAO {
 				e.setAddr(rs.getString("addr"));
 				e.setDeptCode(rs.getString("dept_code"));
 				e.setJobCode(rs.getString("job_code"));
+				e.setAdminCode(rs.getString("admin_code"));
 				e.setManagerId(rs.getString("manager_id"));
 				e.setHireDate(rs.getDate("hire_date"));
 				e.setEntDate(rs.getDate("ent_date"));

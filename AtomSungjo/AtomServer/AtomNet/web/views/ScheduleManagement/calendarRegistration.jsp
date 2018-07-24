@@ -2,12 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ include file = "/views/common/header.jsp" %>
 
-	<!-- niceidt -->
-    <script type="text/javascript">
-      bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
-    </script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/dist/js/nicEdit.js"></script>
-
 	<!-- daterangepicker -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/dist/css/daterangepicker-bs3.css">
 
@@ -53,6 +47,12 @@
                       <td>제목</td>
                       <td>
                         <input id="schedule-name" name="schedule-name" class="form-control" placeholder="제목" required>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>작성자</td>
+                      <td>
+                        <label><%=empLoggedIn.getEmpId() %></label>
                       </td>
                     </tr>
                     <tr>
@@ -161,22 +161,36 @@
       })
   
     });
-    $('#submit').click(function(){
-      console.log($('#repeat-select option:selected').val());
-    });
 
     $('#repeat-select').change(function(){
       if($('#repeat-select option:selected').val() == '반복 없음'){
         $('#repeat-end').hide();
+        $('#repeat-cycle').hide();      
         $('#repeat_end_date').attr("required",false);
+        $('#repeat-select').attr("required",false);
+        $('input:checkbox[name="dayOfWeek"]').attr("required", false); 
 
       }else{
         if($('#repeat-select option:selected').val() == '매주(요일지정)'){
           $('#day-checkbox').show();
           $('#repeat-cycle').show();
+          $('input:checkbox[name="dayOfWeek"]').attr("required", true); 
+          $('input:checkbox[name="dayOfWeek"]').change(function(){
+        	  $('input:checkbox[name="dayOfWeek"]').each(function(){
+        		  if($('input:checkbox[name="dayOfWeek"]').is(":checked") == true){
+        	          $('input:checkbox[name="dayOfWeek"]').attr("required", false); 
+        		  }else{
+        	          $('input:checkbox[name="dayOfWeek"]').attr("required", true); 
+
+        		  }
+        	  });
+          });
         }else{
           $('#day-checkbox').hide();
-          $('#repeat-cycle').hide();          
+          $('#repeat-cycle').hide();         
+          $('#day-checkbox').attr("required",false);
+          $('input:checkbox[name="dayOfWeek"]').attr("required", false); 
+          
         }
         $('#repeat-end').show();
         

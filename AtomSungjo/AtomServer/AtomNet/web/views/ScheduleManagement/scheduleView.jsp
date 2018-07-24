@@ -34,7 +34,7 @@
     <section>
       <div class="container-fluid">
         <div class="row">
-         <form action ="<%=request.getContextPath()%>/calendar/calendarUpdate">
+         <form action ="<%=request.getContextPath()%>/calendar/calendarUpdate" id = 'forma'>
           <div class="panel panel-default">
             <div class="panel-heading">일정 정보</div>
             <div class="panel-body"> <!-- panal body -->
@@ -54,6 +54,12 @@
                       <td>제목</td>
                       <td>
                         <input id="schedule-name" name="schedule-name" class="form-control" placeholder="제목" value="<%=s.getScheduleName()%>" required>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>작성자</td>
+                      <td>
+                        <label><%=s.getEmpId() %></label>
                       </td>
                     </tr>
                     <tr>
@@ -130,8 +136,11 @@
             </div> <!-- panel-body -->
             <div class="panel-footer">
               <div class="buttons pull-right">
+              
+              <%if(s.getEmpId().equals(empLoggedIn.getEmpId())){%>
                 <button type="submit" class="btn btn-primary" id="submit">수정</button>
                 <button type="button" class="btn btn-danger" id="delete" onclick="deleteButtonClick();">삭제</button>
+              <%}%>
                 <button type="reset" onclick="history.go(-1)"class="btn btn-default">취소</button>
               </div>
               <input name="scheduleId" value="<%=s.getScheduleId()%>" hidden>
@@ -166,8 +175,7 @@
       })
       
       $('#repeat-select').val('<%=s.getRepeatCategory()%>').attr("selected","selected");
-<%--       $('#repeat-cycle').val('<%=s.getRepeatCycle()%>').attr("selected","selected");
- --%>      
+
       if($('#repeat-select').val()!='반복 없음'){
     	  if($('#repeat-select option:selected').val() == '매주(요일지정)'){
               $('#day-checkbox').show();
@@ -181,6 +189,12 @@
 
           $('#repeat_end_date').attr("required",true);
       }
+      
+      
+      
+      
+      
+      
     });
     
     $('#submit').click(function(){
@@ -188,20 +202,38 @@
     });
 
     $('#repeat-select').change(function(){
-      if($('#repeat-select option:selected').val() == '반복 없음'){
-        $('#repeat-end').hide();
-      }else{
-        if($('#repeat-select option:selected').val() == '매주(요일지정)'){
-          $('#day-checkbox').show();
-          $('#repeat-cycle').show();
+        if($('#repeat-select option:selected').val() == '반복 없음'){
+          $('#repeat-end').hide();
+          $('#repeat-cycle').hide();      
+          $('#repeat_end_date').attr("required",false);
+          $('#repeat-select').attr("required",false);
+          $('input:checkbox[name="dayOfWeek"]').attr("required", false); 
+
         }else{
-          $('#day-checkbox').hide();
-          $('#repeat-cycle').hide();
+          if($('#repeat-select option:selected').val() == '매주(요일지정)'){
+            $('#day-checkbox').show();
+            $('#repeat-cycle').show();
+            $('input:checkbox[name="dayOfWeek"]').attr("required", true); 
+            $('input:checkbox[name="dayOfWeek"]').change(function(){
+          	  $('input:checkbox[name="dayOfWeek"]').each(function(){
+          		  if($('input:checkbox[name="dayOfWeek"]').is(":checked") == true){
+          	          $('input:checkbox[name="dayOfWeek"]').attr("required", false); 
+          		  }else{
+          	          $('input:checkbox[name="dayOfWeek"]').attr("required", true); 
+          		  }
+          	  });
+            });
+          }else{
+            $('#day-checkbox').hide();
+            $('#repeat-cycle').hide();         
+            $('#day-checkbox').attr("required",false);
+            $('input:checkbox[name="dayOfWeek"]').attr("required", false); 
+            
+          }
+          $('#repeat-end').show();
+          
+          $('#repeat_end_date').attr("required",true);
         }
-        $('#repeat-end').show();
-        
-        $('#repeat_end_date').attr("required",true);
-      }
             
     });
     
@@ -216,6 +248,7 @@
 		if(jQuery.inArray( $(this).val(), list ) > -1)
 			$(this).attr("checked",true);
     });
+	
     
     
 

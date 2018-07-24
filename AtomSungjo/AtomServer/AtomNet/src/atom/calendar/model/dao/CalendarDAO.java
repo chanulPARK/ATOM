@@ -39,6 +39,7 @@ public class CalendarDAO {
 			pstmt.setString(1, s.getScheduleName());
 			pstmt.setString(2, s.getStartDate());
 			pstmt.setString(3, s.getEndDate());
+			System.out.println(s.getEmpId());
 			pstmt.setString(4, s.getEmpId());
 			pstmt.setString(5, s.getCategory());
 			pstmt.setString(6, s.getContent());
@@ -46,6 +47,7 @@ public class CalendarDAO {
 			pstmt.setString(8, String.valueOf(s.getRepeatYN()));
 			pstmt.setString(9, s.getRepeatCategory());
 			pstmt.setString(10, s.getDayOfWeek());
+			System.out.println(s.getDayOfWeek());
 			pstmt.setDate(11, s.getRepeatEndDate());
 			
 			result = pstmt.executeUpdate();
@@ -199,6 +201,103 @@ public class CalendarDAO {
 			rtDate[1] = temp[2] +"-" + temp[0] + "-" + temp[1];
 		}
 		return rtDate;
+	}
+	public List<Calendar> selectAdminCode(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectAdminCode");
+		Calendar s = null;
+		ArrayList<Calendar> lists = new ArrayList();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			System.out.println("sql : " + sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				s = new Calendar();
+				s.setScheduleId(rs.getInt("schedule_id"));
+				s.setScheduleName(rs.getString("schedule_name"));
+				
+				String[] Dates = alldayChk(rs.getString("start_date"), rs.getString("end_date"));
+				if(!(rs.getString("repeat_category").equals("반복 없음") || rs.getString("repeat_category").equals("매일")) ){ // 주중, 매주(요일지정)
+					Dates = null;
+				}
+				
+				
+				
+				if(Dates == null) { // 주중이면 
+					s.setStartDate(rs.getString("start_date"));
+					s.setEndDate(rs.getString("end_date"));
+				}else { //주중이 아니면
+					s.setStartDate(Dates[0]);
+					s.setEndDate(Dates[1]);
+				}
+				s.setEmpId(rs.getString("emp_id"));
+				s.setCategory(rs.getString("category"));
+				s.setContent(rs.getString("content"));
+				s.setPlace(rs.getString("place"));
+				s.setRepeatYN(rs.getString("repeat_yn").charAt(0));
+				s.setRepeatCategory(rs.getString("repeat_category"));
+				s.setDayOfWeek(rs.getString("REPEAT_CYCLE"));
+				s.setRepeatEndDate(rs.getDate("repeat_end_date"));
+				lists.add(s);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close(rs);
+		close(pstmt);
+		return lists;
+	}
+	public List<Calendar> selectDeptCode(Connection conn, String deptCode, String empId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectDeptCode");
+		Calendar s = null;
+		ArrayList<Calendar> lists = new ArrayList();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, deptCode);
+			pstmt.setString(2, empId);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				s = new Calendar();
+				s.setScheduleId(rs.getInt("schedule_id"));
+				s.setScheduleName(rs.getString("schedule_name"));
+				
+				String[] Dates = alldayChk(rs.getString("start_date"), rs.getString("end_date"));
+				if(!(rs.getString("repeat_category").equals("반복 없음") || rs.getString("repeat_category").equals("매일")) ){ // 주중, 매주(요일지정)
+					Dates = null;
+				}
+				
+				
+				
+				if(Dates == null) { // 주중이면 
+					s.setStartDate(rs.getString("start_date"));
+					s.setEndDate(rs.getString("end_date"));
+				}else { //주중이 아니면
+					s.setStartDate(Dates[0]);
+					s.setEndDate(Dates[1]);
+				}
+				s.setEmpId(rs.getString("emp_id"));
+				s.setCategory(rs.getString("category"));
+				s.setContent(rs.getString("content"));
+				s.setPlace(rs.getString("place"));
+				s.setRepeatYN(rs.getString("repeat_yn").charAt(0));
+				s.setRepeatCategory(rs.getString("repeat_category"));
+				s.setDayOfWeek(rs.getString("REPEAT_CYCLE"));
+				s.setRepeatEndDate(rs.getDate("repeat_end_date"));
+				lists.add(s);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close(rs);
+		close(pstmt);
+		return lists;
 	}
 	
 }
