@@ -9,5 +9,13 @@
 
 <script src="<%=request.getContextPath()%>/dist/js/jstree/jstree.min.js"></script>
 
+<script src="<%=request.getContextPath()%>/dist/js/bootstrap.min.js"></script>
+
+<script src="<%=request.getContextPath()%>/dist/js/datepicker.js"></script>
+
+<script src="<%=request.getContextPath()%>/dist/js/daterangepicker.js"></script>
+
+<script src="<%=request.getContextPath()%>/dist/js/nicEdit.js"></script>
+
 </body>
 </html>
