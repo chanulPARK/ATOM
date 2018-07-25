@@ -7,6 +7,7 @@
 <%
 	ArrayList<ElectronicApproval> list = (ArrayList)request.getAttribute("list");
 	int cPage=(int)request.getAttribute("cPage");
+	int numPerPage=(int)request.getAttribute("numPerPage");
 	String pageBar=(String)request.getAttribute("pageBar");
 %>
 
@@ -63,14 +64,6 @@ aside .fa-caret-down {
   padding-right: 8px;
 }
 
-h4{
-  margin: 0px;
-}
-
-.content{
-  margin: 0px 20px;
-}
-
 .row-header{
   margin : 0;
 }
@@ -98,13 +91,153 @@ h4{
  overflow:hidden;
   white-space:nowrap;
 }
+
+  .float-right{
+            float: right;
+        }
+        .tableTL{
+            margin: 0;
+        }
+        .tableTL thead tr th{
+            font-weight: bold;
+            font-size: 13px;
+            text-align: center;
+        }
+        .tableTL tbody tr td{
+            font-size: 13px;
+            text-align: center;
+        }
+        .table-header{
+            border-top: 1px solid rgb(192, 192, 192);
+            padding-top: 8px;
+            border-bottom: 2px solid rgb(192, 192, 192);
+            padding-bottom: 8px;
+        }
+        .table-header div.row div{
+            padding: 1px;
+        }
+        .pagination_wrap{
+            text-align: center;
+            border-top: 1px solid rgb(192, 192, 192);
+            padding-top: 8px;
+            border-bottom: 1px solid rgb(192, 192, 192);
+            padding-bottom: 8px;
+        }
+        .pagination{
+            margin: 0;
+            vertical-align: middle;
+        }
+        .btn-wrap{
+            margin: 10px 0;
+        }
+
 	
 	</style>
 </head>
 
 
-	
-    <section>
+	<section>
+        <div class="content">
+            <div class="col-md-12">
+                <h4>결재대기함</h4>
+                <div class="table-header">
+                    <div class="row">
+                        <div class="col-md-1" style="width: 45px; margin: 0 0 0 15px;">
+                            <select id="numperPage" class="form-control input-sm" style="padding: 0">
+                                <option value="10" selected="selected">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1" style="margin: 0 0 0 10px;"><p style="font-size: 12px; color: rgb(160, 160, 160); margin: 6px 0px;">전체 10</p></div>
+						<div class="col-md-10 pull-right">
+	                        <form class="form-inline pull-right" style="margin-right:15px" action="">
+                                <input class="form-control input-sm" placeholder="From" value=""><button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+                                &nbsp;~&nbsp;
+                                <input class="form-control input-sm" placeholder="To"><button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+                                <select class="form-control input-sm" style="padding: 0">
+                                    <option value="searchUser">기안자</option>
+                                    <option value="searchTitle">제목</option>
+                                    <option value="searchTContents">기안내용</option>
+                                </select>
+                                <input type="text" class="form-control input-sm" placeholder="검색어">
+                                <button type="submit" class="btn btn-primary btn-sm floa">검색</button>
+	                        </form>
+                        </div>
+                    </div> 
+                </div>
+                
+                <table class="tableTL table table-striped">
+                <colgroup>
+                   <col width="1%"/>
+                      <col width="2%"/>
+                      <col width="5%"/>
+                      <col width="2%"/>
+                      <col width="25%"/>
+                      <col width="4%"/>
+                      <col width="5%"/>
+                      <col width="5%"/>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col"><input id="checkAll" name="" onclick="selectAllTodo()" type="checkbox" value="" title="checkAll" aria-invalid="false"></th>
+                        <th scope="col">번호</th>
+                        <th scope="col">
+                            <a data-sortcolumn="FOLDER" href="#">문서 번호<i class="glyphicon glyphicon-triangle-top"></i></a>
+                        </th>
+                        <th scope="col">유형</th>
+                        <th scope="col">
+                            <a data-sortcolumn="REGISTERNAME" href="#">제목<i class="glyphicon glyphicon-triangle-top"></i></a>
+                        </th>
+                        <th scope="col">
+                            <a data-sortcolumn="INSERTDATE" href="#">기안자<i class="glyphicon glyphicon-triangle-top"></i></a>
+                        </th>
+                        <th scope="col">
+                            <a data-sortcolumn="DUEDATE" href="#">기안부서<i class="glyphicon glyphicon-triangle-top"></i></a>
+                        </th>
+                        <th scope="col">
+                            <a data-sortcolumn="DUEDATE" href="#">기안날짜<i class="glyphicon glyphicon-triangle-top"></i></a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%for(ElectronicApproval ea : list){ %>
+	               	<tr>
+	 					<td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="<%=ea.getDraftNo()%>" /></td>
+		                <td><%=ea.getPageNo()%></td>
+		                <td><%=ea.getDraftNo() %></td>
+		                <td>결재</td>
+		                <td><a href="#"><%=ea.getDraftName() %></a></td>
+						<td><%=ea.getEmpName() %></td>
+		                <td><%=ea.getDraftDept() %></td>
+		                <td><%=ea.getDraftDate() %></td>                	
+		            </tr>
+	                    <!-- <tr>
+	                      <td colspan="10" class="emptyRecord">검색 결과가 존재하지 않습니다.</td>
+	                    </tr> -->
+	                <%}%>
+                </tbody>
+                </table>
+                <nav class="pagination_wrap">
+				  <ul class="pagination pagination-sm">
+				  	<%=pageBar %>
+				  </ul>
+				</nav>		
+				            <button type="button" class="btn btn-primary pull-right" id="allApproval" style="margin-top:15px;">일괄 결재 </button>
+						
+				
+                
+            </div>
+            <!-- /.col-md-12 -->
+        </div>
+        <!-- /.content -->
+       
+
+    </section>
+    <%-- <section>
         <div class="content">
           <div class="row">
               <h4>결재대기함</h4>
@@ -240,32 +373,6 @@ h4{
             <div class="row" style="text-align:center;">
 			  <ul class="pagination">
 			  	<%=pageBar %>
-			  
-			    <!-- <li>
-			      <a href="#" aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
-			      </a>
-			    </li>
-			    <li>
-			      <a href="#" aria-label="Previous">
-			        <span aria-hidden="true">&lsaquo;</span>
-			      </a>
-			    </li>
-			    <li><a href="">1</a></li>
-			    <li><a href="">2</a></li>
-			    <li><a href="">3</a></li>
-			    <li><a href="">4</a></li>
-			    <li><a href="">5</a></li>
-			    <li>
-			      <a href="#" aria-label="Next">
-			        <span aria-hidden="true">&rsaquo;</span>
-			      </a>
-			    </li>
-			    <li>
-			      <a href="#" aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
-			      </a>
-			    </li> -->
 			  </ul>
 			</div>
             
@@ -275,9 +382,14 @@ h4{
           </div>
         </div>
 
-    </section>
+    </section> --%>
 
     <script>
+    $(function(){
+    	$('#numperPage').val('<%=numPerPage%>');
+    });
+    
+    
     var dropdown = document.getElementsByClassName("dropdown-btn");
 var i;
 
@@ -292,6 +404,12 @@ for (i = 0; i < dropdown.length; i++) {
     }
   });
   }
+  
+  $('#numperPage').change(function(){
+	  location.href='<%=request.getContextPath()%>/electronic/electronicWaitingBox?cPage=1&numPerPage='+$('#numperPage').val();
+	  console.log($('#numperPage').val());
+  });
+  
     </script>
 
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->

@@ -36,14 +36,18 @@ public class ElectronicWaitingBoxServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Employee e = (Employee)session.getAttribute("empLoggedIn");
 		
+		
+		
 		//페이징 처리
-		int numPerPage = 10;
+		int numPerPage;
 		int cPage;
 		try {
+			numPerPage = Integer.parseInt(request.getParameter("numPerPage"));
 			cPage=Integer.parseInt(request.getParameter("cPage"));
 		}
 		catch (NumberFormatException e1) {
 			cPage=1;
+			numPerPage = 10;
 		}
 		
 		List<ElectronicApproval> list = new ElectronicService().selectWaitApproval(e.getEmpId(), cPage, numPerPage);
@@ -91,7 +95,7 @@ public class ElectronicWaitingBoxServlet extends HttpServlet {
 						else
 						{
 //							pageBar+="<a href='"+request.getContextPath()+"/electronic/electronicWaitingBox?cPage="+pageNo+"'>["+pageNo+"]</a>";
-							pageBar+="<li><a href='"+request.getContextPath()+"/electronic/electronicWaitingBox?cPage="+pageNo+"'>"+pageNo+"</a></li>";
+							pageBar+="<li><a href='"+request.getContextPath()+"/electronic/electronicWaitingBox?cPage="+pageNo+"&numPerPage="+numPerPage+"'>"+pageNo+"</a></li>";
 	
 						}
 						pageNo++;
@@ -109,7 +113,7 @@ public class ElectronicWaitingBoxServlet extends HttpServlet {
 					{
 //						pageBar+="<a href='"+request.getContextPath()+"/electronic/electronicWaitingBox?cPage="+pageNo+"'>[다음]</a>";
 						pageBar+="<li>\r\n" + 
-								"<a href='"+request.getContextPath()+"/electronic/electronicWaitingBox?cPage="+pageNo+"' aria-label='Next'>" + 
+								"<a href='"+request.getContextPath()+"/electronic/electronicWaitingBox?cPage="+pageNo+"&numPerPage="+numPerPage+"' aria-label='Next'>" + 
 									"<span aria-hidden='true'>&rsaquo;</span>" + 
 								"</a>" + 
 							"</li>";
@@ -119,6 +123,7 @@ public class ElectronicWaitingBoxServlet extends HttpServlet {
 				//페이지바 구성끝!
 				
 				request.setAttribute("cPage", cPage);
+				request.setAttribute("numPerPage", numPerPage);
 				request.setAttribute("pageBar", pageBar);
 		
 		request.setAttribute("list", list);		
