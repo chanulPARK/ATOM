@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class BoardDeleteServlet
  */
-@WebServlet(name="BoardDeleteServlet", urlPatterns="/boardDelete")
+@WebServlet("/board/delboard.jsp")
 public class BoardDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -26,7 +26,8 @@ public class BoardDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("BoardDeleteServlet 클래스에서 실행하였습니다.");
+		System.out.println("BoardDeleteServlet 실행");
+		request.getRequestDispatcher("/views/board/delboard.jsp").forward(request, response);
 	}
 
 	/**

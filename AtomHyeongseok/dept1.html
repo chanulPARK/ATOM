@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>자유게시판</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700" rel="stylesheet">
+    <script src='js/jquery-3.3.1.min.js'></script>
+    <link href="css/mm-vertical.css" rel="stylesheet">
+    <script src='js/mm-vertical.js'></script>
+    <!-- 스타일 css -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                <!-- <a class="navbar-brand" href="#">Brand</a> -->
+                    <a class="navbar-brand" href="#">
+                        <img src="image/login.png">
+                    </a>
+                </div>
+            
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+                    <li><a href="#">전자결재</a></li>
+                    <li><a href="#">일정</a></li>
+                    <li><a href="#">업무관리</a></li>
+                    <li><a href="notice.html">게시판</a></li>
+                    <li><a href="#">조직도</a></li>
+                    <li><a href="#">근태관리</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">마이페이지</a></li>
+                        <li><a href="#">설정</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">로그아웃</a></li>
+                    </ul>
+                    </li>
+                </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+    </header>
+
+    <aside id='show'>
+        <div class="content-fluid">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a href='notice.html'>공지사항</a>
+                        </h4>
+                    </div>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse1">자유게시판</a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel1">
+                            <a href="dept1.html">부서 1팀</a>
+                        </div>
+                        <div class="panel2">
+                            <a href="dept2.html">부서 2팀</a>
+                        </div>
+                    </div>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a href="data.html">자료실</a>
+                        </h4>
+                    </div>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a href="question.html">설문조사</a>
+                        </h4>
+                    </div>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse2">게시판 관리</a>
+                        </h4>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse">
+                        <div class="panel1">
+                            <a href="createboard.html">게시판 생성</a>
+                        </div>
+                        <div class="panel2">
+                            <a href="delboard.html">게시판 삭제</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <section>
+        <div class="content">
+            <div class="col-md-10">
+                <h3>부서 1팀 게시판</h3>
+                <div class='left form-group'>
+                    <button type='button' class='btn btn-default'>
+                        <a href="newfreeboard.html">새 글 쓰기</a>
+                    </button>
+                </div>
+                <div class='left form-group'>
+                    <p style='font-size:20px;'>&nbsp;전체(0)&nbsp;</p>
+                </div>
+                <div class='left form-group'>
+                    <select class='form-control'>
+                        <option>10</option>
+                        <option>15</option>
+                        <option>20</option>
+                    </select>
+                </div>
+                <div class='right form-group'>
+                    <button type='button' class='btn btn-primary'>검색</button>
+                </div>
+                <div class='right form-group'>
+                    <input type='text'class='form-control'>
+                </div>
+                <div class='right form-group'>
+                    <select class='form-control'>
+                        <option>제목</option>
+                        <option>작성일</option>
+                        <option>작성자</option>
+                    </select>
+                </div>
+                <table class="table table-hover">
+                        <colgroup>
+                            <col style="width:10px;"/>
+                            <col style="width:50px;"/>
+                            <col style="min-width:200px;"/>
+                            <col style="width:10px;"/>
+                            <col style="width:120px;"/>
+                            <col style="width:90px;"/>
+                            <col style="width:60px;"/>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th scope='col' class='text-center'>
+                                    <input type='checkbox' style='width:10px;'/>
+                                </th>
+                                <th scope="col" class="text-center">
+                                    <span style='font-size:15px;'>
+                                        번호
+                                    </span>
+                                </th>
+                                <th scope="col" class="text-center">
+                                    <span style='font-size:15px;'>
+                                        제목
+                                    </span>
+                                </th>
+                                <th scope="col" class="text-center">
+                                    <img src='' class='glyphicon glyphicon-file'>
+                                </th>
+                                <th scope="col" class="text-center">
+                                    <span style='font-size:15px;'>
+                                        작성자
+                                    </span>
+                                </th>
+                                <th scope="col" class="text-center">
+                                    <span style='font-size:15px;'>
+                                        작성일
+                                    </span>
+                                </th>
+                                <th scope="col" class="text-center">
+                                    <span style='font-size:15px;'>
+                                        조회수
+                                    </span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-condensed">
+                            
+                        </tbody>
+                </table>
+                <nav style="text-align: center">
+                    <ul class="pagination pagination-sm">
+                        <li>
+                            <span aria-hidden="true">&laquo;</span>
+                        </li>
+                        <li class="active">
+                            <a href="#">1</a>
+                        </li>
+                        <li>
+                            <span aria-hidden="true">&raquo;</span>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <br>
+        <div class="container-fluid">
+            
+        </div>
+
+    </section>
+
+    <footer>
+        <p>COPYRIGHT @ ATOM ALL RIGHTS RESERVED</p>
+    </footer>
+
+    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

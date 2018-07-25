@@ -4,22 +4,22 @@ import java.sql.*;
 public class Board {
 	private int boardNo;		// 게시글 번호
 	private String title;		// 글 제목
-	private Date writeDate;		// 작성일
 	private String content;		// 내용
 	private String writer;		// 작성자
+	private Date writeDate;		// 작성일
 	private int visits;			// 조회수
 	
 	public Board() {
 		
 	}
 	
-	public Board(int boardNo, String title, Date writeDate,
-			String content, String writer, int visits) {
+	public Board(int boardNo, String title, String content,
+			String writer, Date writeDate, int visits) {
 		this.boardNo = boardNo;
 		this.title = title;
-		this.writeDate = writeDate;
 		this.content = content;
 		this.writer = writer;
+		this.writeDate = writeDate;
 		this.visits = visits;
 	}
 
@@ -73,11 +73,8 @@ public class Board {
 
 	@Override
 	public String toString() {
-		return "번호:" + boardNo
-			+ ", 제목:" + title
-			+ ", 작성일:" + writeDate
-			+ ", 내용: " + content
-			+ ", 작성자:" + writer
-			+ ", 조회수:" + visits;
+		return "번호:" + boardNo + ", 제목:" + title
+			+ ", 내용: " + content + ", 작성자:" + writer
+			+ ", 작성일:" + writeDate + ", 조회수:" + visits;
 	}
 }
