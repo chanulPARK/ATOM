@@ -1,8 +1,14 @@
+<%@page import="atom.electronic.model.vo.ElectronicApproval"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
 <%@ include file="/views/common/approvalAside.jsp"%>
-
+<%
+	ArrayList<ElectronicApproval> list = (ArrayList)request.getAttribute("list");
+	int cPage=(int)request.getAttribute("cPage");
+	String pageBar=(String)request.getAttribute("pageBar");
+%>
 
 <head>
 	<style>
@@ -213,81 +219,56 @@ h4{
                 
               </thead>
               <tbody>
-              <tr>
-	                <td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="" /></td>
-	                <td>00004</td>
-	                <td>F01USER2018072414</td>
+              <%for(ElectronicApproval ea : list){ %>
+               	<tr>
+ 					<td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="<%=ea.getDraftNo()%>" /></td>
+	                <td><%=ea.getPageNo()%></td>
+	                <td><%=ea.getDraftNo() %></td>
 	                <td>결재</td>
-	                <td>휴가신청서</td>
-					<td>USER</td>
-	                <td>해외개발 1팀</td>
-	                <td>2018-07-24 12:48</td>
-                </tr>
-                <tr>
-	                <td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="" /></td>
-	                <td>00004</td>
-	                <td>F01USER2018072414</td>
-	                <td>결재</td>
-	                <td>휴가신청서</td>
-					<td>USER</td>
-	                <td>해외개발 1팀</td>
-	                <td>2018-07-24 12:48</td>
-                </tr>
-                <tr>
-	                <td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="" /></td>
-	                <td>00004</td>
-	                <td>F01USER2018072414</td>
-	                <td>결재</td>
-	                <td>휴가신청집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를서</td>
-					<td>USER</td>
-	                <td>해외개발 1팀</td>
-	                <td>2018-07-24 12:48</td>
-                </tr>
-                <tr>
-	                <td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="" /></td>
-	                <td>00004</td>
-	                <td>F01USER2018072414</td>
-	                <td>결재</td>
-	                <td>집에가고싶은데집에를 보내주333333333333지않네?집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를집에가고싶은데집에를 보내주333333333333지않네?</td>
-					<td>USER</td>
-	                <td>해외개발 1팀</td>
-	                <td>2018-07-24 12:48</td>
-                </tr>
-                <tr>
-	                <td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="" /></td>
-	                <td>00004</td>
-	                <td>F01USER2018072414</td>
-	                <td>결재</td>
-	                <td>휴가신청서</td>
-					<td>USER</td>
-	                <td>해외개발 1팀</td>
-	                <td>2018-07-24 12:48</td>
-                </tr>
-                <tr>
-	                <td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="" /></td>
-	                <td>00004</td>
-	                <td>F01USER2018072414</td>
-	                <td>결재</td>
-	                <td>휴가신청서</td>
-					<td>USER</td>
-	                <td>해외개발 1팀</td>
-	                <td>2018-07-24 12:48</td>
-                </tr>
-                <tr>
-	                <td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="" /></td>
-	                <td>00004</td>
-	                <td>F01USER2018072414</td>
-	                <td>결재</td>
-	                <td>휴가신청서</td>
-					<td>USER</td>
-	                <td>해외개발 1팀</td>
-	                <td>2018-07-24 12:48</td>
-                </tr>
+	                <td><%=ea.getDraftName() %></td>
+					<td><%=ea.getEmpName() %></td>
+	                <td><%=ea.getDraftDept() %></td>
+	                <td><%=ea.getDraftDate() %></td>                	
+	            </tr>
                     <!-- <tr>
                       <td colspan="10" class="emptyRecord">검색 결과가 존재하지 않습니다.</td>
                     </tr> -->
+                <%}%>
               </tbody>
             </table>
+            
+            <div class="row" style="text-align:center;">
+			  <ul class="pagination">
+			  	<%=pageBar %>
+			  
+			    <!-- <li>
+			      <a href="#" aria-label="Previous">
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+			    </li>
+			    <li>
+			      <a href="#" aria-label="Previous">
+			        <span aria-hidden="true">&lsaquo;</span>
+			      </a>
+			    </li>
+			    <li><a href="">1</a></li>
+			    <li><a href="">2</a></li>
+			    <li><a href="">3</a></li>
+			    <li><a href="">4</a></li>
+			    <li><a href="">5</a></li>
+			    <li>
+			      <a href="#" aria-label="Next">
+			        <span aria-hidden="true">&rsaquo;</span>
+			      </a>
+			    </li>
+			    <li>
+			      <a href="#" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			    </li> -->
+			  </ul>
+			</div>
+            
             <div class="btn-wrap">
             <button type="button" class="btn btn-color5 pull-right" id="allApproval">일괄결재 </button>
             </div>

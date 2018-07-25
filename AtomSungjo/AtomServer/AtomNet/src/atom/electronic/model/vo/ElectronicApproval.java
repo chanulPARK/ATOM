@@ -3,9 +3,11 @@ package atom.electronic.model.vo;
 import java.util.Date;
 
 public class ElectronicApproval {
+	private int pageNo;
 	private String draftNo;
 	private Date draftDate;
 	private String empId;
+	private String empName;
 	private String draftDept;
 	private String draftName;
 	private String draftContent;
@@ -15,11 +17,26 @@ public class ElectronicApproval {
 
 	@Override
 	public String toString() {
-		return "ElectronicApproval [draftNo=" + draftNo + ", draftDate=" + draftDate + ", empId=" + empId
-				+ ", draftDept=" + draftDept + ", draftName=" + draftName + ", draftContent=" + draftContent
+		return "ElectronicApproval [pageNo=" + pageNo + ", draftNo=" + draftNo + ", draftDate=" + draftDate + ", empId="
+				+ empId + ", draftDept=" + draftDept + ", draftName=" + draftName + ", draftContent=" + draftContent
 				+ ", draftState=" + draftState + "]";
 	}
 
+	public String getEmpName() {
+		return empName;
+	}
+
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+	
+	public int getPageNo() {
+		return pageNo;
+	}
+
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
 	public String getDraftNo() {
 		return draftNo;
 	}

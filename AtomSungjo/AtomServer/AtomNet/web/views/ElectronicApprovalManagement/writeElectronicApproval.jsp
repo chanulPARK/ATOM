@@ -95,9 +95,84 @@ h4{
   height:1px;width:5.5em;
 }
 
+
+
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    height:60%;
+}
+.tabcontentsecond{
+	display:none;
+}
+
+ul{
+	list-style:none;
+	 text-align:center;
+	 padding : 0px;
+}
+
+.apprline li{
+	font-size:2em;
+	
+}
+
+
+.appr-info{
+    padding: 6px 12px;
+	border: 1px solid #ccc;
+	height:67%;
+	
+}
+
+
+.userApprSave{
+	 display: inline-block;
+	 background-color :#f1f1f1; 
+	 width: 100%;
+}
+
+.apprlinelist table{
+	text-align:center;
+}
+
+
+
     </style>
+
     <!-- niceidt -->
-    
+
     <script type="text/javascript" src="<%=request.getContextPath()%>/dist/js/nicEdita.js"></script>
     <script type="text/javascript">
       bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
@@ -111,11 +186,149 @@ h4{
           </div>
           <div class="row" >
 	          <div id="formButtonDiv" class="btn-wrap pull-right">
-	      	    <button id="addApprLineButton" type="button" class="btn btn-">결재선</button>
-	      	    <button id="createApprDocButton" type="button" class="btn btn-color5 br">결재요청</button>
+	      	    <button id="addApprLineButton" type="button" class="btn" data-toggle="modal" data-target="#myModal">결재선</button>
+	      	    <button id="createApprDocButton" type="button" class="btn btn-color5" onclick="$('#submitbtn').click()">결재요청</button>
 	      		<!-- <button id="createApprDocTemporayButton" type="button" class="btn btn-default">임시저장</button> -->
 	      		<button id="listApprDocButton" type="button" class="btn btn-default">취소</button>
 	      	  </div>
+
+            <!-- Modal -->
+             <div id="myModal" class="modal fade" role="dialog">
+              <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header" style = "background-color:white;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">결재선 지정</h4>
+                  </div>
+                  
+                  <div class="modal-body">
+                  	<div class="row">
+	                  <div class="col-md-5">
+	                  	<!-- Tab links -->
+						<div class="tab">
+						  <button class="tablinks" onclick="openCity(event, 'organization')">조직도</button>
+						  <button class="tablinks" onclick="openCity(event, 'search')">검색</button>
+						</div>
+						
+						<!-- Tab content -->
+						<div id="organization" class="tabcontent">
+						  <h3>조직도</h3>
+						  <p>London is the capital city of England.</p>
+						</div>
+						<div id="search" class="tabcontent tabcontentsecond">
+						  <h3>검색</h3>
+						  <p>Paris is the capital of France.</p> 
+						</div>
+	                  </div> <!-- col-lg-5 -->
+	                  <div class="col-md-1" style="margin-top:20%;">
+	                  	<div class="apprline" >
+							<ul>
+								<li><a href="#" id="btnItemAdd" style="color:red"><i class="fa fa-plus-square"></i></a></li>
+								<li><a href="#" id="btnItemRemove"><i class="fa fa-minus-square"></i></a></li>
+								<li><a id="btnItemRemoveAll" href="#a"><i class="fa fa-rotate-left"></i></a></li>
+							</ul>						
+						</div>
+	                  </div> <!-- col-lg-1 -->
+	                  <div class="col-md-6">
+						<div class="appr-info">
+							<h5>결재선 정보</h5>
+							<div class="userApprSave Load">
+								<strong>사용자 결재선</strong>									
+								<select title="사용자 결재선" id="userLineId" class="" style="width:55%; margin:2% 5%;">
+									<option value="">-- 선택  --</option>
+									<option value="21263699">결재선저장</option>
+								</select>		
+								<button class="btn btn-xs" type="button" id="btnRemove">삭제</button>
+							</div>
+							<div class="apprlinelist" style="height:77%; overflow-y:scroll;">
+								<div class="fleft" style="width:100% !important; overflow-y:auto;">
+								<ul id="ulResult" class="list-selectable ui-sortable" style="width:98%; font-size:1em;">
+									<li class="ui-state-default important nomove" title="박메카 기안 인사팀">
+										<div class="liDiv">
+											<table cellspacing="1" cellpadding="1" border="0" style="width: 100%; table-layout:fixed; border:1px solid #eee">
+												<tbody>
+													<tr>
+														<td style="padding:10px 5px; width: 3em; text-align: center;"></td>
+														<td id="apprTypeTd" style="padding:10px 5px; text-align: center; border-left:1px solid #F0F3F7; width: 70px;">결재</td>
+														<td class="textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;">박메카 기안 인사팀</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</li>
+									<li class="ui-state-default important move" title="김이지 회장 인사팀">
+										<div class="liDiv">
+											<table cellspacing="1" cellpadding="1" border="0" style="width: 100%; table-layout:fixed; border:1px solid #eee">
+												<tbody>
+													<tr>
+														<td style="padding:10px 5px; width: 3em; text-align: center;"><i class="fa fa-arrows-v fa-lg text-point-b"></i></td>
+														<td id="apprTypeTd" style="padding:10px 5px; text-align: center; border-left:1px solid #F0F3F7; width: 70px;">결재</td>
+														<td class="textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;text-align:center">김이지 회장 인사팀</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</li>
+									<li class="ui-state-default important move" title="송한국 이사 회계팀">
+										<div class="liDiv">
+											<table cellspacing="1" cellpadding="1" border="0" style="width: 100%; table-layout:fixed; border:1px solid #eee">
+												<tbody>
+													<tr>
+														<td style="padding:10px 5px; width: 3em; text-align: center;"><i class="fa fa-arrows-v fa-lg"></i></td>
+														<td id="apprTypeTd" style="padding:10px 5px; text-align: center; border-left:1px solid #F0F3F7; width: 70px;">결재</td>
+														<td class="textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;">송한국 이사 회계팀</td>
+													</tr>
+												</tbody>
+										</table>
+										</div>
+									</li>
+									<li class="ui-state-default important move ui-selected" title="최나라 사원 회계팀">
+										<div class="liDiv">
+											<table cellspacing="1" cellpadding="1" border="0" style="width: 100%; table-layout:fixed; border:1px solid #eee">
+												<tbody>
+													<tr>
+														<td style="padding:10px 5px; width: 3em; text-align: center;">최종</td>
+														<td id="apprTypeTd" style="padding:10px 5px; text-align: center; border-left:1px solid #F0F3F7; width: 70px;">결재</td>
+														<td class="textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;">최나라 사원 회계팀</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</li>
+								</ul>
+							</div>
+							</div>
+							<div class="userApprSave" style = "display:inline-block;">
+								<div class="col-xs-4" >
+									<strong style="font-size:1em;">사용자 결재선명</strong>	
+								</div>								
+								<div class="col-xs-6">
+									<input type="text" class="form-control input-sm">	
+								</div>								
+								<div class="col-xs-2">
+									<button class="btn btn-xs" type="button" id="btnRemove">저장</button>
+								</div>								
+							</div>
+						</div>
+						
+	                  </div> <!-- col-lg-6 -->
+	                  
+                  	</div> <!-- row -->
+                  </div> <!-- modal-body -->
+                  
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">적용</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                  </div>
+                </div>
+
+              </div> <%-- modal-dialog --%>
+            </div>
+
+
+
 	      	  <div class="content-wrap approval responsive">
 	      		<div class="content-write">
 	      			<form id="apprDocForm" name="apprDocForm" method="post" action="<%=request.getContextPath()%>/approval/createApprDoc.do">
@@ -127,24 +340,29 @@ h4{
 				                      <td id="first-td" rowspan="2">결<br><br>재</td>
 				                      <td>기안</td>
 				                      <td>대리</td>
-				                      <td>사장</td>
-				                    </tr>
+<!-- 				                      <td>사장</td>
+ -->				                </tr>
 				                    <tr>
 				                      <td>
-					                      <span style="font-size:0.9em">김올레<br></span>
-					                      <span style="font-size:1em">반려<br></span>
-					                      <span style="font-size:0.8em">07.27 12:00</span>
+					                      <span style="font-size:0.9em"><%=empLoggedIn.getEmpName()%><br></span>
+					                      <input type="hidden" name="material_id" value="<%=empLoggedIn.getEmpId()%>">
+					                      <input type="hidden" name="material_squence" value="1">
+					                      <!-- <span style="font-size:1em">반려<br></span>
+					                      <span style="font-size:0.8em">07.27 12:00</span> -->
 				                      </td>
 				                      <td>
-					                      <span style="font-size:0.9em">김올레<br></span>
-					                      <span style="font-size:1em">대기<br></span>
-					                      <span style="font-size:0.8em">07.27 12:00</span>
+					                      <span style="font-size:0.9em">요기요<br></span>
+					                      <input type="hidden" name="material_id" value="USER2">
+					                      <input type="hidden" name="material_squence" value="2">
+					                      					                      
+					                      <!-- <span style="font-size:1em">대기<br></span>
+					                      <span style="font-size:0.8em">07.27 12:00</span> -->
 				                      </td>
-				                      <td>
+				                      <!-- <td>
 					                      <span style="font-size:0.9em">김올레<br></span>
 					                      <span style="font-size:1em">승인<br></span>
 					                      <span style="font-size:0.8em">07.27 12:00</span>
-				                      </td>
+				                      </td> -->
 				                    </tr>
 				                </tbody>
 	                		</table>
@@ -177,7 +395,7 @@ h4{
 		      								<div class="input-group" >
 											  <input style="width:95%" type="text" class="form-control">
 											  <span style="width:5%;height:2.45em" class="input-group-addon" id="basic-addon2"><i class="fa fa-user-plus"></i></span>
-											</div>	
+											</div>
 	      								</td>
 	      							</tr>
 	      							<tr>
@@ -192,13 +410,13 @@ h4{
 	              		<div class="">
 	              			<textarea id="apprContent" name="apprContent" rows="25" cols="80" style="width:100%"></textarea>
 	              		</div>
-	      			
+
 	      		</div>
 	      	</div> <!-- content-wrap approval responsive -->
-	
+
 	      	<div id="formButtonDiv" class="btn-wrap pull-right">
-	      	    <button id="" type="button" class="btn">결재선</button>
-	      	    <button id="" type="submit" class="btn">결재요청</button>
+	      	    <button id="" type="button" class="btn" onclick="$('#addApprLineButton').click()">결재선</button>
+	      	    <button id="submitbtn" type="submit" class="btn">결재요청</button>
 	      		<button id="" type="reset"  onclick="history.go(-1)" class="btn">취소</button>
 	      	</div>
 	      	</form>
@@ -222,7 +440,30 @@ h4{
       }
     });
     }
+    
+    //TAB javascript
+    function openCity(evt, cityName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
     </script>
+    
 
 
 <%@ include file="/views/common/footer.jsp"%>
