@@ -2,6 +2,10 @@ package atom.task.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -58,35 +62,49 @@ public class TaskWriteEndServlet extends HttpServlet {
 		MultipartRequest mr = new MultipartRequest(request, saveDir, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 		
 		// 5. 비즈니스 로직
-//		<input type="hidden" name="userId" value="<%=emp.getEmpNo() %>">
-//		<input type="hidden" name="userName" value="<%=emp.getEmpName() %>">
-//		<input type="hidden" name="deptCode" value="<%=emp.getDeptCode() %>">
-//		<input type="hidden" name="jopCode" value="<%=emp.getJobCode() %>">
-		
-		String userId = mr.getParameter("userId");
-		String userName = mr.getParameter("userName");
+		String empId = mr.getParameter("userId");
+		String empName = mr.getParameter("userName");
 		String deptCode = mr.getParameter("deptCode");
-//		String jopCode = mr.getParameter("jopCode");
+		String jopCode = mr.getParameter("jopCode");
 		
-		String title = mr.getParameter("title");
 		String taskType = mr.getParameter("taskType");
+		String title = mr.getParameter("title");
 		String content = mr.getParameter("area2");
 		
-		// 사용자가 올린 파일명
-//		String origin = mr.getOriginalFileName("up_file");
-//		String rename = mr.getFilesystemName("up_file");
+		String receiver = mr.getParameter("receiver");
+		String origin = mr.getOriginalFileName("up_file");
+		String rename = mr.getFilesystemName("up_file");
+		Date deadline = Date.valueOf(mr.getParameter("deadline"));
+		System.out.println(deadline);
+
+		
+		// String을 Date로 변환하는 과정
+//		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+//
+//		java.util.Date transDate = null;
+//		try {
+//			transDate = transFormat.parse(deadline);
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
 		
 		Task task = new Task();
+		task.setEmpId(empId);
+		task.setEmpName(empName);
+		task.setDeptName(deptCode);
+		task.setJobName(jopCode);
+		// task_no는 시퀀스처리
+		task.setTaskType(taskType);
 		task.setTaskTitle(title);
 		task.setTaskContent(content);
-		task.setCategoryName(taskType);
-		task.setEmpId(userId);
-		task.setEmpName(userName);
-		task.setDeptName(deptCode);
-		
-//		task.set(jopCode);
-//		task.setOriginalFileName(origin);
-//		task.setRenamedFileName(rename);
+		task.setReceiver(receiver);
+		task.setOriginalFile(origin);
+		task.setRenamedFile(rename);
+		// ENROLL_DATE는 db저장할때 sysdate처리
+		task.setDeadline(deadline);
+
 		
 		int result = new TaskService().insertTask(task);
 		

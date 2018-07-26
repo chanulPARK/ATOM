@@ -30,6 +30,14 @@
 <!-- jquery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+<!-- datepicker css -->
+<link href="<%=request.getContextPath()%>/dist/css/datepicker.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/dist/css/daterangepicker-bs3.css" rel="stylesheet">
+
+<!-- tablesorter -->
+<link href="<%=request.getContextPath()%>/dist/css/blue/style.css" rel="stylesheet">
+
+
 </head>
 
 <body>

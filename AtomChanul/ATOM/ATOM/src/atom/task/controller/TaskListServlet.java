@@ -14,7 +14,7 @@ import atom.task.model.service.TaskService;
 import atom.task.model.vo.Task;
 
 /**
- * Servlet implementation class TaskListServlet
+ * Servlet implementation class taskListServlet
  */
 @WebServlet("/task/taskList")
 public class TaskListServlet extends HttpServlet {
@@ -35,9 +35,13 @@ public class TaskListServlet extends HttpServlet {
 		Employee emp = (Employee)request.getSession().getAttribute("empLoggedIn");
 		
 		
+		
+		String taskType = request.getParameter("taskType");
+		System.out.println(taskType);
+		
 		// 페이징 처리
-		int numPerPage;
 		int cPage;
+		int numPerPage;
 		
 		try {
 			cPage = Integer.parseInt(request.getParameter("cPage")); 
@@ -52,10 +56,19 @@ public class TaskListServlet extends HttpServlet {
 			numPerPage = 10;
 		}
 		
-		List<Task> list = new TaskService().selectTaskList(cPage, numPerPage);
+		List<Task> list = null;
+		int totalContent = 0;
+		if(request.getParameter("taskType")==null) {
+			list = new TaskService().selectTaskList(cPage, numPerPage);
+			totalContent = new TaskService().selectTaskCount();
+		}
+		else {
+			list = new TaskService().selectTaskList(cPage, numPerPage, taskType);	
+			totalContent = new TaskService().selectTaskCount(taskType);
+		}
 		
 		// 전체 page
-		int totalContent = new TaskService().selectTaskCount();
+		
 		int totalPage =  (int)Math.ceil((double)totalContent/numPerPage);
 		int barSiza = 3;
 		String pageBar = "";
@@ -103,6 +116,7 @@ public class TaskListServlet extends HttpServlet {
 		request.setAttribute("cPage", cPage);
 		request.setAttribute("totalContent", totalContent);
 		request.setAttribute("numPerPage", numPerPage);
+		request.setAttribute("taskType", taskType);
 		request.getRequestDispatcher("/views/task/taskList.jsp").forward(request, response);
 	}
 

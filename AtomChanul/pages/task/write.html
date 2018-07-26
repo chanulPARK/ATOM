@@ -247,7 +247,7 @@
                                         <span class="input-group-addon" id="basic-addon2">
                                             <i class="fa fa-calendar" aria-hidden="true"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="reservationtime">
+                                        <input type="text" class="form-control input-sm" id="reservationtime" name="reservationtime" >
                                     </div>
                                     <span class="label-group ml10">
                                         <input type="checkbox" id="isTermless" title="기한없음" name="isTermless" value="0" checked="checked">
@@ -311,7 +311,8 @@
 
     </script>
 
-    <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script> <script type="text/javascript">
+    <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+    <script type="text/javascript">
         bkLib.onDomLoaded(function() {
             nicEditors.allTextAreas()
         });
@@ -319,16 +320,6 @@
 
     <script>
         $('#tree').jstree();
-    </script>
-
-    <!-- <script>
-        $("#menu").metisMenu();
-    </script> -->
-
-    <script>
-        $(function () {
-            $('#menu2').metisMenu({ toggle: false });
-        });
     </script>
 
     <!-- date-picker -->
