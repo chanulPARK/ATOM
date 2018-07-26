@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import atom.electronic.model.service.ElectronicService;
 import atom.electronic.model.vo.ElectronicApproval;
+import atom.electronic.model.vo.MaterialLine;
 import atom.employee.model.vo.Employee;
 
 /**
@@ -35,15 +36,18 @@ public class ElectronicApprovalFormEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		
 		HttpSession session = request.getSession();
 		Employee e = (Employee)session.getAttribute("empLoggedIn");
 		Date d = new Date();
-		SimpleDateFormat sd = new SimpleDateFormat("YYYYMMdd");
+		SimpleDateFormat sd = new SimpleDateFormat("YYYYMMddHHmmss");
 		Random r = new Random();
 		
 		String apprTitle = request.getParameter("apprTitle");
 		String apprContent = request.getParameter("apprContent");
-		String draftNo = e.getDeptCode() + e.getEmpId() + sd.format(d) + r.nextInt(10) + r.nextInt(10);
+		String draftNo = e.getDeptCode() + e.getEmpId() + sd.format(d);
 		// 문서 자동채번 코드 ---- 부서코드+아이디+시간+랜덤함수 00~99까지
 		ElectronicApproval ea = new ElectronicApproval();
 		ea.setDraftNo(draftNo);
@@ -53,7 +57,25 @@ public class ElectronicApprovalFormEndServlet extends HttpServlet {
 		ea.setDraftName(apprTitle);
 		ea.setDraftContent(apprContent);
 		
+		/* 일단 보류 */
+		MaterialLine m = new MaterialLine();
+
+		String[] material_ids = request.getParameterValues("material_id");
+		String[] material_squence_str = request.getParameterValues("material_squence");
+		
+		int[] material_squences = new int[material_squence_str.length];
+		  
+		/* 일단 보류 */
+		
 		int result = new ElectronicService().insertApproval(ea);
+		int result2[] = new int[material_squence_str.length];
+		for (int i = 0; i < material_squence_str.length; i++) {
+			   material_squences[i] = Integer.parseInt(material_squence_str[i]);
+				m.setDraftNo(draftNo);
+				m.setEmpId(material_ids[i]);
+				m.setMaterialSquence(Integer.parseInt(material_squence_str[i]));
+				result2[i] = new ElectronicService().insertMaterialLine(m);
+		}
 		
 		String msg="";
 		String loc="/electronic/electronicWaitingBox";

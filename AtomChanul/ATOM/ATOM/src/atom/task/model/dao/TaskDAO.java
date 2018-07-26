@@ -5,8 +5,10 @@ import static common.JDBCTemplate.close;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -32,6 +34,7 @@ public class TaskDAO {
 	public List<Task> selectTaskList(Connection conn, int cPage, int numPerPage){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+
 		String sql = prop.getProperty("selectTaskList");
 		Task t = null;
 		ArrayList<Task> list = new ArrayList();
@@ -49,11 +52,19 @@ public class TaskDAO {
 				t.setEmpId(rs.getString("EMP_ID"));
 				t.setEmpName(rs.getString("EMP_NAME"));
 				t.setDeptName(rs.getString("DEPT_NAME"));
+				t.setJobName(rs.getString("JOB_NAME"));
 				t.setTaskNo(rs.getInt("TASK_NO"));
-				t.setCategoryName(rs.getString("CATEGORY_NAME"));
+				t.setTaskType(rs.getString("TASK_TYPE"));
 				t.setTaskTitle(rs.getString("TASK_TITLE"));
 				t.setTaskContent(rs.getString("TASK_CONTENT"));
+				t.setReceiver(rs.getString("RECEIVER"));
+				t.setOriginalFile(rs.getString("ORIGINAL_FILE"));
+				t.setRenamedFile(rs.getString("RENAMED_FILE"));
 				t.setEnrollDate(rs.getDate("ENROLL_DATE"));
+				t.setDeadline(rs.getDate("DEADLINE"));
+				t.setTaskStatus(rs.getString("TASK_STATUS"));
+				t.setTaskCheck(rs.getString("TASK_CHECK"));
+				
 				list.add(t);
 			}	
 		} catch (Exception e) {
@@ -69,7 +80,82 @@ public class TaskDAO {
 	public int selectTaskCount(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+
 		String sql = prop.getProperty("selectTaskCount");
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next())
+			{
+				result = rs.getInt("cnt");		
+			}	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		close(rs);
+		close(pstmt);
+		
+		return result;
+	}
+	
+	public List<Task> selectTaskList(Connection conn, int cPage, int numPerPage, String taskType){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		String sql = prop.getProperty("selectTaskListType");
+//		String sql = prop.getProperty("selectTaskList");
+		
+		Task t = null;
+		ArrayList<Task> list = new ArrayList();
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, taskType);
+			pstmt.setInt(2, (cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				t = new Task();
+				t.setEmpId(rs.getString("EMP_ID"));
+				t.setEmpName(rs.getString("EMP_NAME"));
+				t.setDeptName(rs.getString("DEPT_NAME"));
+				t.setJobName(rs.getString("JOB_NAME"));
+				t.setTaskNo(rs.getInt("TASK_NO"));
+				t.setTaskType(rs.getString("TASK_TYPE"));
+				t.setTaskTitle(rs.getString("TASK_TITLE"));
+				t.setTaskContent(rs.getString("TASK_CONTENT"));
+				t.setReceiver(rs.getString("RECEIVER"));
+				t.setOriginalFile(rs.getString("ORIGINAL_FILE"));
+				t.setRenamedFile(rs.getString("RENAMED_FILE"));
+				t.setEnrollDate(rs.getDate("ENROLL_DATE"));
+				t.setDeadline(rs.getDate("DEADLINE"));
+				t.setTaskStatus(rs.getString("TASK_STATUS"));
+				t.setTaskCheck(rs.getString("TASK_CHECK"));
+				
+				list.add(t);
+			}	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		close(rs);
+		close(pstmt);
+		
+		return list;
+	}
+	
+	
+	public int selectTaskCount(Connection conn, String taskType) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		String sql = prop.getProperty("selectTaskCount")+(" WHERE TASK_TYPE='"+taskType+"'");
+//		String sql = prop.getProperty("selectTaskCount");
+		
 		int result = 0;
 		
 		try {
@@ -99,12 +185,16 @@ public class TaskDAO {
 			pstmt.setString(1, t.getEmpId());
 			pstmt.setString(2, t.getEmpName());
 			pstmt.setString(3, t.getDeptName());
-			pstmt.setString(4, t.getCategoryName());
-			pstmt.setString(5, t.getTaskTitle());
-			pstmt.setString(6, t.getTaskContent());
+			pstmt.setString(4, t.getJobName());
 			
-//			pstmt.setString(4, t.getOriginalFileName());
-//			pstmt.setString(5, t.getRenamedFileName());
+			pstmt.setString(5, t.getTaskType());
+			pstmt.setString(6, t.getTaskTitle());
+			pstmt.setString(7, t.getTaskContent());
+			pstmt.setString(8, t.getReceiver());
+			pstmt.setString(9, t.getOriginalFile());
+			pstmt.setString(10, t.getRenamedFile());
+			
+			pstmt.setDate(11, t.getDeadline());
 			
 			result = pstmt.executeUpdate();
 		}
@@ -113,5 +203,39 @@ public class TaskDAO {
 		}
 		close(pstmt);
 		return result;
+		
+	}
+	
+	public Task selectTask(Connection conn, int no){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectTask");
+		Task t = null;
+
+		try 
+		{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				t = new Task();
+				t.setTaskTitle(rs.getString("TASK_TITLE"));
+				t.setTaskContent(rs.getString("TASK_CONTENT"));	
+				t.setReceiver(rs.getString("RECEIVER"));
+				t.setOriginalFile(rs.getString("ORIGINAL_FILE"));
+				t.setRenamedFile(rs.getString("RENAMED_FILE"));
+				t.setEnrollDate(rs.getDate("ENROLL_DATE"));
+				t.setDeadline(rs.getDate("DEADLINE"));
+				t.setTaskStatus(rs.getString("TASK_STATUS"));
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		close(rs);
+		close(pstmt);
+		
+		return t;
 	}
 }

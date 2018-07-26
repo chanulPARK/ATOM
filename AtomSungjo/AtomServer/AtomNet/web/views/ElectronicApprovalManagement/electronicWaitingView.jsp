@@ -1,3 +1,6 @@
+<%@page import="atom.electronic.model.vo.MaterialLine"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="atom.electronic.model.vo.ElectronicApproval"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,8 +8,9 @@
 <%@ include file="/views/common/header.jsp"%>
 <%@ include file="/views/common/approvalAside.jsp"%>
 <%
-	Date date = new Date();
-	SimpleDateFormat sd = new SimpleDateFormat("YYYY.MM.dd");
+	ElectronicApproval ea = (ElectronicApproval)request.getAttribute("ea");
+	ArrayList<MaterialLine> materialList = (ArrayList)request.getAttribute("materialline");
+	System.out.println("결재선 : ?" + materialList);
 %>
 <head>
 <style>
@@ -145,7 +149,7 @@ ul{
 
 .apprline li{
 	font-size:2em;
-	
+
 }
 
 
@@ -153,13 +157,13 @@ ul{
     padding: 6px 12px;
 	border: 1px solid #ccc;
 	height:67%;
-	
+
 }
 
 
 .userApprSave{
 	 display: inline-block;
-	 background-color :#f1f1f1; 
+	 background-color :#f1f1f1;
 	 width: 100%;
 }
 
@@ -167,30 +171,85 @@ ul{
 	text-align:center;
 }
 
+.table-col-striped{
+	border: 3px solid #e5e5e5;
+}
 
+
+
+.table-col-striped > tbody > tr > th {
+   background-color: #f9f9f9;
+}
 
     </style>
 
-    <!-- niceidt -->
-
-    <script type="text/javascript" src="<%=request.getContextPath()%>/dist/js/nicEdita.js"></script>
-    <script type="text/javascript">
-      bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
-    </script>
    </head>
     <section>
         <div class="content">
           <div class="row">
-              <h4>기안문 작성</h4>
+              <h4>결재 대기함</h4>
               <hr>
           </div>
           <div class="row" >
 	          <div id="formButtonDiv" class="btn-wrap pull-right">
-	      	    <button id="addApprLineButton" type="button" class="btn" data-toggle="modal" data-target="#myModal">결재선</button>
-	      	    <button id="createApprDocButton" type="button" class="btn btn-color5" onclick="$('#submitbtn').click()">결재요청</button>
+	      	    <button id="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#approvalModal">결재</button>
+	      	    <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button>
 	      		<!-- <button id="createApprDocTemporayButton" type="button" class="btn btn-default">임시저장</button> -->
-	      		<button id="listApprDocButton" type="button" class="btn btn-default">취소</button>
+	      		<button id="" type="reset"  onclick="history.go(-1)" class="btn btn-default">목록</button>
 	      	  </div>
+
+			<!-- approvalModal -->
+             <div id="approvalModal" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+
+                <!-- Modal content-->
+                                        <form class="" action="<%=request.getContextPath()%>/electronic/ellectonicApprovalSystem" method="post" style="margin:0">
+                
+                <div class="modal-content">
+                  <div class="modal-header" style = "background-color:white;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">결재 처리</h4>
+                  </div>
+
+                  <div class="modal-body">
+                  	<div class="row">
+                      <div class="col-md-12">
+                          <table class="table" style="font-size:1em;margin:0">
+                            <colgroup>
+        	      							<col style="width: 5%;"/>
+        	      							<col style="width: 35%;"/>
+        	      						</colgroup>
+                      			<tr>
+                      				<th style="background-color:#f9f9f9;">결재처리</th>
+                              <td>
+                                <label for="approve"><input id="approve" type="radio" name="appr" value="승인" style="margin-right:3px;" checked>승인</label>&nbsp;
+                                <label for="reject"><input id="reject" type="radio" name="appr" value="반려" style="margin-right:3px;">반려</label>
+                              </td>
+                      			</tr>
+                      			<tr>
+                              <th style="vertical-align:middle;background-color:#f9f9f9;">결재의견</th>
+                              <td>
+                                <textarea style="resize: none;" name="apprComment" class="form-Control"rows="10" cols="60">At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies. </textarea>
+                              </td>
+                      			</tr>
+                      		</table>
+                      		<input type="hidden" name="draftNo" value="<%=ea.getDraftNo()%>">
+                  	</div>
+                    	</div>
+                  </div> <!-- modal-body -->
+
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm">결재</button>
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">닫기</button>
+                  </div>
+                </div>
+                        </form>
+
+              </div> <%-- modal-dialog --%>
+            </div>
+
+
+
 
             <!-- Modal -->
              <div id="myModal" class="modal fade" role="dialog">
@@ -202,7 +261,7 @@ ul{
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">결재선 지정</h4>
                   </div>
-                  
+
                   <div class="modal-body">
                   	<div class="row">
 	                  <div class="col-md-5">
@@ -211,7 +270,7 @@ ul{
 						  <button class="tablinks" onclick="openCity(event, 'organization')">조직도</button>
 						  <button class="tablinks" onclick="openCity(event, 'search')">검색</button>
 						</div>
-						
+
 						<!-- Tab content -->
 						<div id="organization" class="tabcontent">
 						  <h3>조직도</h3>
@@ -219,7 +278,7 @@ ul{
 						</div>
 						<div id="search" class="tabcontent tabcontentsecond">
 						  <h3>검색</h3>
-						  <p>Paris is the capital of France.</p> 
+						  <p>Paris is the capital of France.</p>
 						</div>
 	                  </div> <!-- col-lg-5 -->
 	                  <div class="col-md-1" style="margin-top:20%;">
@@ -228,18 +287,18 @@ ul{
 								<li><a href="#" id="btnItemAdd" style="color:red"><i class="fa fa-plus-square"></i></a></li>
 								<li><a href="#" id="btnItemRemove"><i class="fa fa-minus-square"></i></a></li>
 								<li><a id="btnItemRemoveAll" href="#a"><i class="fa fa-rotate-left"></i></a></li>
-							</ul>						
+							</ul>
 						</div>
 	                  </div> <!-- col-lg-1 -->
 	                  <div class="col-md-6">
 						<div class="appr-info">
 							<h5>결재선 정보</h5>
 							<div class="userApprSave Load">
-								<strong>사용자 결재선</strong>									
+								<strong>사용자 결재선</strong>
 								<select title="사용자 결재선" id="userLineId" class="" style="width:55%; margin:2% 5%;">
 									<option value="">-- 선택  --</option>
 									<option value="21263699">결재선저장</option>
-								</select>		
+								</select>
 								<button class="btn btn-xs" type="button" id="btnRemove">삭제</button>
 							</div>
 							<div class="apprlinelist" style="height:77%; overflow-y:scroll;">
@@ -302,22 +361,22 @@ ul{
 							</div>
 							<div class="userApprSave" style = "display:inline-block;">
 								<div class="col-xs-4" >
-									<strong style="font-size:1em;">사용자 결재선명</strong>	
-								</div>								
+									<strong style="font-size:1em;">사용자 결재선명</strong>
+								</div>
 								<div class="col-xs-6">
-									<input type="text" class="form-control input-sm">	
-								</div>								
+									<input type="text" class="form-control input-sm">
+								</div>
 								<div class="col-xs-2">
 									<button class="btn btn-xs" type="button" id="btnRemove">저장</button>
-								</div>								
+								</div>
 							</div>
 						</div>
-						
+
 	                  </div> <!-- col-lg-6 -->
-	                  
+
                   	</div> <!-- row -->
                   </div> <!-- modal-body -->
-                  
+
                   <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">적용</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
@@ -331,44 +390,30 @@ ul{
 
 	      	  <div class="content-wrap approval responsive">
 	      		<div class="content-write">
-	      			<form id="apprDocForm" name="apprDocForm" method="post" action="<%=request.getContextPath()%>/approval/createApprDoc.do">
 	      				<h3 style="margin: 2% 45%">기안용지</h3>
 	      				<div class="appline-wrap pull-right">
 	                		<table border="1" style="text-align:center">
 	                  			<tbody>
 				                    <tr>
-				                      <td id="first-td" rowspan="2">결<br><br>재</td>
-				                      <td>기안</td>
-				                      <td>대리</td>
+				                      <td id="first-td" rowspan="<%=materialList.size()%>">결<br><br>재</td>
+				                      <td>기안자</td>
+				                      <td>결재자</td>
 <!-- 				                      <td>사장</td>
  -->				                </tr>
 				                    <tr>
+				                    <%for(MaterialLine m : materialList){%>
 				                      <td>
-					                      <span style="font-size:0.9em"><%=empLoggedIn.getEmpName()%><br></span>
-					                      <input type="hidden" name="material_id" value="<%=empLoggedIn.getEmpId()%>">
-					                      <input type="hidden" name="material_squence" value="1">
-					                      <!-- <span style="font-size:1em">반려<br></span>
-					                      <span style="font-size:0.8em">07.27 12:00</span> -->
+					                      <span style="font-size:0.9em"><%=m.getEmpId()%><br></span>
+					                      <span style="font-size:1em"><%=m.getMaterialState() %><br></span>
+					                      <span style="font-size:0.8em"><%if(m.getMaterialDate()!=null){%><%=m.getMaterialDate()%><%}%></span>
 				                      </td>
-				                      <td>
-					                      <span style="font-size:0.9em">요기요<br></span>
-					                      <input type="hidden" name="material_id" value="USER2">
-					                      <input type="hidden" name="material_squence" value="2">
-					                      					                      
-					                      <!-- <span style="font-size:1em">대기<br></span>
-					                      <span style="font-size:0.8em">07.27 12:00</span> -->
-				                      </td>
-				                      <!-- <td>
-					                      <span style="font-size:0.9em">김올레<br></span>
-					                      <span style="font-size:1em">승인<br></span>
-					                      <span style="font-size:0.8em">07.27 12:00</span>
-				                      </td> -->
+				                    <%}%>
 				                    </tr>
 				                </tbody>
 	                		</table>
 	      				</div> <%-- appline-wrap --%>
 	      				<div class="form-block">
-	      					<table class="table separate">
+	      					<table class="table table-col-striped" >
 	      						<caption></caption>
 	      						<colgroup>
 	      							<col style="width: 15%;"/>
@@ -379,47 +424,48 @@ ul{
 	      						<tbody>
 	      							<tr>
 	      								<th>문서번호</th>
-	      								<td>자동채번</td>
+	      								<td><%=ea.getDraftNo() %></td>
 	      								<th>기안일자</th>
-	      								<td><%=sd.format(date) %></td>
+	      								<td><%=ea.getDraftDate() %></td>
 	      							</tr>
 	      							<tr>
 	      								<th>기안자</th>
-	      								<td><%=empLoggedIn.getEmpName() %></td>
+	      								<td><%=ea.getEmpName() %></td>
 	      								<th>기안부서</th>
-	      								<td><%=empLoggedIn.getDeptName() %></td>
+	      								<td><%=ea.getDraftDept() %></td>
 	      							</tr>
 	      							<tr>
 	      								<th>참조자</th>
 	      								<td colspan='3'>
-		      								<div class="input-group" >
-											  <input style="width:95%" type="text" class="form-control">
-											  <span style="width:5%;height:2.45em" class="input-group-addon" id="basic-addon2"><i class="fa fa-user-plus"></i></span>
-											</div>
 	      								</td>
 	      							</tr>
 	      							<tr>
-	      								<th><span style="color: red">* </span>문서제목</th>
-	      								<td colspan="3">
-	                       					 <input type="text" title="문서제목"  name="apprTitle" value="" class="form-control inputbox w100p" maxlength="100" placeholder="문서제목을 입력하세요. " />
-	      								</td>
+	      								<th></span>문서제목</th>
+	      								<td colspan="3"><%=ea.getDraftName() %></td>
 	      							</tr>
 	      						</tbody>
+	      						<tfoot>
+	      							<tr>
+	      								<td colspan="4">
+	      									<div class="">
+	              			<p><%=ea.getDraftContent() %></p>
+	              		</div>
+	      								</td>
+	      							</tr>
+	      						</tfoot>
 	      					</table>
 	      				</div>
-	              		<div class="">
-	              			<textarea id="apprContent" name="apprContent" rows="25" cols="80" style="width:100%"></textarea>
-	              		</div>
+
 
 	      		</div>
 	      	</div> <!-- content-wrap approval responsive -->
 
 	      	<div id="formButtonDiv" class="btn-wrap pull-right">
-	      	    <button id="" type="button" class="btn" onclick="$('#addApprLineButton').click()">결재선</button>
-	      	    <button id="submitbtn" type="submit" class="btn">결재요청</button>
-	      		<button id="" type="reset"  onclick="history.go(-1)" class="btn">취소</button>
+	      	    <button id="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#approvalModal">결재</button>
+	      	    <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button>
+	      		<!-- <button id="createApprDocTemporayButton" type="button" class="btn btn-default">임시저장</button> -->
+	      		<button id="" type="reset"  onclick="history.go(-1)" class="btn btn-default">목록</button>
 	      	</div>
-	      	</form>
       </div> <%--row--%>
      </div> <%--content--%>
 
@@ -440,7 +486,7 @@ ul{
       }
     });
     }
-    
+
     //TAB javascript
     function openCity(evt, cityName) {
         // Declare all variables
@@ -463,7 +509,7 @@ ul{
         evt.currentTarget.className += " active";
     }
     </script>
-    
+
 
 
 <%@ include file="/views/common/footer.jsp"%>
