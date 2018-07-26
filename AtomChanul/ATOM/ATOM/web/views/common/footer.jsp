@@ -13,9 +13,14 @@
 
 <script src="<%=request.getContextPath()%>/dist/js/datepicker.js"></script>
 
-<script src="<%=request.getContextPath()%>/dist/js/daterangepicker.js"></script>
+<!-- tablesorter -->
+<script src="<%=request.getContextPath()%>/dist/js/jquery.tablesorter.min.js"></script>
 
-<script src="<%=request.getContextPath()%>/dist/js/nicEdit.js"></script>
+
+
+<script src="http://js.nicedit.com/nicEdit-latest.js"></script>
+
+
 
 </body>
 </html>

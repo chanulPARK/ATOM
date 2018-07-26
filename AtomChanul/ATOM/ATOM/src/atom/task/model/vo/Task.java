@@ -1,8 +1,9 @@
 package atom.task.model.vo;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Task {
+
     // 사원번호 
     private String empId;
 
@@ -12,14 +13,14 @@ public class Task {
     // 부서명 
     private String deptName;
 
+    // 직급명 
+    private String jobName;
+
     // 업무번호 
     private Integer taskNo;
 
     // 업무분류 
-    private String categoryName;
-
-    // 수신자 
-    private String receiver;
+    private String taskType;
 
     // 제목 
     private String taskTitle;
@@ -27,11 +28,14 @@ public class Task {
     // 내용 
     private String taskContent;
 
+    // 수신자 
+    private String receiver;
+
     // 첨부파일 원본이름 
     private String originalFile;
 
     // 첨부파일 변경이름 
-    private String renameFile;
+    private String renamedFile;
 
     // 등록일 
     private Date enrollDate;
@@ -40,30 +44,31 @@ public class Task {
     private Date deadline;
 
     // 업무 상태 
-    private String taskStasus;
+    private String taskStatus;
 
     // 확인 유무 
     private String taskCheck;
-	
-	public Task() {}
+    
+    public Task() {}
 
-	public Task(String empId, String empName, String deptName, Integer taskNo, String categoryName, String receiver,
-			String taskTitle, String taskContent, String originalFile, String renameFile, Date enrollDate,
-			Date deadline, String taskStasus, String taskCheck) {
+	public Task(String empId, String empName, String deptName, String jobName, Integer taskNo, String taskType,
+			String taskTitle, String taskContent, String receiver, String originalFile, String renamedFile,
+			Date enrollDate, Date deadline, String taskStatus, String taskCheck) {
 		super();
 		this.empId = empId;
 		this.empName = empName;
 		this.deptName = deptName;
+		this.jobName = jobName;
 		this.taskNo = taskNo;
-		this.categoryName = categoryName;
-		this.receiver = receiver;
+		this.taskType = taskType;
 		this.taskTitle = taskTitle;
 		this.taskContent = taskContent;
+		this.receiver = receiver;
 		this.originalFile = originalFile;
-		this.renameFile = renameFile;
+		this.renamedFile = renamedFile;
 		this.enrollDate = enrollDate;
 		this.deadline = deadline;
-		this.taskStasus = taskStasus;
+		this.taskStatus = taskStatus;
 		this.taskCheck = taskCheck;
 	}
 
@@ -91,6 +96,14 @@ public class Task {
 		this.deptName = deptName;
 	}
 
+	public String getJobName() {
+		return jobName;
+	}
+
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
+	}
+
 	public Integer getTaskNo() {
 		return taskNo;
 	}
@@ -99,20 +112,12 @@ public class Task {
 		this.taskNo = taskNo;
 	}
 
-	public String getCategoryName() {
-		return categoryName;
+	public String getTaskType() {
+		return taskType;
 	}
 
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
-	public String getReceiver() {
-		return receiver;
-	}
-
-	public void setReceiver(String receiver) {
-		this.receiver = receiver;
+	public void setTaskType(String taskType) {
+		this.taskType = taskType;
 	}
 
 	public String getTaskTitle() {
@@ -131,6 +136,14 @@ public class Task {
 		this.taskContent = taskContent;
 	}
 
+	public String getReceiver() {
+		return receiver;
+	}
+
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
+	}
+
 	public String getOriginalFile() {
 		return originalFile;
 	}
@@ -139,12 +152,12 @@ public class Task {
 		this.originalFile = originalFile;
 	}
 
-	public String getRenameFile() {
-		return renameFile;
+	public String getRenamedFile() {
+		return renamedFile;
 	}
 
-	public void setRenameFile(String renameFile) {
-		this.renameFile = renameFile;
+	public void setRenamedFile(String renamedFile) {
+		this.renamedFile = renamedFile;
 	}
 
 	public Date getEnrollDate() {
@@ -163,12 +176,12 @@ public class Task {
 		this.deadline = deadline;
 	}
 
-	public String getTaskStasus() {
-		return taskStasus;
+	public String getTaskStatus() {
+		return taskStatus;
 	}
 
-	public void setTaskStasus(String taskStasus) {
-		this.taskStasus = taskStasus;
+	public void setTaskStatus(String taskStatus) {
+		this.taskStatus = taskStatus;
 	}
 
 	public String getTaskCheck() {
@@ -179,4 +192,15 @@ public class Task {
 		this.taskCheck = taskCheck;
 	}
 
+	@Override
+	public String toString() {
+		return "Task [empId=" + empId + ", empName=" + empName + ", deptName=" + deptName + ", jobName=" + jobName
+				+ ", taskNo=" + taskNo + ", taskType=" + taskType + ", taskTitle=" + taskTitle + ", taskContent="
+				+ taskContent + ", receiver=" + receiver + ", originalFile=" + originalFile + ", renamedFile="
+				+ renamedFile + ", enrollDate=" + enrollDate + ", deadline=" + deadline + ", taskStatus=" + taskStatus
+				+ ", taskCheck=" + taskCheck + "]";
+	}
+	
+	
+    
 }

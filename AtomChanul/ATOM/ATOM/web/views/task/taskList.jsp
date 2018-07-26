@@ -2,16 +2,29 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp" %>
 <%@ include file="/views/common/aside.jsp" %>
-<%@ page import='java.util.*, atom.task.model.vo.Task' %>
+<%@ page import='java.util.*, atom.task.model.vo.Task, java.lang.*' %>
 <%
 	List<Task> list = (List<Task>)request.getAttribute("list");
 
+	String taskType = (String)request.getAttribute("taskType");
+
 	// 페이징 처리
 	int cPage = (int)request.getAttribute("cPage");
-	String pageBar = (String)request.getAttribute("pageBar");
 	int totalContent = (int)request.getAttribute("totalContent");
 	int numPerPage = (int)request.getAttribute("numPerPage");
+	String pageBar = (String)request.getAttribute("pageBar");
 %>
+<style>
+	.float-right {
+		float: right;
+	}
+	.btn-task {
+		background: #353b47;
+        color: #fff;
+	}
+</style>
+
+
 <script type="text/javascript">
 	$(function() {
 		$('#numPerPage').change(function() {
@@ -19,26 +32,41 @@
 			});
 	});
 	
+	// 글쓰기 이동
 	function fn_goTaskWrite() {
 		location.href="<%=request.getContextPath()%>/task/taskWrite";
 	};
 	
+/*     	confirm("정보를 삭제 하시겠습니까?") */
+	// 체크박스
+	var chk;
     function selectAll() {
-   		if($('#checkAll').checked!=true)
-   			$('input[name=chkid]').attr("checked", $('#checkAll').is(":checked"));
+   		if($('#checkAll').is(':checked'))
+   			$('input[name=chkid]').prop("checked", true);
+   			/* $('input[name=chkid]').attr("checked", $('#checkAll').is(":checked")); */
    		else
-		/* if($('#checkAll').checked==true) */
-       		$('input[name=chkid]').removeAttr("checked");
+   			$('input[name=chkid]').prop("checked", false);
+       		/* $('input[name=chkid]').removeAttr("checked", $('#checkAll').removeAttr(":checked")); */
 	};
 	
-	statusPopup = function(taskId, title, userStatus, isTermless, overDayCount) {
+	/* statusPopup = function(taskId, title, userStatus, isTermless, overDayCount) {
         var url = spro.getContextRoot() + "/groupware/todo/listTodoReadStatusViewPopup.do?taskId="+taskId+"&taskType=2&userStatus="+userStatus+"&isTermless="+isTermless+"&overDayCount="+overDayCount;
         spro.showModalFrame(url, "",
             function(result) {callback(result);}, 
                              {title:title, width:500, height:300}
         );
-    }
-
+    } */
+    
+    // 테이블 정렬
+    $(document).ready(function(){ 
+    	$("#sorttable").tablesorter({
+    		headers: {
+                0: { sorter: false }
+    		}
+    	});
+    }); 
+    /* $("#sorttable").tablesorter( {sortList: [[1,0]]} ); */
+	
 </script>
 
     <section>
@@ -49,7 +77,7 @@
                     <div class="row">
                         <div class="col-md-1" style="width: 45px; margin: 0 0 0 15px;">
                             <form action="<%=request.getContextPath() %>/task/taskList" name="numPerPageFrm" id="numPerPageFrm">
-                            <select class="form-control input-sm" id="numPerPage" style="padding: 0">
+                            <select class="form-control input-sm" id="numPerPage" name="numPerPage" style="padding: 0">
                                 <option value="10" <%=numPerPage==10?"selected":"" %>>10</option>
                                 <option value="15" <%=numPerPage==15?"selected":"" %>>15</option>
                                 <option value="20" <%=numPerPage==20?"selected":"" %>>20</option>
@@ -70,13 +98,13 @@
                                     <option value="searchTitle">제목</option>
                                 </select>
                                 <input type="text" class="form-control input-sm" placeholder="검색어">
-                                <button type="submit" class="btn btn-primary btn-sm floa">검색</button>
+                                <button type="submit" class="btn btn-task btn-sm">검색</button>
                             </div>
                         </form>
                     </div> 
                 </div>
 
-                <table class="tableTL table table-striped">
+                <table class="tableTL table table-striped tablesorter" id="sorttable">
 	                <colgroup>
 	                    <col style="width: 40px;">
 	                    <col style="width: 50px;">
@@ -92,27 +120,13 @@
 	                    <tr>
 	                        <th scope="col"><input id="checkAll" onclick="selectAll()" type="checkbox" value="" title="checkAll" aria-invalid="false"></th>
 	                        <th scope="col">번호</th>
-	                        <th scope="col">
-	                            <a data-sortcolumn="FOLDER" href="#">업무 보관함<i class="glyphicon glyphicon-triangle-top"></i></a>
-	                        </th>
-	                        <th scope="col">
-	                            <a data-sortcolumn="TITLE" href="#">제목<i class="glyphicon glyphicon-triangle-top"></i></a>
-	                        </th>
-	                        <th scope="col">
-	                            <a data-sortcolumn="REGISTERNAME" href="#">요청자<i class="glyphicon glyphicon-triangle-top"></i></a>
-	                        </th>
-	                        <th scope="col">
-	                            <a data-sortcolumn="INSERTDATE" href="#">요청일<i class="glyphicon glyphicon-triangle-top"></i></a>
-	                        </th>
-	                        <th scope="col">
-	                            <a data-sortcolumn="INSERTDATE" href="#">마감일<i class="glyphicon glyphicon-triangle-top"></i></a>
-	                        </th>
-	                        <th scope="col">
-	                            <a data-sortcolumn="DUEDATE" href="#">상태<i class="glyphicon glyphicon-triangle-top"></i></a>
-	                        </th>
-	                        <th scope="col">
-	                            <a data-sortcolumn="DUEDATE" href="#">읽음확인<i class="glyphicon glyphicon-triangle-top"></i></a>
-	                        </th>
+	                        <th scope="col">업무 분류</th>
+	                        <th scope="col">제목</th>
+	                        <th scope="col">요청자</th>
+	                        <th scope="col">요청일</th>
+	                        <th scope="col">마감일</th>
+	                        <th scope="col">상태</th>
+	                        <th scope="col">읽음확인</th>
 	                    </tr>
 	                </thead>
 	                <tbody>
@@ -120,12 +134,19 @@
 	                    <tr>
 	                        <td><input name="chkid" type="checkbox" title="checkbox" value="" ></td>
 	                        <td><%=t.getTaskNo() %></td>
-	                        <td><%=t.getCategoryName() %></td>
-	                        <td class="text-left"><%=t.getTaskTitle() %></td>
+	                        <% String temp = "";
+	                        if(t.getTaskType()=="1") temp="업무 요청";
+	                        if(t.getTaskType()=="2") temp="업무 보고";
+	                        else temp="업무 일지"; %>
+	                        <td><%=temp %>
+	                        </td>
+	                        <td class="text-left"><a href='<%=request.getContextPath()%>/task/taskView?taskNo=<%= t.getTaskNo() %>'>
+	                        	<%=t.getTaskTitle() %></a>
+	                        </td>
 	                        <td><a href="#" data-toggle="modal" data-target="#myModal"><%=t.getEmpName() %></a></td>
 	                        <td><%=t.getEnrollDate() %></td>
-	                        <td><%=t.getDeadline()==null?"기한없음":"" %></td>
-	                        <td><%=t.getTaskStasus() ==null?"미완료":"" %></td>
+	                        <td><%=t.getDeadline() %></td>
+	                        <td><%=t.getTaskStatus() %></td>
 	                        <td>
 	                        <button class="btn btn-danger btn-xs"><%=t.getTaskCheck()==null?"읽지 않음":"읽음" %></button>
 	                        </td>
@@ -136,9 +157,13 @@
                 
                 <nav class="pagination_wrap"><%=pageBar %></nav>
                 <!-- /.pagination_wrap -->
-                <div class="btn-wrap">
-                    <button class="btn btn-primary btn-sm" onclick="fn_goTaskWrite()">업무 등록</button>
-                    <button class="btn btn-primary btn-sm">업무 삭제</button>
+                <div class="btn-wrap float-right">
+                    <button class="btn btn-task btn-sm" onclick="fn_goTaskWrite()">업무 등록</button>
+                    <%-- <% if(taskType.equals("1")) { %> --%>
+                    <button class="btn btn-default btn-sm">보관함 지정</button>
+                    <%-- <%} %> --%>
+                    <button class="btn btn-default btn-sm">삭제</button>
+                    <button class="btn btn-default btn-sm">업무 완료</button>
                 </div>
             </div>
             <!-- /.col-md-12 -->
@@ -155,7 +180,7 @@
 	                </div>
 	                <div class="modal-body">
                         <div class="text-center">
-                            <img class="profile-user-img img-fluid img-circle" src="<%=request.getContextPath()%>/dist/img/profile.jpg" alt="User profile picture">
+                            <img class="profile-user-img img-fluid img-circle" src="<%=request.getContextPath() %>/dist/img/profile.jpg" alt="User profile picture">
                         </div>
                             <h3 class="profile-username text-center">한예슬</h3>
                             <p class="text-muted text-center">Software Engineer</p>

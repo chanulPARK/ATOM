@@ -33,7 +33,7 @@
                                 <th scope="col" class="text-center">사원번호</th>
                                 <td class="text-center" colspan="2"><%=emp.getEmpId() %></td>
                                 <td class="text-center" rowspan="4">
-                                    <img class="img-fluid img-circle" src="../../dist/img/profile.jpg" alt="">
+                                    <img class="img-fluid img-circle" src="<%=request.getContextPath()%>/dist/img/profile.jpg" alt="">
                                 </td>
                             </tr>
                             <tr>
@@ -46,7 +46,7 @@
                             </tr>
                             <tr>
                                 <th scope="col"  class="text-center">주민등록번호</th>
-                                <td class="text-center" colspan="2"><%=emp.getEmpNo() %></td>
+                                <td class="text-center" colspan="2"><%=emp.getEmpRrn() %></td>
                             </tr>
                             <tr>
                                 <th scope="col"  class="text-center">이메일</th>
