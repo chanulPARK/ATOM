@@ -3023,6 +3023,10 @@ fieldset[disabled] .btn {
   background-color: #fff;
   border-color: #ccc;
 }
+.btn-default>a{
+    color:black;
+    text-decoration:none;
+}
 .btn-default:hover,
 .btn-default:focus,
 .btn-default.focus,
@@ -5311,6 +5315,9 @@ a.list-group-item-danger.active:focus {
   margin-bottom: 0;
   font-size: 16px;
   color: inherit;
+}
+.panel-title>a{
+	text-decoration:none;
 }
 .panel-title > a,
 .panel-title > small,

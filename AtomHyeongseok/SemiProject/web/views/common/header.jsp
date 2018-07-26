@@ -104,7 +104,7 @@
 			                			</a>
 			                		</div>
 			                		<div class='panel2'>
-			                			<a href='<%=request.getContextPath()%>/board/delboard.jsp'>
+			                			<a href='<%=request.getContextPath()%>/board/dropboard.jsp'>
 			                				게시판 삭제
 			                			</a>
 			                		</div>

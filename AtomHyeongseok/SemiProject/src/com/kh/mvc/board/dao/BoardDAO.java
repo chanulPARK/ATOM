@@ -59,6 +59,7 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 		close(pstmt);
+		System.out.println("insertBoard 결과 : "+result);
 		return result;
 	}
 	
@@ -76,6 +77,7 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 		close(pstmt);
+		System.out.println("updateBoard 결과 : "+result);
 		return result;
 	}
 	
@@ -91,12 +93,11 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 		close(pstmt);
+		System.out.println("deleteBoard 결과 : "+result);
 		return result;
 	}
 	
 	public List<Board> selectBoardList(Connection conn, int cPage, int numPerPage){
-		pstmt = null;
-		rset = null;
 		String sql = prop.getProperty("selectBoardList");
 		ArrayList<Board> list = new ArrayList<Board>();
 		try {
@@ -110,7 +111,7 @@ public class BoardDAO {
 				b.setTitle(rset.getString("title"));
 				b.setContent(rset.getString("content"));
 				b.setWriter(rset.getString("writer"));
-				b.setWriteDate(rset.getDate("writeDate"));
+				b.setWriteDate(rset.getDate("write_date"));
 				b.setVisits(rset.getInt("visits"));
 				list.add(b);
 			}
@@ -120,12 +121,11 @@ public class BoardDAO {
 		}
 		close(rset);
 		close(pstmt);
+		System.out.println("selectBoardList 결과:"+list);
 		return list;
 	}
 	
 	public int selectBoardCount(Connection conn) {
-		pstmt = null;
-		rset = null;
 		String sql = prop.getProperty("selectBoardCount");
 		result = 0;
 		try {
@@ -140,6 +140,7 @@ public class BoardDAO {
 		}
 		close(rset);
 		close(pstmt);
+		System.out.println("selectBoardCount 결과 : "+result);
 		return result;
 	}
 	
@@ -156,6 +157,7 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 		close(pstmt);
+		System.out.println("insertBoardCount 결과 : "+result);
 		return result;
 	}
 }

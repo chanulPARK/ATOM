@@ -37,11 +37,10 @@
         <script>
             var doc = document.getElementById("showD");
             $('button').click(function(){
-                 doc.innerHTML = "<p class='glyphicon glyphicon-folder-close'>"
-                 doc.innerHTML += "&nbsp;게시판&nbsp;</p>";
+                 doc.innerHTML = "<p class='glyphicon glyphicon-folder-close'>&nbsp;게시판&nbsp;</p>";
             });
             $('p.glyphicon.glyphicon-folder-close').click(function(){
-                 $('p.glyphicon.glyphicon-folder-close').add();
+                 doc.innerHTML += "<br>&nbsp;&nbsp;<p class='glyphicon glyphicon-folder-close'>&nbsp;게시판&nbsp;</p>";
             });
         </script>
     </div>

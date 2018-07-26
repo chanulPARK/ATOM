@@ -38,6 +38,7 @@ public class BoardListServlet extends HttpServlet {
 		}
 		
 		List<Board> list = new BoardService().selectBoardList(cPage, numPerPage);
+		System.out.println("BLS 결과:"+list);
 		// pageBar를 만들기 위해 전체 자료수를 먼저 가져온다.
 		int totalContent = new BoardService().selectBoardCount();
 		// 전체 페이지 수
@@ -47,33 +48,39 @@ public class BoardListServlet extends HttpServlet {
 		int pageNo = ((cPage-1)/barSize)*barSize+1;	// 각 페이지의 첫 노드. barSize로 나눈 나머지가 항상 1이다.
 		int pageEnd = pageNo+barSize-1; // 각 페이지의 마지막 노드 번호
 		// pageBar 설정하기
-		if(pageNo==1)			// 페이지 번호가 1이면
-			pageBar += "<li><span aria-hidden='false'>"
-					+"&laquo;</span></li>";		// 이전 클릭이 눌러지지 않기 위함이다.
-		else					// 그 외의 숫자면
-			pageBar += "<a href='"+request.getContextPath()
-						+"/board/boardView?cPage="
-						+(pageNo-1)+"' aria-label='Previous'>"
-						+"<span aria-hidden='true'>&laquo;</span></a>";
-		// 페이지 번호를 부여한다.
-		while(pageNo<=pageEnd && pageNo<=totalPage) {
-			if(cPage==pageNo)		// 현재 페이지에 있으면
-				pageBar += "<li><span>"+pageNo+"</span></li>";
-			else					// 그렇지 않으면
-				pageBar += "<a href='"+request.getContextPath()
-				+"/board/boardView?cPage="+pageNo+"'>"+pageNo+"</a>";
-			pageNo++;		// 페이지 범위를 정하지 않으면 무한반복하기 때문에 반드시 증감식을 넣어야 한다.
-		}
-		if(cPage>=totalPage)				// 현재 페이지가 전체의 마지막 페이지에 도달하면
+		if(totalContent==0) {
+			pageBar += "<li><span aria-hidden='false'>&laquo;</span></li>";
+			pageBar += "<li class='active'><span>"+pageNo+"</span></li>";
 			pageBar += "<li><span aria-hidden='false'>&raquo;</span></li>";
-		else								// 현재 페이지가 아직 전체의 마지막 페이지에 가지 않았다면
-			pageBar += "<a href="+request.getContextPath()
-					+"/board/boardView?cPage="
-					+pageNo+" aria-label='Next'>"
-					+"<span aria-hidden='true'>&raquo;</span></a>";
+		}
+		else if(totalContent>0) {
+			if(pageNo==1)			// 페이지 번호가 1이면
+				pageBar += "<li><span aria-hidden='false'>&laquo;</span></li>";		// 이전 클릭이 눌러지지 않기 위함이다.
+			else					// 그 외의 숫자면
+				pageBar += "<li><a href='"+request.getContextPath()
+						+"/board/boardView?cPage="+(pageNo-1)
+						+"' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>";
+			// 페이지 번호를 부여한다.
+			while(pageNo<=pageEnd && pageNo<=totalPage) {
+				if(cPage==pageNo)		// 현재 페이지에 있으면
+					pageBar += "<li><span class='btn btn-primary'>"+pageNo+"</span></li>";
+				else					// 그렇지 않으면
+					pageBar += "<li><a href='"+request.getContextPath()
+							+"/board/boardView?cPage="+pageNo+"' class='btn btn-primary'>"
+							+pageNo+"</a></li>";
+				pageNo++;		// 페이지 범위를 정하지 않으면 무한반복하기 때문에 반드시 증감식을 넣어야 한다.
+			}
+			if(cPage>=totalPage)				// 현재 페이지가 전체의 마지막 페이지에 도달하면
+				pageBar += "<li><span aria-hidden='false'>&raquo;</span></li>";
+			else								// 현재 페이지가 아직 전체의 마지막 페이지에 가지 않았다면
+				pageBar += "<li><a href="+request.getContextPath()
+						+"/board/boardView?cPage="+pageNo
+						+" aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>";
+		}
 		// 페이지 바 구성 종료 후
 		request.setAttribute("list", list);
 		request.setAttribute("cPage", cPage);
+		request.setAttribute("totalContent", totalContent);
 		request.setAttribute("pageBar", pageBar);
 		request.getRequestDispatcher("/views/board/boardList.jsp").forward(request, response);
 	}

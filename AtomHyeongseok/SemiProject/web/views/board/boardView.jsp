@@ -3,38 +3,39 @@
 <%
 	Board b = (Board)request.getAttribute("board");
 %>
-<%@ include file="/views/common/header.jsp"%>
-<script>
-	function fn_loginAlert(){
-		alert("로그인 후 이용하시오.");
-		$('#userId').focus();
+<style>
+	tr>td:nth-child(2n-1){
+		background-color:beige;
 	}
-</script>
+</style>
+<%@ include file="/views/common/header.jsp"%>
 		<div class="content">
             <div class="col-md-8">
                 <table>
-                    <thead>
-                        <tr>
-                            <td>제목</td>
-                            <td><input type="text" name="title" id='title'/></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>첨부</td>
-                            <td>
-                                <input type='file' name="file" id="file"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>내용</td>
-                            <td>
-                                <textarea cols=120 rows=15></textarea>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tr>
+                        <td rowspan=2>글 번호</td>
+                       	<td rowspan=2><%=b.getBoardNo()%></td>
+					</tr>
+					<tr>
+                        <td>제목</td>
+                        <td><%=b.getTitle()%></td>
+                        <td>작성자</td>
+                        <td><%=b.getWriter()%></td>
+                    </tr>
+                    <tr>
+                        <td>내용</td>
+                        <td rowspan=3><%=b.getContent()%></td>
+                    </tr>
                 </table>
                 <br>
+            </div>
+            <div class='change'>
+            	<input type='button' id='modify' value='수정하기' class='btn btn-primary'
+            onclick='<%=request.getContextPath()%>/board/boardModify.jsp?board_no=<%=b.getBoardNo()%>'/>
+            	<input type='button' id='delete' value='삭제하기' class='btn btn-default'
+            onclick='<%=request.getContextPath()%>/board/boardDelete.jsp?board_no=<%=b.getBoardNo()%>'/>
+            	<input type='reset' id='back' value='뒤로가기'
+            		   class='btn btn-default' onclick='history.back(-1)'/>
             </div>
         </div>
 
