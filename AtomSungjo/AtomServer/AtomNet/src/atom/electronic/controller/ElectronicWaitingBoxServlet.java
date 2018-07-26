@@ -125,6 +125,7 @@ public class ElectronicWaitingBoxServlet extends HttpServlet {
 				request.setAttribute("cPage", cPage);
 				request.setAttribute("numPerPage", numPerPage);
 				request.setAttribute("pageBar", pageBar);
+				request.setAttribute("totalContent", totalContent);
 		
 		request.setAttribute("list", list);		
 		

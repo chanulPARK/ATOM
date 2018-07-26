@@ -1,12 +1,15 @@
 package atom.electronic.model.vo;
 
-import java.util.Arrays;
+import java.util.Date;
 
 public class MaterialLine {
 	private String draftNo;
 	private String empId;
 	private int materialSquence;
 	private String materialState;
+	private Date materialDate;
+	
+	
 	public MaterialLine() {}
 	public MaterialLine(String draftNo, String empId, int materialSquence, String materialState) {
 		super();
@@ -39,6 +42,13 @@ public class MaterialLine {
 	public void setMaterialState(String materialState) {
 		this.materialState = materialState;
 	}
+	public Date getMaterialDate() {
+		return materialDate;
+	}
+	public void setMaterialDate(Date materialDate) {
+		this.materialDate = materialDate;
+	}
+	
 	@Override
 	public String toString() {
 		return "MaterialLine [draftNo=" + draftNo + ", empId=" + empId + ", materialSquence=" + materialSquence

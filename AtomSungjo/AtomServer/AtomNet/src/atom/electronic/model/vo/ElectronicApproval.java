@@ -6,6 +6,7 @@ public class ElectronicApproval {
 	private int pageNo;
 	private String draftNo;
 	private Date draftDate;
+	private Date CompletionDate;
 	private String empId;
 	private String empName;
 	private String draftDept;
@@ -20,6 +21,16 @@ public class ElectronicApproval {
 		return "ElectronicApproval [pageNo=" + pageNo + ", draftNo=" + draftNo + ", draftDate=" + draftDate + ", empId="
 				+ empId + ", draftDept=" + draftDept + ", draftName=" + draftName + ", draftContent=" + draftContent
 				+ ", draftState=" + draftState + "]";
+	}
+
+	
+	
+	public Date getCompletionDate() {
+		return CompletionDate;
+	}
+
+	public void setCompletionDate(Date completionDate) {
+		CompletionDate = completionDate;
 	}
 
 	public String getEmpName() {

@@ -42,12 +42,12 @@ public class ElectronicApprovalFormEndServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Employee e = (Employee)session.getAttribute("empLoggedIn");
 		Date d = new Date();
-		SimpleDateFormat sd = new SimpleDateFormat("YYYYMMdd");
+		SimpleDateFormat sd = new SimpleDateFormat("YYYYMMddHHmmss");
 		Random r = new Random();
 		
 		String apprTitle = request.getParameter("apprTitle");
 		String apprContent = request.getParameter("apprContent");
-		String draftNo = e.getDeptCode() + e.getEmpId() + sd.format(d) + r.nextInt(10) + r.nextInt(10);
+		String draftNo = e.getDeptCode() + e.getEmpId() + sd.format(d);
 		// 문서 자동채번 코드 ---- 부서코드+아이디+시간+랜덤함수 00~99까지
 		ElectronicApproval ea = new ElectronicApproval();
 		ea.setDraftNo(draftNo);

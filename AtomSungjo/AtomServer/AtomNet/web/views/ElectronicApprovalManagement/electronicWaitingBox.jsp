@@ -8,6 +8,7 @@
 	ArrayList<ElectronicApproval> list = (ArrayList)request.getAttribute("list");
 	int cPage=(int)request.getAttribute("cPage");
 	int numPerPage=(int)request.getAttribute("numPerPage");
+	int totalContent=(int)request.getAttribute("totalContent");
 	String pageBar=(String)request.getAttribute("pageBar");
 %>
 
@@ -152,7 +153,7 @@ aside .fa-caret-down {
                                 <option value="50">50</option>
                             </select>
                         </div>
-                        <div class="col-md-1" style="margin: 0 0 0 10px;"><p style="font-size: 12px; color: rgb(160, 160, 160); margin: 6px 0px;">전체 10</p></div>
+                        <div class="col-md-1" style="margin: 0 0 0 10px;"><p style="font-size: 12px; color: rgb(160, 160, 160); margin: 6px 0px;">전체 <%=totalContent%></p></div>
 						<div class="col-md-10 pull-right">
 	                        <form class="form-inline pull-right" style="margin-right:15px" action="">
                                 <input class="form-control input-sm" placeholder="From" value=""><button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -210,7 +211,7 @@ aside .fa-caret-down {
 		                <td><%=ea.getPageNo()%></td>
 		                <td><%=ea.getDraftNo() %></td>
 		                <td>결재</td>
-		                <td><a href="#"><%=ea.getDraftName() %></a></td>
+		                <td><a href="<%=request.getContextPath()%>/electronic/electronicWaitingView?draftNo=<%=ea.getDraftNo()%>"><%=ea.getDraftName() %></a></td>
 						<td><%=ea.getEmpName() %></td>
 		                <td><%=ea.getDraftDept() %></td>
 		                <td><%=ea.getDraftDate() %></td>                	
