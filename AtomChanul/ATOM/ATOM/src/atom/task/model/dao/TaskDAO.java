@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,6 +126,7 @@ public class TaskDAO {
 				t.setEmpName(rs.getString("EMP_NAME"));
 				t.setDeptName(rs.getString("DEPT_NAME"));
 				t.setJobName(rs.getString("JOB_NAME"));
+				
 				t.setTaskNo(rs.getInt("TASK_NO"));
 				t.setTaskType(rs.getString("TASK_TYPE"));
 				t.setTaskTitle(rs.getString("TASK_TITLE"));
@@ -220,14 +222,22 @@ public class TaskDAO {
 			while(rs.next())
 			{
 				t = new Task();
+				t.setEmpId(rs.getString("EMP_ID"));
+				t.setEmpName(rs.getString("EMP_NAME"));
+				t.setDeptName(rs.getString("DEPT_NAME"));
+				t.setJobName(rs.getString("JOB_NAME"));
+				
+				t.setTaskNo(rs.getInt("TASK_NO"));
+				t.setTaskType(rs.getString("TASK_TYPE"));
 				t.setTaskTitle(rs.getString("TASK_TITLE"));
-				t.setTaskContent(rs.getString("TASK_CONTENT"));	
+				t.setTaskContent(rs.getString("TASK_CONTENT"));
 				t.setReceiver(rs.getString("RECEIVER"));
 				t.setOriginalFile(rs.getString("ORIGINAL_FILE"));
 				t.setRenamedFile(rs.getString("RENAMED_FILE"));
 				t.setEnrollDate(rs.getDate("ENROLL_DATE"));
 				t.setDeadline(rs.getDate("DEADLINE"));
 				t.setTaskStatus(rs.getString("TASK_STATUS"));
+				t.setTaskCheck(rs.getString("TASK_CHECK"));
 			}
 		}
 		catch (Exception e) {
@@ -237,5 +247,26 @@ public class TaskDAO {
 		close(pstmt);
 		
 		return t;
+	}
+	
+	public int deleteTask(Connection conn, int taskNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteTask");
+		System.out.println(sql);
+		
+		try 
+		{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, taskNo);
+			result = pstmt.executeUpdate();
+		} 
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		close(pstmt);
+		
+		return result;
 	}
 }

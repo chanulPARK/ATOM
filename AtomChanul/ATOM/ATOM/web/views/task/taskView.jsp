@@ -2,12 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp" %>
 <%@ include file="/views/common/aside.jsp" %>
-<%@ page import='java.util.*, atom.task.model.vo.Task, java.lang.*' %>
+<%@ page import='java.util.*, atom.task.model.vo.Task' %>
 <%
 	Employee emp = (Employee)request.getSession().getAttribute("empLoggedIn");
 	Task t = (Task)request.getAttribute("task");
 %>
-
 <style>
 		.tableTL {
             margin: 0;
@@ -25,17 +24,26 @@
         	float: right;
         }
 </style>
+<script>
+	function taskDelete() {
+		var frm = $('#task-details');
+		var name = "<%=t.getTaskTitle() %>";
+		var url = "<%=request.getContextPath()%>/task/taskDelete?taskNo=<%=t.getTaskNo()%>";
+		var bool = confirm("["+name+"]을 정말 삭제하시겠습니까?");
+		if(bool) {
+			frm.attr("action",url);
+			frm.submit();
+		}
+		else alert("삭제가 취소되었습니다.")
+	}
+</script>
 
 <section>
     <div class="content">
         <div class="col-md-12">
             <h4>업무 세부사항</h4>
-        	<form action="<%=request.getContextPath()%>/task/taskWriteEnd" method="post" enctype="multipart/form-data">
-        		<input type="hidden" name="userId" value="<%=emp.getEmpId() %>">
-        		<input type="hidden" name="userName" value="<%=emp.getEmpName() %>">
-        		<input type="hidden" name="deptCode" value="<%=emp.getDeptCode() %>">
-        		<input type="hidden" name="jopCode" value="<%=emp.getJobCode() %>">
-        	</form>
+        	<form id="task-details">
+        		<input type="hidden" name="taskNo" value="<%=t.getTaskNo() %>">
         		
 	            <table class="tableTR table table-condensed">
                     <tr>
@@ -67,6 +75,7 @@
 						<td><%=t.getTaskContent() %></td>
 					</tr>
 	            </table>
+            
 	            <div class="inform-wrap" style="border: 5px solid #eaeaea">
 	            	<h5>&nbsp;&nbsp;업무 처리내역</h5>
 	            	<table class="tableTR table table-condensed">
@@ -94,11 +103,12 @@
 					</table>
 					<div class="btn-wrap float-right">
 		                <button type="submit" class="btn btn-sm btn-primary">저장</button>
-		                <button type="button" class="btn btn-sm btn-default">임시저장</button>
-		                <button type="reset" class="btn btn-sm btn-default">취소</button>
-		                <button type="reset" class="btn btn-sm btn-default">목록</button>
+		                <button type="button" class="btn btn-sm btn-default">수정</button>
+		                <button type="button" class="btn btn-sm btn-default" onclick="taskDelete()">삭제</button>
+		                <button type="button" class="btn btn-sm btn-default" onclick="history.back()">목록</button>
 		            </div>
 	            </div>
+            </form>
         </div>
     </div>
 </section>
