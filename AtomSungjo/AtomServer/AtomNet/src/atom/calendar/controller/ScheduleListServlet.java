@@ -8,9 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import atom.calendar.model.service.CalendarService;
 import atom.calendar.model.vo.Calendar;
+import atom.employee.model.vo.Employee;
 
 /**
  * Servlet implementation class ScheduleListServlet
@@ -31,13 +33,16 @@ public class ScheduleListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String empId = "EMP_ID 01";
-		List<Calendar> lists = new CalendarService().selectEmpId(empId);
-//		List<Calendar> lists = new CalendarService().selectDeptName();
-		
-		
+		HttpSession session = request.getSession();
+		Employee e = (Employee)session.getAttribute("empLoggedIn");
+		List<Calendar> lists = new CalendarService().selectEmpId(e.getEmpId());
+		List<Calendar> noticeLists = new CalendarService().selectAdminCode();
+		List<Calendar> deptLists = new CalendarService().selectDeptCode(e.getDeptCode(), e.getEmpId());
 		
 		request.setAttribute("list", lists);
+		request.setAttribute("noticeLists", noticeLists);
+		request.setAttribute("deptLists", deptLists);
+		
 		
 		request.getRequestDispatcher("/views/ScheduleManagement/schedule.jsp").forward(request, response);
 	}

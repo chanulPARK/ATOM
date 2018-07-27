@@ -50,4 +50,18 @@ public class CalendarService {
 		return result;
 	}
 
+	public List<Calendar> selectAdminCode() {
+		Connection conn = getConnection();
+		List<Calendar> lists = new CalendarDAO().selectAdminCode(conn);
+		close(conn);
+		return lists;
+	}
+
+	public List<Calendar> selectDeptCode(String deptCode, String empId) {
+		Connection conn = getConnection();
+		List<Calendar> lists = new CalendarDAO().selectDeptCode(conn,deptCode,empId);
+		close(conn);
+		return lists;
+	}
+
 }

@@ -4,18 +4,17 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.sun.xml.internal.ws.util.StringUtils;
+import javax.servlet.http.HttpSession;
 
 import atom.calendar.model.service.CalendarService;
 import atom.calendar.model.vo.Calendar;
+import atom.employee.model.vo.Employee;
 
 /**
  * Servlet implementation class CalendarRegistrationFormEndServlet
@@ -56,12 +55,14 @@ public class CalendarRegistrationFormEndServlet extends HttpServlet {
 		String startDate = scheduleDateSE[0];
 		String endDate = scheduleDateSE[1];
 
+		HttpSession session = request.getSession();
+		Employee e = (Employee)session.getAttribute("empLoggedIn");
 		Calendar s = new Calendar();
 		s.setScheduleName(scheduleName);
 		s.setStartDate(startDate);
 		s.setEndDate(endDate);
-		s.setCategory("부서명");
-		s.setEmpId("EMP_ID 01");
+		s.setCategory(e.getDeptCode());
+		s.setEmpId(e.getEmpId());
 		s.setContent(content);
 		s.setPlace(schedulePlace);
 		s.setRepeatYN(repeatYN);
