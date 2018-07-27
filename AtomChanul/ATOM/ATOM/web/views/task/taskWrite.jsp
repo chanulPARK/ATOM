@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp" %>
-<%@ include file="/views/common/aside.jsp" %>
+<%@ include file="/views/common/taskAside.jsp" %>
 <%
 	Employee emp = (Employee)request.getSession().getAttribute("empLoggedIn");
 %>

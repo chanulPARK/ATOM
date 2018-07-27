@@ -37,6 +37,9 @@
 <!-- tablesorter -->
 <link href="<%=request.getContextPath()%>/dist/css/blue/style.css" rel="stylesheet">
 
+<!-- rsc-user -->
+<link href='<%=request.getContextPath()%>/dist/css/rsc-user.css' rel='stylesheet'>
+
 
 </head>
 
@@ -47,22 +50,26 @@
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
 					<!-- <a class="navbar-brand" href="#">Brand</a> -->
-					<a class="navbar-brand" href="#"> <img
-						src="<%=request.getContextPath()%>/dist/img/login.png">
+					<a class="navbar-brand" href="<%=request.getContextPath()%>/views/main.jsp">
+						<img src="<%=request.getContextPath()%>/dist/img/login.png">
 					</a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li><a href="<%=request.getContextPath()%>/views/main.jsp">
-								<span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
-						<li><a href="electronicApproval.jsp">전자결재</a></li>
-						<li><a href="<%=request.getContextPath()%>/schedule/scheduleList">일정</a></li>
+						<li><a href="<%=request.getContextPath()%>/login.jsp"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+						<li><a href="<%=request.getContextPath()%>/electronic/electronicWaitingBox">전자결재</a></li>
+	                    <li><a href="<%=request.getContextPath()%>/schedule/scheduleList">일정</a></li>
 						<li><a href="<%=request.getContextPath()%>/task/taskList">업무관리</a></li>
-						<li><a href="#">게시판</a></li>
+						<li><a href="<%=request.getContextPath()%>/board/boardList">게시판</a></li>
+						<li id= 'resourcehome'><a href='<%=request.getContextPath() %>/user/resourseHome'>자원관리</a></li>
 						<li><a href="#">조직도</a></li>
-						<li><a href="#">근태관리</a></li>
+						<%if(empLoggedIn.getAdminCode().trim().equals("1")){ %>
+	                    <li><a href="<%=request.getContextPath()%>/views/attendance/att_day.jsp">근태관리</a></li>
+	                    <%} else { %>
+	                    <li><a href="<%=request.getContextPath()%>/attendance/userDay">근태관리</a></li>
+	                    <%} %>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown"><a href="#" class="dropdown-toggle"

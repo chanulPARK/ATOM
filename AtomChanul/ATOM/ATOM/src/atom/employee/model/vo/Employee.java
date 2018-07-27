@@ -3,181 +3,219 @@ package atom.employee.model.vo;
 import java.sql.Date;
 
 public class Employee {
-   private String empId;
-   private String empPw;
-   private String empName;
-   private String empRrn;
-   private String email;
-   private String phone;
-   private String addr;
-   private String deptCode;
-   private String jobCode;
-   private String managerId;
-   private String adminCode;
-   private Date hireDate;
-   private Date entDate;
-   private String entYn;
-   private String empPr;
-   private String empImg;
-   
-   public Employee() {}
+	private String empId;
+	private String empPw;
+	private String empName;
+	private String empRrn;
+	private String email;
+	private String phone;
+	private String addr;
+	private String deptCode;
+	private String deptName;
+	private String jobCode;
+	private String jobName;
+	private String adminCode;
+	private String adminName;
+	private String managerId;
+	private Date hireDate;
+	private Date entDate;
+	private String entYn;
+	private String empPr;
+	private String empImg;
+	
+	
+	
+	
+	public Employee() {}
 
-   public Employee(String empId, String empPw, String empName, String empRrn, String email, String phone, String addr,
-         String deptCode, String jobCode, String managerId, String adminCode, Date hireDate, Date entDate, String entYn, String empPr,
-         String empImg) {
-      super();
-      this.empId = empId;
-      this.empPw = empPw;
-      this.empName = empName;
-      this.empRrn = empRrn;
-      this.email = email;
-      this.phone = phone;
-      this.addr = addr;
-      this.deptCode = deptCode;
-      this.jobCode = jobCode;
-      this.managerId = managerId;
-      this.adminCode = adminCode;
-      this.hireDate = hireDate;
-      this.entDate = entDate;
-      this.entYn = entYn;
-      this.empPr = empPr;
-      this.empImg = empImg;
-   }
+	public String getDeptName() {
+		return deptName;
+	}
 
-   public String getEmpId() {
-      return empId;
-   }
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
 
-   public void setEmpId(String empId) {
-      this.empId = empId;
-   }
+	public String getJobName() {
+		return jobName;
+	}
 
-   public String getEmpPw() {
-      return empPw;
-   }
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
+	}
 
-   public void setEmpPw(String empPw) {
-      this.empPw = empPw;
-   }
+	public String getAdminName() {
+		return adminName;
+	}
 
-   public String getEmpName() {
-      return empName;
-   }
+	public void setAdminName(String adminName) {
+		this.adminName = adminName;
+	}
 
-   public void setEmpName(String empName) {
-      this.empName = empName;
-   }
+	public Employee(String empId, String empPw, String empName, String empRrn, String email, String phone, String addr,
+			String deptCode, String deptName, String jobCode, String jobName, String adminCode, String adminName,
+			String managerId, Date hireDate, Date entDate, String entYn, String empPr, String empImg) {
+		super();
+		this.empId = empId;
+		this.empPw = empPw;
+		this.empName = empName;
+		this.empRrn = empRrn;
+		this.email = email;
+		this.phone = phone;
+		this.addr = addr;
+		this.deptCode = deptCode;
+		this.deptName = deptName;
+		this.jobCode = jobCode;
+		this.jobName = jobName;
+		this.adminCode = adminCode;
+		this.adminName = adminName;
+		this.managerId = managerId;
+		this.hireDate = hireDate;
+		this.entDate = entDate;
+		this.entYn = entYn;
+		this.empPr = empPr;
+		this.empImg = empImg;
+	}
 
-   public String getEmpRrn() {
-      return empRrn;
-   }
 
-   public void setEmpRrn(String empRrn) {
-      this.empRrn = empRrn;
-   }
 
-   public String getAdminCode() {
-      return adminCode;
-   }
+	public String getEmpId() {
+		return empId;
+	}
 
-   public void setAdminCode(String adminCode) {
-      this.adminCode = adminCode;
-   }
+	public void setEmpId(String empId) {
+		this.empId = empId;
+	}
 
-   public String getEmail() {
-      return email;
-   }
+	public String getEmpPw() {
+		return empPw;
+	}
 
-   public void setEmail(String email) {
-      this.email = email;
-   }
+	public void setEmpPw(String empPw) {
+		this.empPw = empPw;
+	}
 
-   public String getPhone() {
-      return phone;
-   }
+	public String getEmpName() {
+		return empName;
+	}
 
-   public void setPhone(String phone) {
-      this.phone = phone;
-   }
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
 
-   public String getAddr() {
-      return addr;
-   }
+	public String getEmpRrn() {
+		return empRrn;
+	}
 
-   public void setAddr(String addr) {
-      this.addr = addr;
-   }
+	public void setEmpRrn(String empRrn) {
+		this.empRrn = empRrn;
+	}
 
-   public String getDeptCode() {
-      return deptCode;
-   }
+	public String getEmail() {
+		return email;
+	}
 
-   public void setDeptCode(String deptCode) {
-      this.deptCode = deptCode;
-   }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-   public String getJobCode() {
-      return jobCode;
-   }
+	public String getPhone() {
+		return phone;
+	}
 
-   public void setJobCode(String jobCode) {
-      this.jobCode = jobCode;
-   }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-   public String getManagerId() {
-      return managerId;
-   }
+	public String getAddr() {
+		return addr;
+	}
 
-   public void setManagerId(String managerId) {
-      this.managerId = managerId;
-   }
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
 
-   public Date getHireDate() {
-      return hireDate;
-   }
+	public String getDeptCode() {
+		return deptCode;
+	}
 
-   public void setHireDate(Date hireDate) {
-      this.hireDate = hireDate;
-   }
+	public void setDeptCode(String deptCode) {
+		this.deptCode = deptCode;
+	}
 
-   public Date getEntDate() {
-      return entDate;
-   }
+	public String getJobCode() {
+		return jobCode;
+	}
 
-   public void setEntDate(Date entDate) {
-      this.entDate = entDate;
-   }
+	public void setJobCode(String jobCode) {
+		this.jobCode = jobCode;
+	}
 
-   public String getEntYn() {
-      return entYn;
-   }
+	public String getAdminCode() {
+		return adminCode;
+	}
 
-   public void setEntYn(String entYn) {
-      this.entYn = entYn;
-   }
+	public void setAdminCode(String adminCode) {
+		this.adminCode = adminCode;
+	}
 
-   public String getEmpPr() {
-      return empPr;
-   }
+	public String getManagerId() {
+		return managerId;
+	}
 
-   public void setEmpPr(String empPr) {
-      this.empPr = empPr;
-   }
+	public void setManagerId(String managerId) {
+		this.managerId = managerId;
+	}
 
-   public String getEmpImg() {
-      return empImg;
-   }
+	public Date getHireDate() {
+		return hireDate;
+	}
 
-   public void setEmpImg(String empImg) {
-      this.empImg = empImg;
-   }
+	public void setHireDate(Date hireDate) {
+		this.hireDate = hireDate;
+	}
 
-   @Override
-   public String toString() {
-      return "Employee [empId=" + empId + ", empPw=" + empPw + ", empName=" + empName + ", empRrn=" + empRrn
-            + ", email=" + email + ", phone=" + phone + ", addr=" + addr + ", deptCode=" + deptCode + ", jobCode="
-            + jobCode + ", managerId=" + managerId + ", adminCode=" + adminCode + ", hireDate=" + hireDate
-            + ", entDate=" + entDate + ", entYn=" + entYn + ", empPr=" + empPr + ", empImg=" + empImg + "]";
-   }
-   
+	public Date getEntDate() {
+		return entDate;
+	}
+
+	public void setEntDate(Date entDate) {
+		this.entDate = entDate;
+	}
+
+	public String getEntYn() {
+		return entYn;
+	}
+
+	public void setEntYn(String entYn) {
+		this.entYn = entYn;
+	}
+
+	public String getEmpPr() {
+		return empPr;
+	}
+
+	public void setEmpPr(String empPr) {
+		this.empPr = empPr;
+	}
+
+	public String getEmpImg() {
+		return empImg;
+	}
+
+	public void setEmpImg(String empImg) {
+		this.empImg = empImg;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [empId=" + empId + ", empPw=" + empPw + ", empName=" + empName + ", empRrn=" + empRrn
+				+ ", email=" + email + ", phone=" + phone + ", addr=" + addr + ", deptCode=" + deptCode + ", deptName="
+				+ deptName + ", jobCode=" + jobCode + ", jobName=" + jobName + ", adminCode=" + adminCode
+				+ ", adminName=" + adminName + ", managerId=" + managerId + ", hireDate=" + hireDate + ", entDate="
+				+ entDate + ", entYn=" + entYn + ", empPr=" + empPr + ", empImg=" + empImg + "]";
+	}
+
+	
+	
 }

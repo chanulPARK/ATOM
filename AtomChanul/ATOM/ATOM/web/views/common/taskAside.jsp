@@ -2,6 +2,37 @@
     pageEncoding="UTF-8"%>
 
 <style>
+	aside div.leftmenu_top {
+        background: #353b47;
+        color: #fff;
+        text-align: center;
+        height: 50px;
+    }
+    aside div.leftmenu_top h3{
+        padding-top: 10px;
+        margin: 0;
+    }
+    aside div.leftmenu_top h3 a{
+        font-size: 20px;
+        text-decoration: none;
+        padding: 0 10px;
+    }
+    aside div.leftmenu_top h3 a:hover{
+        text-decoration: none;
+        color: #fff;
+    }
+    aside div.leftmenu_top h3 a:active{
+        text-decoration: none;
+        color: #fff;
+    }
+    aside div.leftmenu_top h3 a:visited{
+        text-decoration: none;
+        color: #fff;
+    }
+    aside div.leftmenu_top h3 a:link{
+        text-decoration: none;
+        color: #fff;
+    }
 	.leftmenu_area .panel .panel-heading {
 	border-bottom: 1px solid rgb(221, 221, 221);
 	}
