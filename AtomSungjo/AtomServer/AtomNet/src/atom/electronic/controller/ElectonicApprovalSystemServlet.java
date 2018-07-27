@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import atom.electronic.model.service.ElectronicService;
+import atom.electronic.model.vo.AuthoriaztionComment;
 import atom.electronic.model.vo.MaterialLine;
 import atom.employee.model.vo.Employee;
 
@@ -34,14 +35,16 @@ public class ElectonicApprovalSystemServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		Employee e = (Employee)session.getAttribute("empLoggedIn");
-		String electAppr = request.getParameter("appr");
-		String apprComment = request.getParameter("apprComment");
-		String draftNo = request.getParameter("draftNo");
+		Employee e = (Employee)session.getAttribute("empLoggedIn"); // 작성자 내용
+		String electAppr = request.getParameter("appr"); // 승인/거절
+		String apprComment = request.getParameter("apprComment"); // 결재의견
+		String draftNo = request.getParameter("draftNo"); // 결재문서 번호
 		MaterialLine m = new MaterialLine();
 		m.setDraftNo(draftNo);
 		m.setEmpId(e.getEmpId());
 		m.setMaterialState(electAppr); //승인,거절
+		
+		
 		
 		int result = new ElectronicService().updateMaterialLine(m); // 결재선 변경
 		int materialcnt = new ElectronicService().selectMaterialLineCount(m); // 결재선 총 수
@@ -54,12 +57,21 @@ public class ElectonicApprovalSystemServlet extends HttpServlet {
 			m.setMaterialState("종결");		
 		}else {
 			m.setMaterialState("진행");
+			int result4 = new ElectronicService().updateMaterialLineafterProgree(m);
 		}
-		int result2 = new ElectronicService().updateElectronicApprovalState(m);
+		int result2 = new ElectronicService().updateElectronicApprovalState(m); // 문서 상태 변경
+		
+		
+		AuthoriaztionComment ac = new AuthoriaztionComment(); // 결재의견
+		ac.setComment(apprComment);
+		ac.setDraftNo(draftNo);
+		ac.setEmpId(e.getEmpId());
+		
+		int result3 = new ElectronicService().insertComment(ac); // 결재의견 추가
 		
 		String msg="";
 		String loc="/electronic/electronicWaitingBox";
-		if(result>0)
+		if(result>0 && result2>0 && result3 >0)
 		{
 			msg="결재 성공";
 		}

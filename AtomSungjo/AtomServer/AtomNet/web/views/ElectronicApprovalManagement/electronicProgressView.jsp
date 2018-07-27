@@ -13,7 +13,7 @@
 	ArrayList<MaterialLine> materialList = (ArrayList)request.getAttribute("materialline");
 	ArrayList<AuthoriaztionComment> commentList = (ArrayList)request.getAttribute("commentList");
 	System.out.println("결재선 : ?" + materialList);
-	System.out.println("결재의견 : ?" + commentList);
+	System.out.println("커맨트 : ?" + commentList.size());
 	
 %>
 <head>
@@ -191,17 +191,13 @@ ul{
     <section>
         <div class="content">
           <div class="row">
-          	<%if(ea.getDraftState().equals("종결")){%>
-              <h4>완료문서함</h4>
-              <%}else{%>
-              <h4>반려문서함</h4>
-              <%} %>
+              <h4>결재 진행함</h4>
               <hr>
           </div>
           <div class="row" >
 	          <div id="formButtonDiv" class="btn-wrap pull-right">
-	      	    <!-- <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button> -->
-	      		<!-- <button id="createApprDocTemporayButton" type="button" class="btn btn-default">임시저장</button> -->
+	      	    <button id="" class="btn btn-primary" type="button">결재회수</button>
+	      	    <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button>
 	      		<button id="" type="reset"  onclick="history.go(-1)" class="btn btn-default">목록</button>
 	      	  </div>
 
@@ -410,9 +406,19 @@ ul{
 	      						</tfoot>
 	      					</table>
 	      				</div>
+
+
 	      		</div>
 	      	</div> <!-- content-wrap approval responsive -->
+
+	      	<div id="formButtonDiv" class="btn-wrap pull-right">
+	      	   <button id="" class="btn btn-primary" type="button">결재회수</button>
+	      	    <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button>
+	      		<!-- <button id="createApprDocTemporayButton" type="button" class="btn btn-default">임시저장</button> -->
+	      		<button id="" type="reset"  onclick="history.go(-1)" class="btn btn-default">목록</button>
+	      	</div>
       </div> <%--row--%>
+      <%if(commentList.size()!=0){ %>
       <div class="row">
       	<h5>결재의견</h5>
 		<div class="content-view border-top">
@@ -454,6 +460,7 @@ ul{
 	</table>
 	</div>
       </div>
+      <%} %>
      </div> <%--content--%>
 
     </section>

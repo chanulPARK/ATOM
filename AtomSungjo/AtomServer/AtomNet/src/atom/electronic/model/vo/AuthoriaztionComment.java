@@ -7,6 +7,9 @@ public class AuthoriaztionComment {
 	private String empId;
 	private Date commentDate;
 	private String comment;
+	private String empName;
+	private String deptName;
+	private String apprState;
 	
 	public AuthoriaztionComment() {}
 	
@@ -16,6 +19,31 @@ public class AuthoriaztionComment {
 		this.empId = empId;
 		this.commentDate = commentDate;
 		this.comment = comment;
+	}
+
+	
+	public String getApprState() {
+		return apprState;
+	}
+
+	public void setApprState(String apprState) {
+		this.apprState = apprState;
+	}
+
+	public String getEmpName() {
+		return empName;
+	}
+
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 
 	public String getDraftNo() {

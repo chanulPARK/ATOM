@@ -191,16 +191,12 @@ ul{
     <section>
         <div class="content">
           <div class="row">
-          	<%if(ea.getDraftState().equals("종결")){%>
               <h4>완료문서함</h4>
-              <%}else{%>
-              <h4>반려문서함</h4>
-              <%} %>
               <hr>
           </div>
           <div class="row" >
 	          <div id="formButtonDiv" class="btn-wrap pull-right">
-	      	    <!-- <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button> -->
+	      	    <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button>
 	      		<!-- <button id="createApprDocTemporayButton" type="button" class="btn btn-default">임시저장</button> -->
 	      		<button id="" type="reset"  onclick="history.go(-1)" class="btn btn-default">목록</button>
 	      	  </div>

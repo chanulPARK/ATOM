@@ -5,6 +5,7 @@ import java.util.Date;
 public class MaterialLine {
 	private String draftNo;
 	private String empId;
+	private String empName;
 	private int materialSquence;
 	private String materialState;
 	private Date materialDate;
@@ -17,6 +18,13 @@ public class MaterialLine {
 		this.empId = empId;
 		this.materialSquence = materialSquence;
 		this.materialState = materialState;
+	}
+	
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
 	}
 	public String getDraftNo() {
 		return draftNo;

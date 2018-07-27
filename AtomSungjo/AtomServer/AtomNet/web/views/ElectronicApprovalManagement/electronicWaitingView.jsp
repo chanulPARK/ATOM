@@ -1,3 +1,4 @@
+<%@page import="atom.electronic.model.vo.AuthoriaztionComment"%>
 <%@page import="atom.electronic.model.vo.MaterialLine"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="atom.electronic.model.vo.ElectronicApproval"%>
@@ -10,6 +11,7 @@
 <%
 	ElectronicApproval ea = (ElectronicApproval)request.getAttribute("ea");
 	ArrayList<MaterialLine> materialList = (ArrayList)request.getAttribute("materialline");
+	ArrayList<AuthoriaztionComment> commentList = (ArrayList)request.getAttribute("commentList");
 	System.out.println("결재선 : ?" + materialList);
 %>
 <head>
@@ -397,13 +399,14 @@ ul{
 				                    <tr>
 				                      <td id="first-td" rowspan="<%=materialList.size()%>">결<br><br>재</td>
 				                      <td>기안자</td>
+				                      <%for(int i=1;i<materialList.size();i++){ %>
 				                      <td>결재자</td>
-<!-- 				                      <td>사장</td>
- -->				                </tr>
+				                      <%}%>
+				                </tr>
 				                    <tr>
 				                    <%for(MaterialLine m : materialList){%>
 				                      <td>
-					                      <span style="font-size:0.9em"><%=m.getEmpId()%><br></span>
+					                      <span style="font-size:0.9em"><%=m.getEmpName()%><br></span>
 					                      <span style="font-size:1em"><%=m.getMaterialState() %><br></span>
 					                      <span style="font-size:0.8em"><%if(m.getMaterialDate()!=null){%><%=m.getMaterialDate()%><%}%></span>
 				                      </td>
@@ -467,6 +470,49 @@ ul{
 	      		<button id="" type="reset"  onclick="history.go(-1)" class="btn btn-default">목록</button>
 	      	</div>
       </div> <%--row--%>
+      <%if(commentList.size()!=0){ %>
+      <div class="row">
+      	<h5>결재의견</h5>
+		<div class="content-view border-top">
+		<table class="table full-border" summary="진행현황">
+			<caption></caption>
+			<colgroup>
+				<col style="width: 10%;">
+				<col style="width: 13%;">
+				<col style="width: 10%;">
+				<col style="width: 20%;">
+				<col style="width:*;">
+			</colgroup>
+			<thead>
+				<tr>
+					<th scope="col">결재</th>
+					<th scope="col">결재자</th>
+					<th scope="col">부서</th>
+					<th scope="col">결재일시</th>
+					<th scope="col">의견</th>
+				</tr>
+			</thead>					
+			<tbody>
+			<%for(AuthoriaztionComment ac : commentList){ %>
+				<tr> <!-- 결재의견 로직 구현하즈아 -->
+					<td><%=ac.getApprState() %></td> 
+					<td>									
+						<div class="ellipsis" title="박메카 회장" style="cursor:default;"> <span class="name"><%=ac.getEmpName() %></span></div>
+					</td>
+					<td>
+						<div class="ellipsis" title="인사팀" style="cursor:default;"> <span class="name"><%=ac.getDeptName() %></span></div>
+					</td>
+					<td><%=ac.getCommentDate() %></td>
+					<td class="text-left">
+						<%=ac.getComment() %>
+					</td>
+				</tr>
+			<%}%>
+			</tbody>					
+	</table>
+	</div>
+      </div>
+      <%} %>
      </div> <%--content--%>
 
     </section>

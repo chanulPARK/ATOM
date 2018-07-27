@@ -207,7 +207,8 @@ aside .fa-caret-down {
                     </tr>
                 </thead>
                 <tbody>
-                    <%for(ElectronicApproval ea : list){ %>
+                    <%if(list.size()!=0){
+                    for(ElectronicApproval ea : list){ %>
 	               	<tr>
 	 					<td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="<%=ea.getDraftNo()%>" /></td>
 		                <td><%=ea.getPageNo()%></td>
@@ -221,7 +222,10 @@ aside .fa-caret-down {
 	                    <!-- <tr>
 	                      <td colspan="10" class="emptyRecord">검색 결과가 존재하지 않습니다.</td>
 	                    </tr> -->
-	                <%}%>
+	                <%}
+		             }else{%>
+		             	<td colspan="8" class="emptyRecord">검색 결과가 존재하지 않습니다.</td>
+		             <%} %>
                 </tbody>
                 </table>
                 <nav class="pagination_wrap">
@@ -408,7 +412,7 @@ for (i = 0; i < dropdown.length; i++) {
   }
   
   $('#numperPage').change(function(){
-	  location.href='<%=request.getContextPath()%>/electronic/electronicWaitingBox?cPage=1&numPerPage='+$('#numperPage').val();
+	  location.href='<%=request.getContextPath()%>/electronic/electronicCompletionBox?cPage=1&numPerPage='+$('#numperPage').val();
 	  console.log($('#numperPage').val());
   });
   

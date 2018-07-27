@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import atom.electronic.model.service.ElectronicService;
+import atom.electronic.model.vo.AuthoriaztionComment;
 import atom.electronic.model.vo.ElectronicApproval;
 import atom.electronic.model.vo.MaterialLine;
 
@@ -32,16 +33,21 @@ public class ElectronicCompletionViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-String draftNo = request.getParameter("draftNo");
+		String draftNo = request.getParameter("draftNo");
+		System.out.println("draftNo   : " + draftNo);
 		
-		ElectronicApproval ea = new ElectronicService().selectDraftNo(draftNo);
-		List<MaterialLine> list = new ElectronicService().selectMaterialLineDraftNo(draftNo);
+		ElectronicApproval ea = new ElectronicService().selectDraftNo(draftNo); // 기안 내용
+		List<MaterialLine> list = new ElectronicService().selectMaterialLineDraftNo(draftNo); // 결재선 리스트
+		List<AuthoriaztionComment> commentList = new ElectronicService().selectCommentDraftNo(draftNo); // 결재의견 리스트
+		
+		System.out.println("list22 : " + list);
 		
 		String view="";
 		if(ea!=null)
 		{
 			request.setAttribute("ea", ea);
 			request.setAttribute("materialline", list);
+			request.setAttribute("commentList", commentList);
 			view="/views/ElectronicApprovalManagement/electronicCompletionView.jsp";
 		}
 		else

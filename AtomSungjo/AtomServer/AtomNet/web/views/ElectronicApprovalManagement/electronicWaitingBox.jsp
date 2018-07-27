@@ -205,21 +205,25 @@ aside .fa-caret-down {
                     </tr>
                 </thead>
                 <tbody>
-                    <%for(ElectronicApproval ea : list){ %>
-	               	<tr>
-	 					<td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="<%=ea.getDraftNo()%>" /></td>
-		                <td><%=ea.getPageNo()%></td>
-		                <td><%=ea.getDraftNo() %></td>
-		                <td>결재</td>
-		                <td><a href="<%=request.getContextPath()%>/electronic/electronicWaitingView?draftNo=<%=ea.getDraftNo()%>"><%=ea.getDraftName() %></a></td>
-						<td><%=ea.getEmpName() %></td>
-		                <td><%=ea.getDraftDept() %></td>
-		                <td><%=ea.getDraftDate() %></td>                	
-		            </tr>
-	                    <!-- <tr>
-	                      <td colspan="10" class="emptyRecord">검색 결과가 존재하지 않습니다.</td>
-	                    </tr> -->
-	                <%}%>
+                    <%if(list.size()!=0){
+	                    for(ElectronicApproval ea : list){ %>
+		               	<tr>
+		 					<td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="<%=ea.getDraftNo()%>" /></td>
+			                <td><%=ea.getPageNo()%></td>
+			                <td><%=ea.getDraftNo() %></td>
+			                <td>결재</td>
+			                <td><a href="<%=request.getContextPath()%>/electronic/electronicWaitingView?draftNo=<%=ea.getDraftNo()%>"><%=ea.getDraftName() %></a></td>
+							<td><%=ea.getEmpName() %></td>
+			                <td><%=ea.getDraftDept() %></td>
+			                <td><%=ea.getDraftDate() %></td>                	
+			            </tr>
+		                    <!-- <tr>
+		                      <td colspan="10" class="emptyRecord">검색 결과가 존재하지 않습니다.</td>
+		                    </tr> -->
+		                <%}
+		             }else{%>
+		             	<td colspan="8" class="emptyRecord">검색 결과가 존재하지 않습니다.</td>
+		             <%} %>
                 </tbody>
                 </table>
                 <nav class="pagination_wrap">
@@ -238,153 +242,6 @@ aside .fa-caret-down {
        
 
     </section>
-    <%-- <section>
-        <div class="content">
-          <div class="row">
-              <h4>결재대기함</h4>
-              <hr>
-          </div>
-          <div class="row" >
-
-
-            <!-- search start-->
-			<div class="search-wrap">
-				<div class="form-group">
-          <form class="form-inline">
-
-					<table class="col-sm-10">
-						<caption></caption>
-						<colgroup>
-              <col style="width: 7%;"/>
-							<col style="width: 25%;"/>
-							<col style="width: 7%;"/>
-							<col style="width: 41%;"/>
-
-						</colgroup>
-						<tbody>
-							<tr>
-								<th><label for="searchUserName">기안자</label></th>
-								<td><input id="searchUserName" name="searchUserName" value="" type="text" title="기안자" class="form-control"></td>
-								<th><label for="searchFormName">양식명</label></th>
-								<td><input id="searchFormName" name="searchFormName" value="" type="text" title="양식명" class="form-control"></td>
-							</tr>
-							<tr>
-								<th>
-									<select id="toggleSearchType" class="form-control">
-										<option value="searchApprTitle" >
-											문서제목
-										</option>
-										<option value="searchApprContent" >
-											문서내용
-										</option>
-									</select>
-								</th>
-								<td>
-									<input  id="inputSearchType" type="text" class="form-control" title="문서제목"	name="searchApprTitle" value="" style="width:100%">
-								</td>
-								<th>
-									<label>배정일</label>
-								</th>
-								<td>
-									<input type="text" title="시작일" id="searchStartDate" name="searchStartDate" value="" class="form-control" placeholder="시작일">
-									<button type="button" class="btn btn-color7 br tbl-inner"><i class="fa fa-calendar"></i></button>
-								  <span>~</span>
-									<input type="text" title="종료일" id="searchEndDate" name="searchEndDate" value="" class="form-control" placeholder="종료일">
-									<button type="button" class="btn btn-color7"><i class="fa fa-calendar"></i></button>
-								</td>
-							</tr>
-							<tr>
-									<th scope="row"><label for="searchApprDocNo">문서번호</label></th>
-										<td><input id="searchApprDocNo" type="text" title="문서번호" name="searchApprDocNo" value="" class="form-control" />
-									</td>
-							</tr>
-						</tbody>
-					</table>
-
-					<div class="search_btn">
-						<button type="button" id="searchApListButton"  class="btn btn-color5"><i class="fa fa-search fa-fw"></i> 검색</button>
-					</div>
-        </form>
-
-				</div>
-			</div>
-			<!-- search end-->
-
-
-
-
-
-          </div>
-          <div class="row">
-            <div class="table-header">
-              <div class="totalnum">전체<span> 0</span>
-            </div>
-            <div class="content-list approval">
-
-            </div>
-            <!--  listable-->
-            <table class="table table-striped" id="listTable" style = "text-align: center;table-layout:fixed;">
-              <caption></caption>
-              <colgroup>
-                      <col width="1%"/>
-                      <col width="3%"/>
-                      <col width="9%"/>
-                      <col width="3%"/>
-                      <col width="25%"/>
-                      <col width="3%"/>
-                      <col width="5%"/>
-                      <col width="8%"/>
-              </colgroup>
-              <thead>
-                <tr>
-                  <th scope="col"><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="" /></th>
-                  <th scope="col">NO</th>
-                  <th scope="col">문서번호</th>
-                  <th scope="col">유형</th>
-                  <th scope="col">
-                    <a onclick="" href="#" style="">문서제목<i class="fa fa-caret-down"></i></a>
-                  </th>
-                  <th scope="col">기안자</th>
-                  <th scope="col">기안부서</th>
-                  <th scope="col">
-                    <a onclick=""  href="#a">기안일<i class="fa fa-caret-down"><span class="blind"></span></i></a>
-                  </th>
-                </tr>
-                
-              </thead>
-              <tbody>
-              <%for(ElectronicApproval ea : list){ %>
-               	<tr>
- 					<td><input name="allCheck" id="allCheck" title="checkbox" type="checkbox" value="<%=ea.getDraftNo()%>" /></td>
-	                <td><%=ea.getPageNo()%></td>
-	                <td><%=ea.getDraftNo() %></td>
-	                <td>결재</td>
-	                <td><%=ea.getDraftName() %></td>
-					<td><%=ea.getEmpName() %></td>
-	                <td><%=ea.getDraftDept() %></td>
-	                <td><%=ea.getDraftDate() %></td>                	
-	            </tr>
-                    <!-- <tr>
-                      <td colspan="10" class="emptyRecord">검색 결과가 존재하지 않습니다.</td>
-                    </tr> -->
-                <%}%>
-              </tbody>
-            </table>
-            
-            <div class="row" style="text-align:center;">
-			  <ul class="pagination">
-			  	<%=pageBar %>
-			  </ul>
-			</div>
-            
-            <div class="btn-wrap">
-            <button type="button" class="btn btn-color5 pull-right" id="allApproval">일괄결재 </button>
-            </div>
-          </div>
-        </div>
-
-    </section> --%>
-
     <script>
     $(function(){
     	$('#numperPage').val('<%=numPerPage%>');

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import atom.electronic.model.dao.ElectronicDAO;
+import atom.electronic.model.vo.AuthoriaztionComment;
 import atom.electronic.model.vo.ElectronicApproval;
 import atom.electronic.model.vo.MaterialLine;
 
@@ -112,6 +113,73 @@ public class ElectronicService {
 	public List<ElectronicApproval> selectCompletionApproval(String empId, int cPage, int numPerPage) {
 		Connection conn = getConnection();
 		ArrayList<ElectronicApproval> list = new ElectronicDAO().selectCompletionApproval(conn,empId,cPage,numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public int selectCompletionCount(String empId) {
+		Connection conn = getConnection();
+		int totalContent= new ElectronicDAO().selectCompletionCount(conn,empId);
+		close(conn);
+		return totalContent;
+	}
+
+	public List<AuthoriaztionComment> selectCommentDraftNo(String draftNo) {
+		Connection conn = getConnection();
+		ArrayList<AuthoriaztionComment> commentList= new ElectronicDAO().selectCommentDraftNo(conn,draftNo);
+		close(conn);
+		return commentList;
+	}
+
+	public int insertComment(AuthoriaztionComment ac) {
+		Connection conn = getConnection();
+		int result = new ElectronicDAO().insertComment(conn,ac);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int updateMaterialLineafterProgree(MaterialLine m) {
+		Connection conn = getConnection();
+		int result = new ElectronicDAO().updateMaterialLineafterProgree(conn,m);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public List<ElectronicApproval> selectProgressApproval(String empId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		ArrayList<ElectronicApproval> list = new ElectronicDAO().selectProgressApproval(conn,empId,cPage,numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public int selectProgressApprovalCount(String empId) {
+		Connection conn = getConnection();
+		int approvalprogressCnt= new ElectronicDAO().selectProgressApprovalCount(conn,empId);
+		close(conn);
+		return approvalprogressCnt;
+	}
+
+	public List<ElectronicApproval> selectRequestApproval(String empId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		ArrayList<ElectronicApproval> list = new ElectronicDAO().selectRequestApproval(conn,empId,cPage,numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public int selectRequestApprovalCount(String empId) {
+		Connection conn = getConnection();
+		int approvalprogressCnt= new ElectronicDAO().selectRequestApprovalCount(conn,empId);
+		close(conn);
+		return approvalprogressCnt;
+	}
+
+	public List<ElectronicApproval> selectReturnApproval(String empId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		ArrayList<ElectronicApproval> list = new ElectronicDAO().selectReturnApproval(conn,empId,cPage,numPerPage);
 		close(conn);
 		return list;
 	}

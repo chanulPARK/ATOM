@@ -126,7 +126,6 @@ public class ElectronicWaitingBoxServlet extends HttpServlet {
 				request.setAttribute("numPerPage", numPerPage);
 				request.setAttribute("pageBar", pageBar);
 				request.setAttribute("totalContent", totalContent);
-		
 		request.setAttribute("list", list);		
 		
 		request.getRequestDispatcher("/views/ElectronicApprovalManagement/electronicWaitingBox.jsp").forward(request, response);	

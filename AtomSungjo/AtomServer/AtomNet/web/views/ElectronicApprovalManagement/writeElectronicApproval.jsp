@@ -340,8 +340,8 @@ ul{
 				                      <td id="first-td" rowspan="2">결<br><br>재</td>
 				                      <td>기안</td>
 				                      <td>대리</td>
-<!-- 				                      <td>사장</td>
- -->				                </tr>
+ 				                      <td>사장</td>
+ 				                </tr>
 				                    <tr>
 				                      <td>
 					                      <span style="font-size:0.9em"><%=empLoggedIn.getEmpName()%><br></span>
@@ -358,7 +358,16 @@ ul{
 					                      <!-- <span style="font-size:1em">대기<br></span>
 					                      <span style="font-size:0.8em">07.27 12:00</span> -->
 				                      </td>
-				                      <!-- <td>
+				                      <td>
+					                      <span style="font-size:0.9em">길리슛<br></span>
+					                      <input type="hidden" name="material_id" value="U">
+					                      <input type="hidden" name="material_squence" value="3">
+					                  </td>
+					                  <!--    					                      
+					                      <span style="font-size:1em">대기<br></span>
+					                      <span style="font-size:0.8em">07.27 12:00</span>
+				                      </td>
+				                      <td>
 					                      <span style="font-size:0.9em">김올레<br></span>
 					                      <span style="font-size:1em">승인<br></span>
 					                      <span style="font-size:0.8em">07.27 12:00</span>

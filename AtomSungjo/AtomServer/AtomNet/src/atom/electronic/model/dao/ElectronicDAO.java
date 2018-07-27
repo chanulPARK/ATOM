@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 import atom.calendar.model.dao.CalendarDAO;
+import atom.electronic.model.vo.AuthoriaztionComment;
 import atom.electronic.model.vo.ElectronicApproval;
 import atom.electronic.model.vo.MaterialLine;
 
@@ -199,7 +200,6 @@ public class ElectronicDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, draftNo);
-			pstmt.setString(2, "진행");
 			
 			rs = pstmt.executeQuery();
 			
@@ -211,6 +211,7 @@ public class ElectronicDAO {
 				m.setMaterialSquence(rs.getInt("material_squence"));
 				m.setMaterialState(rs.getString("material_state"));
 				m.setMaterialDate(rs.getDate("material_date"));
+				m.setEmpName(rs.getString("emp_name"));
 				
 				list.add(m);
 			}
@@ -353,7 +354,6 @@ public class ElectronicDAO {
 				ea.setDraftContent(rs.getString("draft_content"));
 				ea.setDraftState(rs.getString("draft_state"));
 				ea.setCompletionDate(rs.getDate("COMPLETIONDATE"));
-				System.out.println("rs.getDate(\"COMPLETIONDATE\") : " + rs.getDate("COMPLETIONDATE"));
 				list.add(ea);
 			}
 		} catch (SQLException e) {
@@ -362,5 +362,252 @@ public class ElectronicDAO {
 		}
 		return list;
 	}
-
+	public int selectCompletionCount(Connection conn, String empId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectCompletionCount");
+		int cnt = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, empId);
+			pstmt.setString(2, empId);
+			pstmt.setString(3, "종결");
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				cnt = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cnt;
+	}
+	public ArrayList<AuthoriaztionComment> selectCommentDraftNo(Connection conn, String draftNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectCommentDraftNo");
+		ArrayList<AuthoriaztionComment> list = new ArrayList();
+		AuthoriaztionComment ac;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, draftNo);
+			
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ac = new AuthoriaztionComment();
+				ac.setComment(rs.getString("comment_content"));
+				ac.setCommentDate(rs.getDate("comment_date"));
+				ac.setDraftNo(rs.getString("draft_no"));
+				ac.setEmpId(rs.getString("emp_id"));
+				ac.setEmpName(rs.getString("emp_name"));
+				ac.setDeptName(rs.getString("dept_name"));
+				ac.setApprState(rs.getString("material_state"));
+				list.add(ac);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public int insertComment(Connection conn, AuthoriaztionComment ac) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertComment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, ac.getDraftNo());
+			pstmt.setString(2, ac.getEmpId());
+			pstmt.setString(3, ac.getComment());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close(pstmt);
+		
+		return result;
+	}
+	public int updateMaterialLineafterProgree(Connection conn, MaterialLine m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateMaterialLineafterProgree");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "진행");
+			pstmt.setString(2, m.getDraftNo());
+			pstmt.setString(3, m.getDraftNo());
+			pstmt.setString(4, m.getEmpId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close(pstmt);
+		
+		return result;
+	}
+	public ArrayList<ElectronicApproval> selectProgressApproval(Connection conn, String empId, int cPage, int numPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectProgressApproval");
+		ArrayList<ElectronicApproval> list = new ArrayList();
+		ElectronicApproval ea;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, empId);
+			pstmt.setString(2, "승인");
+			pstmt.setString(3, "진행");
+			pstmt.setInt(4, (cPage-1)*numPerPage+1);
+			pstmt.setInt(5, cPage*numPerPage);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ea = new ElectronicApproval();
+				ea.setPageNo(rs.getInt("rnum"));
+				ea.setEmpName(rs.getString("emp_name"));
+				ea.setDraftNo(rs.getString("draft_no"));
+				ea.setDraftDate(rs.getDate("draft_date"));
+				ea.setEmpId(rs.getString("emp_id"));
+				ea.setDraftDept(rs.getString("draft_dept"));
+				ea.setDraftName(rs.getString("draft_name"));
+				ea.setDraftContent(rs.getString("draft_content"));
+				ea.setDraftState(rs.getString("draft_state"));
+				
+				list.add(ea);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public int selectProgressApprovalCount(Connection conn, String empId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectProgressApprovalCount");
+		int approvalprogressCnt = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, empId);
+			pstmt.setString(2, "승인");
+			pstmt.setString(3, "진행");
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				approvalprogressCnt = rs.getInt("cnt");//APPROVALCNT
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return approvalprogressCnt;
+	}
+	public ArrayList<ElectronicApproval> selectRequestApproval(Connection conn, String empId, int cPage,int numPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectRequestApproval");
+		ArrayList<ElectronicApproval> list = new ArrayList();
+		ElectronicApproval ea;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, empId);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ea = new ElectronicApproval();
+				ea.setPageNo(rs.getInt("rnum"));
+				ea.setEmpName(rs.getString("emp_name"));
+				ea.setDraftNo(rs.getString("draft_no"));
+				ea.setDraftDate(rs.getDate("draft_date"));
+				ea.setEmpId(rs.getString("emp_id"));
+				ea.setDraftDept(rs.getString("draft_dept"));
+				ea.setDraftName(rs.getString("draft_name"));
+				ea.setDraftContent(rs.getString("draft_content"));
+				ea.setDraftState(rs.getString("draft_state"));
+				
+				list.add(ea);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public int selectRequestApprovalCount(Connection conn, String empId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectRequestApprovalCount");
+		int approvalprogressCnt = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, empId);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				approvalprogressCnt = rs.getInt("cnt");//APPROVALCNT
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return approvalprogressCnt;
+	}
+	public ArrayList<ElectronicApproval> selectReturnApproval(Connection conn, String empId, int cPage, int numPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectReturnApproval");
+		ArrayList<ElectronicApproval> list = new ArrayList();
+		ElectronicApproval ea;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "반려");
+			pstmt.setString(2, empId);
+			pstmt.setString(3, empId);
+			pstmt.setString(4, "반려");
+			pstmt.setInt(5, (cPage-1)*numPerPage+1);
+			pstmt.setInt(6, cPage*numPerPage);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ea = new ElectronicApproval();
+				ea.setPageNo(rs.getInt("rnum"));
+				ea.setEmpName(rs.getString("emp_name"));
+				ea.setDraftNo(rs.getString("draft_no"));
+				ea.setDraftDate(rs.getDate("draft_date"));
+				ea.setEmpId(rs.getString("emp_id"));
+				ea.setDraftDept(rs.getString("draft_dept"));
+				ea.setDraftName(rs.getString("draft_name"));
+				ea.setDraftContent(rs.getString("draft_content"));
+				ea.setDraftState(rs.getString("draft_state"));
+				ea.setCompletionDate(rs.getDate("MATERIAL_DATE"));
+				list.add(ea);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 }
