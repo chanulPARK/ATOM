@@ -5,7 +5,7 @@
 	List<ResourceList> list = (List<ResourceList>)request.getAttribute("list");
 	String pageBar = (String)request.getAttribute("pageBar");
 	
-/* 	//검색 창
+ 	//검색 창
 	String searchResource = "";
 	
 	if(request.getAttribute("searchResource")!=null)	

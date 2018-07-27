@@ -32,23 +32,39 @@ public class UserResourceSearchServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String searchResource = request.getParameter("searchResource");
-	/*	
-		int cPage = Integer.parseInt(request.getParameter("cPage"));
-		int numPerPage = Integer.parseInt(request.getParameter("numPerPage"));
-		String pageBar = PageBar.getPageBar(request, cPage, numPerPage);*/
-		
+	
 		List<ResourceList> list = null;
 		list = new ReservationService().selectSearchResource(searchResource);
 		
-		//페이지바 변수 저장
-	/*	request.setAttribute("pageBar", pageBar);
+		int numPerPage = 4;
+		int cPage;
+		
+		try
+		{
+			cPage = Integer.parseInt(request.getParameter("cPage"));
+		}
+		catch(NumberFormatException e)
+		{
+			cPage = 1;
+		}
+		
+		
+		String pageBar = PageBar.getPageBar(request,cPage,numPerPage);
+		
+		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("cPage", cPage);
-		request.setAttribute("numPerPage", numPerPage);*/
-		request.setAttribute("list", list);
+		request.setAttribute("numPerPage", numPerPage);
 		request.setAttribute("searchResource", searchResource);
+		request.setAttribute("list", list);
+		
+		
+		if(list==null)
+		{
+			System.out.println("search서블릿인데 list가 null입니당");
+		}
 		
 		//페이지 이동
-		request.getRequestDispatcher("/views/rsc_user_search.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/rsc_user_home.jsp").forward(request, response);
 	}
 
 	/**

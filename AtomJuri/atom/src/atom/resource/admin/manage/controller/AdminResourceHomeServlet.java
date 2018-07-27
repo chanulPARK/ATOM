@@ -100,7 +100,8 @@ public class AdminResourceHomeServlet extends HttpServlet {
 		//페이지바 변수 저장
 		request.setAttribute("cPage", cPage);
 		request.setAttribute("pageBar", pageBar);
-		
+		request.setAttribute("numPerPage", numPerPage);
+		request.setAttribute("totalContent", totalContent);
 		request.setAttribute("list", list);
 		
 		//페이지 이동

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8" import='java.util.*,atom.resource.emp.reservation.model.vo.ResourceList'%>
     
 <%@ include file="/views/common/header.jsp" %>
-
+<%@ include file="/views/common/aside.jsp" %>
 <%
 	List<ResourceList> list = (List<ResourceList>)request.getAttribute("list");
 	String pageBar = (String)request.getAttribute("pageBar");
@@ -15,7 +15,7 @@
 	else
 		System.out.println("입력 값이 null로 들어와");
 	
-	//아이디 값 받아오기 
+	/* //아이디 값 받아오기 
 	String empId = (String)session.getAttribute("empId");
 	
 	if(empId==null)
@@ -25,8 +25,9 @@
 	else
 	{
 		System.out.println("아이디 값 출력됩니다아아//");
-	}
-
+	} */
+	int cPage = (int)request.getAttribute("cPage");
+	int numPerPage = (int)request.getAttribute("numPerPage");
 %>
 
     <script>
@@ -48,33 +49,7 @@
 		});	  
 	  </script>
 
-	 <aside>
-	 
-	 <div class="content-fluid">
-		 <div class="panel-group">
-	    	<div class="panel panel-default">
-	      
-	      	<div class="panel-heading">
-	        	<h4 class="panel-title">
-	          	<a data-toggle="collapse" href="#collapse1">자원 예약 메뉴</a>
-	        	</h4>
-	       </div>
-	       
-	       <div id="collapse1" class="panel-collapse collapse">
-	      	  <div class="panel-body">
-	       		<a href='<%=request.getContextPath() %>/user/resourseHome'>자원 예약 홈</a>
-	          </div>
-	        
-	        <div class="panel-footer">
-	     		<a href='<%=request.getContextPath() %>/user/reservationList'>나의 예약 리스트</a>
-	        </div>
-	        
-	      </div>
-	    </div>
-	  </div>
-	</div>
-    
-    </aside>
+	
 
     <section>
         <div class="container-fluid">
@@ -106,7 +81,6 @@
  				<!--=============== 검색 창=============== -->
 			 	
 			 	<div id='search-resource'>
-			 	
 				 	<form action="<%=request.getContextPath() %>/user/resourceFinder" method="get"> 
 					 	<input type="text" name='searchResource' placeholder="검색"/>	 
 					 		
@@ -128,7 +102,14 @@
                         </tr>
                     </thead>
                     <tbody class="table-condensed">
-                    <% for(ResourceList rl : list) 
+                    <%if(list==null) 
+                    {%>
+                    <tr>
+						<td colspan=9>검색결과가 없습니다.</td>	
+					</tr>
+					<%}
+                    else
+                    {	for(ResourceList rl : list) 
                     	{%>
                         <tr>
                             <td class="text-center"><%=rl.getRscCatename() %></td>
@@ -145,7 +126,8 @@
                           	<%} %>
                           	</td>
                         </tr>
-                        <%} %> 
+                       <%}//for문 닫기
+					}  //else문 닫기%> 
                     </tbody>
                 </table>
                 </div>
