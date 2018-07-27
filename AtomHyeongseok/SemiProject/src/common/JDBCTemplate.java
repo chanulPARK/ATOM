@@ -3,9 +3,8 @@ import java.sql.*;
 import java.util.Properties;
 
 public class JDBCTemplate {
-	private static Properties prop = new Properties();
-	
 	public static Connection getConnection() {
+		Properties prop = new Properties();
 		Connection conn = null;
 		try {
 			Class.forName(prop.getProperty("driver"));

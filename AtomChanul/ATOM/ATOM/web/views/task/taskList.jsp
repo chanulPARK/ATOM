@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp" %>
 <%@ include file="/views/common/aside.jsp" %>
-<%@ page import='java.util.*, atom.task.model.vo.Task, java.lang.*' %>
+<%@ page import='java.util.*, atom.task.model.vo.Task' %>
 <%
 	List<Task> list = (List<Task>)request.getAttribute("list");
 
@@ -26,10 +26,22 @@
 
 
 <script type="text/javascript">
+	// numPerPage변경시 화면 리로딩
 	$(function() {
 		$('#numPerPage').change(function() {
 			document.numPerPageFrm.submit();
 			});
+	});
+	
+	// searchType 분기 처리
+	$(function() {
+		var sid = document.querySelector("#searchUser");
+		var stitle = document.querySelector('#searchTitle');
+		$('#searchType').change(function() {
+			sid.style.display='none';
+			stitle.style.display='none';
+			$('#search-'+this.value).css("display","inline-block");
+		});
 	});
 	
 	// 글쓰기 이동
@@ -37,17 +49,43 @@
 		location.href="<%=request.getContextPath()%>/task/taskWrite";
 	};
 	
-/*     	confirm("정보를 삭제 하시겠습니까?") */
-	// 체크박스
-	var chk;
-    function selectAll() {
-   		if($('#checkAll').is(':checked'))
-   			$('input[name=chkid]').prop("checked", true);
-   			/* $('input[name=chkid]').attr("checked", $('#checkAll').is(":checked")); */
-   		else
-   			$('input[name=chkid]').prop("checked", false);
-       		/* $('input[name=chkid]').removeAttr("checked", $('#checkAll').removeAttr(":checked")); */
+	// 전체 체크박스
+	function selectAll() {
+   		if($('#checkAll').is(':checked')) $('input[name=chkid]').prop("checked", true);
+   		else $('input[name=chkid]').prop("checked", false);
 	};
+	
+	// 체크박스된 값 처리
+	var chkid = "";
+	function fn_del() {
+		$("input[name=chkid]:checked").each(function() {
+			console.log($(this))
+			chkid = chkid + $(this).val()+",";
+			});
+		chkid = chkid.substring(0,chkid.lastIndexOf(","));
+		// console.log(chkid)
+	
+		if(chkid=="") alert("삭제할 대상을 선택하세요.");
+		
+		if(confirm("정보를 삭제 하시겠습니까?")) {
+			location.href="<%=request.getContextPath() %>/task/taskDelete?taskNos="+chkid;
+		}
+	};
+	
+	// datepicker
+    $(function(){
+        $('.reservation').datepicker({
+        	format: 'yyyy-mm-dd',
+        	months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            monthsShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            days: ['일', '월', '화', '수', '목', '금', '토'],
+            daysShort: ['일', '월', '화', '수', '목', '금', '토'],
+            daysMin: ['일', '월', '화', '수', '목', '금', '토'],
+            yearSuffix: '년',
+            autoHide: true
+        });
+	});
+
 	
 	/* statusPopup = function(taskId, title, userStatus, isTermless, overDayCount) {
         var url = spro.getContextRoot() + "/groupware/todo/listTodoReadStatusViewPopup.do?taskId="+taskId+"&taskType=2&userStatus="+userStatus+"&isTermless="+isTermless+"&overDayCount="+overDayCount;
@@ -70,8 +108,17 @@
 </script>
 
     <section>
-        <div class="content">
-            <div class="col-md-12">
+        <div class="content task-content">
+            <div class="col-md-12" style="min-width: 900px;">
+               	<%--  <%
+                String text = "";
+                if(taskType=="1") text="발신 업무 요청";
+                else if(taskType=="1-1") text="수신 업무 요청";
+                else if(taskType=="2") text="발신 업무 보고";
+                else if(taskType=="2-1") text="수신 업무 보고";
+                else if(taskType=="3") text="업무 일지";
+                %>
+                <h5><%=text %></h5> --%>
                 <h4>업무관리</h4>
                 <div class="table-header">
                     <div class="row">
@@ -88,27 +135,34 @@
                         </div>
                         <div class="col-md-1" style="margin: 0 0 0 10px;"><p style="font-size: 12px; color: rgb(160, 160, 160); margin: 6px 0px;">전체 <%=totalContent %></p></div>
 
-                        <form class="form-inline">
-                            <div class="col-md-7" style="float: right;">
-                                <input class="form-control input-sm" placeholder="From" value=""><button type="button" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-calendar"></i></button>
-                                ~
-                                <input class="form-control input-sm" placeholder="To"><button type="button" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-calendar"></i></button>
-                                <select class="form-control input-sm" style="padding: 0">
-                                    <option value="searchUser">요청자</option>
-                                    <option value="searchTitle">제목</option>
-                                </select>
-                                <input type="text" class="form-control input-sm" placeholder="검색어">
-                                <button type="submit" class="btn btn-task btn-sm">검색</button>
+                        <form action="<%=request.getContextPath() %>/task/taskSearch" class="search-form form-inline col-md-7 float-right">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm reservation" id="reservation1" name="searchFrom"  placeholder="From">
+                                <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
                             </div>
+                            ~
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm reservation" id="reservation2" name="searchTo" placeholder="To">
+                                <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                            </div>
+                            
+                            <select name="searchOption" class="form-control input-sm" style="padding: 0">
+                                <option value="searchUser">요청자</option>
+                                <option value="searchTitle">제목</option>
+                            </select>
+                            <input type="text" name="searchKeyword" class="form-control input-sm" placeholder="검색어">
+                            <button type="submit" class="btn btn-task btn-sm">검색</button>
                         </form>
+                        <!-- ./search-form -->
                     </div> 
                 </div>
+                <!-- ./table-header -->
 
                 <table class="tableTL table table-striped tablesorter" id="sorttable">
 	                <colgroup>
 	                    <col style="width: 40px;">
-	                    <col style="width: 50px;">
-	                    <col style="width: 120px;">
+	                    <col style="width: 60px;">
+	                    <col style="width: 100px;">
 	                    <col style="min-width: 200px;">
 	                    <col style="width: 100px;">
 	                    <col style="width: 100px;">
@@ -132,15 +186,14 @@
 	                <tbody>
 	                	<%for(Task t : list) {%>
 	                    <tr>
-	                        <td><input name="chkid" type="checkbox" title="checkbox" value="" ></td>
+	                        <td><input name="chkid" type="checkbox" title="checkbox" value="<%=t.getTaskNo() %>" ></td>
 	                        <td><%=t.getTaskNo() %></td>
 	                        <% String temp = "";
 	                        if(t.getTaskType()=="1") temp="업무 요청";
 	                        if(t.getTaskType()=="2") temp="업무 보고";
 	                        else temp="업무 일지"; %>
-	                        <td><%=temp %>
-	                        </td>
-	                        <td class="text-left"><a href='<%=request.getContextPath()%>/task/taskView?taskNo=<%= t.getTaskNo() %>'>
+	                        <td><%=temp %></td>
+	                        <td class="text-left"><a href='<%=request.getContextPath()%>/task/taskView?taskNo=<%=t.getTaskNo() %>'>
 	                        	<%=t.getTaskTitle() %></a>
 	                        </td>
 	                        <td><a href="#" data-toggle="modal" data-target="#myModal"><%=t.getEmpName() %></a></td>
@@ -162,7 +215,7 @@
                     <%-- <% if(taskType.equals("1")) { %> --%>
                     <button class="btn btn-default btn-sm">보관함 지정</button>
                     <%-- <%} %> --%>
-                    <button class="btn btn-default btn-sm">삭제</button>
+                    <button class="btn btn-default btn-sm" onclick="fn_del()">삭제</button>
                     <button class="btn btn-default btn-sm">업무 완료</button>
                 </div>
             </div>

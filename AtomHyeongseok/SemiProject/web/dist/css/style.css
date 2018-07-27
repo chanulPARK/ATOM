@@ -58,10 +58,6 @@ aside{
     text-decoration: none;
     color:black;
 }
-button.btn.btn-default>a{
-    color:black;
-    text-decoration:none;
-}
 div.commit{
     float: left;
 }
@@ -75,7 +71,7 @@ textarea{
 .panel-title>a{
     text-decoration: none;
 }
-.panel-collapse div.panel1 a,
-.panel-collapse div.panel2 a{
+.panel-collapse .panel1 a,
+.panel-collapse .panel2 a{
     text-decoration:none;
 }

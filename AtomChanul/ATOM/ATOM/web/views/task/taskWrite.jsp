@@ -141,8 +141,6 @@
 		            <textarea name="area2" style="width: 100%; height: 250px"></textarea>
 	            </div>
 	            
-	            
-	            
             <div class="btn-wrap float-right">
                 <button type="submit" class="btn btn-sm btn-primary">저장</button>
                 <button type="button" class="btn btn-sm btn-default">임시저장</button>

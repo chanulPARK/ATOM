@@ -2,20 +2,41 @@
     pageEncoding="UTF-8" import='java.util.*, com.kh.mvc.board.vo.Board'%>
 <%
 	List<Board> list = (List<Board>)request.getAttribute("list");
-	int cPage = (int)request.getAttribute("cPage");
 	String pageBar = (String)request.getAttribute("pageBar");
+	int totalContent = (int)request.getAttribute("totalContent");
 %>
 <%@ include file="/views/common/header.jsp"%>
+<script>
+	var doc = document.getElementById("h3Id");
+	var text = $('h4.panel-title').children().text();
+	var col1 = $('div#collapse1>div.panel1').children().text();
+	var col2 = $('div#collapse1>div.panel2').children().text();
+	if(text=='공지사항'){
+		doc.innerHTML = "공지사항";
+	}
+	if(col1=='부서 1팀'){
+		doc.innerHTML = '부서 1팀 게시판';
+	}
+	if(col2=='부서 2팀'){
+		doc.innerHTML = '부서 2팀 게시판';
+	}
+	if(text=='자료실'){
+		doc.innerHTML = '자료실';
+	}
+	if(text=='설문조사'){
+		doc.innerHTML = '설문조사';
+	}
+</script>
 	<div class="content">
 		<div class='col-md-10'>
-			<h3>공지사항</h3>
+			<h3 id='h3Id'>게시판</h3>
 			<div class='floatleft form-group'>
         		<button type='button' class='btn btn-default'>
             		<a href='boardForm.jsp'>새 글 쓰기</a>
         		</button>
         	</div>
         	<div class='floatleft form-group'>
-        		<p style='font-size:20px;'>&nbsp;전체(0)&nbsp;</p>
+        		<p style='font-size:20px;'>&nbsp;전체(<%=totalContent%>)&nbsp;</p>
         	</div>
         	<div class='floatleft form-group'>
         		<select class='form-control'>
@@ -86,41 +107,6 @@
 					</tr>
 				</thead>
 				<tbody class='table-condensed'>
-					<tr>
-						<th>
-							<input type='checkbox' style='width:10px;' class='checked'/>
-						</th>
-						<th class='text-center'>
-							<span style='font-size:15px;'>
-								1
-							</span>
-						</th>
-						<th>
-							<span style='font-size:15px;'>
-								<a href='<%=request.getContextPath()%>/board/boardView?board_no=1'>
-									관리자 첫 게시글(임시)
-								</a>
-							</span>
-						</th>
-						<th>
-							<img src='' class='glyphicon glyphicon-file'>
-						</th>
-						<th class='text-center'>
-							<span style='font-size:15px;'>
-								관리자
-							</span>
-						</th>
-						<th class='text-center'>
-							<span style='font-size:15px;'>
-								2018-07-25
-							</span>
-						</th>
-						<th class='text-center'>
-							<span style='font-size:15px;'>
-								0
-							</span>
-						</th>
-					</tr>
 					<%for(Board b : list) {%>
 						<tr>
 							<td><input type='checkbox' style='width:10px;'/></td>
@@ -144,9 +130,9 @@
 				</tbody>
 			</table>
 			<nav style="text-align: center">
-		        <ul class="pagination pagination-sm">
+		        <div class="pagination pagination-sm btn-group">
 		           <%=pageBar%>
-		        </ul>
+		        </div>
 		    </nav>
 		</div>
     </div>

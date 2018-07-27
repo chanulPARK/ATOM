@@ -36,7 +36,6 @@ public class TaskViewServlet extends HttpServlet {
 		
 		Task task = new TaskService().selectTask(taskNo);
 		
-		
 		String view="";
 		if(task!=null) {
 			request.setAttribute("task", task);
@@ -49,6 +48,7 @@ public class TaskViewServlet extends HttpServlet {
 			request.setAttribute("loc", "/task/taskList");
 			view="/views/common/msg.jsp";
 		}
+		request.setAttribute("task", task);
 		request.getRequestDispatcher(view).forward(request, response);
 	}
 
