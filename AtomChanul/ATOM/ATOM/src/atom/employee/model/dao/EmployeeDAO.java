@@ -16,7 +16,7 @@ public class EmployeeDAO {
 	public EmployeeDAO() {
 		prop=new Properties();
 		try {
-			String file=EmployeeDAO.class.getResource("/sql/employee-sql.properties").getPath();
+			String file=EmployeeDAO.class.getResource("/sql/employee/employee-sql.properties").getPath();
 			prop.load(new FileReader(file));
 		} catch(IOException e) {
 			e.printStackTrace();
@@ -42,7 +42,11 @@ public class EmployeeDAO {
 				e.setPhone(rs.getString("phone"));
 				e.setAddr(rs.getString("addr"));
 				e.setDeptCode(rs.getString("dept_code"));
+				e.setDeptName(rs.getString("dept_name"));
 				e.setJobCode(rs.getString("job_code"));
+				e.setJobName(rs.getString("job_name"));
+				e.setAdminCode(rs.getString("admin_code"));
+				e.setAdminName(rs.getString("admin_name"));
 				e.setManagerId(rs.getString("manager_id"));
 				e.setHireDate(rs.getDate("hire_date"));
 				e.setEntDate(rs.getDate("ent_date"));
