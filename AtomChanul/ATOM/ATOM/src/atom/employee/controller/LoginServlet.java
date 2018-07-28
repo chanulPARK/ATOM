@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
 		System.out.println("암호화pw : "+pw);
 		
 		Employee e = new EmployeeService().selectOne(id);
-		
+		System.out.println("e:"  + e);
 		String msg="";
 		String loc="";
 		String view="views/common/msg.jsp";
