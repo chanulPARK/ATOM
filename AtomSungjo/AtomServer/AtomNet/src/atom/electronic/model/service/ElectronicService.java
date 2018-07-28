@@ -184,4 +184,42 @@ public class ElectronicService {
 		return list;
 	}
 
+	public List<ElectronicApproval> selectRequestApproval(String empId, String searchType, String searchWord, int cPage,int numPerPage, String fromDate, String toDate) {
+		Connection conn = getConnection();
+		List<ElectronicApproval> list = new ElectronicDAO().selectRequestApproval(conn,empId, searchType,searchWord, cPage, numPerPage,fromDate,toDate);
+		close(conn);
+		return list;
+	}
+
+	public List<ElectronicApproval> selectCompletionApproval(String empId, String searchType, String searchWord,int cPage, int numPerPage, String fromDate, String toDate) {
+		Connection conn = getConnection();
+		List<ElectronicApproval> list = new ElectronicDAO().selectCompletionApproval(conn,empId, searchType,searchWord, cPage, numPerPage,fromDate,toDate);
+		close(conn);
+		return list;
+	}
+
+	public List<ElectronicApproval> selectProgressApproval(String empId, String searchType, String searchWord,
+			int cPage, int numPerPage, String fromDate, String toDate) {
+		Connection conn = getConnection();
+		List<ElectronicApproval> list = new ElectronicDAO().selectProgressApproval(conn,empId, searchType,searchWord, cPage, numPerPage,fromDate,toDate);
+		close(conn);
+		return list;
+	}
+
+	public List<ElectronicApproval> selectReturnApproval(String empId, String searchType, String searchWord, int cPage,
+			int numPerPage, String fromDate, String toDate) {
+		Connection conn = getConnection();
+		List<ElectronicApproval> list = new ElectronicDAO().selectReturnApproval(conn,empId, searchType,searchWord, cPage, numPerPage,fromDate,toDate);
+		close(conn);
+		return list;
+	}
+
+	public List<ElectronicApproval> selectWaitingApproval(String empId, String searchType, String searchWord, int cPage,
+			int numPerPage, String fromDate, String toDate) {
+		Connection conn = getConnection();
+		List<ElectronicApproval> list = new ElectronicDAO().selectWaitingApproval(conn,empId, searchType,searchWord, cPage, numPerPage,fromDate,toDate);
+		close(conn);
+		return list;
+	}
+
 }

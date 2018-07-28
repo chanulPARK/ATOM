@@ -12,6 +12,8 @@
 	ElectronicApproval ea = (ElectronicApproval)request.getAttribute("ea");
 	ArrayList<MaterialLine> materialList = (ArrayList)request.getAttribute("materialline");
 	ArrayList<AuthoriaztionComment> commentList = (ArrayList)request.getAttribute("commentList");
+	SimpleDateFormat sd = new SimpleDateFormat("YYYY-MM-dd");
+	SimpleDateFormat sd2 = new SimpleDateFormat("HH:mm:ss");
 	System.out.println("결재선 : ?" + materialList);
 %>
 <head>
@@ -408,7 +410,7 @@ ul{
 				                      <td>
 					                      <span style="font-size:0.9em"><%=m.getEmpName()%><br></span>
 					                      <span style="font-size:1em"><%=m.getMaterialState() %><br></span>
-					                      <span style="font-size:0.8em"><%if(m.getMaterialDate()!=null){%><%=m.getMaterialDate()%><%}%></span>
+					                      <span style="font-size:0.8em"><%if(m.getMaterialDate()!=null){%><%=sd.format(m.getMaterialDate())%><br><%=sd2.format(m.getMaterialDate())%><%}%></span>
 				                      </td>
 				                    <%}%>
 				                    </tr>

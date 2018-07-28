@@ -48,7 +48,7 @@ public class ElectronicApprovalFormEndServlet extends HttpServlet {
 		String apprTitle = request.getParameter("apprTitle");
 		String apprContent = request.getParameter("apprContent");
 		String draftNo = e.getDeptCode() + e.getEmpId() + sd.format(d);
-		// 문서 자동채번 코드 ---- 부서코드+아이디+시간+랜덤함수 00~99까지
+		// 문서 자동채번 코드 ---- 부서코드+아이디+시간
 		ElectronicApproval ea = new ElectronicApproval();
 		ea.setDraftNo(draftNo);
 		ea.setDraftDate(d);
@@ -74,7 +74,7 @@ public class ElectronicApprovalFormEndServlet extends HttpServlet {
 				m.setDraftNo(draftNo);
 				m.setEmpId(material_ids[i]);
 				m.setMaterialSquence(Integer.parseInt(material_squence_str[i]));
-				result2[i] = new ElectronicService().insertMaterialLine(m);
+				result2[i] = new ElectronicService().insertMaterialLine(m); // 결재선 변경
 		}
 		
 		String msg="";
