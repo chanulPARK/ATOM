@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import atom.employee.model.vo.Employee;
 import atom.task.model.service.TaskService;
 import atom.task.model.vo.Task;
+import common.PageBar;
 
 /**
  * Servlet implementation class taskListServlet
@@ -34,10 +35,7 @@ public class TaskListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Employee emp = (Employee)request.getSession().getAttribute("empLoggedIn");
 		
-		
-		
 		String taskType = request.getParameter("taskType");
-		System.out.println(taskType);
 		
 		// 페이징 처리
 		int cPage;
@@ -50,8 +48,7 @@ public class TaskListServlet extends HttpServlet {
 			cPage = 1;
 		}
 		try {
-			numPerPage = Integer.parseInt(request.getParameter("numPerPage")) ;
-			System.out.println(numPerPage);
+			numPerPage = Integer.parseInt(request.getParameter("numPerPage"));
 		} catch(NumberFormatException e) {
 			numPerPage = 10;
 		}
@@ -68,7 +65,6 @@ public class TaskListServlet extends HttpServlet {
 		}
 		
 		// 전체 page
-		
 		int totalPage =  (int)Math.ceil((double)totalContent/numPerPage);
 		int barSiza = 3;
 		String pageBar = "";
@@ -110,6 +106,8 @@ public class TaskListServlet extends HttpServlet {
 		}
 		
 		pageBar += "</li></ul>";
+		
+//		String pageBar = PageBar.getPageBar(request, cPage, numPerPage);
 		
 		request.setAttribute("list", list);
 		request.setAttribute("pageBar", pageBar);

@@ -23,9 +23,6 @@ public class Employee {
 	private String empPr;
 	private String empImg;
 	
-	
-	
-	
 	public Employee() {}
 
 	public String getDeptName() {

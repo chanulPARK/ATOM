@@ -34,7 +34,7 @@
 	});
 	
 	// searchType 분기 처리
-	$(function() {
+	/* $(function() {
 		var sid = document.querySelector("#searchUser");
 		var stitle = document.querySelector('#searchTitle');
 		$('#searchType').change(function() {
@@ -42,7 +42,7 @@
 			stitle.style.display='none';
 			$('#search-'+this.value).css("display","inline-block");
 		});
-	});
+	}); */
 	
 	// 글쓰기 이동
 	function fn_goTaskWrite() {
@@ -76,6 +76,7 @@
     $(function(){
         $('.reservation').datepicker({
         	format: 'yyyy-mm-dd',
+        	yearFirst: true,
         	months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
             monthsShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
             days: ['일', '월', '화', '수', '목', '금', '토'],
@@ -123,7 +124,7 @@
             <div class="table-header">
                 <div class="row">
                     <div class="col-md-1" style="width: 45px; margin: 0 0 0 15px;">
-                        <form action="<%=request.getContextPath() %>/task/taskList" name="numPerPageFrm" id="numPerPageFrm">
+                        <form action="<%=request.getContextPath() %>/task/taskList" name="numPerPageFrm" id="numPerPageFrm" method="post" >
                         <select class="form-control input-sm" id="numPerPage" name="numPerPage" style="padding: 0">
                             <option value="10" <%=numPerPage==10?"selected":"" %>>10</option>
                             <option value="15" <%=numPerPage==15?"selected":"" %>>15</option>
@@ -135,7 +136,9 @@
                     </div>
                     <div class="col-md-1" style="margin: 0 0 0 10px;"><p style="font-size: 12px; color: rgb(160, 160, 160); margin: 6px 0px;">전체 <%=totalContent %></p></div>
 
-                    <form action="<%=request.getContextPath() %>/task/taskSearch" class="search-form form-inline col-md-7 float-right">
+                    <form action="<%=request.getContextPath() %>/task/taskSearch" class="search-form form-inline col-md-7 float-right" method="post" >
+	                    <input type="hidden" name="cPage" value="<%=cPage %>"/>
+						<input type="hidden" name="numPerPage" value="<%=numPerPage %>"/>
                         <div class="input-group">
                             <input type="text" class="form-control input-sm reservation" id="reservation1" name="searchFrom"  placeholder="From">
                             <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>

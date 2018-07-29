@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import atom.task.model.service.TaskService;
 import atom.task.model.vo.Task;
+import common.PageBar;
 
 
 /**
@@ -38,11 +39,40 @@ public class TaskSearchServlet extends HttpServlet {
 		String searchOption = request.getParameter("searchOption");
 		String searchKeyword = request.getParameter("searchKeyword");
 		
+		System.out.println("ser"+searchFrom);
+		System.out.println("ser"+searchTo);
+		System.out.println("ser"+searchOption);
+		System.out.println("ser"+searchKeyword);
 		List<Task> list = null;
-		switch(searchOption) {
-//		case "searchUser" : list = new TaskService().selectMemberById(searchKeyword); break;
-//		case "searchTitle" : list = new TaskService().selectMemberByName(searchKeyword); break;
+		if(searchKeyword=="") {
+			System.out.println("공백");
+			list = new TaskService().searchTask(searchFrom, searchTo);
 		}
+		else {
+			if(searchOption=="searchUser") {
+				list = new TaskService().searchTaskUser(searchFrom, searchTo, searchKeyword);
+			}
+			else if(searchOption=="searchTitle") {
+				list = new TaskService().searchTaskTitle(searchFrom, searchTo, searchKeyword);
+			}
+		}
+		
+//		switch(searchOption) {
+//		case "searchUser" : temp = new TaskService().selectMemberById(searchKeyword); break;
+//		case "searchTitle" : temp = new TaskService().selectMemberByName(searchKeyword); break;
+//		}
+		
+		
+		int cPage = Integer.parseInt(request.getParameter("cPage"));
+		int numPerPage = Integer.parseInt(request.getParameter("numPerPage"));
+		
+//		String pageBar = PageBar.getPageBar(request, cPage, numPerPage);
+		
+		int totalContent = 10;
+		
+		request.setAttribute("cPage", cPage);
+		request.setAttribute("numPerPage", numPerPage);
+		request.setAttribute("totalContent", totalContent);
 		
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/views/task/taskList.jsp").forward(request, response);

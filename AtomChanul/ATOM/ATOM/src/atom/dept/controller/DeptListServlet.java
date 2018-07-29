@@ -1,4 +1,4 @@
-package atom.employee.controller;
+package atom.dept.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,20 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import atom.employee.model.service.EmployeeService;
-import atom.employee.model.vo.Employee;
-
 /**
- * Servlet implementation class MypageServlet
+ * Servlet implementation class DeptListServlet
  */
-@WebServlet("/empView")
-public class EmpViewServlet extends HttpServlet {
+@WebServlet("/deptlist")
+public class DeptListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EmpViewServlet() {
+    public DeptListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,12 +26,8 @@ public class EmpViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getParameter("userId");
-		
-		Employee e = new EmployeeService().selectOne(userId);
-		
-		request.setAttribute("userId", e);
-		request.getRequestDispatcher("/views/employee/empView.jsp").forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

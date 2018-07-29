@@ -160,14 +160,16 @@ public class TaskDAO {
 		
 		int result = 0;
 		
-		try {
+		try
+		{
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if(rs.next())
 			{
 				result = rs.getInt("cnt");		
 			}	
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		close(rs);
@@ -214,13 +216,11 @@ public class TaskDAO {
 		String sql = prop.getProperty("selectTask");
 		Task t = null;
 
-		try 
-		{
+		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, no);
 			rs = pstmt.executeQuery();
-			while(rs.next())
-			{
+			while(rs.next()) {
 				t = new Task();
 				t.setEmpId(rs.getString("EMP_ID"));
 				t.setEmpName(rs.getString("EMP_NAME"));
@@ -255,18 +255,153 @@ public class TaskDAO {
 		String sql = prop.getProperty("deleteTask");
 		System.out.println(sql);
 		
-		try 
-		{
+		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, taskNo);
 			result = pstmt.executeUpdate();
 		} 
-		catch(SQLException e)
-		{
+		catch(SQLException e) {
 			e.printStackTrace();
 		}
 		close(pstmt);
 		
 		return result;
+	}
+	
+	public List<Task> searchTask(Connection conn, Date searchFrom, Date searchTo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		sql = prop.getProperty("searchTask");
+		System.out.println("sql:"+sql);
+		Task t = null;
+		ArrayList<Task> list = new ArrayList();
+		
+		try 
+		{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setDate(1, searchFrom);
+			pstmt.setDate(2, searchTo);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				t = new Task();
+				t.setEmpId(rs.getString("EMP_ID"));
+				t.setEmpName(rs.getString("EMP_NAME"));
+				t.setDeptName(rs.getString("DEPT_NAME"));
+				t.setJobName(rs.getString("JOB_NAME"));
+				
+				t.setTaskNo(rs.getInt("TASK_NO"));
+				t.setTaskType(rs.getString("TASK_TYPE"));
+				t.setTaskTitle(rs.getString("TASK_TITLE"));
+				t.setTaskContent(rs.getString("TASK_CONTENT"));
+				t.setReceiver(rs.getString("RECEIVER"));
+				t.setOriginalFile(rs.getString("ORIGINAL_FILE"));
+				t.setRenamedFile(rs.getString("RENAMED_FILE"));
+				t.setEnrollDate(rs.getDate("ENROLL_DATE"));
+				t.setDeadline(rs.getDate("DEADLINE"));
+				t.setTaskStatus(rs.getString("TASK_STATUS"));
+				t.setTaskCheck(rs.getString("TASK_CHECK"));
+				list.add(t);			
+			}	
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		close(rs);
+		close(pstmt);
+		
+		return list;
+	}
+	
+	public List<Task> searchTaskUser(Connection conn, Date searchFrom, Date searchTo, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		sql = prop.getProperty("searchUser");
+		System.out.println("sql:"+sql);
+		Task t = null;
+		ArrayList<Task> list = new ArrayList();
+		
+		try 
+		{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setDate(1, searchFrom);
+			pstmt.setDate(2, searchTo);
+			pstmt.setString(3, "%"+searchKeyword+"%");
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				t = new Task();
+				t.setEmpId(rs.getString("EMP_ID"));
+				t.setEmpName(rs.getString("EMP_NAME"));
+				t.setDeptName(rs.getString("DEPT_NAME"));
+				t.setJobName(rs.getString("JOB_NAME"));
+				
+				t.setTaskNo(rs.getInt("TASK_NO"));
+				t.setTaskType(rs.getString("TASK_TYPE"));
+				t.setTaskTitle(rs.getString("TASK_TITLE"));
+				t.setTaskContent(rs.getString("TASK_CONTENT"));
+				t.setReceiver(rs.getString("RECEIVER"));
+				t.setOriginalFile(rs.getString("ORIGINAL_FILE"));
+				t.setRenamedFile(rs.getString("RENAMED_FILE"));
+				t.setEnrollDate(rs.getDate("ENROLL_DATE"));
+				t.setDeadline(rs.getDate("DEADLINE"));
+				t.setTaskStatus(rs.getString("TASK_STATUS"));
+				t.setTaskCheck(rs.getString("TASK_CHECK"));
+				list.add(t);			
+			}	
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		close(rs);
+		close(pstmt);
+		
+		return list;
+	}
+	
+	public List<Task> searchTaskTitle(Connection conn, Date searchFrom, Date searchTo, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		sql = prop.getProperty("searchTitle");
+		System.out.println("sql:"+sql);
+		Task t = null;
+		ArrayList<Task> list = new ArrayList();
+		
+		try 
+		{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setDate(1, searchFrom);
+			pstmt.setDate(2, searchTo);
+			pstmt.setString(3, "%"+searchKeyword+"%");
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				t = new Task();
+				t.setEmpId(rs.getString("EMP_ID"));
+				t.setEmpName(rs.getString("EMP_NAME"));
+				t.setDeptName(rs.getString("DEPT_NAME"));
+				t.setJobName(rs.getString("JOB_NAME"));
+				
+				t.setTaskNo(rs.getInt("TASK_NO"));
+				t.setTaskType(rs.getString("TASK_TYPE"));
+				t.setTaskTitle(rs.getString("TASK_TITLE"));
+				t.setTaskContent(rs.getString("TASK_CONTENT"));
+				t.setReceiver(rs.getString("RECEIVER"));
+				t.setOriginalFile(rs.getString("ORIGINAL_FILE"));
+				t.setRenamedFile(rs.getString("RENAMED_FILE"));
+				t.setEnrollDate(rs.getDate("ENROLL_DATE"));
+				t.setDeadline(rs.getDate("DEADLINE"));
+				t.setTaskStatus(rs.getString("TASK_STATUS"));
+				t.setTaskCheck(rs.getString("TASK_CHECK"));
+				list.add(t);			
+			}	
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		close(rs);
+		close(pstmt);
+		
+		return list;
 	}
 }

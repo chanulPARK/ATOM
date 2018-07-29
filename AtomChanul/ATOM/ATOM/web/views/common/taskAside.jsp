@@ -33,52 +33,6 @@
         text-decoration: none;
         color: #fff;
     }
-	.leftmenu_area .panel .panel-heading {
-	border-bottom: 1px solid rgb(221, 221, 221);
-	}
-	.leftmenu_area .panel .panel-heading a {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-heading a:hover {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-heading a:active {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-heading a:visited {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-heading a:link {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-collapse .panel-footer a {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-collapse .panel-footer a:hover {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-collapse .panel-footer a:active {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-collapse .panel-footer a:visited {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-collapse .panel-footer a:link {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-collapse .list:hover {
-	background: rgb(221, 221, 221);
-	}
 </style>
 <script>
     $(function () {

@@ -6,6 +6,7 @@ import static common.JDBCTemplate.getConnection;
 import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.List;
 
 import atom.task.model.dao.TaskDAO;
@@ -67,5 +68,25 @@ public class TaskService {
 		close(conn);
 		
 		return result;
+	}
+	public List<Task> searchTask(Date searchFrom, Date searchTo) {
+		Connection conn = getConnection();
+		List<Task> list = new TaskDAO().searchTask(conn, searchFrom, searchTo);
+		close(conn);
+		return list;
+	}
+	
+	public List<Task> searchTaskUser(Date searchFrom, Date searchTo, String searchKeyword) {
+		Connection conn = getConnection();
+		List<Task> list = new TaskDAO().searchTaskUser(conn, searchFrom, searchTo, searchKeyword);
+		close(conn);
+		return list;
+	}
+	
+	public List<Task> searchTaskTitle(Date searchFrom, Date searchTo, String searchKeyword) {
+		Connection conn = getConnection();
+		List<Task> list = new TaskDAO().searchTaskTitle(conn, searchFrom, searchTo, searchKeyword);
+		close(conn);
+		return list;
 	}
 }
