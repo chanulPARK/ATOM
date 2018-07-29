@@ -222,4 +222,41 @@ public class ElectronicService {
 		return list;
 	}
 
+	public int deleteCommentByEmpId(String draftNo, String empId) {
+		Connection conn = getConnection();
+		int result = new ElectronicDAO().deleteCommentByEmpId(conn,draftNo, empId);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int updateMaterial(String draftNo, String empId) {
+		// TODO Auto-generated method stub
+		Connection conn = getConnection();
+		int result = new ElectronicDAO().updateMaterial(conn,draftNo, empId);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int deleteMaterial(String draftNo, String empId) {
+		Connection conn = getConnection();
+		int result = new ElectronicDAO().deleteMaterial(conn,draftNo,empId);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int deleteElectronicApproval(String draftNo) {
+		Connection conn = getConnection();
+		int result = new ElectronicDAO().deleteElectronicApproval(conn,draftNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
 }

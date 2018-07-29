@@ -175,6 +175,7 @@ aside .fa-caret-down {
                         </div>
                     </div> 
                 </div>
+         <form class="" action="<%=request.getContextPath()%>/electronic/selectApproval" method="post" style="margin:0">
                 
                 <table class="tableTL table table-striped">
                 <colgroup>
@@ -236,8 +237,56 @@ aside .fa-caret-down {
 				  	<%=pageBar %>
 				  </ul>
 				</nav>		
-				            <button type="button" class="btn btn-primary pull-right" id="selectApproval" style="margin-top:15px;">선택 결재 </button>
+				<button type="button" class="btn btn-primary pull-right" id="selectApproval" style="margin-top:15px;"  data-toggle="modal" data-target="#approvalModal">선택 결재 </button>
 						
+				<!-- approvalModal -->
+             <div id="approvalModal" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+
+                <!-- Modal content-->
+<%-- 			<form class="" action="<%=request.getContextPath()%>/electronic/ellectonicApprovalSystem" method="post" style="margin:0">
+ --%>                
+                <div class="modal-content">
+                  <div class="modal-header" style = "background-color:white;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">결재 처리</h4>
+                  </div>
+
+                  <div class="modal-body">
+                  	<div class="row">
+                      <div class="col-md-12">
+                          <table class="table" style="font-size:1em;margin:0">
+                            <colgroup>
+        	      							<col style="width: 5%;"/>
+        	      							<col style="width: 35%;"/>
+        	      						</colgroup>
+                      			<tr>
+                      				<th style="background-color:#f9f9f9;">결재처리</th>
+                              <td>
+                                <label for="approve"><input id="approve" type="radio" name="appr" value="승인" style="margin-right:3px;" checked>승인</label>&nbsp;
+                                <label for="reject"><input id="reject" type="radio" name="appr" value="반려" style="margin-right:3px;">반려</label>
+                              </td>
+                      			</tr>
+                      			<tr>
+                              <th style="vertical-align:middle;background-color:#f9f9f9;">결재의견</th>
+                              <td>
+                                <textarea style="resize: none;" name="apprComment" class="form-Control"rows="10" cols="60">At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies. </textarea>
+                              </td>
+                      			</tr>
+                      		</table>
+                  	</div>
+                    	</div>
+                  </div> <!-- modal-body -->
+					
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm">결재</button>
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">닫기</button>
+                  </div>
+                </div>
+                        </form>
+
+              </div> <%-- modal-dialog --%>
+            </div>
 				
                 
             </div>
@@ -292,14 +341,18 @@ for (i = 0; i < dropdown.length; i++) {
 		  $("#checkAll").attr("checked",false);
 	  }
   });
-  var checklist = new Array();
   $('#selectApproval').click(function(){
+	  var checklist = new Array();
 	  $('input:checkbox[name=allCheck]').each(function() {
 	         if($(this).is(':checked')){
 	            checklist.push($(this).val());
-	            console.log(checklist);
 	         }
-	      });
+	  });
+	  if(checklist.length != 0){
+	  }else{
+		  alert("선택된 문서가 없습니다.");
+		  location.href="";
+	  }
   });
   
     </script>

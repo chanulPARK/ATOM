@@ -9,6 +9,8 @@
 	SimpleDateFormat sd = new SimpleDateFormat("YYYY.MM.dd");
 %>
 <head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/dist/css/style.css" />
+
 <style>
 
 /* Style the sidenav links and the dropdown button */
@@ -137,7 +139,7 @@ h4{
 	display:none;
 }
 
-ul{
+.apprline ul{
 	list-style:none;
 	 text-align:center;
 	 padding : 0px;
@@ -215,7 +217,9 @@ ul{
 						<!-- Tab content -->
 						<div id="organization" class="tabcontent">
 						  <h3>조직도</h3>
-						  <p>London is the capital city of England.</p>
+  						 <!-- 3 setup a container element -->
+						  <div id="jstree">
+ 						 </div>
 						</div>
 						<div id="search" class="tabcontent tabcontentsecond">
 						  <h3>검색</h3>
@@ -234,25 +238,24 @@ ul{
 	                  <div class="col-md-6">
 						<div class="appr-info">
 							<h5>결재선 정보</h5>
-							<div class="userApprSave Load">
+							<!-- <div class="userApprSave Load">
 								<strong>사용자 결재선</strong>									
 								<select title="사용자 결재선" id="userLineId" class="" style="width:55%; margin:2% 5%;">
 									<option value="">-- 선택  --</option>
 									<option value="21263699">결재선저장</option>
 								</select>		
 								<button class="btn btn-xs" type="button" id="btnRemove">삭제</button>
-							</div>
+							</div> -->
 							<div class="apprlinelist" style="height:77%; overflow-y:scroll;">
 								<div class="fleft" style="width:100% !important; overflow-y:auto;">
-								<ul id="ulResult" class="list-selectable ui-sortable" style="width:98%; font-size:1em;">
-									<li class="ui-state-default important nomove" title="박메카 기안 인사팀">
+								<ul id="ulResult" class="list-selectable ui-sortable" style="width:98%; font-size:1em; list-style:none; padding:0;">
+									<li class="ui-state-default important nomove" title="">
 										<div class="liDiv">
 											<table cellspacing="1" cellpadding="1" border="0" style="width: 100%; table-layout:fixed; border:1px solid #eee">
 												<tbody>
 													<tr>
-														<td style="padding:10px 5px; width: 3em; text-align: center;"></td>
 														<td id="apprTypeTd" style="padding:10px 5px; text-align: center; border-left:1px solid #F0F3F7; width: 70px;">결재</td>
-														<td class="textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;">박메카 기안 인사팀</td>
+														<td class="textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;"><%=empLoggedIn.getEmpName() + " " + empLoggedIn.getJobName() + " " + empLoggedIn.getDeptName()%></td>
 													</tr>
 												</tbody>
 											</table>
@@ -263,7 +266,6 @@ ul{
 											<table cellspacing="1" cellpadding="1" border="0" style="width: 100%; table-layout:fixed; border:1px solid #eee">
 												<tbody>
 													<tr>
-														<td style="padding:10px 5px; width: 3em; text-align: center;"><i class="fa fa-arrows-v fa-lg text-point-b"></i></td>
 														<td id="apprTypeTd" style="padding:10px 5px; text-align: center; border-left:1px solid #F0F3F7; width: 70px;">결재</td>
 														<td class="textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;text-align:center">김이지 회장 인사팀</td>
 													</tr>
@@ -276,7 +278,6 @@ ul{
 											<table cellspacing="1" cellpadding="1" border="0" style="width: 100%; table-layout:fixed; border:1px solid #eee">
 												<tbody>
 													<tr>
-														<td style="padding:10px 5px; width: 3em; text-align: center;"><i class="fa fa-arrows-v fa-lg"></i></td>
 														<td id="apprTypeTd" style="padding:10px 5px; text-align: center; border-left:1px solid #F0F3F7; width: 70px;">결재</td>
 														<td class="textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;">송한국 이사 회계팀</td>
 													</tr>
@@ -289,7 +290,6 @@ ul{
 											<table cellspacing="1" cellpadding="1" border="0" style="width: 100%; table-layout:fixed; border:1px solid #eee">
 												<tbody>
 													<tr>
-														<td style="padding:10px 5px; width: 3em; text-align: center;">최종</td>
 														<td id="apprTypeTd" style="padding:10px 5px; text-align: center; border-left:1px solid #F0F3F7; width: 70px;">결재</td>
 														<td class="textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;">최나라 사원 회계팀</td>
 													</tr>
@@ -300,7 +300,7 @@ ul{
 								</ul>
 							</div>
 							</div>
-							<div class="userApprSave" style = "display:inline-block;">
+							<!-- <div class="userApprSave" style = "display:inline-block;">
 								<div class="col-xs-4" >
 									<strong style="font-size:1em;">사용자 결재선명</strong>	
 								</div>								
@@ -310,7 +310,7 @@ ul{
 								<div class="col-xs-2">
 									<button class="btn btn-xs" type="button" id="btnRemove">저장</button>
 								</div>								
-							</div>
+							</div> -->
 						</div>
 						
 	                  </div> <!-- col-lg-6 -->
@@ -399,15 +399,6 @@ ul{
 	      								<td><%=empLoggedIn.getDeptName() %></td>
 	      							</tr>
 	      							<tr>
-	      								<th>참조자</th>
-	      								<td colspan='3'>
-		      								<div class="input-group" >
-											  <input style="width:95%" type="text" class="form-control">
-											  <span style="width:5%;height:2.45em" class="input-group-addon" id="basic-addon2"><i class="fa fa-user-plus"></i></span>
-											</div>
-	      								</td>
-	      							</tr>
-	      							<tr>
 	      								<th><span style="color: red">* </span>문서제목</th>
 	      								<td colspan="3">
 	                       					 <input type="text" title="문서제목"  name="apprTitle" value="" class="form-control inputbox w100p" maxlength="100" placeholder="문서제목을 입력하세요. " />
@@ -435,6 +426,69 @@ ul{
     </section>
 
     <script>
+    $(function () {
+    	$('#jstree').jstree({
+    		"core" : {
+    			'data' : [{
+    				"text" : "경영관리팀",
+					'icon' : '<%=request.getContextPath()%>/dist/img/hierarchical-structure.png',
+    				'children' : [{
+    					'id' : '<%=empLoggedIn.getEmpId()%>',
+    					'text' : '<%=empLoggedIn.getEmpName()%> <%=empLoggedIn.getJobName()%>',
+    					'icon' : '<%=request.getContextPath()%>/dist/img/user-shape.png',
+    				},
+    				{
+    					'text' : '김정수 부사장',
+    					'icon' : '<%=request.getContextPath()%>/dist/img/user-shape.png'
+    				}
+    				]
+    			},
+    			{
+    				"text" : "경영관리팀",
+					'icon' : '<%=request.getContextPath()%>/dist/img/hierarchical-structure.png',
+    				'children' : [{
+    					'text' : '김정수 사장',
+    					'type' : 'human', 
+    					'icon' : '<%=request.getContextPath()%>/dist/img/user-shape.png'
+    				},
+    				{
+    					'text' : '김정수 부사장',
+    					'icon' : '<%=request.getContextPath()%>/dist/img/user-shape.png'
+    				}
+    				]
+    			}
+    			]
+    		}
+    	}).bind('select_node.jstree', function(event, data){
+    	    var id = data.instance.get_node(data.selected).id;        //id 가져오기
+    	    var parent = data.instance.get_node(data.selected).parent;    //type 가져오기
+
+			if(parent != "#"){
+				console.log(id + parent);
+				$('#ulResult').append('<li class="ui-state-default important nomove" title=""><div class="liDiv"><table cellspacing="1" cellpadding="1" border="0" style="width: 100%; table-layout:fixed; border:1px solid #eee"><tbody><tr><td id="apprTypeTd" style="padding:10px 5px; text-align: center; border-left:1px solid #F0F3F7; width: 70px;">결재</td><td class="textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;"><%=empLoggedIn.getEmpName() + " " + empLoggedIn.getJobName() + " " + empLoggedIn.getDeptName()%></td>	</tr></tbody></table></div></li>');
+				
+				<%-- <li class="ui-state-default important nomove" title="">
+				<div class="liDiv">
+					<table cellspacing="1" cellpadding="1" border="0" style="width: 100%; table-layout:fixed; border:1px solid #eee">
+						<tbody>
+							<tr>
+								<td id="apprTypeTd" style="padding:10px 5px; text-align: center; border-left:1px solid #F0F3F7; width: 70px;">결재</td>
+								<td class="textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;"><%=empLoggedIn.getEmpName() + " " + empLoggedIn.getJobName() + " " + empLoggedIn.getDeptName()%></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</li> --%>u
+				
+			}
+    	});
+    });
+    $('button').on('click', function () {
+        $('#jstree').jstree(true).select_node('child_node_1');
+       $('#jstree').jstree('select_node', 'child_node_1');
+       // $.jstree.reference('#jstree').select_node('child_node_1');
+/*         $.jstree.reference('#jstree').select_node('child_node_2');
+ */      });
     var dropdown = document.getElementsByClassName("dropdown-btn");
     var i;
 
@@ -472,6 +526,7 @@ ul{
         evt.currentTarget.className += " active";
     }
     </script>
+<script src="<%=request.getContextPath()%>/dist/js/jstree.min.js"></script>
     
 
 

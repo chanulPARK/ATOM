@@ -943,5 +943,95 @@ public class ElectronicDAO {
 		}
 		return list;
 	}
+
+	public int deleteCommentByEmpId(Connection conn, String draftNo, String empId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteCommentByEmpId");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, draftNo);
+			pstmt.setString(2, empId);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close(pstmt);
+		
+		return result;
+	}
+
+	public int updateMaterial(Connection conn, String draftNo, String empId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateMaterial");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "진행");
+			pstmt.setString(2, empId);
+			pstmt.setString(3, draftNo);
+			pstmt.setString(4, empId);
+			pstmt.setString(5, draftNo);
+			pstmt.setString(6, draftNo);
+			pstmt.setString(7, draftNo);
+			pstmt.setString(8, empId);
+			pstmt.setString(9, draftNo);
+			pstmt.setString(10, "진행");
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close(pstmt);
+		
+		return result;
+	}
+
+	public int deleteMaterial(Connection conn, String draftNo, String empId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteMaterial");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, draftNo);
+			pstmt.setString(2, draftNo);
+			pstmt.setString(3, empId);
+			pstmt.setString(4, draftNo);
+			pstmt.setString(5, "진행");
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close(pstmt);
+		
+		return result;
+	}
+
+	public int deleteElectronicApproval(Connection conn, String draftNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteElectronicApproval");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, draftNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close(pstmt);
+		
+		return result;
+	}
 	
 }
