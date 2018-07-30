@@ -62,6 +62,8 @@
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+				
 					<ul class="nav navbar-nav">
 						<li><a href="<%=request.getContextPath()%>/login.jsp"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
 						<li><a href="<%=request.getContextPath()%>/electronic/electronicWaitingBox">전자결재</a></li>
@@ -96,8 +98,8 @@
 						</li>
 					</ul>
 				</div>
-				<!-- /.navbar-collapse -->
+				<!--navbar-collapse -->
 			</div>
-			<!-- /.container-fluid -->
+			<!-- container-fluid -->
 		</nav>
 	</header>

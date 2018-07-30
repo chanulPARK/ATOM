@@ -20,15 +20,14 @@
     
     
     
- 
-   <div class="col-sm-8 text-left"> <!-- container 영역  --> 
+ <div class="col-sm-8 text-left"> <!-- container 영역  --> 
 
      <div class="container">
 		 <div style="margin-bottom: 1%;">
 
    <h2>
 
-    직원정보<small>ATOM</small>
+    	직원정보<small>ATOM</small>
 	
    </h2>
 
@@ -39,7 +38,7 @@
     <%-- <%=request.getContextPath() %> --%>
      
      <li id='emplist' class="active"><a href="<%=request.getContextPath() %>/emp/selectAll">전체직원정보</a></li>
- 	 <li><a href="employeeInsertForm.jsp">직원 추가</a></li>
+ 	 <li><a href="<%=request.getContextPath() %>/views/orgchat/admin/employeeInsertForm.jsp">직원 추가</a></li>
      <li><a href="#">직원수정</a></li>
      <li><a href="#">직원삭제</a></li>
     
@@ -54,7 +53,7 @@
 
    
    
-    <section class="content">
+    <!-- <section class="content"> -->
   <div class="panel-group">
 
    <div class="panel panel-default">
@@ -215,7 +214,7 @@
 
 
 
-</section>
+<!-- </section> -->
 </div>  <!-- 위에 두개 뭐지 -->
 
 </div>
@@ -309,15 +308,8 @@
   </div>
 
 
-    
-
-
-
-
-
-   
-
       <%@ include file="/views/common/footer.jsp" %>
 
 
 
+ 

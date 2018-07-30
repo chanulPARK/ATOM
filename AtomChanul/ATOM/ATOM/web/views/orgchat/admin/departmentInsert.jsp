@@ -3,6 +3,11 @@
 <%@ include file="/views/common/header.jsp" %> <!-- 정적 처리방식 -->
  <%@ include file="/views/common/deptAside.jsp" %>
 
+
+
+
+
+
 <!-- <script type="text/javascript">
 
 $(function() {
@@ -43,7 +48,7 @@ $(function() {
 
 
  
-    <div class="col-sm-8 text-left"> <!-- container 영역  --> 
+  <div class="col-sm-8 text-left"> <!-- container 영역  --> 
 
      <div class="container">
 	
@@ -59,7 +64,7 @@ $(function() {
 
     <ul class="nav nav-pills nav-justified">
 
-     <li class="active"><a href="departmentList.jsp">부서목록</a></li>
+     <li class="active"><a href="<%=request.getContextPath() %>/dept/selectAll">전체부서목록</a></li>
      <li><a href="departmentInsert.jsp">부서추가</a></li>
      <li><a href="#">부서수정</a></li>
      <li><a href="#">부서삭제</a></li>
@@ -107,52 +112,6 @@ $(function() {
   </div>
 
  
- 
-<!--  
-  <div class="panel panel-default">
-
-   <div class="panel-heading">부서 출력</div>
-
-   <div class="panel-body">
-
-    <table class="table">
-
-     <thead>
-
-      <tr>
-
-       <th>부서 번호</th>
-
-       <th>부서명</th>
-		
-       <th>부서삭제</th>
-
-      </tr>
-
-     </thead>
-
-     <tbody>
-
-      <tr>
-
-       <td>1</td>
-
-       <td>개발부</td>
-
-       <td><button type="button" class="btn btn-default btn-sm">Delete</button></td>
-
-      </tr>
-
-     </tbody>
-
-    </table>
-
-
-
-   </div>
-
-  </div> -->
-
 
  </div>
  </div>

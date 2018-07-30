@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+
 <%@ include file="/views/common/header.jsp" %> <!-- 정적 처리방식 -->
  <%@ include file="/views/common/deptAside.jsp" %>
 
@@ -27,7 +29,7 @@
 
  
 
- <div class="col-sm-8 text-left"> <!-- container 영역  --> 
+<div class="col-sm-8 text-left"> <!-- container 영역  --> 
 
      <div class="container">
 	
@@ -43,8 +45,8 @@
 
     <ul class="nav nav-pills nav-justified">
 
-     <li><a href="employeeList.jsp">전체직원정보</a></li>
- 	 <li class="active"><a href="employeeInsertForm.jsp">직원 추가</a></li>
+     <li><a href="<%=request.getContextPath() %>/emp/selectAll">전체직원정보</a></li>
+ 	 <li class="active"><a href="<%=request.getContextPath() %>/employeeInsert">직원 추가</a></li>
      <li><a href="#">직원수정</a></li>
      <li><a href="#">직원삭제</a></li>
 
