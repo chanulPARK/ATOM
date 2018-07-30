@@ -1,4 +1,4 @@
-package atom.dept.controller;
+package atom.job.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import atom.dept.model.service.DeptService;
-import atom.dept.model.vo.Dept;
+import atom.job.model.service.JobService;
+import atom.job.model.vo.Job;
 
 /**
- * Servlet implementation class DeptListServlet
+ * Servlet implementation class JobSelectAllServlet
  */
-@WebServlet("/deptlist")
-public class DeptListServlet extends HttpServlet {
+@WebServlet("/jobList")
+public class JobSelectAllServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeptListServlet() {
+    public JobSelectAllServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,11 +35,12 @@ public class DeptListServlet extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		//부서정보 가져오기
+		List<Job>jobList= new JobService().jobList();	//직급 리스트  서비스로 이동
 		
-		List<Dept>list= new DeptService().deptList();	//부서목록
-		request.setAttribute("Dept", list);  //DEPT VO, dept 서비스
+		request.setAttribute("Job", jobList);
+		request.getRequestDispatcher("/views/orgchat/admin/jobList.jsp").forward(request, response);
 		
-		request.getRequestDispatcher("/views/orgchat/admin/departmentList.jsp").forward(request, response);	//화면 쏴주는곳
+		
 		
 	
 	}

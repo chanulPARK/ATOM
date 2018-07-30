@@ -2,8 +2,10 @@ package atom.dept.model.service;
 import static common.JDBCTemplete.*;
 
 import java.sql.Connection;
+import java.util.List;
 
 import atom.dept.model.dao.DeptDAO;
+import atom.dept.model.vo.Dept;
 
 public class DeptService {
 
@@ -12,6 +14,7 @@ public class DeptService {
 	
 	
 	
+	//부서 추가
 	public int insertDept(String deptName) 
 	{
 		Connection conn=getConnection();
@@ -23,6 +26,14 @@ public class DeptService {
 		
 		return result;
 		
+	}
+
+	//모든 부서정보 가져오기
+	public List<Dept> deptList() {
+		Connection conn = getConnection();
+		List<Dept> deptlist= new DeptDAO().selectAll(conn);
+		close(conn);
+		return deptlist;
 	}
 
 	

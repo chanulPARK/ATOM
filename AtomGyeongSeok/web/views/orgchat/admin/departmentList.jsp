@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@page import="atom.dept.model.vo.Dept" %>
+<%@page import="java.util.*" %>
+
+<%
+	List<Dept>dept = (List)request.getAttribute("Dept");
+%>
+
+
 <%@ include file="/views/common/header.jsp" %> <!-- 정적 처리방식 -->
  <%@ include file="/views/common/leftNav.jsp" %>
 
@@ -61,8 +70,8 @@ $(function() {
 
 	<%-- "<%=request.getContextPath() %>/deptInsert" --%>
 
-     <li class="active"><a href="departmentList.jsp">부서목록</a></li>
-     <li><a href="departmentInsert.jsp">부서추가</a></li>
+     <li class="active"><a href="<%=request.getContextPath() %>/deptlist">부서목록</a></li>
+     <li><a href="<%=request.getContextPath() %>/views/orgchat/admin/departmentInsert.jsp">부서추가</a></li>
      <li><a href="#">부서수정</a></li>
      <li><a href="#">부서삭제</a></li>
 
@@ -133,17 +142,18 @@ $(function() {
      </thead>
 
      <tbody>
+     <%for(Dept d: dept) {%>
 
       <tr>
 
-       <td>1</td>
+       <td><%=d.getDeptCode() %></td>
 
-       <td>개발부</td>
+       <td><%=d.getDeptName() %></td>
 
        <td><button type="button" class="btn btn-default btn-sm">Delete</button></td>
 
       </tr>
-
+<%}%>
      </tbody>
 
     </table>

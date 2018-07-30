@@ -1,28 +1,25 @@
-package atom.dept.controller;
+package atom.job.controller;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import atom.dept.model.service.DeptService;
-import atom.dept.model.vo.Dept;
+import atom.job.model.service.JobService;
 
 /**
- * Servlet implementation class DeptListServlet
+ * Servlet implementation class JobInsertServlet
  */
-@WebServlet("/deptlist")
-public class DeptListServlet extends HttpServlet {
+@WebServlet("/jobInsert")
+public class JobInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeptListServlet() {
+    public JobInsertServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,16 +29,32 @@ public class DeptListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		String jobName =request.getParameter("jobName"); //인풋 아이디값?
 		
-		//부서정보 가져오기
+		int result = new JobService().insertJob(jobName);	//위에 선언된 변수를 가지고 감
 		
-		List<Dept>list= new DeptService().deptList();	//부서목록
-		request.setAttribute("Dept", list);  //DEPT VO, dept 서비스
 		
-		request.getRequestDispatcher("/views/orgchat/admin/departmentList.jsp").forward(request, response);	//화면 쏴주는곳
 		
-	
+		String msg="";
+		String loc="/views/main.jsp";	//일단 메인으로
+		String view="/views/common/msg.jsp";
+		
+		if(result>0)
+		{
+			msg="직급 추가을 완료하였습니다.";
+		}
+		else
+		{
+			msg="직급 추가을 실패하였습니다.";
+			
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		request.getRequestDispatcher(view).forward(request, response);
+		
+		
+		
+		
 	}
 
 	/**
