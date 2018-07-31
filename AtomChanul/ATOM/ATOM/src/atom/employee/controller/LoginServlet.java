@@ -33,6 +33,8 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = (String)request.getParameter("userId");
 		String pw = (String)request.getParameter("userPw");
+		
+		System.out.println("userId : "+id);
 		System.out.println("암호화pw : "+pw);
 		
 		Employee e = new EmployeeService().selectOne(id);

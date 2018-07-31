@@ -16,6 +16,7 @@
 	boolean chk = true;
 	GregorianCalendar date1 = new GregorianCalendar (Locale.KOREA);
 	GregorianCalendar date2 = new GregorianCalendar (Locale.KOREA);
+	System.out.println("시스템코드:" + empLoggedIn.getAdminCode());
 %>
 	<!-- fullCalendar 3.9.0 -->
     <script src="<%=request.getContextPath()%>\dist\lib\moment.min.js"></script>
@@ -28,11 +29,27 @@
     	.fc-sun .fc-day-number {color:#e31b23}
     	.fc-sat {color:#0100FF}
     	.fc-sat .fc-day-number {color:#0100FF}
+    	aside div.leftmenu_top {
+            background: #353b47;
+            color: #fff;
+            text-align: center;
+            height: 50px;
+        }
+        aside div.leftmenu_top h3{
+            padding-top: 10px;
+            margin: 0;
+        }
     </style>
     <aside>
+    <div class="leftmenu_top">
+            <h3>
+               	 일정관리
+            </h3>
+     </div>
+     <br>
       <div class="sidebar" style="margin: 0px 10px">
         <div class="create-schedule">
-          <a href="<%=request.getContextPath()%>/calendar/calendarRegistrationForm" class="btn btn-primary btn-block ">일정 등록</a>
+          <a href="<%=request.getContextPath()%>/calendar/calendarRegistrationForm" class="btn btn-default btn-block ">일정 등록</a>
         </div>
         <br>
         <div class="panel panel-default">
@@ -44,12 +61,14 @@
               <div class="form-check">
                 <label for="schedule-group-check1" class="label label-danger schedule-group"><input type="checkbox" name="schedule-group" id="schedule-group-check1" checked> 공지사항</label>
               </div>
+			<%if(empLoggedIn.getAdminCode().equals("0")){ %>
               <div class="form-check">
-                <label for="schedule-group-check2" class="label label-success schedule-group"><input type="checkbox" name="schedule-group" id="schedule-group-check2" checked> <%=empLoggedIn.getDeptCode() %> </label>
+                <label for="schedule-group-check2" class="label label-success schedule-group"><input type="checkbox" name="schedule-group" id="schedule-group-check2" checked> <%=empLoggedIn.getDeptName() %> </label>
               </div>
               <div class="form-check">
                 <label for="schedule-group-check3" class="label label-info schedule-group"><input type="checkbox" name="schedule-group" id="schedule-group-check3" checked> 내 일정 </label>
               </div>
+              <%}%>
               
             </div>
           </div>
@@ -455,11 +474,11 @@
         
         
         
-        
+		<%if(empLoggedIn.getAdminCode().equals("0")){ %>
         $('#calendar').fullCalendar('addEventSource',myEvents);
         $('#calendar').fullCalendar('addEventSource',deptSchedule);
+		<%}%>        
         $('#calendar').fullCalendar('addEventSource',noticeSchedule);
-        
         
         
         

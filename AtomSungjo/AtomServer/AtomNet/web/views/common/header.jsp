@@ -40,7 +40,6 @@
             position: absolute;
             /* position: fixed; */
             border-bottom: solid 1px rgb(222, 226, 230);
-            background: rgb(222, 226, 230);
         }
         section{
             padding: 20px;

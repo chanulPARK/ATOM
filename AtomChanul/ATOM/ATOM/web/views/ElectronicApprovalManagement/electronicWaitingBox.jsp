@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="atom.electronic.model.vo.ElectronicApproval"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -6,6 +7,8 @@
 <%@ include file="/views/common/approvalAside.jsp"%>
 <%
 	ArrayList<ElectronicApproval> list = (ArrayList)request.getAttribute("list");
+SimpleDateFormat sd = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+
 	int cPage=(int)request.getAttribute("cPage");
 	int numPerPage=(int)request.getAttribute("numPerPage");
 	int totalContent=(int)request.getAttribute("totalContent");
@@ -13,6 +16,8 @@
 %>
 
 <head>
+<!-- 데이트피커 -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>\dist\css\datepicker.css">
 	<style>
 	/* Style the sidenav links and the dropdown button */
 .sidenav a, .dropdown-btn {
@@ -155,52 +160,53 @@ aside .fa-caret-down {
                         </div>
                         <div class="col-md-1" style="margin: 0 0 0 10px;"><p style="font-size: 12px; color: rgb(160, 160, 160); margin: 6px 0px;">전체 <%=totalContent%></p></div>
 						<div class="col-md-10 pull-right">
-	                        <form class="form-inline pull-right" style="margin-right:15px" action="">
-                                <input class="form-control input-sm" placeholder="From" value=""><button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+	                        <form class="form-inline pull-right" style="margin-right:15px" action="<%=request.getContextPath()%>/electronic/electonicWaitingFinder">
+                                <input id="FromDate" name="FromDate" class="form-control input-sm" placeholder="From" value=""><button  type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
                                 &nbsp;~&nbsp;
-                                <input class="form-control input-sm" placeholder="To"><button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
-                                <select class="form-control input-sm" style="padding: 0">
+                                <input id="ToDate" name="ToDate" class="form-control input-sm" placeholder="To"><button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+                                <select id="searchSelectBox" name="searchType" class="form-control input-sm" style="padding: 0">
                                     <option value="searchUser">기안자</option>
                                     <option value="searchTitle">제목</option>
                                     <option value="searchTContents">기안내용</option>
                                 </select>
-                                <input type="text" class="form-control input-sm" placeholder="검색어">
+                                <input id="searchWord" name="searchWord" type="text" class="form-control input-sm" value="<%if(request.getParameter("searchWord")!=null){%><%=request.getParameter("searchWord")%><%}%>" placeholder="검색어">
                                 <button type="submit" class="btn btn-primary btn-sm floa">검색</button>
 	                        </form>
                         </div>
                     </div> 
                 </div>
+         <form class="" action="<%=request.getContextPath()%>/electronic/selectApproval" method="post" style="margin:0">
                 
                 <table class="tableTL table table-striped">
                 <colgroup>
                    <col width="1%"/>
                       <col width="2%"/>
-                      <col width="5%"/>
+                      <col width="10%"/>
                       <col width="2%"/>
                       <col width="25%"/>
                       <col width="4%"/>
                       <col width="5%"/>
-                      <col width="5%"/>
+                      <col width="6%"/>
                 </colgroup>
                 <thead>
                     <tr>
                         <th scope="col"><input id="checkAll" name="" onclick="selectAllTodo()" type="checkbox" value="" title="checkAll" aria-invalid="false"></th>
                         <th scope="col">번호</th>
                         <th scope="col">
-                            <a data-sortcolumn="FOLDER" href="#">문서 번호<i class="glyphicon glyphicon-triangle-top"></i></a>
+                            	문서 번호
                         </th>
                         <th scope="col">유형</th>
                         <th scope="col">
-                            <a data-sortcolumn="REGISTERNAME" href="#">제목<i class="glyphicon glyphicon-triangle-top"></i></a>
+                           	 제목
                         </th>
                         <th scope="col">
-                            <a data-sortcolumn="INSERTDATE" href="#">기안자<i class="glyphicon glyphicon-triangle-top"></i></a>
+                          	 기안자
                         </th>
                         <th scope="col">
-                            <a data-sortcolumn="DUEDATE" href="#">기안부서<i class="glyphicon glyphicon-triangle-top"></i></a>
+                         	   기안부서
                         </th>
                         <th scope="col">
-                            <a data-sortcolumn="DUEDATE" href="#">기안날짜<i class="glyphicon glyphicon-triangle-top"></i></a>
+                            	기안날짜
                         </th>
                     </tr>
                 </thead>
@@ -215,7 +221,7 @@ aside .fa-caret-down {
 			                <td><a href="<%=request.getContextPath()%>/electronic/electronicWaitingView?draftNo=<%=ea.getDraftNo()%>"><%=ea.getDraftName() %></a></td>
 							<td><%=ea.getEmpName() %></td>
 			                <td><%=ea.getDraftDept() %></td>
-			                <td><%=ea.getDraftDate() %></td>                	
+			                <td><%=sd.format(ea.getDraftDate()) %></td>                	
 			            </tr>
 		                    <!-- <tr>
 		                      <td colspan="10" class="emptyRecord">검색 결과가 존재하지 않습니다.</td>
@@ -231,8 +237,56 @@ aside .fa-caret-down {
 				  	<%=pageBar %>
 				  </ul>
 				</nav>		
-				            <button type="button" class="btn btn-primary pull-right" id="allApproval" style="margin-top:15px;">일괄 결재 </button>
+				<button type="button" class="btn btn-primary pull-right" id="selectApproval" style="margin-top:15px;"  data-toggle="modal" data-target="#approvalModal">선택 결재 </button>
 						
+				<!-- approvalModal -->
+             <div id="approvalModal" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+
+                <!-- Modal content-->
+<%-- 			<form class="" action="<%=request.getContextPath()%>/electronic/ellectonicApprovalSystem" method="post" style="margin:0">
+ --%>                
+                <div class="modal-content">
+                  <div class="modal-header" style = "background-color:white;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">결재 처리</h4>
+                  </div>
+
+                  <div class="modal-body">
+                  	<div class="row">
+                      <div class="col-md-12">
+                          <table class="table" style="font-size:1em;margin:0">
+                            <colgroup>
+        	      							<col style="width: 5%;"/>
+        	      							<col style="width: 35%;"/>
+        	      						</colgroup>
+                      			<tr>
+                      				<th style="background-color:#f9f9f9;">결재처리</th>
+                              <td>
+                                <label for="approve"><input id="approve" type="radio" name="appr" value="승인" style="margin-right:3px;" checked>승인</label>&nbsp;
+                                <label for="reject"><input id="reject" type="radio" name="appr" value="반려" style="margin-right:3px;">반려</label>
+                              </td>
+                      			</tr>
+                      			<tr>
+                              <th style="vertical-align:middle;background-color:#f9f9f9;">결재의견</th>
+                              <td>
+                                <textarea style="resize: none;" name="apprComment" class="form-Control"rows="10" cols="60">At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies. </textarea>
+                              </td>
+                      			</tr>
+                      		</table>
+                  	</div>
+                    	</div>
+                  </div> <!-- modal-body -->
+					
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm">결재</button>
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">닫기</button>
+                  </div>
+                </div>
+                        </form>
+
+              </div> <%-- modal-dialog --%>
+            </div>
 				
                 
             </div>
@@ -244,8 +298,11 @@ aside .fa-caret-down {
     </section>
     <script>
     $(function(){
+    	$('#FromDate').datepicker();
+    	$('#ToDate').datepicker();
     	$('#numperPage').val('<%=numPerPage%>');
-    });
+    	if(<%=request.getParameter("searchType")%> != null)
+    	$('#searchSelectBox').val('<%=request.getParameter("searchType")%>').attr('selected',true);    });
     
     
     var dropdown = document.getElementsByClassName("dropdown-btn");
@@ -268,7 +325,39 @@ for (i = 0; i < dropdown.length; i++) {
 	  console.log($('#numperPage').val());
   });
   
+  $("#checkAll").change(function(){
+      if($("#checkAll").is(":checked")){
+    	  $("input[type=checkbox]").prop("checked",true);
+      }else{
+    	  $("input[type=checkbox]").prop("checked",false);
+      }
+  });
+  
+  $('input[name="allCheck"]').change(function(){
+	  if($('input[name="allCheck"]').is(":checked")){
+		  console.log('dd');
+	  }else{
+		  console.log('ㅠㅠ');
+		  $("#checkAll").attr("checked",false);
+	  }
+  });
+  $('#selectApproval').click(function(){
+	  var checklist = new Array();
+	  $('input:checkbox[name=allCheck]').each(function() {
+	         if($(this).is(':checked')){
+	            checklist.push($(this).val());
+	         }
+	  });
+	  if(checklist.length != 0){
+	  }else{
+		  alert("선택된 문서가 없습니다.");
+		  location.href="";
+	  }
+  });
+  
     </script>
+        <script src="<%=request.getContextPath()%>/dist/js/datepicker.js"></script>
+    
 
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
 <!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

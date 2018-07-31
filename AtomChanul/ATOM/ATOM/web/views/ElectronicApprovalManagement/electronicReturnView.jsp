@@ -12,6 +12,8 @@
 	ElectronicApproval ea = (ElectronicApproval)request.getAttribute("ea");
 	ArrayList<MaterialLine> materialList = (ArrayList)request.getAttribute("materialline");
 	ArrayList<AuthoriaztionComment> commentList = (ArrayList)request.getAttribute("commentList");
+	SimpleDateFormat sd = new SimpleDateFormat("YYYY-MM-dd");
+	SimpleDateFormat sd2 = new SimpleDateFormat("HH:mm:ss");
 	System.out.println("결재선 : ?" + materialList);
 	System.out.println("결재의견 : ?" + commentList);
 	
@@ -196,8 +198,8 @@ ul{
           </div>
           <div class="row" >
 	          <div id="formButtonDiv" class="btn-wrap pull-right">
-	      	    <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button>
-	      		<!-- <button id="createApprDocTemporayButton" type="button" class="btn btn-default">임시저장</button> -->
+<!-- 	      	    <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button>
+ -->	      		<!-- <button id="createApprDocTemporayButton" type="button" class="btn btn-default">임시저장</button> -->
 	      		<button id="" type="reset"  onclick="history.go(-1)" class="btn btn-default">목록</button>
 	      	  </div>
 
@@ -356,7 +358,7 @@ ul{
 				                      <td>
 					                      <span style="font-size:0.9em"><%=m.getEmpName()%><br></span>
 					                      <span style="font-size:1em"><%=m.getMaterialState() %><br></span>
-					                      <span style="font-size:0.8em"><%if(m.getMaterialDate()!=null){%><%=m.getMaterialDate()%><%}%></span>
+					                      <span style="font-size:0.8em"><%if(m.getMaterialDate()!=null){%><%=sd.format(m.getMaterialDate())%><br><%=sd2.format(m.getMaterialDate())%><%}%></span>
 				                      </td>
 				                    <%}%>
 				                    </tr>

@@ -65,7 +65,6 @@ public class ElectronicApprovalFormEndServlet extends HttpServlet {
 		
 		int[] material_squences = new int[material_squence_str.length];
 		  
-		/* 일단 보류 */
 		
 		int result = new ElectronicService().insertApproval(ea);
 		int result2[] = new int[material_squence_str.length];

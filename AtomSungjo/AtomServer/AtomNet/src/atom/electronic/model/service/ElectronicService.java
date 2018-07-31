@@ -13,6 +13,7 @@ import atom.electronic.model.dao.ElectronicDAO;
 import atom.electronic.model.vo.AuthoriaztionComment;
 import atom.electronic.model.vo.ElectronicApproval;
 import atom.electronic.model.vo.MaterialLine;
+import atom.employee.model.vo.Employee;
 
 public class ElectronicService {
 

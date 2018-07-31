@@ -18,6 +18,7 @@ import atom.electronic.model.service.ElectronicService;
 import atom.electronic.model.vo.AuthoriaztionComment;
 import atom.electronic.model.vo.ElectronicApproval;
 import atom.electronic.model.vo.MaterialLine;
+import atom.employee.model.vo.Employee;
 
 public class ElectronicDAO {
 
@@ -68,8 +69,8 @@ public class ElectronicDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, m.getDraftNo());
-			pstmt.setString(2, m.getEmpId());
-			pstmt.setInt(3, m.getMaterialSquence());
+			pstmt.setString(2, m.getEmpId()); // 작성자
+			pstmt.setInt(3, m.getMaterialSquence()); //
 			if(m.getMaterialSquence()==1) {
 				sql = "INSERT INTO MATERIALLINE VALUES(MATERIALLINE_SEQ.NEXTVAL,?,?,?,?,sysdate)";
 				pstmt = conn.prepareStatement(sql);
@@ -1033,5 +1034,6 @@ public class ElectronicDAO {
 		
 		return result;
 	}
+
 	
 }

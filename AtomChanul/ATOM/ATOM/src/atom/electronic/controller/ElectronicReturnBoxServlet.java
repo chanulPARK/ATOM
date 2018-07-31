@@ -55,7 +55,7 @@ public class ElectronicReturnBoxServlet extends HttpServlet {
 		
 		//pageBar만들기!! 만들어 볼까요?!
 				//전체 자료수
-				int totalContent=new ElectronicService().selectCompletionCount(e.getEmpId());
+				int totalContent=new ElectronicService().selectReturnCount(e.getEmpId());
 				String pageBar="";
 
 				//전체 page수

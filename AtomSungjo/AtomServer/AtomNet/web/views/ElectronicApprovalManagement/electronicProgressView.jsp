@@ -202,8 +202,8 @@ ul{
 	          <div id="formButtonDiv" class="btn-wrap pull-right">
 	          	<input type='hidden' name = "draftNo" value="<%=ea.getDraftNo()%>">
 	      	    <button id="" class="btn btn-primary" type="submit" ">결재회수</button>
-	      	    <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button>
-	      		<button id="" type="reset"  onclick="history.go(-1)" class="btn btn-default">목록</button>
+<!-- 	      	    <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button>
+ -->	      		<button id="" type="reset"  onclick="history.go(-1)" class="btn btn-default">목록</button>
 	      			      	  </form>
 	      		
 	      	  </div>

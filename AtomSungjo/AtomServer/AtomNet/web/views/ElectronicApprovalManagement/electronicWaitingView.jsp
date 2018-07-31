@@ -197,8 +197,8 @@ ul{
           <div class="row" >
 	          <div id="formButtonDiv" class="btn-wrap pull-right">
 	      	    <button id="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#approvalModal">결재</button>
-	      	    <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button>
-	      		<!-- <button id="createApprDocTemporayButton" type="button" class="btn btn-default">임시저장</button> -->
+<!-- 	      	    <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button>
+ -->	      		<!-- <button id="createApprDocTemporayButton" type="button" class="btn btn-default">임시저장</button> -->
 	      		<button id="" type="reset"  onclick="history.go(-1)" class="btn btn-default">목록</button>
 	      	  </div>
 
@@ -233,7 +233,7 @@ ul{
                       			<tr>
                               <th style="vertical-align:middle;background-color:#f9f9f9;">결재의견</th>
                               <td>
-                                <textarea style="resize: none;" name="apprComment" class="form-Control"rows="10" cols="60">At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies. </textarea>
+                                <textarea style="resize: none;" name="apprComment" class="form-Control"rows="10" cols="60" placeholder="결재의견을 입력하세요."></textarea>
                               </td>
                       			</tr>
                       		</table>
@@ -467,8 +467,8 @@ ul{
 
 	      	<div id="formButtonDiv" class="btn-wrap pull-right">
 	      	    <button id="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#approvalModal">결재</button>
-	      	    <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button>
-	      		<!-- <button id="createApprDocTemporayButton" type="button" class="btn btn-default">임시저장</button> -->
+<!-- 	      	    <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button>
+ -->	      		<!-- <button id="createApprDocTemporayButton" type="button" class="btn btn-default">임시저장</button> -->
 	      		<button id="" type="reset"  onclick="history.go(-1)" class="btn btn-default">목록</button>
 	      	</div>
       </div> <%--row--%>
