@@ -25,14 +25,14 @@ public class EmployeeDAO {
 		}
 	}
 
-	public Employee selectOne(Connection conn, String id) {
+	public Employee selectOne(Connection conn, String empId) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		Employee e = null;
 		String sql = prop.getProperty("selectOne");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
+			pstmt.setString(1, empId);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				e = new Employee();

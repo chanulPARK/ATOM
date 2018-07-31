@@ -21,7 +21,7 @@ section{
     background: rgb(255, 255, 255);
     border-left: 1px solid rgb(222, 226, 230);
     margin-left: 250px;
-    /* min-height: 675px; */
+    min-height: 675px;
     display: block;
 }
 footer{

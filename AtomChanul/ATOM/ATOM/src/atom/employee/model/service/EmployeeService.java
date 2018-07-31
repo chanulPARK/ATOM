@@ -10,9 +10,9 @@ import static common.JDBCTemplate.*;
 
 public class EmployeeService {
 
-	public Employee selectOne(String id) {
+	public Employee selectOne(String empId) {
 		Connection conn = getConnection();
-		Employee e = new EmployeeDAO().selectOne(conn,id);
+		Employee e = new EmployeeDAO().selectOne(conn, empId);
 		close(conn);
 		return e;
 	}

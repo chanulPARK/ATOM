@@ -82,7 +82,7 @@
 							data-toggle="dropdown" role="button" aria-expanded="false"><span
 								class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href='<%=request.getContextPath()%>/empView?userId=<%=empLoggedIn.getEmpName() %>'>마이페이지</a></li>
+								<li><a href='<%=request.getContextPath()%>/empView?empId=<%=empLoggedIn.getEmpId() %>'>마이페이지</a></li>
 								<li><a href="#">설정</a></li>
 								<li class="divider"></li>
 								<li><a href="<%=request.getContextPath()%>/logout">로그아웃</a></li>

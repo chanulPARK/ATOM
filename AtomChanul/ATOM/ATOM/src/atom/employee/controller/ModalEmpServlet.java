@@ -13,14 +13,14 @@ import atom.employee.model.vo.Employee;
 /**
  * Servlet implementation class MypageServlet
  */
-@WebServlet("/empView")
-public class EmpViewServlet extends HttpServlet {
+@WebServlet("/modalEmp")
+public class ModalEmpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EmpViewServlet() {
+    public ModalEmpServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,10 +34,10 @@ public class EmpViewServlet extends HttpServlet {
 		System.out.println(empId);
 		
 		Employee e = new EmployeeService().selectOne(empId);
-		System.out.println(e);
+		System.out.println("modal:"+ e);
 		
-		request.setAttribute("emp", e);
-		request.getRequestDispatcher("/views/employee/empView.jsp").forward(request, response);
+		request.setAttribute("modalEmp", e);
+		request.getRequestDispatcher("/views/task/taskList.jsp").forward(request, response);
 	}
 
 	/**

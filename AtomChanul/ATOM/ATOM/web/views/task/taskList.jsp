@@ -13,7 +13,11 @@
 	int totalContent = (int)request.getAttribute("totalContent");
 	int numPerPage = (int)request.getAttribute("numPerPage");
 	String pageBar = (String)request.getAttribute("pageBar");
+	
+	// modalEmp
+	Employee modalEmp = (Employee)request.getAttribute("modalEmp");
 %>
+<%=modalEmp %>
 <style>
 	.float-right {
 		float: right;
@@ -109,6 +113,11 @@
     /* $(document).ready(function(){
         $(".btn-status").addClass("btn-danger");
 	}); */
+	
+	
+	function fn_empview(empId) {
+		location.href="<%=request.getContextPath()%>/modalEmp?empId="+empId;
+	};
 	
 </script>
 
@@ -206,7 +215,7 @@
                      <td class="text-left"><a href='<%=request.getContextPath()%>/task/taskView?taskNo=<%=t.getTaskNo() %>'>
                      	<%=t.getTaskTitle() %></a>
                      </td>
-                     <td><a href="#" data-toggle="modal" data-target="#myModal"><%=t.getEmpName() %></a></td>
+                     <td><a href="#" data-toggle="modal" data-target="#myModal" onclick="fn_empview(<%=t.getEmpId() %>)"><%=t.getEmpName() %></a></td>
                      <td><%=t.getEnrollDate() %></td>
                      <td><%=t.getDeadline() %></td>
                      <td><% if(t.getTaskStatus().equals("반려")) { %>
@@ -239,49 +248,77 @@
     <!-- /.content -->
     
     <!-- Modal -->
- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-     <div class="modal-dialog">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                 <h4 class="modal-title" id="myModalLabel">사원 정보</h4>
-             </div>
-             <div class="modal-body">
-                    <div class="text-center">
-                        <img class="profile-user-img img-fluid img-circle" src="<%=request.getContextPath() %>/dist/img/profile.jpg" alt="User profile picture">
-                    </div>
-                        <h3 class="profile-username text-center">한예슬</h3>
-                        <p class="text-muted text-center">Software Engineer</p>
-            
-                        <table width="200px;">
-                            <tr>
-                                <th scope="row">부서</th>
-                                <td>영업부 / 영업 2팀</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">직책</th>
-                                <td>사원</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">전화번호</th>
-                                <td>01000000006 / </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">메일</th>
-                                <td>atom@naver.com</td>
-                            </tr>
-                        </table>
-            </div>
-            <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary">자세히 보기</button>
-            </div> -->
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
+    <%if(modalEmp!=null) {%>
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">사원 정보</h4>
+				</div>
+				<%-- <div class="modal-body">
+					<div class="text-center">
+						<img class="profile-user-img img-fluid img-circle" src="<%=request.getContextPath() %>/dist/img/profile.jpg" alt="User profile picture">
+					</div>
+	                <h3 class="profile-username text-center"><%=modalEmp.getEmpName() %></h3>
+	                <p class="text-muted text-center"><%=modalEmp.getJobName() %></p>
+	       
+	                   <table width="200px;">
+	                    <tr>
+	                        <th scope="row">부서</th>
+	                        <td><%=modalEmp.getDeptName() %></td>
+	                    </tr>
+	                    <tr>
+	                        <th scope="row">직책</th>
+	                        <td><%=modalEmp.getJobName() %></td>
+	                    </tr>
+	                    <tr>
+	                        <th scope="row">전화번호</th>
+	                        <td><%=modalEmp.getPhone() %></td>
+	                    </tr>
+	                    <tr>
+	                        <th scope="row">메일</th>
+	                        <td><%=modalEmp.getEmail() %></td>
+	                    </tr>
+	                </table>
+				</div> --%>
+				<div class="modal-body">
+					<div class="text-center">
+						<img class="profile-user-img img-fluid img-circle" src="<%=request.getContextPath() %>/dist/img/profile.jpg" alt="User profile picture">
+					</div>
+	                <h3 class="profile-username text-center">한예슬</h3>
+	                <p class="text-muted text-center">Software Engineer</p>
+	       
+	                   <table width="200px;">
+	                    <tr>
+	                        <th scope="row">부서</th>
+	                        <td>영업부 / 영업 2팀</td>
+	                    </tr>
+	                    <tr>
+	                        <th scope="row">직책</th>
+	                        <td>사원</td>
+	                    </tr>
+	                    <tr>
+	                        <th scope="row">전화번호</th>
+	                        <td>01000000006 / </td>
+	                    </tr>
+	                    <tr>
+	                        <th scope="row">메일</th>
+	                        <td>atom@naver.com</td>
+	                    </tr>
+	                </table>
+				</div>
+	            <!-- <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+	                <button type="button" class="btn btn-primary">자세히 보기</button>
+	            </div> -->
+	        </div>
+	        <!-- /.modal-content -->
+	    </div>
+	    <!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	<%} %>
     
 </section>
 

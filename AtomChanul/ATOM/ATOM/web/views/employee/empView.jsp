@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="atom.employee.model.vo.Employee" %>
 <%@ include file="/views/common/header.jsp" %>
-<%@ include file="/views/common/taskAside.jsp" %>
+<%-- <%@ include file="/views/common/taskAside.jsp" %> --%>
 <%
-	Employee emp = (Employee)request.getSession().getAttribute("empLoggedIn");
+	Employee emp = (Employee)request.getAttribute("emp");
 %>
 <style>
     .mypage .mypage-tbl tr th {
