@@ -1,6 +1,8 @@
 package atom.dept.model.vo;
 
-public class Dept {
+import atom.employee.model.vo.Employee;
+
+public class Dept{
 	private int deptCode;
 	private String deptName;
 	

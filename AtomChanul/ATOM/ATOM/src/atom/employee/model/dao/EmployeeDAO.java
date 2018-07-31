@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import atom.dept.model.vo.Dept;
 import atom.employee.model.vo.Employee;
+import atom.job.model.vo.Job;
 
 import static common.JDBCTemplate.*;
 
@@ -68,12 +70,14 @@ public class EmployeeDAO {
 	   	  PreparedStatement pstmt = null;
 	      ResultSet rs = null;
 	      List<Employee> employeeList= new ArrayList<Employee>();
+	      
 	      String sql = prop.getProperty("selectAll");
 	      try {
 	         pstmt = conn.prepareStatement(sql);
 	         rs = pstmt.executeQuery();
 	         while(rs.next()) {
-	            Employee e = new Employee();
+	        	Employee e = new Employee();
+	           
 	            e.setEmpId(rs.getString("emp_id"));
 	            e.setEmpPw(rs.getString("emp_pw"));
 	            e.setEmpName(rs.getString("emp_name"));
@@ -81,8 +85,6 @@ public class EmployeeDAO {
 	            e.setEmail(rs.getString("email"));
 	            e.setPhone(rs.getString("phone"));
 	            e.setAddr(rs.getString("addr"));
-	            e.setDeptCode(rs.getString("dept_code"));
-	            e.setJobCode(rs.getString("job_code"));
 	            e.setManagerId(rs.getString("manager_id"));
 	            e.setAdminCode(rs.getString("admin_code"));
 	            e.setHireDate(rs.getDate("hire_date"));
@@ -98,6 +100,7 @@ public class EmployeeDAO {
 	      close(rs);
 	      close(pstmt);
 	      
+	     
 	      System.out.println(employeeList);
 	      return employeeList;
 		   
