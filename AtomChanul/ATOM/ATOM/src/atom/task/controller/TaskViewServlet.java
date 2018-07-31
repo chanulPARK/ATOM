@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import atom.task.model.service.TaskService;
 import atom.task.model.vo.Task;
+import atom.task.model.vo.TaskProcess;
 
 /**
  * Servlet implementation class TaskViewServlet
@@ -39,8 +40,9 @@ public class TaskViewServlet extends HttpServlet {
 		String view="";
 		if(task!=null) {
 			request.setAttribute("task", task);
-//			List<TaskComment> list = new TaskService().selectTaskCommentList(taskNo);
-//			request.setAttribute("list", list);
+			List<TaskProcess> list = new TaskService().processList(taskNo);
+			System.out.println(list);
+			request.setAttribute("list", list);
 			view = "/views/task/taskView.jsp";
 		}
 		else {

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/views/common/header.jsp" %>
+<%-- <%@ include file="/views/common/header.jsp" %> --%>
 <%@ include file="/views/common/taskAside.jsp" %>
 <%@ page import='java.util.*, atom.task.model.vo.Task' %>
 <%
@@ -13,7 +13,11 @@
 	int totalContent = (int)request.getAttribute("totalContent");
 	int numPerPage = (int)request.getAttribute("numPerPage");
 	String pageBar = (String)request.getAttribute("pageBar");
+	
+	// modalEmp
+	Employee modalEmp = (Employee)request.getAttribute("modalEmp");
 %>
+<%=modalEmp %>
 <style>
 	.float-right {
 		float: right;
@@ -34,7 +38,7 @@
 	});
 	
 	// searchType 분기 처리
-	$(function() {
+	/* $(function() {
 		var sid = document.querySelector("#searchUser");
 		var stitle = document.querySelector('#searchTitle');
 		$('#searchType').change(function() {
@@ -42,7 +46,7 @@
 			stitle.style.display='none';
 			$('#search-'+this.value).css("display","inline-block");
 		});
-	});
+	}); */
 	
 	// 글쓰기 이동
 	function fn_goTaskWrite() {
@@ -76,6 +80,7 @@
     $(function(){
         $('.reservation').datepicker({
         	format: 'yyyy-mm-dd',
+        	yearFirst: true,
         	months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
             monthsShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
             days: ['일', '월', '화', '수', '목', '금', '토'],
@@ -104,26 +109,36 @@
     	});
     }); 
     /* $("#sorttable").tablesorter( {sortList: [[1,0]]} ); */
+    
+    /* $(document).ready(function(){
+        $(".btn-status").addClass("btn-danger");
+	}); */
+	
+	
+	function fn_empview(empId) {
+		location.href="<%=request.getContextPath()%>/modalEmp?empId="+empId;
+	};
 	
 </script>
 
 <section>
     <div class="content task-content">
         <div class="col-md-12" style="min-width: 900px;">
-           	<%--  <%
-            String text = "";
-            if(taskType=="1") text="발신 업무 요청";
-            else if(taskType=="1-1") text="수신 업무 요청";
-            else if(taskType=="2") text="발신 업무 보고";
-            else if(taskType=="2-1") text="수신 업무 보고";
-            else if(taskType=="3") text="업무 일지";
+           	<%-- <%
+            switch(text) {
+            case "1" : text = "발신 업무 요청";
+            case "1-1" : text = "수신 업무 요청";
+            case "2" : text = "발신 업무 보고";
+            case "2-1" : text = "수신 업무 보고";
+            case "3" : text = "업무 일지";
+            }
             %>
             <h5><%=text %></h5> --%>
             <h4>업무관리</h4>
             <div class="table-header">
                 <div class="row">
                     <div class="col-md-1" style="width: 45px; margin: 0 0 0 15px;">
-                        <form action="<%=request.getContextPath() %>/task/taskList" name="numPerPageFrm" id="numPerPageFrm">
+                        <form action="<%=request.getContextPath() %>/task/taskList" name="numPerPageFrm" id="numPerPageFrm" method="post" >
                         <select class="form-control input-sm" id="numPerPage" name="numPerPage" style="padding: 0">
                             <option value="10" <%=numPerPage==10?"selected":"" %>>10</option>
                             <option value="15" <%=numPerPage==15?"selected":"" %>>15</option>
@@ -135,7 +150,11 @@
                     </div>
                     <div class="col-md-1" style="margin: 0 0 0 10px;"><p style="font-size: 12px; color: rgb(160, 160, 160); margin: 6px 0px;">전체 <%=totalContent %></p></div>
 
-                    <form action="<%=request.getContextPath() %>/task/taskSearch" class="search-form form-inline col-md-7 float-right">
+                    <form action="<%=request.getContextPath() %>/task/taskSearch" class="search-form form-inline col-md-7 float-right" method="post" >
+	                    <input type="hidden" name="cPage" value="<%=cPage %>"/>
+						<input type="hidden" name="numPerPage" value="<%=numPerPage %>"/>
+						<input type="hidden" name="taskType" value="<%=taskType %>"/>
+						<input type="hidden" name="empId" value="<%=empLoggedIn.getEmpId() %>"/>
                         <div class="input-group">
                             <input type="text" class="form-control input-sm reservation" id="reservation1" name="searchFrom"  placeholder="From">
                             <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -196,13 +215,18 @@
                      <td class="text-left"><a href='<%=request.getContextPath()%>/task/taskView?taskNo=<%=t.getTaskNo() %>'>
                      	<%=t.getTaskTitle() %></a>
                      </td>
-                     <td><a href="#" data-toggle="modal" data-target="#myModal"><%=t.getEmpName() %></a></td>
+                     <td><a href="#" data-toggle="modal" data-target="#myModal" onclick="fn_empview(<%=t.getEmpId() %>)"><%=t.getEmpName() %></a></td>
                      <td><%=t.getEnrollDate() %></td>
                      <td><%=t.getDeadline() %></td>
-                     <td><%=t.getTaskStatus() %></td>
-                     <td>
-                     <button class="btn btn-danger btn-xs"><%=t.getTaskCheck()==null?"읽지 않음":"읽음" %></button>
-                     </td>
+                     <td><% if(t.getTaskStatus().equals("반려")) { %>
+                   		<button class="btn btn-danger btn-xs"><%=t.getTaskStatus() %></button>
+                   		<%} else if(t.getTaskStatus().equals("미완료")) { %>
+                   		<button class="btn btn-primary btn-xs"><%=t.getTaskStatus() %></button>
+                   		<%} else {%>
+                   		<button class="btn btn-default btn-xs"><%=t.getTaskStatus() %></button>
+                   		<%} %>
+                     	</td>
+                     <td><button class="btn btn-info btn-xs"><%=t.getTaskCheck()==null?"읽지 않음":"읽음" %></button></td>
                  </tr>
                 	<%} %>
              </tbody>
@@ -224,49 +248,77 @@
     <!-- /.content -->
     
     <!-- Modal -->
- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-     <div class="modal-dialog">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                 <h4 class="modal-title" id="myModalLabel">사원 정보</h4>
-             </div>
-             <div class="modal-body">
-                    <div class="text-center">
-                        <img class="profile-user-img img-fluid img-circle" src="<%=request.getContextPath() %>/dist/img/profile.jpg" alt="User profile picture">
-                    </div>
-                        <h3 class="profile-username text-center">한예슬</h3>
-                        <p class="text-muted text-center">Software Engineer</p>
-            
-                        <table width="200px;">
-                            <tr>
-                                <th scope="row">부서</th>
-                                <td>영업부 / 영업 2팀</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">직책</th>
-                                <td>사원</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">전화번호</th>
-                                <td>01000000006 / </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">메일</th>
-                                <td>atom@naver.com</td>
-                            </tr>
-                        </table>
-            </div>
-            <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary">자세히 보기</button>
-            </div> -->
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
+    <%if(modalEmp!=null) {%>
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">사원 정보</h4>
+				</div>
+				<%-- <div class="modal-body">
+					<div class="text-center">
+						<img class="profile-user-img img-fluid img-circle" src="<%=request.getContextPath() %>/dist/img/profile.jpg" alt="User profile picture">
+					</div>
+	                <h3 class="profile-username text-center"><%=modalEmp.getEmpName() %></h3>
+	                <p class="text-muted text-center"><%=modalEmp.getJobName() %></p>
+	       
+	                   <table width="200px;">
+	                    <tr>
+	                        <th scope="row">부서</th>
+	                        <td><%=modalEmp.getDeptName() %></td>
+	                    </tr>
+	                    <tr>
+	                        <th scope="row">직책</th>
+	                        <td><%=modalEmp.getJobName() %></td>
+	                    </tr>
+	                    <tr>
+	                        <th scope="row">전화번호</th>
+	                        <td><%=modalEmp.getPhone() %></td>
+	                    </tr>
+	                    <tr>
+	                        <th scope="row">메일</th>
+	                        <td><%=modalEmp.getEmail() %></td>
+	                    </tr>
+	                </table>
+				</div> --%>
+				<div class="modal-body">
+					<div class="text-center">
+						<img class="profile-user-img img-fluid img-circle" src="<%=request.getContextPath() %>/dist/img/profile.jpg" alt="User profile picture">
+					</div>
+	                <h3 class="profile-username text-center">한예슬</h3>
+	                <p class="text-muted text-center">Software Engineer</p>
+	       
+	                   <table width="200px;">
+	                    <tr>
+	                        <th scope="row">부서</th>
+	                        <td>영업부 / 영업 2팀</td>
+	                    </tr>
+	                    <tr>
+	                        <th scope="row">직책</th>
+	                        <td>사원</td>
+	                    </tr>
+	                    <tr>
+	                        <th scope="row">전화번호</th>
+	                        <td>01000000006 / </td>
+	                    </tr>
+	                    <tr>
+	                        <th scope="row">메일</th>
+	                        <td>atom@naver.com</td>
+	                    </tr>
+	                </table>
+				</div>
+	            <!-- <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+	                <button type="button" class="btn btn-primary">자세히 보기</button>
+	            </div> -->
+	        </div>
+	        <!-- /.modal-content -->
+	    </div>
+	    <!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	<%} %>
     
 </section>
 

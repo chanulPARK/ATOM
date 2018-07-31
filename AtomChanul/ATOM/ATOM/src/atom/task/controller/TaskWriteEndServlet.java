@@ -40,7 +40,6 @@ public class TaskWriteEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		Employee emp = (Employee)request.getSession().getAttribute("empLoggedIn");
 		
 		// 1. 파일 정상적으로 업로드된지 확인
 		if(!ServletFileUpload.isMultipartContent(request)) {
@@ -75,19 +74,6 @@ public class TaskWriteEndServlet extends HttpServlet {
 		String origin = mr.getOriginalFileName("up_file");
 		String rename = mr.getFilesystemName("up_file");
 		Date deadline = Date.valueOf(mr.getParameter("deadline"));
-		System.out.println(deadline);
-
-		
-		// String을 Date로 변환하는 과정
-//		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
-//
-//		java.util.Date transDate = null;
-//		try {
-//			transDate = transFormat.parse(deadline);
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		
 		
 		Task task = new Task();

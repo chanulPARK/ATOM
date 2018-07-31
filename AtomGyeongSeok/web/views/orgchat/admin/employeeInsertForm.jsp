@@ -43,8 +43,8 @@
 
     <ul class="nav nav-pills nav-justified">
 
-     <li><a href="employeeList.jsp">전체직원정보</a></li>
- 	 <li class="active"><a href="employeeInsertForm.jsp">직원 추가</a></li>
+     <li><a href="<%=request.getContextPath() %>/emp/selectAll">전체직원정보</a></li>
+ 	 <li class="active"><a href="<%=request.getContextPath() %>/employeeInsert">직원 추가</a></li>
      <li><a href="#">직원수정</a></li>
      <li><a href="#">직원삭제</a></li>
 

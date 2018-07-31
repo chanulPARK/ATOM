@@ -29,12 +29,15 @@ public class EmpViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getParameter("userId");
+		String empId = request.getParameter("empId");
 		
-		Employee e = new EmployeeService().selectOne(userId);
+		System.out.println(empId);
 		
-		request.setAttribute("userId", e);
-		request.getRequestDispatcher("/views/emp/empView.jsp").forward(request, response);
+		Employee e = new EmployeeService().selectOne(empId);
+		System.out.println(e);
+		
+		request.setAttribute("emp", e);
+		request.getRequestDispatcher("/views/employee/empView.jsp").forward(request, response);
 	}
 
 	/**

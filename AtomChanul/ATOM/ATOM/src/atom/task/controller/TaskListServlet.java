@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import atom.employee.model.vo.Employee;
 import atom.task.model.service.TaskService;
 import atom.task.model.vo.Task;
+import common.PageBar;
 
 /**
  * Servlet implementation class taskListServlet
@@ -33,11 +34,12 @@ public class TaskListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Employee emp = (Employee)request.getSession().getAttribute("empLoggedIn");
+		String empId = request.getParameter("empId");
 		
-		
+		System.out.println(emp);
+		System.out.println(empId);
 		
 		String taskType = request.getParameter("taskType");
-		System.out.println(taskType);
 		
 		// 페이징 처리
 		int cPage;
@@ -50,25 +52,33 @@ public class TaskListServlet extends HttpServlet {
 			cPage = 1;
 		}
 		try {
-			numPerPage = Integer.parseInt(request.getParameter("numPerPage")) ;
-			System.out.println(numPerPage);
+			numPerPage = Integer.parseInt(request.getParameter("numPerPage"));
 		} catch(NumberFormatException e) {
 			numPerPage = 10;
 		}
 		
 		List<Task> list = null;
 		int totalContent = 0;
-		if(request.getParameter("taskType")==null) {
-			list = new TaskService().selectTaskList(cPage, numPerPage);
-			totalContent = new TaskService().selectTaskCount();
+		if(taskType==null) {
+			list = new TaskService().selectTaskList(empId, cPage, numPerPage);
+			totalContent = new TaskService().selectTaskCount(empId);
 		}
 		else {
-			list = new TaskService().selectTaskList(cPage, numPerPage, taskType);	
-			totalContent = new TaskService().selectTaskCount(taskType);
+			if(taskType=="1" || taskType=="2") {
+				list = new TaskService().selectTaskList(empId, cPage, numPerPage, taskType);	
+				totalContent = new TaskService().selectTaskCount(empId, taskType);
+			}
+			else if(taskType=="1-1" || taskType=="2-1") {
+				list = new TaskService().selectTaskListReceiver(empId, cPage, numPerPage, taskType);	
+				totalContent = new TaskService().selectTaskCountReceiver(empId, taskType);
+			}
+			else {
+				list = new TaskService().selectTaskList(empId, cPage, numPerPage, taskType);	
+				totalContent = new TaskService().selectTaskCount(empId, taskType);
+			}
 		}
 		
 		// 전체 page
-		
 		int totalPage =  (int)Math.ceil((double)totalContent/numPerPage);
 		int barSiza = 3;
 		String pageBar = "";
@@ -85,7 +95,6 @@ public class TaskListServlet extends HttpServlet {
 		else {
 			pageBar += "<a href='"+request.getContextPath()+"/task/taskList?cPage="+(pageNo-1)+"&numPerPage="+numPerPage+"'><span aria-hidden='true'>&laquo;</span></a>";
 		}
-		
 		pageBar += "</li>";
 		
 		// 이동할 숫자
@@ -98,7 +107,6 @@ public class TaskListServlet extends HttpServlet {
 			}
 			pageNo++;
 		}
-		
 		pageBar += "<li>";
 		
 		// 다음
@@ -108,7 +116,6 @@ public class TaskListServlet extends HttpServlet {
 		else {
 			pageBar += "<a href='"+request.getContextPath()+"/task/taskList?cPage="+pageNo+"&numPerPage="+numPerPage+"' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a>";
 		}
-		
 		pageBar += "</li></ul>";
 		
 		request.setAttribute("list", list);

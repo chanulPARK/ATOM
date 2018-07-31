@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp" %>
+<%@ include file="/views/common/attendanceAside.jsp" %>
 
 <link href="<%=request.getContextPath()%>/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="<%=request.getContextPath()%>/dist/js/bootstrap.min.js"></script>
@@ -48,19 +49,6 @@
         });
     });
     </script>
-
-    <aside>
-        <div class='sidebar-nav navbar-default'>
-            <ul class="nav" id="side-menu">
-                <li>
-                    <a href="<%=request.getContextPath() %>/attendance/userDay" style="font-size: 17px">일일근태등록</a>
-                </li>
-                <li>
-                    <a href="<%=request.getContextPath() %>/views/attendance/user_month.jsp" style="font-size: 17px">월별근태현황</a>
-                </li>
-            </ul>
-        </div>
-    </aside>
 
     <section>
         <div class="content">

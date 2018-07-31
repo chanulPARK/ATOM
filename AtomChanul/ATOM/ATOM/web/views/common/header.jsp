@@ -48,8 +48,13 @@
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+			        <span class="icon-bar"></span>	<!-- 모바일웹일때 3줄 보이게 하는것 -->
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>                        
+   				</button>
 					<!-- <a class="navbar-brand" href="#">Brand</a> -->
-					<a class="navbar-brand" href="<%=request.getContextPath()%>/views/main.jsp">
+					<a class="navbar-brand" href="<%=request.getContextPath()%>">
 						<img src="<%=request.getContextPath()%>/dist/img/login.png">
 					</a>
 				</div>
@@ -60,10 +65,11 @@
 						<li><a href="<%=request.getContextPath()%>/login.jsp"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
 						<li><a href="<%=request.getContextPath()%>/electronic/electronicWaitingBox">전자결재</a></li>
 	                    <li><a href="<%=request.getContextPath()%>/schedule/scheduleList">일정</a></li>
-						<li><a href="<%=request.getContextPath()%>/task/taskList">업무관리</a></li>
+						<li><a href="<%=request.getContextPath()%>/task/taskList?empId=<%=empLoggedIn.getEmpId()%>">업무관리</a></li>
 						<li><a href="<%=request.getContextPath()%>/board/boardList">게시판</a></li>
 						<li id= 'resourcehome'><a href='<%=request.getContextPath() %>/user/resourseHome'>자원관리</a></li>
-						<li><a href="#">조직도</a></li>
+						<li><a href="<%=request.getContextPath()%>/emp/selectAll">조직도</a></li>
+	                    <!-- 근태관리 -->
 						<%if(empLoggedIn.getAdminCode().trim().equals("1")){ %>
 	                    <li><a href="<%=request.getContextPath()%>/views/attendance/att_day.jsp">근태관리</a></li>
 	                    <%} else { %>
@@ -75,7 +81,7 @@
 							data-toggle="dropdown" role="button" aria-expanded="false"><span
 								class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href='<%=request.getContextPath()%>/empView?userId=<%=empLoggedIn.getEmpName() %>'>마이페이지</a></li>
+								<li><a href='<%=request.getContextPath()%>/empView?empId=<%=empLoggedIn.getEmpId() %>'>마이페이지</a></li>
 								<li><a href="#">설정</a></li>
 								<li class="divider"></li>
 								<li><a href="<%=request.getContextPath()%>/logout">로그아웃</a></li>

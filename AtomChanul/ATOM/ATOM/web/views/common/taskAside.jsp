@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ include file="/views/common/header.jsp" %>
 <style>
 	aside div.leftmenu_top {
         background: #353b47;
@@ -33,52 +33,6 @@
         text-decoration: none;
         color: #fff;
     }
-	.leftmenu_area .panel .panel-heading {
-	border-bottom: 1px solid rgb(221, 221, 221);
-	}
-	.leftmenu_area .panel .panel-heading a {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-heading a:hover {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-heading a:active {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-heading a:visited {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-heading a:link {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-collapse .panel-footer a {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-collapse .panel-footer a:hover {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-collapse .panel-footer a:active {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-collapse .panel-footer a:visited {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-collapse .panel-footer a:link {
-	text-decoration: none;
-	color: #333;
-	}
-	.leftmenu_area .panel .panel-collapse .list:hover {
-	background: rgb(221, 221, 221);
-	}
 </style>
 <script>
     $(function () {
@@ -109,25 +63,25 @@
 	    <div class="list-group">
 	        <a class="list-group-item" data-toggle="collapse" href="#collapse1" aria-expanded="true">업무 요청</a>
             <div id="collapse1" class="panel-collapse collapse in list-group">
-                <a href="<%=request.getContextPath()%>/task/taskList?taskType=1" class="list-group-item">- 발신 업무 요청
+                <a href="<%=request.getContextPath()%>/task/taskList?taskType=1&empId=<%=empLoggedIn.getEmpId()%>" class="list-group-item">- 발신 업무 요청
                     <span class="badge">2</span>
                 </a>
-                <a href="<%=request.getContextPath()%>/task/taskList?taskType=1-1" class="list-group-item">- 수신 업무 요청
+                <a href="<%=request.getContextPath()%>/task/taskList?taskType=1-1&empId=<%=empLoggedIn.getEmpId()%>" class="list-group-item">- 수신 업무 요청
                     <span class="badge">1</span>
                 </a>
             </div>
             <!-- ./list-item_1 -->
             <a class="list-group-item" data-toggle="collapse" href="#collapse2" aria-expanded="true">업무 보고</a>
             <div id="collapse2" class="panel-collapse collapse in list-group">
-                <a href="<%=request.getContextPath()%>/task/taskList?taskType=2" class="list-group-item">- 발신 업무 보고
+                <a href="<%=request.getContextPath()%>/task/taskList?taskType=2&empId=<%=empLoggedIn.getEmpId()%>" class="list-group-item">- 발신 업무 보고
                     <span class="badge">2</span>
                 </a>
-                <a href="<%=request.getContextPath()%>/task/taskList?taskType=2-1" class="list-group-item">- 수신 업무 보고
+                <a href="<%=request.getContextPath()%>/task/taskList?taskType=2-1&empId=<%=empLoggedIn.getEmpId()%>" class="list-group-item">- 수신 업무 보고
                     <span class="badge">1</span>
                 </a>
             </div>
             <!-- ./list-item_2 -->
-            <a class="list-group-item" href="<%=request.getContextPath()%>/task/taskList?taskType=3" aria-expanded="true">업무 일지</a>
+            <a class="list-group-item" href="<%=request.getContextPath()%>/task/taskList?taskType=3&empId=<%=empLoggedIn.getEmpId()%>" aria-expanded="true">업무 일지</a>
             <!-- ./list-item_3 -->
             <a class="list-group-item" data-toggle="collapse" href="#collapse3" aria-expanded="true">업무 보관함</a>
             <div id="collapse3" class="panel-collapse collapse in">

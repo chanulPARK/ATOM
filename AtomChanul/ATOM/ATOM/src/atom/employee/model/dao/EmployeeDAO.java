@@ -8,6 +8,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+<<<<<<< HEAD
+=======
+import java.util.List;
+>>>>>>> 1b6407bff8f839b7f16b075fe41f9ac955a583d5
 import java.util.Properties;
 
 import atom.employee.model.vo.Employee;
@@ -24,14 +28,14 @@ public class EmployeeDAO {
 		}
 	}
 
-	public Employee selectOne(Connection conn, String id) {
+	public Employee selectOne(Connection conn, String empId) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		Employee e = null;
 		String sql = prop.getProperty("selectOne");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
+			pstmt.setString(1, empId);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				e = new Employee();
@@ -47,6 +51,10 @@ public class EmployeeDAO {
 				e.setJobCode(rs.getString("job_code"));
 				e.setJobName(rs.getString("job_name"));
 				e.setAdminCode(rs.getString("admin_code"));
+<<<<<<< HEAD
+=======
+//				e.setAdminName(rs.getString("admin_name"));
+>>>>>>> 1b6407bff8f839b7f16b075fe41f9ac955a583d5
 				e.setManagerId(rs.getString("manager_id"));
 				e.setHireDate(rs.getDate("hire_date"));
 				e.setEntDate(rs.getDate("ent_date"));
@@ -62,6 +70,7 @@ public class EmployeeDAO {
 		return e;
 	}
 	
+<<<<<<< HEAD
 	public ArrayList<Employee> selectEmployeeAll(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -124,5 +133,78 @@ public class EmployeeDAO {
 		return list;
 	}
 	
+=======
+	public List<Employee> selectAll(Connection conn) {
+	   	  PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      List<Employee> employeeList= new ArrayList<Employee>();
+	      String sql = prop.getProperty("selectAll");
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         rs = pstmt.executeQuery();
+	         while(rs.next()) {
+	            Employee e = new Employee();
+	            e.setEmpId(rs.getString("emp_id"));
+	            e.setEmpPw(rs.getString("emp_pw"));
+	            e.setEmpName(rs.getString("emp_name"));
+	            e.setEmpRrn(rs.getString("emp_rrn"));
+	            e.setEmail(rs.getString("email"));
+	            e.setPhone(rs.getString("phone"));
+	            e.setAddr(rs.getString("addr"));
+	            e.setDeptCode(rs.getString("dept_code"));
+	            e.setJobCode(rs.getString("job_code"));
+	            e.setManagerId(rs.getString("manager_id"));
+	            e.setAdminCode(rs.getString("admin_code"));
+	            e.setHireDate(rs.getDate("hire_date"));
+	            e.setEntDate(rs.getDate("ent_date"));
+	            e.setEntYn(rs.getString("ent_yn"));
+	            e.setEmpPr(rs.getString("emp_pr"));
+	            e.setEmpImg(rs.getString("emp_img"));
+	            employeeList.add(e);
+	         }
+	      } catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	      close(rs);
+	      close(pstmt);
+	      
+	      System.out.println(employeeList);
+	      return employeeList;
+		   
+	   }
+
+	public int insertEmployee(Connection conn, Employee e) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("insertEmployee");
+		//System.out.println(sql);
+		//System.out.println(e);
+		
+		try 
+		{
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, e.getEmpId());
+			pstmt.setString(2, e.getEmpPw());
+			pstmt.setString(3, e.getEmpName());
+			pstmt.setString(4, e.getEmpRrn());
+			pstmt.setString(5, e.getEmail());
+			pstmt.setString(6, e.getPhone());
+			pstmt.setString(7, e.getAddr());
+			pstmt.setString(8, e.getDeptCode());
+			pstmt.setString(9, e.getJobCode());
+			pstmt.setString(10,e.getManagerId());
+			pstmt.setString(11,e.getEmpPr());
+			result=pstmt.executeUpdate();
+			
+		} 
+		catch (Exception ee) 
+		{
+			ee.printStackTrace();
+		}
+		
+		close(pstmt);
+		return result;
+	}
+>>>>>>> 1b6407bff8f839b7f16b075fe41f9ac955a583d5
 
 }

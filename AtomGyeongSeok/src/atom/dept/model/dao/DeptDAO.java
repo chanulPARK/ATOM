@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import atom.dept.model.vo.Dept;
@@ -21,6 +23,7 @@ public class DeptDAO {
 	         prop.load(new FileReader(file));
 	      } catch(IOException e) {
 	         e.printStackTrace();
+	         System.out.println("sql문 점검요망");
 	      }
 	   }
 
@@ -47,9 +50,39 @@ public class DeptDAO {
 			
 			return result;
 		}
+
+
+	public List<Dept> selectAll(Connection conn) {
+			PreparedStatement pstmt= null;
+			ResultSet rs = null;
+			List<Dept> deptList= new ArrayList<Dept>();
+			String sql = prop.getProperty("selectAll");
+			
+			try {
+				pstmt =conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+				Dept d = new Dept();
+				d.setDeptCode(rs.getInt("dept_Code"));	//rs 붙여야함
+				d.setDeptName(rs.getString("dept_Name"));
+				deptList.add(d);
+				}
+			}
+			catch(Exception ee) 
+			{
+				ee.printStackTrace();
+				System.out.println("DeptDAO에서 에러발생");
+			}
+		
+			//역순으로 닫아줌
+			close(rs);
+			close(pstmt);
+			System.out.println(deptList);	
+		return deptList; //리스트를 가지고 로출한곳으로 돌아감
+	}
 		
 		
-		   
+		  
 		   
 		   
 	   }

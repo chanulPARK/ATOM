@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/views/common/header.jsp" %>
+<%-- <%@ include file="/views/common/header.jsp" %> --%>
 <%@ include file="/views/common/taskAside.jsp" %>
-<%
-	Employee emp = (Employee)request.getSession().getAttribute("empLoggedIn");
-%>
-
 
 <script>
 	// 제목 작성여부
@@ -42,17 +38,18 @@
 </script>
 
 <style>
-		.tableTL {
+		.tableTR {
+			table-layout: fixed;
             margin: 0;
         }
-        .tableTL thead tr th {
+        .tableTR thead tr th {
             font-weight: bold;
             font-size: 13px;
-            text-align: center;
+            text-align: left;
         }
-        .tableTL tbody tr td {
+        .tableTR tbody tr td {
             font-size: 13px;
-            text-align: center;
+            text-align: left;
         }
         .float-right {
         	float: right;
@@ -64,10 +61,10 @@
         <div class="col-md-12">
             <h4>업무 등록</h4>
         	<form action="<%=request.getContextPath()%>/task/taskWriteEnd" method="post" enctype="multipart/form-data">
-        		<input type="hidden" name="userId" value="<%=emp.getEmpId() %>">
-        		<input type="hidden" name="userName" value="<%=emp.getEmpName() %>">
-        		<input type="hidden" name="deptCode" value="<%=emp.getDeptCode() %>">
-        		<input type="hidden" name="jopCode" value="<%=emp.getJobCode() %>">
+        		<input type="hidden" name="userId" value="<%=empLoggedIn.getEmpId() %>">
+        		<input type="hidden" name="userName" value="<%=empLoggedIn.getEmpName() %>">
+        		<input type="hidden" name="deptCode" value="<%=empLoggedIn.getDeptCode() %>">
+        		<input type="hidden" name="jopCode" value="<%=empLoggedIn.getJobCode() %>">
         		
 	            <table class="tableTR table table-condensed">
 	                <tbody>
@@ -141,13 +138,12 @@
 		            <textarea name="area2" style="width: 100%; height: 250px"></textarea>
 	            </div>
 	            
-            <div class="btn-wrap float-right">
-                <button type="submit" class="btn btn-sm btn-primary">저장</button>
-                <button type="button" class="btn btn-sm btn-default">임시저장</button>
-                <button type="reset" class="btn btn-sm btn-default">취소</button>
-            </div>
-            </form>
-        </div>
+				<div class="btn-wrap float-right">
+		            <button type="submit" class="btn btn-sm btn-primary">저장</button>
+		            <button type="reset" class="btn btn-sm btn-default">취소</button>
+				</div>
+			</form>
+       	</div>
     </div>
 </section>
 

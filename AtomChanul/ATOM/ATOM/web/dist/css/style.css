@@ -20,7 +20,6 @@ section{
     padding: 20px;
     background: rgb(255, 255, 255);
     border-left: 1px solid rgb(222, 226, 230);
-    width: 100%-250px;
     margin-left: 250px;
     min-height: 675px;
     display: block;
@@ -64,6 +63,11 @@ footer > p{
 .table-header div.row div{
     padding: 1px;
 }
+.tableCM{
+	table-layout: fixed;
+	display: table;
+    margin: 0;
+}
 .pagination_wrap{
     text-align: center;
     border-top: 1px solid rgb(192, 192, 192);
@@ -90,6 +94,7 @@ footer > p{
 }
 .btn-wrap {
     margin: 10px 0;
+    text-align: right;
 }
 .float-right {
 	float: right;
