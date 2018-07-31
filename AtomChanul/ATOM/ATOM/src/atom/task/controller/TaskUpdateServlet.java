@@ -9,22 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 import atom.task.model.service.TaskService;
 import atom.task.model.vo.Task;
 import atom.task.model.vo.TaskProcess;
 
 /**
- * Servlet implementation class TaskViewServlet
+ * Servlet implementation class TaskUpdateServlet
  */
-@WebServlet("/task/taskView")
-public class TaskViewServlet extends HttpServlet {
+@WebServlet("/task/taskUpdate")
+public class TaskUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TaskViewServlet() {
+    public TaskUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,21 +36,8 @@ public class TaskViewServlet extends HttpServlet {
 		
 		Task task = new TaskService().selectTask(taskNo);
 		
-		String view="";
-		if(task!=null) {
-			request.setAttribute("task", task);
-			List<TaskProcess> list = new TaskService().processList(taskNo);
-			System.out.println(list);
-			request.setAttribute("list", list);
-			view = "/views/task/taskView.jsp";
-		}
-		else {
-			request.setAttribute("msg", "조회한 게시물이 없습니다.");
-			request.setAttribute("loc", "/task/taskList");
-			view="/views/common/msg.jsp";
-		}
 		request.setAttribute("task", task);
-		request.getRequestDispatcher(view).forward(request, response);
+		request.getRequestDispatcher("/views/task/taskUpdate.jsp").forward(request, response);
 	}
 
 	/**

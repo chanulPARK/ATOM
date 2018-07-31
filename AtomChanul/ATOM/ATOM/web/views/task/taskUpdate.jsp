@@ -2,7 +2,21 @@
     pageEncoding="UTF-8"%>
 <%-- <%@ include file="/views/common/header.jsp" %> --%>
 <%@ include file="/views/common/taskAside.jsp" %>
-
+<%@ page import='java.util.*, atom.task.model.vo.Task' %>
+<%
+	Task t = (Task)request.getAttribute("task");
+%>
+<style>
+		.tableTR {
+            margin: 0;
+        }
+        .inform-wrap h4 {
+        	margin: 10px
+        }
+        .inform-wrap h4 span {
+        	margin-right: 20px
+        }
+</style>
 <script>
 	// 제목 작성여부
 	$(function(){
@@ -59,7 +73,7 @@
 <section>
     <div class="content">
         <div class="col-md-12">
-            <h4>업무 등록</h4>
+            <h4>업무 수정</h4>
         	<form action="<%=request.getContextPath()%>/task/taskWriteEnd" method="post" enctype="multipart/form-data">
         		<input type="hidden" name="userId" value="<%=empLoggedIn.getEmpId() %>">
         		<input type="hidden" name="userName" value="<%=empLoggedIn.getEmpName() %>">
@@ -73,7 +87,7 @@
 	                            <span style="color: red">* </span>제목</th>
 	                        <td>
 	                            <div>
-	                                <input type="text" class="form-control input-sm" name="title" id="title1" placeholder="제목을 입력하세요." required>
+	                                <input type="text" class="form-control input-sm" name="title" id="title1" value="<%=t.getTaskTitle() %>" placeholder="제목을 입력하세요." required>
 	                            </div>
 	                        </td>
 	                    </tr>
@@ -83,11 +97,11 @@
 	                        <td>
 	                            <div class="label-group">
 	                                <label class="radio-inline">
-	                                    <input type="radio" class="fnone valid" id="type1" name="taskType" title="업무 요청" value="1"> 업무 요청</label>
+	                                    <input type="radio" class="fnone valid" id="type1" name="taskType" title="업무 요청" value="1" checked='<%=t.getTaskType()=="1"?"checked":"" %>'> 업무 요청</label>
 	                                <label class="radio-inline">
-	                                    <input type="radio" class="fnone valid" id="type2" name="taskType" title="업무 보고" value="2" checked="checked"> 업무 보고</label>
+	                                    <input type="radio" class="fnone valid" id="type2" name="taskType" title="업무 보고" value="2" checked='<%=t.getTaskType()=="2"?"checked":"" %>'> 업무 보고</label>
 	                                <label class="radio-inline">
-	                                    <input type="radio" class="fnone valid" id="type3" name="taskType" title="업무 일지" value="3"> 업무 일지</label>
+	                                    <input type="radio" class="fnone valid" id="type3" name="taskType" title="업무 일지" value="3" checked='<%=t.getTaskType()=="3"?"checked":"" %>'> 업무 일지</label>
 	                            </div>
 	                        </td>
 	                    </tr>
@@ -97,11 +111,17 @@
 	                        </th>
 	                        <td>
 	                            <div class="form-inline">
+	                            <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon2">
+                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        </span>
+                                        <input type="text" class="form-control input-sm" id="reservation" name="enrollDate"  value="<%=t.getEnrollDate() %>">
+                                    </div> ~
                                     <div class="input-group">
                                         <span class="input-group-addon" id="basic-addon2">
                                             <i class="fa fa-calendar" aria-hidden="true"></i>
                                         </span>
-                                        <input type="text" class="form-control input-sm" id="reservation" name="deadline" >
+                                        <input type="text" class="form-control input-sm" id="reservation2" name="deadline" value="<%=t.getDeadline() %>">
                                     </div>
                                     <span class="form-group" style="margin: 0 0 0 4px">
                                        	<input type="checkbox" id="isTermless" title="기한없음" name="isTermless" value="0" style="margin: 0 4px 0 0">
@@ -114,7 +134,7 @@
 	                        <th id="workerTH1">담당자</th>
 	                        <td>
 	                            <div>
-	                                <input type="text" class="form-control input-sm" placeholder="사용자" aria-required="true" name="receiver">
+	                                <input type="text" class="form-control input-sm" placeholder="사용자" aria-required="true" name="receiver"  value="<%=t.getReceiver() %>">
 	                            </div>
 	                        </td>
 	                    </tr>
@@ -130,12 +150,12 @@
 	                    </tr>
 	                    <tr>
 							<th>첨부파일</th>
-							<td><input type="file" name="up_file"></td>
+							<td><input type="file" name="up_file"><%=t.getOriginalFile()==null?"첨부파일 없음":"" %></td>
 						</tr>
 	                </tbody>
 	            </table>
 	            <div>
-		            <textarea name="area2" style="width: 100%; height: 250px"></textarea>
+		            <textarea name="area2" style="width: 100%; height: 250px"><%=t.getTaskContent() %></textarea>
 	            </div>
 	            
 				<div class="btn-wrap float-right">

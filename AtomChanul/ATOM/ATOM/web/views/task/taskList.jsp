@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/views/common/header.jsp" %>
+<%-- <%@ include file="/views/common/header.jsp" %> --%>
 <%@ include file="/views/common/taskAside.jsp" %>
 <%@ page import='java.util.*, atom.task.model.vo.Task' %>
 <%
@@ -105,19 +105,24 @@
     	});
     }); 
     /* $("#sorttable").tablesorter( {sortList: [[1,0]]} ); */
+    
+    /* $(document).ready(function(){
+        $(".btn-status").addClass("btn-danger");
+	}); */
 	
 </script>
 
 <section>
     <div class="content task-content">
         <div class="col-md-12" style="min-width: 900px;">
-           	<%--  <%
-            String text = "";
-            if(taskType=="1") text="발신 업무 요청";
-            else if(taskType=="1-1") text="수신 업무 요청";
-            else if(taskType=="2") text="발신 업무 보고";
-            else if(taskType=="2-1") text="수신 업무 보고";
-            else if(taskType=="3") text="업무 일지";
+           	<%-- <%
+            switch(text) {
+            case "1" : text = "발신 업무 요청";
+            case "1-1" : text = "수신 업무 요청";
+            case "2" : text = "발신 업무 보고";
+            case "2-1" : text = "수신 업무 보고";
+            case "3" : text = "업무 일지";
+            }
             %>
             <h5><%=text %></h5> --%>
             <h4>업무관리</h4>
@@ -139,6 +144,8 @@
                     <form action="<%=request.getContextPath() %>/task/taskSearch" class="search-form form-inline col-md-7 float-right" method="post" >
 	                    <input type="hidden" name="cPage" value="<%=cPage %>"/>
 						<input type="hidden" name="numPerPage" value="<%=numPerPage %>"/>
+						<input type="hidden" name="taskType" value="<%=taskType %>"/>
+						<input type="hidden" name="empId" value="<%=empLoggedIn.getEmpId() %>"/>
                         <div class="input-group">
                             <input type="text" class="form-control input-sm reservation" id="reservation1" name="searchFrom"  placeholder="From">
                             <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -202,10 +209,15 @@
                      <td><a href="#" data-toggle="modal" data-target="#myModal"><%=t.getEmpName() %></a></td>
                      <td><%=t.getEnrollDate() %></td>
                      <td><%=t.getDeadline() %></td>
-                     <td><%=t.getTaskStatus() %></td>
-                     <td>
-                     <button class="btn btn-danger btn-xs"><%=t.getTaskCheck()==null?"읽지 않음":"읽음" %></button>
-                     </td>
+                     <td><% if(t.getTaskStatus().equals("반려")) { %>
+                   		<button class="btn btn-danger btn-xs"><%=t.getTaskStatus() %></button>
+                   		<%} else if(t.getTaskStatus().equals("미완료")) { %>
+                   		<button class="btn btn-primary btn-xs"><%=t.getTaskStatus() %></button>
+                   		<%} else {%>
+                   		<button class="btn btn-default btn-xs"><%=t.getTaskStatus() %></button>
+                   		<%} %>
+                     	</td>
+                     <td><button class="btn btn-info btn-xs"><%=t.getTaskCheck()==null?"읽지 않음":"읽음" %></button></td>
                  </tr>
                 	<%} %>
              </tbody>

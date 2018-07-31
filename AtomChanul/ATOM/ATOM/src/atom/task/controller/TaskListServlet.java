@@ -34,6 +34,10 @@ public class TaskListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Employee emp = (Employee)request.getSession().getAttribute("empLoggedIn");
+		String empId = request.getParameter("empId");
+		
+		System.out.println(emp);
+		System.out.println(empId);
 		
 		String taskType = request.getParameter("taskType");
 		
@@ -55,13 +59,23 @@ public class TaskListServlet extends HttpServlet {
 		
 		List<Task> list = null;
 		int totalContent = 0;
-		if(request.getParameter("taskType")==null) {
-			list = new TaskService().selectTaskList(cPage, numPerPage);
-			totalContent = new TaskService().selectTaskCount();
+		if(taskType==null) {
+			list = new TaskService().selectTaskList(empId, cPage, numPerPage);
+			totalContent = new TaskService().selectTaskCount(empId);
 		}
 		else {
-			list = new TaskService().selectTaskList(cPage, numPerPage, taskType);	
-			totalContent = new TaskService().selectTaskCount(taskType);
+			if(taskType=="1" || taskType=="2") {
+				list = new TaskService().selectTaskList(empId, cPage, numPerPage, taskType);	
+				totalContent = new TaskService().selectTaskCount(empId, taskType);
+			}
+			else if(taskType=="1-1" || taskType=="2-1") {
+				list = new TaskService().selectTaskListReceiver(empId, cPage, numPerPage, taskType);	
+				totalContent = new TaskService().selectTaskCountReceiver(empId, taskType);
+			}
+			else {
+				list = new TaskService().selectTaskList(empId, cPage, numPerPage, taskType);	
+				totalContent = new TaskService().selectTaskCount(empId, taskType);
+			}
 		}
 		
 		// 전체 page
@@ -81,7 +95,6 @@ public class TaskListServlet extends HttpServlet {
 		else {
 			pageBar += "<a href='"+request.getContextPath()+"/task/taskList?cPage="+(pageNo-1)+"&numPerPage="+numPerPage+"'><span aria-hidden='true'>&laquo;</span></a>";
 		}
-		
 		pageBar += "</li>";
 		
 		// 이동할 숫자
@@ -94,7 +107,6 @@ public class TaskListServlet extends HttpServlet {
 			}
 			pageNo++;
 		}
-		
 		pageBar += "<li>";
 		
 		// 다음
@@ -104,10 +116,7 @@ public class TaskListServlet extends HttpServlet {
 		else {
 			pageBar += "<a href='"+request.getContextPath()+"/task/taskList?cPage="+pageNo+"&numPerPage="+numPerPage+"' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a>";
 		}
-		
 		pageBar += "</li></ul>";
-		
-//		String pageBar = PageBar.getPageBar(request, cPage, numPerPage);
 		
 		request.setAttribute("list", list);
 		request.setAttribute("pageBar", pageBar);

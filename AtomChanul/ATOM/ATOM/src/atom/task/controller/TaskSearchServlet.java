@@ -39,42 +39,123 @@ public class TaskSearchServlet extends HttpServlet {
 		String searchOption = request.getParameter("searchOption");
 		String searchKeyword = request.getParameter("searchKeyword");
 		
+		String empId = request.getParameter("empId");
+		String taskType = request.getParameter("taskType");
+		
+		int cPage = Integer.parseInt(request.getParameter("cPage"));
+		int numPerPage = Integer.parseInt(request.getParameter("numPerPage"));
+		
 		System.out.println("ser"+searchFrom);
 		System.out.println("ser"+searchTo);
 		System.out.println("ser"+searchOption);
 		System.out.println("ser"+searchKeyword);
 		List<Task> list = null;
+		int totalContent = 0;
 		if(searchKeyword=="") {
 			System.out.println("공백");
-			list = new TaskService().searchTask(searchFrom, searchTo);
+			list = new TaskService().searchTask(searchFrom, searchTo, empId, taskType);
+			if(taskType==null) {
+				totalContent = new TaskService().selectTaskCount(empId);
+			}
+			else {
+				if(taskType=="1" || taskType=="2") {
+					totalContent = new TaskService().selectTaskCount(empId, taskType);
+				}
+				else if(taskType=="1-1" || taskType=="2-1") {
+					totalContent = new TaskService().selectTaskCountReceiver(empId, taskType);
+				}
+				else {
+					totalContent = new TaskService().selectTaskCount(empId, taskType);
+				}
+			}
 		}
 		else {
 			if(searchOption=="searchUser") {
-				list = new TaskService().searchTaskUser(searchFrom, searchTo, searchKeyword);
+				list = new TaskService().searchTaskUser(searchFrom, searchTo, searchKeyword, empId, taskType);
+				if(taskType==null) {
+					totalContent = new TaskService().selectTaskCount(empId);
+				}
+				else {
+					if(taskType=="1" || taskType=="2") {
+						totalContent = new TaskService().selectTaskCount(empId, taskType);
+					}
+					else if(taskType=="1-1" || taskType=="2-1") {
+						totalContent = new TaskService().selectTaskCountReceiver(empId, taskType);
+					}
+					else {
+						totalContent = new TaskService().selectTaskCount(empId, taskType);
+					}
+				}
 			}
 			else if(searchOption=="searchTitle") {
-				list = new TaskService().searchTaskTitle(searchFrom, searchTo, searchKeyword);
+				list = new TaskService().searchTaskTitle(searchFrom, searchTo, searchKeyword, empId, taskType);
+				if(taskType==null) {
+					totalContent = new TaskService().selectTaskCount(empId);
+				}
+				else {
+					if(taskType=="1" || taskType=="2") {
+						totalContent = new TaskService().selectTaskCount(empId, taskType);
+					}
+					else if(taskType=="1-1" || taskType=="2-1") {
+						totalContent = new TaskService().selectTaskCountReceiver(empId, taskType);
+					}
+					else {
+						totalContent = new TaskService().selectTaskCount(empId, taskType);
+					}
+				}
 			}
 		}
 		
-//		switch(searchOption) {
-//		case "searchUser" : temp = new TaskService().selectMemberById(searchKeyword); break;
-//		case "searchTitle" : temp = new TaskService().selectMemberByName(searchKeyword); break;
-//		}
 		
 		
-		int cPage = Integer.parseInt(request.getParameter("cPage"));
-		int numPerPage = Integer.parseInt(request.getParameter("numPerPage"));
+		// 전체 page
+		int totalPage =  (int)Math.ceil((double)totalContent/numPerPage);
+		int barSiza = 3;
+		String pageBar = "";
+		int pageNo = ((cPage-1)/barSiza)*barSiza+1;
+		int pageEnd = pageNo+barSiza-1;
 		
-//		String pageBar = PageBar.getPageBar(request, cPage, numPerPage);
+		// page bar
+		pageBar += "<ul class='pagination pagination-sm'><li>";
 		
-		int totalContent = 10;
+		// 이전
+		if(pageNo==1) {
+			pageBar += "<span aria-hidden='true'>&laquo;</span>";
+		}
+		else {
+			pageBar += "<a href='"+request.getContextPath()+"/task/taskList?cPage="+(pageNo-1)+"&numPerPage="+numPerPage+"'><span aria-hidden='true'>&laquo;</span></a>";
+		}
+		pageBar += "</li>";
 		
-		request.setAttribute("cPage", cPage);
-		request.setAttribute("numPerPage", numPerPage);
-		request.setAttribute("totalContent", totalContent);
+		// 이동할 숫자
+		while(!(pageNo>pageEnd||pageNo>totalPage)) {
+			if(cPage==pageNo) {
+				pageBar += "<li class='active'><a href='#'>"+pageNo+"</a></li>";
+			}
+			else {
+				pageBar += "<li><a href='"+request.getContextPath()+"/task/taskList?cPage="+pageNo+"&numPerPage="+numPerPage+"'>"+pageNo+"</a></li>";
+			}
+			pageNo++;
+		}
+		pageBar += "<li>";
 		
+		// 다음
+		if(pageNo>totalPage) {
+			pageBar += "<span aria-hidden='true'>&raquo</span>";
+		}
+		else {
+			pageBar += "<a href='"+request.getContextPath()+"/task/taskList?cPage="+pageNo+"&numPerPage="+numPerPage+"' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a>";
+		}
+		pageBar += "</li></ul>";
+		
+		
+		request.setAttribute("empId", empId);
 		request.setAttribute("list", list);
+		request.setAttribute("pageBar", pageBar);
+		request.setAttribute("cPage", cPage);
+		request.setAttribute("totalContent", totalContent);
+		request.setAttribute("numPerPage", numPerPage);
+		request.setAttribute("taskType", taskType);
 		request.getRequestDispatcher("/views/task/taskList.jsp").forward(request, response);
 	}
 
