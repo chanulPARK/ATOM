@@ -22,8 +22,7 @@ departmentInsert.jsp<%@ page language="java" contentType="text/html; charset=UTF
 
      <li ><a href="EmployeeList.jsp">직급목록</a></li>
      <li class="active" ><a href="DepartmentList.jsp">직급추가</a></li>
-     <li><a href="">직급수정</a></li>
-     <li><a href="">직원삭제</a></li>
+     
 
     
 

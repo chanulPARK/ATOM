@@ -20,7 +20,9 @@ public class DeptDAO {
 	      prop=new Properties();
 	      try {
 	         String file=DeptDAO.class.getResource("/sql/dept/dept-sql.properties").getPath();
+	        
 	         prop.load(new FileReader(file));
+	         
 	      } catch(IOException e) {
 	         e.printStackTrace();
 	      }
@@ -55,7 +57,6 @@ public class DeptDAO {
 			ResultSet rs = null;
 			List<Dept> deptList= new ArrayList<Dept>();
 			String sql = prop.getProperty("deptSelectAll");
-			
 			try {
 				pstmt =conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
@@ -65,6 +66,7 @@ public class DeptDAO {
 				d.setDeptName(rs.getString("dept_Name"));
 				deptList.add(d);
 				}
+				System.out.println("으아아아아아아아아"+deptList);	
 			}
 			catch(Exception ee) 
 			{
@@ -75,7 +77,6 @@ public class DeptDAO {
 			//역순으로 닫아줌
 			close(rs);
 			close(pstmt);
-			System.out.println(deptList);	
 		return deptList; //리스트를 가지고 로출한곳으로 돌아감
 	}
 		

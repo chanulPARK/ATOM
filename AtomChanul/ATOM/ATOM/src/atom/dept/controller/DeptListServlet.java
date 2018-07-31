@@ -34,7 +34,6 @@ public class DeptListServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		List<Dept>list= new DeptService().deptList();	//부서목록
 		request.setAttribute("Dept", list);  //DEPT VO, dept 서비스
-		
 		request.getRequestDispatcher("/views/orgchat/admin/departmentList.jsp").forward(request, response);	//화면 쏴주는곳
 		
 	}

@@ -66,8 +66,7 @@ $(function() {
 
      <li class="active"><a href="<%=request.getContextPath() %>/dept/selectAll">전체부서목록</a></li>
      <li><a href="departmentInsert.jsp">부서추가</a></li>
-     <li><a href="#">부서수정</a></li>
-     <li><a href="#">부서삭제</a></li>
+     
 
 
     

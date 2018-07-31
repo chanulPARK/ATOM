@@ -36,8 +36,7 @@
 
      <li class="active"><a href="<%=request.getContextPath() %>/deptlist">부서목록</a></li>
      <li><a href="<%=request.getContextPath() %>/views/orgchat/admin/departmentInsert.jsp">부서추가</a></li>
-     <li><a href="#">부서수정</a></li>
-     <li><a href="#">부서삭제</a></li>
+     
 
     
 
@@ -73,7 +72,9 @@
        <th>부서 번호</th>
 
        <th>부서명</th>
-		
+     
+       <th>부서수정</th>
+      
        <th>부서삭제</th>
 
       </tr>
@@ -89,7 +90,19 @@
 
        <td><%=d.getDeptName() %></td>
 
-       <td><button id="btnDelete" type="button" class="btn btn-default btn-sm">Delete</button></td>
+       <td>
+       <button id="btnDelete" type="button" class="btn btn-default btn-sm">수정</button>
+       
+       
+       </td>
+
+		<td>
+       
+       <button id="btnDelete" type="button" class="btn btn-default btn-sm">삭제</button>
+       
+       </td>
+		
+
 
       </tr>
 <%}%>

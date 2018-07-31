@@ -39,8 +39,7 @@
      
      <li id='emplist' class="active"><a href="<%=request.getContextPath() %>/emp/selectAll">전체직원정보</a></li>
  	 <li><a href="<%=request.getContextPath() %>/views/orgchat/admin/employeeInsertForm.jsp">직원 추가</a></li>
-     <li><a href="#">직원수정</a></li>
-     <li><a href="#">직원삭제</a></li>
+     
     
     </ul>
 
@@ -66,25 +65,26 @@
 
       <select class="form-control" id="searchKey" name="searchKey">
 
-       <option value="0">사원번호</option>
+       <option value="empId">사원번호</option>
 
-       <option value="1">이름</option>
+       <option value="name">이름</option>
 
 
-       <option value="2">부서</option>
+       <option value="dept">부서</option>
 
-       <option value="3">직위</option>
+       <option value="job">직위</option>
 
-      </select> <label for="name"></label> <input type="text"
-
+      </select> <label for="name"></label> 
+      
+      <input type="text"
        class="form-control" id="searchValue" name="searchValue"
 
        required="required">
 
       <button type="submit" class="btn btn-default">
 
-       <span class="glyphicon glyphicon-search"></span> Search
-
+       <span class="glyphicon glyphicon-search"></span> 검색
+		
       </button>
 
      </form>

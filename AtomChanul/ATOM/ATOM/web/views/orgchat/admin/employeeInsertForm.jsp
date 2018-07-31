@@ -2,12 +2,24 @@
     pageEncoding="UTF-8"%>
 
 
+ <%@page import="atom.employee.model.vo.Employee"%>
+ <%@page import="atom.dept.model.vo.Dept"%>
+ <%@page import="atom.job.model.vo.Job"%>
+<%@page import="java.util.*"%>
+
+<%
+	List<Dept>deptlist = (List)request.getAttribute("Dept");
+	System.out.println(deptlist);
+	List<Job>joblist = (List)request.getAttribute("Job");
+	
+%>
+
 <%@ include file="/views/common/header.jsp" %> <!-- 정적 처리방식 -->
  <%@ include file="/views/common/deptAside.jsp" %>
 
 
 
-<script>
+<!-- <script>
 
  $(document).ready(function() {
 
@@ -23,7 +35,8 @@
 
  });
 
-</script>
+</script> -->
+
 
 
 
@@ -47,8 +60,7 @@
 
      <li><a href="<%=request.getContextPath() %>/emp/selectAll">전체직원정보</a></li>
  	 <li class="active"><a href="<%=request.getContextPath() %>/employeeInsert">직원 추가</a></li>
-     <li><a href="#">직원수정</a></li>
-     <li><a href="#">직원삭제</a></li>
+     
 
     
 
@@ -173,17 +185,22 @@
       </div>
 
 
+	
       <div class="form-group">
+      
+       <label for="deptCode">부서:</label> 
+       
+       
+        
+       <select class="form-control" id="deptCode" name="deptCode">
 
-       <label for="deptCode">부서:</label> <select
-
-        class="form-control" id="deptCode" name="deptCode">
-
-        <option value="1">개발부</option>
-
+		<option value="1">총무부</option>
+        <option value="1">총무부</option>  
+		
 
        </select>
-
+		 
+		
       </div>
 
       <div class="form-group">

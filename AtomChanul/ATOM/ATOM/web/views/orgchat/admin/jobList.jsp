@@ -31,8 +31,7 @@
 
      <li class="active"><a href="<%=request.getContextPath()%>/jobList">직급목록</a></li>
      <li ><a href="<%=request.getContextPath() %>/views/orgchat/admin/jobInsert.jsp">직급추가</a></li>
-     <li><a href="PositionList.jsp">직급수정</a></li>
-     <li><a href="PositionList.jsp">직원삭제</a></li>
+    
 
     
 
@@ -59,11 +58,9 @@
       <tr>
 
        <th>직위번호</th>
-
        <th>직위명</th>
-
-
-       <th></th>
+       <th>직위수정</th>
+       <th>직위삭제</th>
 
       </tr>
 
@@ -80,8 +77,15 @@
 
   
 
-       <td><button type="button" class="btn btn-default btn-sm">Delete</button></td>
-
+       <td>
+       <button type="button" class="btn btn-default btn-sm">직위수정</button>
+      
+       </td>
+       
+       <td>
+       	 <button type="button" class="btn btn-default btn-sm">직위삭제</button>
+       </td>
+			
       </tr>
 	<%} %>
 
