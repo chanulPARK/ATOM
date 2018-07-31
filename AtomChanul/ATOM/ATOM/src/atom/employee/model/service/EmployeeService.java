@@ -2,12 +2,10 @@ package atom.employee.model.service;
 
 import static common.JDBCTemplate.close;
 import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
-<<<<<<< HEAD
 import java.util.ArrayList;
-=======
->>>>>>> 1b6407bff8f839b7f16b075fe41f9ac955a583d5
 import java.util.List;
 
 import atom.employee.model.dao.EmployeeDAO;
@@ -21,8 +19,6 @@ public class EmployeeService {
 		close(conn);
 		return e;
 	}
-	
-<<<<<<< HEAD
 
 	public ArrayList<Employee> selectEmployeeAll() {
 		Connection conn = getConnection();
@@ -36,7 +32,8 @@ public class EmployeeService {
 		ArrayList<String> list = new EmployeeDAO().selectDept(conn);
 		close(conn);
 		return list;
-=======
+	}
+	
 	public List<Employee> employeeList(){
 		Connection conn = getConnection();
 		List<Employee> employeeList = new EmployeeDAO().selectAll(conn);
@@ -52,7 +49,6 @@ public class EmployeeService {
 		else rollback(conn);
 		close(conn);
 		return result;
->>>>>>> 1b6407bff8f839b7f16b075fe41f9ac955a583d5
 	}
 
 }

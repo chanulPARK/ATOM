@@ -8,10 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-<<<<<<< HEAD
-=======
 import java.util.List;
->>>>>>> 1b6407bff8f839b7f16b075fe41f9ac955a583d5
 import java.util.Properties;
 
 import atom.employee.model.vo.Employee;
@@ -51,10 +48,7 @@ public class EmployeeDAO {
 				e.setJobCode(rs.getString("job_code"));
 				e.setJobName(rs.getString("job_name"));
 				e.setAdminCode(rs.getString("admin_code"));
-<<<<<<< HEAD
-=======
 //				e.setAdminName(rs.getString("admin_name"));
->>>>>>> 1b6407bff8f839b7f16b075fe41f9ac955a583d5
 				e.setManagerId(rs.getString("manager_id"));
 				e.setHireDate(rs.getDate("hire_date"));
 				e.setEntDate(rs.getDate("ent_date"));
@@ -70,7 +64,6 @@ public class EmployeeDAO {
 		return e;
 	}
 	
-<<<<<<< HEAD
 	public ArrayList<Employee> selectEmployeeAll(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -133,7 +126,6 @@ public class EmployeeDAO {
 		return list;
 	}
 	
-=======
 	public List<Employee> selectAll(Connection conn) {
 	   	  PreparedStatement pstmt = null;
 	      ResultSet rs = null;
@@ -205,6 +197,5 @@ public class EmployeeDAO {
 		close(pstmt);
 		return result;
 	}
->>>>>>> 1b6407bff8f839b7f16b075fe41f9ac955a583d5
 
 }

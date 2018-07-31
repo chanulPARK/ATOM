@@ -326,7 +326,7 @@ h4{
 	      					</table>
 	      				</div>
 	              		<div class="">
-	              			<textarea rows="25" cols="80" style="width:100%;resize:none;overflow-y: scroll;" ></textarea>
+	              			<textarea name="apprContent" rows="25" cols="80" style="width:100%;resize:none;overflow-y: scroll;" ></textarea>
 	              		</div>
 
 	      		</div>
