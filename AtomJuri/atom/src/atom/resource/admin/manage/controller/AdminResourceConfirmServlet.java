@@ -1,4 +1,4 @@
-package atom.resource.emp.reservation.controller;
+package atom.resource.admin.manage.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,21 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import atom.employee.model.vo.Employee;
-import atom.resource.emp.reservation.model.service.ReservationService;
+import atom.resource.admin.manage.model.service.AdminResourceService;
 import atom.resource.emp.reservation.model.vo.ResourceList;
 
 /**
- * Servlet implementation class UserResourceReturnServlet
+ * Servlet implementation class AdminResourceConfirmServlet
  */
-@WebServlet("/user/return")
-public class UserResourceReturnServlet extends HttpServlet {
+@WebServlet("/admin/accept")
+public class AdminResourceConfirmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserResourceReturnServlet() {
+    public AdminResourceConfirmServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,37 +31,39 @@ public class UserResourceReturnServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		request.setCharacterEncoding("UTF-8");
+				
+		String empId = request.getParameter("adminEmpId");
+		String startTime = request.getParameter("adminStartTime");
 		
-		int rscCode = Integer.parseInt(request.getParameter("userInputCode"));
-		String startTime = request.getParameter("returnStartTime");
+		System.out.println(empId+startTime);
 		
-		System.out.println(rscCode+startTime+"여기 서블릿인데");
+		ResourceList rl = new ResourceList();
 		
-		ResourceList rl = new ResourceList(rscCode,startTime);
-		int result = new ReservationService().returnResource(rl);
+		rl.setEmpId(empId);
+		rl.setStartTime(startTime);
+
+		int result = new AdminResourceService().updateAccept(rl);
 		
-	   	
+		System.out.println(result + "result 값임당");
+		
+		//DAO 다녀왔따
 		String msg = "";
-		String loc = "/user/reservationList";
-		String view = "/views/common/msg.jsp";
-		
+		String loc = "/admin/resourceAcceptList";
+				
 		if(result>0)
 		{
-			msg="선택한 자원이 반납 되었습니다.";
+			msg = "승인 처리 성공";
 		}
 		else
 		{
-			msg="자원 반납이 실패하였습니다.";
-			
+			msg = "승인 처리 실패";
 		}
 		
-    	request.setAttribute("msg", msg);
+				
+		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
-		
-		request.getRequestDispatcher(view).forward(request, response);
-		
-		
-		
+	
+		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		
 	}
 

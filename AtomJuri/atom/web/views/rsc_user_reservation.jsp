@@ -10,12 +10,9 @@
 	String pageBar = (String)request.getAttribute("pageBar");
 
 	//회원 아이디 값 가져오기 
-	Employee e = (Employee)request.getSession().getAttribute("empLoggedIn");
-	String empId = (String)session.getAttribute("empId");
+	/*  Employee e = (Employee)request.getSession().getAttribute("empLoggedIn");
+	 String empId = e.getEmpId(); */
 	
-	//반납하고자하는 자원 코드가 본인이 대여한 자원 코드인지 확인
-//	boolean istrue = (boolean)request.getAttribute("istrue");
-//	int userInputCode = (int)request.getAttribute("userInputCode");
 
 	//페이지 처리 변수들
 //	int cPage = (int)request.getAttribute("cPage");
@@ -23,78 +20,57 @@
 
 %>
   <script>
-	  
-	  //반납 버튼 confirm 창
-		 $(function () 
-	   	{
-			 $('#returnconfirmbtn').click(function() 
-			{
-				 var userInputCode = $('#userInputCode').val().trim();
-					
-				if(userInputCode==null||userInputCode.length==0)
-				{
-					alert("자원 코드를 입력해주세요.");
-				}		
-				return;
-				/* if(confirm("반납 하시겠습니까?")==true)
-				{
-					alert("반납이 되었습니다.")
-				}
-				else
-				{
-					return;
-				}	 */
-			});
-		});	 
-	  
-		/*  
-		 $(function () 
-		{
-			 $('#returnCheckbtn').click(function() 
-			{
-				alert("하이루");
-			});
-		});	 
-		  */
-		 function fn_codeRecheck() 
-		 {
-			 
-			<%-- var recheckCode = $('#userInputCode').val().trim();
-			
-			var  url = '<%request.getContextPath()%>/checkRscCodeDuplicateFrm';
-			var title = "checkRscCodeDuplicateFrm";
-			var status="left=500px, top=100px, width=300px,height=200px, menubar=no, status=no,scrollbars=yes";
-			var popup=window.open('',title,status);
-			checkRscCodeDuplicateFrm.recheckCode.value=recheckCode;
-			checkRscCodeDuplicateFrm.method="post";
-			checkRscCodeDuplicateFrm.submit(); --%>
-		 }
+	  $(function (){
+	      $(".btn").click("on",function()
+	      {
+	         var returnCode = $(this).attr('name');
+	         var returnStartTime = $(this).attr('value');
+	         
+	         $('[name=userInputCode]').val(returnCode);
+	         $('[name=returnStartTime]').val(returnStartTime);
+	         $(this).attr("data-toggle","modal");
+	         $(this).attr("data-target","#myModalusre"); 
+	      });
+	});
 	
-	  </script>
+	  function fn_rsc_return()   
+	  {
+		  if(confirm("반납 하시겠습니까?")==true)
+			{	
+				document.userReturnCodeFrm.submit();
+		 	}
+		 	else
+		 	{
+		 		return;	
+		 	}
+	  }
+
+  </script>
+  
+  
+  
     <section>
         <div class="container-fluid">
         
             <div class="col-md-8, floatleft">
                 <h3>예약 리스트</h3>
-                
               <!-- =======  예약리스트 상단의 알림창 부분 ========= -->
                 
                 <div class="alert alert-info">
     					<span class="glyphicon glyphicon-bullhorn"></span>	
     					
     					<div>
-    					<p class="marginzero">1. 예약하고자 하는 자원은 하단  <kbd class="kbdfont">예약</kbd>버튼으로 예약 접수 할 수 있습니다.		
- 			 								  2. 접수가 완료 되면 관리자 검토 후 자원 승인 또는 반려가 될 수 있습니다.</p>
+    					<p class="marginzero"> 1.접수가 완료 되면 관리자 검토 후 자원 승인 또는 반려가 될 수 있습니다.
+    					2. 사용 완료된 자원은 하단 반납 여부란의 <kbd class="kbdfont">미반납</kbd>버튼을 통해 필히 반납해주시길 바랍니다.
+    					</p>
     					</div>	
  			 			
  			 			<div>					  
- 			 			<p class="marginzero">3. 사용 완료된 자원은 <kbd class="kbdfont">나의 예약리스트</kbd>를 통해 필히 반납해주시길 바랍니다.
+ 			 			<p class="marginzero">
+ 			 			3. 반납이 완료되면 <kbd class="kbdfont">반려 완료</kbd>로 변경됩니다.
  			 			4. 예약 시간 중복은 허용되지 않으며, 급한 용무가 있다면 미리 예약을 해두시길 바랍니다.</p>
  			 			</div>
-    					
-  			 	</div>
-                
-                
+  			 	</div>   
  			</div>
  			
  			  <!-- =======  예약리스트 상단의 알림창 부분 끝========= -->
@@ -114,16 +90,25 @@
                             <th scope="col"  class="text-center">예약 신청 시간</th>
                             <th scope="col"  class="text-center">예약 요청일</th>
                             <th scope="col"  class="text-center">반납 여부</th>
+                            
                         </tr>
                     </thead>
                     
                     <tbody class="table-condensed">
                    
-	                    <% for(ResourceList rl : list) 
+	                     <% for(ResourceList rl : list) 
 	                    	{%>
 	                        <tr>
+	          
+	                        	<!-- 반납 창에다 보내줄 id값 -->
+	                        	
+	                             <input type="hidden" id="modalRscCode" name="<%=rl.getRscCode()%>" value ="<%=rl.getRscCode()%>" /> 
+	                        	<input type="hidden" id = "modalStartTime" name="<%=rl.getStartTime()%>" value="<%=rl.getStartTime()%>" />
+	                        	 
+	                         
 	                            <td class="text-center"><%=rl.getRscCatename() %></td>
-	                            <td class="text-center"><%=rl.getRscCode() %></td>
+	                            <td class="text-center">
+	                            <%=rl.getRscCode() %></td>
 	                            <td class="text-center"><%=rl.getRscName() %></td>
 	                      
 	                            <td class="text-center">
@@ -138,27 +123,31 @@
 	                        	<%} 
 	                          	else //예약 진행 상황이 x이면
 	                          	{%>
-	                            <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#myModal0">반려</button>
+	                            <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#myModal0" >반려</button>
+	                          
 	                          <%} %>
+	                         
 	                            </td>
-	                            
+	                                    
 	                          	<td class="text-center"><%=rl.getStartTime() %> ~ <br> <%=rl.getEndTime() %></td>
 	                            <td class="text-center"><%=rl.getRequestDate() %></td>
 	                          	  
-								<td class="text-center">
-	                            <% if(rl.getRscCondition().equals("Y")) //반납 상태가 Y이면
-	                           	{%>
-	                           	 <span class="label label-primary">반납 완료</span>
-	                          <%} 
-	                          	else //반납 상태가 N이면
-	                          	{%>
-	                          	<span class="label label-danger text-center">미납</span>
-	                          	<%} %>
-	                          	</td>
-							
+								 <td class="text-center">
+		                            <% if(rl.getRscReturn().equals("Y")) //반납 상태가 Y이면
+		                           	{%>
+		                           	 <span class="label label-primary">반납 완료</span>
+		                          <%} 
+		                          	else if(rl.getRscRent().equals("O") && rl.getRscReturn().equals("N") )//반납 상태가 N이면  + 예약 진행 상황도 o이면으로 조건 수정 필요
+		                          	{%>
+		                          		<button type="button" class="btn btn-danger btn-sm floatright" data-toggle="" 
+		 								 data-target="" class="btn" name="<%=rl.getRscCode()%>" value="<%=rl.getStartTime()%>">미반납</button>		 
+		                          		
+		                          	<%} %>
+		                          	</td> 
 	                        </tr>
-	                        <%} %> 
-	                    </tbody>
+	                        </tbody>
+	                      <%} %> 
+	                  
                 </table>
             
             <!-- ===============예약 리스트 끝======================================= -->
@@ -168,20 +157,15 @@
             <nav id='pageBar' class="txtcenter"> 
                     <ul class="pagination pagination-sm pagingbtn">
             	     	<%= pageBar %>   
-				    </ul>
-            				    
-	 			  <button type="button" class="btn btn-default btn-sm floatright" data-toggle="modal" 
-	 				 data-target="#myModalusre" >반납</button>
-	 				 
+				    </ul> 
 	 			 </nav>
-	 			  </div>
-                
-  
+ 			  </div>
   				<!-- =========================페이징 버튼 끝========================= -->
+	 		 				 
 	 				 
 	 				<!-- 모달 부분 -->
 	 				<div class="modal fade" id="myModalusre" role="dialog">
-				    <div class="modal-dialog ">
+				    <div class="modal-dialog modal-sm ">
 				    
 				      <!-- Modal 내용-->
 				      <div class="modal-content">
@@ -196,25 +180,19 @@
 				           <div class="row">
 							<div class="col-md-12">
 							
-							  <form action="<%=request.getContextPath() %>/user/return" method = "post" class="form-inline" name="userInputCodeFrm">
-							  	<label for="inputEmail3" >자원 코드 : </label> 
-							  	  <input type="text" class="form-control" name="userInputCode" id="userInputCode" placeholder="자원 코드를 입력해주세요"> 
-								   <button id="returnCheckbtn" onclick="fn_codeRecheck();"class="btn btn-default" > 반납가능 자원 확인</button>	
-							  </form>
-							  
-							  <form name="checkRscCodeDuplicateFrm">
-								<input type="hidden" name="recheckCode"/>
-							</form>
-							
+							  <form action="<%=request.getContextPath() %>/user/return" method = "post" class="form-inline" name="userReturnCodeFrm">
+							  	<label>자원 코드 : </label> 
+							  	  <input type="text" class="form-control" name="userInputCode" id="userInputCode" value="" readonly> 
+							  	  <input type="hidden" name="returnStartTime" name="returnStartTime" value=""/>
+							   </form>
 							</div> 
 					      </div>	    
 						  </div>
    
 				        <div class="modal-footer">
-				         <button id="returnconfirmbtn" type="submit" class="btn btn-default" >반납하기</button>
-				         </div>   
-				        </div>
-				      
+				         <button id="returnconfirmbtn" type="submit" class="btn btn-default" onclick="fn_rsc_return();" >반납하기</button>
+					    </div>   
+				     </div>
 				   
 				  </div> 
 				  </div>

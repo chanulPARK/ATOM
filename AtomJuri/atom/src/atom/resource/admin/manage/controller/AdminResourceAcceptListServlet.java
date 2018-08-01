@@ -46,7 +46,7 @@ public class AdminResourceAcceptListServlet extends HttpServlet {
 				}
 				
 				//게시판 출력 로직 + 매개변수로 페이지 처리변수 넘겨줌
-				List<ResourceList> list = new AdminResourceService().selectResourceAcceptList(cPage,numPerPage);
+				List<ResourceList> list = new AdminResourceService().selectResourceAcceptList(cPage,numPerPage); //
 				
 				//전체 자료수 구하기
 				int totalContent = new AdminResourceService().selectAdminResourceCount();

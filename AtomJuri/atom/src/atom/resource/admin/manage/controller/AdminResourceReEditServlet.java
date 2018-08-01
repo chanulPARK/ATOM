@@ -1,4 +1,4 @@
-package atom.resource.emp.reservation.controller;
+package atom.resource.admin.manage.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,21 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import atom.employee.model.vo.Employee;
-import atom.resource.emp.reservation.model.service.ReservationService;
+import atom.resource.admin.manage.model.service.AdminResourceService;
 import atom.resource.emp.reservation.model.vo.ResourceList;
 
 /**
- * Servlet implementation class UserResourceReturnServlet
+ * Servlet implementation class AdminResourceReEditServlet
  */
-@WebServlet("/user/return")
-public class UserResourceReturnServlet extends HttpServlet {
+@WebServlet("/admin/ReEdit")
+public class AdminResourceReEditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserResourceReturnServlet() {
+    public AdminResourceReEditServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,29 +29,32 @@ public class UserResourceReturnServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		
 		request.setCharacterEncoding("UTF-8");
 		
-		int rscCode = Integer.parseInt(request.getParameter("userInputCode"));
-		String startTime = request.getParameter("returnStartTime");
+//		String rscCatecode = request.getParameter("editCatecode");
+		int rscCode = Integer.parseInt(request.getParameter("editRscCode"));
+		String rscName = request.getParameter("editRscName");
+		String rscCondition = request.getParameter("edit_condition");
 		
-		System.out.println(rscCode+startTime+"여기 서블릿인데");
+//		System.out.println("여기는 서블릿임당");
+//   	System.out.println(rscCatecode+rscCode+rscName+rscCondition);
+	
+		ResourceList rl = new ResourceList(rscCode,rscName,rscCondition);
 		
-		ResourceList rl = new ResourceList(rscCode,startTime);
-		int result = new ReservationService().returnResource(rl);
-		
-	   	
+		int result = new AdminResourceService().editResource(rl);
+	
 		String msg = "";
-		String loc = "/user/reservationList";
+		String loc = "/admin/resourcehome";
 		String view = "/views/common/msg.jsp";
 		
 		if(result>0)
 		{
-			msg="선택한 자원이 반납 되었습니다.";
+			msg="선택한 자원이 수정 되었습니다.";
 		}
 		else
 		{
-			msg="자원 반납이 실패하였습니다.";
+			msg="자원 수정을 실패하였습니다.";
 			
 		}
 		
@@ -60,10 +62,6 @@ public class UserResourceReturnServlet extends HttpServlet {
 		request.setAttribute("loc", loc);
 		
 		request.getRequestDispatcher(view).forward(request, response);
-		
-		
-		
-		
 	}
 
 	/**

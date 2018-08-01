@@ -6,15 +6,16 @@
 	String pageBar = (String)request.getAttribute("pageBar");
 	
  	//검색 창
-	String searchResource = "";
+	String adminSearchResource = "";
 	
-	if(request.getAttribute("searchResource")!=null)	
-		searchResource = (String)request.getAttribute("searchResource");
-	else
-		System.out.println("입력 값이 null로 들어와"); */
-	
-	//아이디 값 받아오기 
-/* 	String empId = (String)session.getAttribute("empId");
+	if(request.getAttribute("adminSearchResource")!=null)	
+		adminSearchResource = (String)request.getAttribute("adminSearchResource");
+
+	//자원 추가 창 카테고리
+	String searchType = "";
+
+	/* //아이디 값 받아오기 
+ 	String empId = (String)session.getAttribute("empId");
 	
 	if(empId==null)
 	{
@@ -23,8 +24,8 @@
 	else
 	{
 		System.out.println("아이디 값 출력됩니다아아//");
-	} */
-
+	} 
+ */
 %>
 
 <!DOCTYPE html>
@@ -48,54 +49,128 @@
 	 
 	 <script>
 	 
-	
-	 //추가 버튼 confirm 창
-	 $(function () 
-   	{
-		 $('#addconfirmbtn').click(function() 
+	//추가 부분 기능
+
+	//자원 이름 넣는 박스 글자수 체크 	
+	function fn_checkName() 
+	{
+		var rscName = $("[name=rsc_name]").val();
+		/* var addOption = document.getElementById('sel1');
+     	var addValue = addOption.options[addOption.selectedIndex].value;
+	 */	
+		if(rscName.trim().length==0)
 		{
-			if(confirm("추가 하시겠습니까?")==true)
-			{
-				alert("자원이 추가되었습니다.")
-			}
-			else
-			{
-				return;
-			}	
-		});
-	});	
+			alert("자원 명을 적어주세요.");
+			
+			return false;
+		}
+		
+		else if(rscName.trim().length>18)
+		{
+			alert("자원 명은 18글자 이하로 작성해주세요.");
+
+			return false;
+		}
+		
+	 	if(confirm("추가 하시겠습니까?")==true)
+	 	{	
+			document.addFrm.submit();
+	 	}
+	 	else
+	 	{
+	 		return;	
+	 	}
+	 }
+
+	//===============================================
+
+	 
+	 //=============================================//
 	 
 	 //수정 버튼 confirm 창
+	 
 	 $(function () 
    	{
-		 $('#editconfirmbtn').click(function() 
-		{
-			if(confirm("수정 하시겠습니까?")==true)
-			{
-				alert("선택한 자원 정보가 수정되었습니다.")
-			}
-			else
-			{
-				return;
-			}	
+		 $('.reEditBtn').click("on",function() 
+		{ 
+	
+			 var editCatecode = $(this).attr('name');
+	         var editRscCode = $(this).attr('id');
+	         		
+			//모달 input 태그에 위에 값 집어넣기			
+		   $('[name=editCatecode]').val(editCatecode);
+       	   $('[name=editRscCode]').val(editRscCode);
+           $(this).attr("data-toggle","modal");
+           $(this).attr("data-target","#myModaledit");
+
 		});
 	});		
 	 
-	 //삭제 버튼 confirm 창
+	  function fn_reEdit()
+	  {
+			 var editRscName = $("[name=editRscName]").val();
+			 
+			 if(editRscName.trim().length==0)
+				{
+					alert("자원 명을 적어주세요.");
+					
+					return false;
+				}
+				
+				else if(editRscName.trim().length>18)
+				{
+					alert("자원 명은 18글자 이하로 작성해주세요.");
+
+					return false;
+				}
+				
+			 	if(confirm("수정 하시겠습니까?")==true)
+			 	{	
+					document.reEditFrm.submit();
+			 	}
+			 	else
+			 	{
+			 		return;	
+			 	}
+	  }
+
+	 //==============================================//
+	 
+	 //삭제 기능 
+	 
 	 $(function () 
-   	{
-		 $('#delconfirmbtn').click(function() 
-		{
-			if(confirm("삭제 하시겠습니까?")==true)
-			{
-				alert("선택한 자원이 삭제되었습니다.")
-			}
-			else
-			{
-				return;
-			}	
+	{
+		 $('.delbtn').click("on",function() 
+		{ 
+	         var delRscCode = $(this).attr('name');
+	         var delRscName = $(this).attr('id');
+				         
+/* 			 alert(delRscCode);
+			 alert(delRscName); */
+				         		
+		 	//모달 input 태그에 위에 값 집어넣기			
+		   $('[name=delRscCode]').val(delRscCode);
+		   $('[name=delRscName]').val(delRscName);
+           $(this).attr("data-toggle","modal");
+           $(this).attr("data-target","#myModaldel");
+
 		});
-	});		 
+	});		
+	 
+	 
+	 //삭제 버튼 confirm 창
+	  function fn_del()
+	  {				
+			if(confirm("삭제 하시겠습니까?")==true)
+			{	
+				document.delFrm.submit();
+		 	}
+		 	else
+		 	{
+		 		return;	
+		 	}
+	  };
+	 
 	 </script>
 
 	  <title>자원 관리</title>
@@ -195,30 +270,48 @@
  			<div class="col-sm-12 well rsclist">
  			
  			<!--=============== 검색 창=============== -->
- 			<div class="con-sm-3">
-				 	<form>
-					 	<input type="text"  placeholder="검색"/>
+
+				<div id='search-resource'>
+				 	<form action="<%=request.getContextPath() %>/admin/resourceFinder" method="get"> 
+					 	<input type="text" name='adminSearchResource' placeholder="검색"/>	 
+					 		
 					 	<button type="submit" class="btn btnsm btn-default">검색</button>	
 				 	</form>
 			 	</div>
 			 	<br>
-			 	
+			 	 	
   				<!--=============== 검색 창 끝=============== -->
   			
  			
  			<table class="table table-hover">
                     <thead>
                         <tr>
+                        	<th scope="col"  class="text-center">자원 분류 코드</th>
                             <th scope="col"  class="text-center">자원 분류</th>
                             <th scope="col"  class="text-center">자원 코드</th>
                             <th scope="col"  class="text-center">자원 명</th>
                             <th scope="col"  class="text-center">예약 상태</th>
+                            <th scope="col"  class="text-center"> </th>
                         </tr>
                     </thead>
                     <tbody class="table-condensed">
-                        <% for(ResourceList rl : list) 
+                    <%if(list==null) 
+                    {%>
+                    <tr>
+						<td colspan=9>검색결과가 없습니다.</td>	
+					</tr>
+					<%}
+                    else
+                    {	for(ResourceList rl : list) 
                     	{%>
                         <tr>
+                        
+                        	<!-- *수정 modal창에 띄울 정보 꺼내오기 *  -->
+                        	<input type="hidden" id="modalRscCatecode" name="<%=rl.getRscCatecode()%>" value ="<%=rl.getRscCatecode()%>" /> 
+                        	<input type="hidden" id="modalRscCode" name="<%=rl.getRscCode()%>" value ="<%=rl.getRscCode()%>" /> 
+                        	<input type="hidden" id="modalRscName" name="<%=rl.getRscName()%>" value ="<%=rl.getRscName()%>" /> 
+                        
+                        	<td class="text-center"><%=rl.getRscCatecode() %></td>
                             <td class="text-center"><%=rl.getRscCatename() %></td>
                             <td class="text-center"><%=rl.getRscCode() %></td>
                             <td class="text-center"><%=rl.getRscName() %></td>
@@ -232,8 +325,18 @@
                           	<button type="button" class="btn btn-danger btn-sm disabled">예약 불가</button>
                           	<%} %>
                           	</td>
+                          	
+                          	<td>
+                          	<button type="button" name="<%=rl.getRscCatecode()%>" id="<%=rl.getRscCode()%>" class="btn btn-default btn-sm reEditBtn" data-toggle="" 
+	 						 data-target="" >수정</button>
+	 							 						 
+	 						 <button type="button" class="btn btn-default btn-sm delbtn" data-toggle="" 
+	 						 data-target="" name="<%=rl.getRscCode()%>" id="<%=rl.getRscName() %>">삭제</button>
+	 						
+                          	</td>
                         </tr>
-                        <%} %> 
+                      <%}//for문 닫기
+					}  //else문 닫기%> 
                     </tbody>
                 </table>
             	
@@ -245,12 +348,7 @@
 				    </ul>
                       <!-- =============페이징 버튼 끝=============== -->
             	
-                    
-		
- 					 <button type="button" class="btn btn-default btn-sm floatright" data-toggle="modal" 
-	 				 data-target="#myModaldel" >삭제</button>
-	 				 <button type="button" class="btn btn-default btn-sm floatright" data-toggle="modal" 
-	 				 data-target="#myModaledit" >수정</button>
+
 	 				  <button type="button" class="btn btn-default btn-sm floatright" data-toggle="modal" 
 	 				 data-target="#myModaladd" >추가</button>
 	 				 
@@ -269,40 +367,64 @@
 				        <div class="modal-header">
 				          <button type="button" class="close" data-dismiss="modal">&times;</button>
 				         <h3 class="txtcenter">자원 추가</h3>
-				         </div> 
 				         
+				         <div class="alert alert-info">
+							  <h4 class="txtcenter"> <안내 사항> </h4> 
+							  <p>
+							  	법인카드의 경우, 자원명에 이름과 카드 번호 앞 4자리를 함께 입력해주시기 바랍니다. <br>
+							  	ex) 국민카드, 카드 앞 4자리 번호 2345 > 자원 명 : 국민카드 2345
+							  </p>
+							</div>
+				         </div>
+				          
 				          <div class="modal-body">
 				          
-				           <div class="row">
-							    <div class="col-xs-4 col-md-4">
-							    <label>자원 분류</label>
-									 <select class="form-control" id="sel1">
-									    <option>공간</option>
-									    <option>물품</option>
-									    <option>법인 차량</option>
-									    <option>추가</option>
-								  </select>							     
-							    </div>
-							    
-							    <div class="col-xs-4 col-md-4">
-							    <label>자원 코드</label>
-							      <input type="text" name="rsc_code" class="form-control input-sm" placeholder="001" />
-							    </div>
-							    
-							    <div class="col-xs-4 col-md-4">
-							    <label>자원 명</label>
-							      <input type="text" name="rsc_name" class="form-control input-sm" placeholder="벤츠 지바겐" />
-							      <br>
-							    </div>
-						 </div>	
-				        </div>
-				        
+				          <form action="<%=request.getContextPath()%>/admin/addRsc" method="post" name="addFrm">
+				          
+				         <table class="table">
+							  <thead>
+							    <tr>
+							      <th scope="col">자원 분류</th>
+							      <th scope="col">자원 명</th>
+							      <th scope="col">예약 상태</th>
+							    </tr>
+							  </thead>
+							  
+							  <tbody>
+							    <tr>
+							      <td>
+							<select class="form-control" size="4" id="sel1" name="sel1"/> <!-- onchange="SetSelectBox();" -->
+								
+								 <option value='A' selected >공간</option>
+								 <option value='B'>물품</option>
+								 <option value='C'>법인 차량</option>
+								 <option value='D'>법인 카드</option>
+						
+							</select>
+							</td> 
+							
+							 <td>
+							 <input type="text" name="rsc_name" class="form-control input-sm" placeholder="자원 명 입력" required />	
+							 </td>
+							   
+							<td>
+							 <label>예약 가능 </label><input type="radio" name="rsc_condition" id="rsc_yes" value="Y"  checked>		      
+							<label>예약 불가 </label><input type="radio" name="rsc_condition" id="rsc_no" value="N" >
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				         
+						  </form>
+						  </div>	    
+						 						 
 				        <div class="modal-footer">
-				         <button id="addconfirmbtn" type="button" class="btn btn-default" >추가 하기</button>
+				         <button id="addbtn" type="submit" onclick="fn_checkName();"class="btn btn-default" >추가 하기</button>
 						 </div>        
-						   
+						 </div>   
 				         </div>
 				    </div>
+				    </div>	
 				  </div> 
 
  		 <!--끝 모달 부분 끝-->
@@ -320,35 +442,51 @@
 				          <button type="button" class="close" data-dismiss="modal">&times;</button>
 				         <h3 class="txtcenter">자원 수정</h3>
 				         </div> 
+				        
+				         <div class="modal-body">
 				         
-				          <div class="modal-body">
-				          
-				           <div class="row">
-							    <div class="col-xs-4 col-md-4">
-							    
-							    <label>자원 분류</label>
-									 <select class="form-control" id="sel1">
-									    <option>공간</option>
-									    <option>물품</option>
-									    <option>법인 차량</option>
-									    <option>추가</option>
-								  </select>							     
-							    </div>
-							    
-							    <div class="col-xs-4 col-md-4">
-							    <label>자원 코드</label>
-							      <input type="text" name="rsc_code" class="form-control input-sm" placeholder="001" />
-							    </div>
-							    
-							    <div class="col-xs-4 col-md-4">
-							    <label>자원 명</label>
-							      <input type="text" name="rsc_name" class="form-control input-sm" placeholder="벤츠 지바겐" />
-							      <br>
-							    </div>
-						 </div>
-				          
+				          <form action="<%=request.getContextPath()%>/admin/ReEdit" method="post" name="reEditFrm">
+				          		         
+				          <table class="table">
+							  <thead>
+							    <tr>
+							      <th scope="col">자원 분류</th>
+							       <th scope="col">자원 코드</th>
+							      <th scope="col">자원 명</th>
+							      <th scope="col">예약 상태</th>
+							    </tr>
+							  </thead>
+							  
+							  <tbody>
+							    <tr>
+							      	<td>
+										<input class="form-control input-sm "type = "text" name= "editCatecode" id="editCatecode" readonly />
+									</td> 
+									
+									<td>
+									 <input type="text" name="editRscCode" id="editRscCode" class="form-control input-sm" readonly />	
+								 	</td>
+							
+								 <td>
+								 <input type="text" name="editRscName" id="editRscName" class="form-control input-sm" placeholder="자원 명 입력" required />	
+								 </td>
+							   
+								<td>
+								 <label>예약 가능 </label><input type="radio" name="edit_condition" id="edit_yes" value="Y" checked >		      
+								<label>예약 불가 </label><input type="radio" name="edit_condition" id="edit_no" value="N" >
+								</td>
+							</tr>
+						</tbody>
+						</table>
+						
+					</form>
+						          
+				        </div> 
+				         
 				        <div class="modal-footer">
-				         <button id="editconfirmbtn" type="button" class="btn btn-default" >수정 하기</button>
+				         <button id="editconfirmbtn" type="submit" onclick="fn_reEdit()" class="btn btn-default" >수정 하기</button>
+				       
+				       
 				         </div>   
 					  </div>
 				      
@@ -373,35 +511,32 @@
 				         <h3 class="txtcenter">삭제 하기</h3>
 				         </div> 
 				         
-				          <div class="modal-body">
-				          
-				           <div class="row">
-							    <div class="col-xs-4 col-md-4">
-							    
-							    <label>자원 분류</label>
-									 <select class="form-control" id="sel1">
-									    <option>공간</option>
-									    <option>물품</option>
-									    <option>법인 차량</option>
-									    <option>추가</option>
-								  </select>							     
-							    </div>
-							    
-							    <div class="col-xs-4 col-md-4">
-							    <label>자원 코드</label>
-							      <input type="text" name="rsc_code" class="form-control input-sm" placeholder="001" />
-							    </div>
-							    
-							    <div class="col-xs-4 col-md-4">
-							    <label>자원 명</label>
-							      <input type="text" name="rsc_name" class="form-control input-sm" placeholder="벤츠 지바겐" />
-							      <br>
-							    </div>
-						 </div>    
-						 </div>
-						    
+				         <div class="modal-body">
+				           <form action="<%=request.getContextPath()%>/admin/del" method="post" name="delFrm">
+				        <table class="table">
+							  <thead>
+							    <tr>
+							       <th scope="col">자원 코드</th>
+							       <th scope="col">자원 이름</th>
+							       
+							    </tr>
+							  </thead>
+							  
+							  <tbody>
+							    <tr>			      	
+									<td>
+									 <input type="text" name="delRscCode" id="delRscCode" class="form-control input-sm" readonly />	
+								 	</td>
+							
+									 <td>
+									 <input type="text" name="delRscName" id="delRscName" class="form-control input-sm" readonly />	
+									 </td>
+								</tr>
+							</tbody>
+						</table>
+	    				</form>
 				        <div class="modal-footer">
-				         <button id="delconfirmbtn"type="button" class="btn btn-default" >삭제 하기</button>
+				         <button id="delconfirmbtn" type="button" class="btn btn-default" onclick = "fn_del();" >삭제 하기</button>
 				         </div>   
 					    </div>
 				      
@@ -411,9 +546,7 @@
  		
  		 <!--끝 모달 부분 끝-->
  		  <!-- ========== 삭제 버튼 끝 ============= -->
- 			
-
- 			</div>		 
+ 		
    <!-- 끝 ================ 자원 리스트  ================= 끝-->
  	
     </section>

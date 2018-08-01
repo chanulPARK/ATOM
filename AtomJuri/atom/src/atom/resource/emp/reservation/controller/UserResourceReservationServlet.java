@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import common.PageBar;
+import atom.employee.model.vo.Employee;
 import atom.resource.emp.reservation.model.service.ReservationService;
 import atom.resource.emp.reservation.model.vo.ResourceList;
 
@@ -32,8 +33,11 @@ public class UserResourceReservationServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//회원 아이디 값 불러오기 
-	    String empId = request.getParameter("empId");
+		/*//회원 아이디 값 불러오기 
+		Employee e = (Employee)request.getSession().getAttribute("empLoggedIn");
+		String empId = e.getEmpId(); */
+		
+		String empId = "user";//이거 아니니까 나중에 바꾸기
 		
 	  //페이징 처리 로직
 		int numPerPage = 4;
@@ -43,7 +47,7 @@ public class UserResourceReservationServlet extends HttpServlet {
 		{
 			cPage = Integer.parseInt(request.getParameter("cPage"));
 		}
-		catch(NumberFormatException e)
+		catch(NumberFormatException e1)
 		{
 			cPage = 1;
 		}
@@ -100,6 +104,18 @@ public class UserResourceReservationServlet extends HttpServlet {
 		{
 			pageBar += "<li><a href='"+request.getContextPath()+"/user/reservationList?cPage="+(pageNo-1)+"'aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>";
 		}	
+		
+		if(!list.isEmpty())
+		{
+			System.out.println("여기 서블릿인데 list에 값이 있어요 ");
+		}
+		else
+		{
+			System.out.println("여기 서블릿인데 list가 null인데요 ");
+		}
+		
+		System.out.println(list.get(0).getRscCondition());
+		
 		
 		//페이지바 변수 저장
 		request.setAttribute("cPage", cPage);

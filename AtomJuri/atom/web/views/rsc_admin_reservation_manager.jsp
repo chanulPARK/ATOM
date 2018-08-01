@@ -34,29 +34,47 @@
 	  <script>
 	  
 	  //승인 버튼 confirm 창
-		 $(function () 
+		  $(function () 
 	   	{
-			 $('#okconfirmbtn').click(function() 
+			 $('#okbtn').click("on",function() 
 			{
+			
+				 /* var userId = $('#adminEmpId').val();
+				 alert(userId); */
+				 
+				/*  var userId = $(this).attr('name');
+				 var startTime = $(this).attr('value');
+				 
+				 alert(userId);
+				 alert(startTime); */
+				 				 
 				if(confirm("승인 하시겠습니까?")==true)
 				{
-					alert("승인 되었습니다.")
+					document.adminAcceptFrm.submit();
 				}
 				else
 				{
 					return;
-				}	
+				}	 
 			});
 		});	
-	  
+	   
 		 //반려 버튼 confirm 창
 		 $(function () 
 	   	{
 			 $('#noconfirmbtn').click(function() 
 			{
+
 				if(confirm("반려 하시겠습니까?")==true)
 				{
-					alert("반려 되었습니다.")
+					var userId = $('#adminEmpId').val();
+					alert(userId);
+					
+					
+					
+					
+					
+					location.href=""
 				}
 				else
 				{
@@ -170,12 +188,20 @@
                             <th scope="col"  class="text-center">예약 요청 접수일</th>
                             <th scope="col"  class="text-center">예약 신청 기간</th>
                             <th scope="col"  class="text-center">예약 상태</th>
+                            <th scope="col"  class="text-center"></th>
                         </tr>
                     </thead>
                     <tbody class="table-condensed">
                      <% for(ResourceList rl : list) 
                     	{%>
                         <tr>
+                        
+                        	<!-- 승인 모달 창에다가 넘겨줄 값 hidden으로 넣음	 -->
+                        	<form action="<%=request.getContextPath() %>/admin/accept" method = "post" class="form-inline" name="adminAcceptFrm">
+                        	 <input type="hidden" id="adminEmpId" name="adminEmpId" value ="<%=rl.getEmpId()%>" /> 
+                        	 <input type="hidden" id="adminStartTime" name="adminStartTime" value ="<%=rl.getStartTime()%>"/> 
+                        	
+                        
                             <td class="text-center"><%=rl.getRscCatename() %></td>
                             <td class="text-center"><%=rl.getRscCode() %></td>
                             <td class="text-center"><%=rl.getRscName() %></td>
@@ -197,7 +223,31 @@
 	                           		<span class="label label-default"> 반려 </span>
 	                          <%} %>
 	                            </td>
-                        </tr>
+	                            
+	                      	<td class="text-center">
+	                      	
+	                      	 <% if(rl.getRscRent().equals("O")) //예약 진행 상황이 O이면
+	                           	{%>
+	                           	   
+	                          <%} 
+	                          	else if(rl.getRscRent().equals("W")) //예약 진행 상황이 w이면
+	                          	{%>
+	                          			 								 
+	 								 <button type="button" class="btn btn-default btn-sm floatright" data-toggle="modal" 
+	 								 data-target="#myModalx" >반려</button>
+	 								 
+	 								 <button type="submit" id="okbtn" class="btn btn-default btn-sm floatright"  onclick="fn_admin_accept(<%=rl.getStartTime()%>)">승인</button>                       
+	                        </form>
+	                       <%--  <button type="submit" id="okbtn" class="btn btn-default btn-sm floatright"  onclick="fn_admin_accept()"
+	 								 name="<%=rl.getEmpId()%>" value="<%=rl.getStartTime() %>">승인</button>  --%>
+	                        	<%} 
+	                          	else //예약 진행 상황이 x이면
+	                          	{%>
+	                           		-
+	                          <%} %>
+	                      	
+	                      	</td>
+							 </tr>
                         <%} %> 
                        
                    </tbody>
@@ -212,17 +262,11 @@
 				    
                       <!-- =============페이징 버튼 끝=============== -->
             	
-	 				 
-	 				 <button type="button" class="btn btn-default btn-sm floatright" data-toggle="modal" 
-	 				 data-target="#myModalx" >반려</button>
-	 				  <button type="button" class="btn btn-default btn-sm floatright" data-toggle="modal" 
-	 				 data-target="#myModalo" >승인</button>
-	 				 
 	 				 </nav>
 	 				 
 	 				<!-- 모달 부분 -->
 	 				<div class="modal fade" id="myModalo" role="dialog">
-				    <div class="modal-dialog">
+				    <div class="modal-dialog modal-sm">
 				    
 				      <!-- Modal 내용-->
 				      <div class="modal-content">
@@ -235,30 +279,18 @@
 				          <div class="modal-body">
 				          
 				           <div class="row">
-							    <div class="col-xs-4 col-md-4">
-							    
-							    <label>자원 분류</label>
-									 <select class="form-control" id="sel1">
-									    <option>공간</option>
-									    <option>물품</option>
-									    <option>법인 차량</option>
-									    <option>추가</option>
-								  </select>							     
-							    </div>
-							    
-							    <div class="col-xs-4 col-md-4">
-							    <label>자원 코드</label>
-							      <input type="text" name="rsc_code" class="form-control input-sm" placeholder="001" />
-							    </div>
-							    
-							    <div class="col-xs-4 col-md-4">
-							    <label>자원 명</label>
-							      <input type="text" name="rsc_name" class="form-control input-sm" placeholder="벤츠 지바겐" />
-							      <br>
-							    </div>
+							   
+							   <form action="<%=request.getContextPath() %>/admin/accept" method = "post" class="form-inline" name="adminAcceptFrm">
+							   
+							   <label class='txtcenter'> 해당 건을 승인하시겠습니까? </label>
+							   <p name="test"></p>
+							   
+							   </form>
+							  
+						    </div>
 						 </div>	        
 				        <div class="modal-footer">
-				         <button id="okconfirmbtn" type="button" class="btn btn-default" >승인하기</button>
+				         <button id="okconfirmbtn" type="button" class="btn btn-default" onclick="fn_admin_accept();">승인하기</button>
 				         	<!-- 반납하시겠습니까 confirm창 하나 더 추가 -->
 				         </div>   		         
 				         </div>	      
@@ -284,45 +316,18 @@
 				          <div class="modal-body">
 				          
 				           <div class="row">
-							    <div class="col-xs-4 col-md-4">
-							    
-							    <label>자원 분류</label>
-									 <select class="form-control" id="sel1">
-									    <option>공간</option>
-									    <option>물품</option>
-									    <option>법인 차량</option>
-									    <option>추가</option>
-								  </select>							     
-							    </div>
-							    
-							    <div class="col-xs-4 col-md-4">
-							    <label>자원 코드</label>
-							      <input type="text" name="rsc_code" class="form-control input-sm" placeholder="001" />
-							    </div>
-							    
-							    <div class="col-xs-4 col-md-4">
-							    <label>자원 명</label>
-							      <input type="text" name="rsc_name" class="form-control input-sm" placeholder="벤츠 지바겐" />
-							      <br>
-							    </div>
-							    
+							 					    
 							    <div class="col-xs-12 col-md-12">
 							    <label>반려 이유 </label>
 							      <input type="text" name="rsc_name" class="form-control input-sm" placeholder="반려 이유 작성" />
 							      <br>
-							    </div>
-							    
-							    
+							    </div>	    
 						 </div>
-						 
-						   
+						 	   
 				        <div class="modal-footer">
 				         <button id="noconfirmbtn" type="button" class="btn btn-default" >반려하기</button>
 				         </div>   
-				         
-				         
-				         </div>
-				      
+				         </div>	     
 				    </div>
 				  </div> 
 			 

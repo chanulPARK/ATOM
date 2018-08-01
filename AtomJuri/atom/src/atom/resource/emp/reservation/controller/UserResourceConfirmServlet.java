@@ -7,21 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import atom.employee.model.vo.Employee;
 import atom.resource.emp.reservation.model.service.ReservationService;
 import atom.resource.emp.reservation.model.vo.ResourceList;
 
 /**
- * Servlet implementation class UserResourceReturnServlet
+ * Servlet implementation class UserResourceConfirmServlet
  */
-@WebServlet("/user/return")
-public class UserResourceReturnServlet extends HttpServlet {
+@WebServlet("/user/reservationConfirm")
+public class UserResourceConfirmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserResourceReturnServlet() {
+    public UserResourceConfirmServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,37 +32,47 @@ public class UserResourceReturnServlet extends HttpServlet {
 	
 		request.setCharacterEncoding("UTF-8");
 		
-		int rscCode = Integer.parseInt(request.getParameter("userInputCode"));
-		String startTime = request.getParameter("returnStartTime");
+//		String empId = request.getParameter("empId");
+		String empId = "user";
+		String rscCatecode = request.getParameter("catecode");
+		String rscCateName = request.getParameter("category");
+		int rscCode = Integer.parseInt(request.getParameter("code"));
+		String rscName = request.getParameter("name");
+		String startTime = request.getParameter("start_time");
+		String endTime = request.getParameter("end_time");
 		
-		System.out.println(rscCode+startTime+"여기 서블릿인데");
+		System.out.println(startTime);
 		
-		ResourceList rl = new ResourceList(rscCode,startTime);
-		int result = new ReservationService().returnResource(rl);
+		ResourceList rl = new ResourceList();
 		
-	   	
-		String msg = "";
-		String loc = "/user/reservationList";
+		rl.setEmpId(empId);
+		rl.setRscCatecode(rscCatecode);
+	//	rl.setRscCatename(rscCateName);
+		rl.setRscCode(rscCode);
+	//	rl.setRscName(rscName);
+		rl.setStartTime(startTime);
+		rl.setEndTime(endTime);
+		
+		int result = new ReservationService().insertRent(rl);
+		
+		String msg="";
+		String loc="/user/resourseHome";
+		
 		String view = "/views/common/msg.jsp";
 		
 		if(result>0)
 		{
-			msg="선택한 자원이 반납 되었습니다.";
+			msg="예약이 성공적으로 완료되었습니다.";
 		}
 		else
 		{
-			msg="자원 반납이 실패하였습니다.";
-			
+			msg ="예약이 실패하였습니다.";
 		}
 		
-    	request.setAttribute("msg", msg);
+		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
 		
 		request.getRequestDispatcher(view).forward(request, response);
-		
-		
-		
-		
 	}
 
 	/**
