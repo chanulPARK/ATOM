@@ -10,6 +10,15 @@ public class Calendar {
 	private String startDate;
 	private String endDate;
 	private String empId;
+	private String empName;
+	public String getEmpName() {
+		return empName;
+	}
+
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+
 	private String category;
 	private String content;
 	private String place;

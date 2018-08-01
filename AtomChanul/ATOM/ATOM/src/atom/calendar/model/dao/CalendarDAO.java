@@ -75,7 +75,7 @@ public class CalendarDAO {
 				s = new Calendar();
 				s.setScheduleId(rs.getInt("schedule_id"));
 				s.setScheduleName(rs.getString("schedule_name"));
-				
+				s.setEmpName(rs.getString("emp_name"));
 				String[] Dates = alldayChk(rs.getString("start_date"), rs.getString("end_date"));
 				if(!(rs.getString("repeat_category").equals("반복 없음") || rs.getString("repeat_category").equals("매일")) ){ // 주중, 매주(요일지정)
 					Dates = null;
@@ -125,6 +125,7 @@ public class CalendarDAO {
 				s.setStartDate(rs.getString("start_date"));
 				s.setEndDate(rs.getString("end_date"));
 				s.setEmpId(rs.getString("emp_id"));
+				s.setEmpName(rs.getString("emp_name"));
 				s.setCategory(rs.getString("category"));
 				s.setContent(rs.getString("content"));
 				s.setPlace(rs.getString("place"));

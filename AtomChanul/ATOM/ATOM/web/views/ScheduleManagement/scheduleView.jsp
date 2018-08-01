@@ -22,14 +22,38 @@
 			min-height:55px;
 		}
 	</style>
-
+	<style>
+    	.fc-day-number {color : #000000}    /* 기본색상 검정  */
+    	.fc-sun{color:#e31b23}
+    	.fc-sun .fc-day-number {color:#e31b23}
+    	.fc-sat {color:#0100FF}
+    	.fc-sat .fc-day-number {color:#0100FF}
+    	aside div.leftmenu_top {
+            background: #353b47;
+            color: #fff;
+            text-align: center;
+            height: 50px;
+        }
+        aside div.leftmenu_top h3{
+            padding-top: 10px;
+            margin: 0;
+        }
+    </style>
     <aside>
-      <div class="sidebar">
-        <div class="" style="margin: 10px 10px">
-          <a href="<%=request.getContextPath()%>/schedule/scheduleList" class="btn btn-primary btn-block ">돌아가기</a>
+    <div class="leftmenu_top">
+            <h3>
+               	 일정관리
+            </h3>
+     </div>
+     <br>
+      <div class="sidebar" style="margin: 0px 10px">
+        <div class="create-schedule">
+          <a href="<%=request.getContextPath()%>/schedule/scheduleList" class="btn btn-default btn-block ">돌아가기</a>
         </div>
+        <br>
       </div>
     </aside>
+
 
     <section>
       <div class="container-fluid">
@@ -59,7 +83,7 @@
                     <tr>
                       <td>작성자</td>
                       <td>
-                        <label><%=s.getEmpId() %></label>
+                        <label><%=s.getEmpName() %></label>
                       </td>
                     </tr>
                     <tr>
@@ -124,10 +148,6 @@
                       <td>
                         <textarea name="schedule-content" rows="8" cols="80" class="form-control" name="schedule-content"><%=s.getContent() %></textarea>
                       </td>
-                    </tr>
-                    <tr>
-                      <td>참여자</td>
-                      <td></td>
                     </tr>
                   </tbody>
                 </table>
