@@ -8,14 +8,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 import atom.calendar.model.dao.CalendarDAO;
+import atom.electronic.model.service.ElectronicService;
 import atom.electronic.model.vo.AuthoriaztionComment;
 import atom.electronic.model.vo.ElectronicApproval;
 import atom.electronic.model.vo.MaterialLine;
+import atom.employee.model.vo.Employee;
 
 public class ElectronicDAO {
 
@@ -30,6 +33,12 @@ public class ElectronicDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public String transForm (String dateform) {
+		String[] temp = dateform.split("/");
+		return temp[2]+"-"+temp[0]+"-"+temp[1];
+	}
+	
 	public int insertApproval(Connection conn, ElectronicApproval ea) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -38,11 +47,10 @@ public class ElectronicDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, ea.getDraftNo());
-			pstmt.setDate(2, new java.sql.Date(ea.getDraftDate().getTime()));
-			pstmt.setString(3, ea.getEmpId());
-			pstmt.setString(4, ea.getDraftDept());
-			pstmt.setString(5, ea.getDraftName());
-			pstmt.setString(6, ea.getDraftContent());
+			pstmt.setString(2, ea.getEmpId());
+			pstmt.setString(3, ea.getDraftDept());
+			pstmt.setString(4, ea.getDraftName());
+			pstmt.setString(5, ea.getDraftContent());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -61,11 +69,15 @@ public class ElectronicDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, m.getDraftNo());
-			pstmt.setString(2, m.getEmpId());
-			pstmt.setInt(3, m.getMaterialSquence());
+			pstmt.setString(2, m.getEmpId()); // 작성자
+			pstmt.setInt(3, m.getMaterialSquence()); //
 			if(m.getMaterialSquence()==1) {
+				sql = "INSERT INTO MATERIALLINE VALUES(MATERIALLINE_SEQ.NEXTVAL,?,?,?,?,sysdate)";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, m.getDraftNo());
+				pstmt.setString(2, m.getEmpId());
+				pstmt.setInt(3, m.getMaterialSquence());
 				pstmt.setString(4, "승인");
-				pstmt.setDate(5, new java.sql.Date(new java.util.Date().getTime()));
 			}else if(m.getMaterialSquence()==2) {
 				pstmt.setString(4, "진행");
 				pstmt.setDate(5, null);
@@ -103,7 +115,7 @@ public class ElectronicDAO {
 				ea.setPageNo(rs.getInt("rnum"));
 				ea.setEmpName(rs.getString("emp_name"));
 				ea.setDraftNo(rs.getString("draft_no"));
-				ea.setDraftDate(rs.getDate("draft_date"));
+				ea.setDraftDate(rs.getTimestamp("draft_date"));
 				ea.setEmpId(rs.getString("emp_id"));
 				ea.setDraftDept(rs.getString("draft_dept"));
 				ea.setDraftName(rs.getString("draft_name"));
@@ -153,7 +165,7 @@ public class ElectronicDAO {
 			while(rs.next()) {
 				ea = new ElectronicApproval();
 				ea.setDraftNo(rs.getString("draft_no"));
-				ea.setDraftDate(rs.getDate("draft_date"));
+				ea.setDraftDate(rs.getTimestamp("draft_date"));
 				ea.setEmpId(rs.getString("emp_id"));
 				ea.setEmpName(rs.getString("emp_name"));
 				ea.setDraftDept(rs.getString("draft_dept"));
@@ -176,9 +188,8 @@ public class ElectronicDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1,m.getMaterialState());
-			pstmt.setDate(2, new java.sql.Date(new java.util.Date().getTime()));
-			pstmt.setString(3, m.getDraftNo());
-			pstmt.setString(4, m.getEmpId());
+			pstmt.setString(2, m.getDraftNo());
+			pstmt.setString(3, m.getEmpId());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -210,7 +221,7 @@ public class ElectronicDAO {
 				m.setEmpId(rs.getString("emp_id"));
 				m.setMaterialSquence(rs.getInt("material_squence"));
 				m.setMaterialState(rs.getString("material_state"));
-				m.setMaterialDate(rs.getDate("material_date"));
+				m.setMaterialDate(rs.getTimestamp("material_date"));
 				m.setEmpName(rs.getString("emp_name"));
 				
 				list.add(m);
@@ -347,13 +358,13 @@ public class ElectronicDAO {
 				ea.setPageNo(rs.getInt("rnum"));
 				ea.setEmpName(rs.getString("emp_name"));
 				ea.setDraftNo(rs.getString("draft_no"));
-				ea.setDraftDate(rs.getDate("draft_date"));
+				ea.setDraftDate(rs.getTimestamp("draft_date"));
 				ea.setEmpId(rs.getString("emp_id"));
 				ea.setDraftDept(rs.getString("draft_dept"));
 				ea.setDraftName(rs.getString("draft_name"));
 				ea.setDraftContent(rs.getString("draft_content"));
 				ea.setDraftState(rs.getString("draft_state"));
-				ea.setCompletionDate(rs.getDate("COMPLETIONDATE"));
+				ea.setCompletionDate(rs.getTimestamp("COMPLETIONDATE"));
 				list.add(ea);
 			}
 		} catch (SQLException e) {
@@ -402,7 +413,7 @@ public class ElectronicDAO {
 			while(rs.next()) {
 				ac = new AuthoriaztionComment();
 				ac.setComment(rs.getString("comment_content"));
-				ac.setCommentDate(rs.getDate("comment_date"));
+				ac.setCommentDate(rs.getTimestamp("comment_date"));
 				ac.setDraftNo(rs.getString("draft_no"));
 				ac.setEmpId(rs.getString("emp_id"));
 				ac.setEmpName(rs.getString("emp_name"));
@@ -479,7 +490,7 @@ public class ElectronicDAO {
 				ea.setPageNo(rs.getInt("rnum"));
 				ea.setEmpName(rs.getString("emp_name"));
 				ea.setDraftNo(rs.getString("draft_no"));
-				ea.setDraftDate(rs.getDate("draft_date"));
+				ea.setDraftDate(rs.getTimestamp("draft_date"));
 				ea.setEmpId(rs.getString("emp_id"));
 				ea.setDraftDept(rs.getString("draft_dept"));
 				ea.setDraftName(rs.getString("draft_name"));
@@ -527,6 +538,8 @@ public class ElectronicDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, empId);
+			pstmt.setInt(2, (cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
 			
 			rs = pstmt.executeQuery();
 			
@@ -535,7 +548,7 @@ public class ElectronicDAO {
 				ea.setPageNo(rs.getInt("rnum"));
 				ea.setEmpName(rs.getString("emp_name"));
 				ea.setDraftNo(rs.getString("draft_no"));
-				ea.setDraftDate(rs.getDate("draft_date"));
+				ea.setDraftDate(rs.getTimestamp("draft_date"));
 				ea.setEmpId(rs.getString("emp_id"));
 				ea.setDraftDept(rs.getString("draft_dept"));
 				ea.setDraftName(rs.getString("draft_name"));
@@ -577,6 +590,276 @@ public class ElectronicDAO {
 		String sql = prop.getProperty("selectReturnApproval");
 		ArrayList<ElectronicApproval> list = new ArrayList();
 		ElectronicApproval ea;
+		//--내가 작성한 문서가 반려이다.
+//		--내가 승인한 문서가 반려이다.
+//		--내가 반려를 했다.
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, empId);
+			pstmt.setString(2, "반려");
+			pstmt.setString(3, "승인");
+			pstmt.setString(4, "반려");
+			pstmt.setString(5, empId);
+			pstmt.setString(6, empId);
+			pstmt.setString(7, "승인");
+			pstmt.setString(8, "반려");
+			pstmt.setInt(9, (cPage-1)*numPerPage+1);
+			pstmt.setInt(10, cPage*numPerPage);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ea = new ElectronicApproval();
+				ea.setPageNo(rs.getInt("rnum"));
+				ea.setEmpName(rs.getString("emp_name"));
+				ea.setDraftNo(rs.getString("draft_no"));
+				ea.setDraftDate(rs.getTimestamp("draft_date"));
+				ea.setEmpId(rs.getString("emp_id"));
+				ea.setDraftDept(rs.getString("draft_dept"));
+				ea.setDraftName(rs.getString("draft_name"));
+				ea.setDraftContent(rs.getString("draft_content"));
+				ea.setDraftState(rs.getString("draft_state"));
+				ea.setCompletionDate(rs.getTimestamp("MATERIAL_DATE"));
+				list.add(ea);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public List<ElectronicApproval> selectCompletionApproval(Connection conn, String empId, String searchType, String searchWord,	int cPage, int numPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectCompletionApproval");
+		switch(searchType) {
+		case "searchUser" : sql += " AND EMP_NAME LIKE ?";  break;
+		case "searchTitle" : sql += " AND draft_name LIKE ?"; break;
+		case "searchTContents" : sql += " AND draft_content LIKE ?"; break;
+		}
+		
+		System.out.println("sql:"+sql);
+		ArrayList<ElectronicApproval> list = new ArrayList();
+		ElectronicApproval ea;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, empId);
+			pstmt.setString(2, empId);
+			pstmt.setString(3, "종결");
+			pstmt.setInt(4, (cPage-1)*numPerPage+1);
+			pstmt.setInt(5, cPage*numPerPage);
+			pstmt.setString(6, "%"+searchWord+"%");
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ea = new ElectronicApproval();
+				ea.setPageNo(rs.getInt("rnum"));
+				ea.setEmpName(rs.getString("emp_name"));
+				ea.setDraftNo(rs.getString("draft_no"));
+				ea.setDraftDate(rs.getTimestamp("draft_date"));
+				ea.setEmpId(rs.getString("emp_id"));
+				ea.setDraftDept(rs.getString("draft_dept"));
+				ea.setDraftName(rs.getString("draft_name"));
+				ea.setDraftContent(rs.getString("draft_content"));
+				ea.setDraftState(rs.getString("draft_state"));
+				ea.setCompletionDate(rs.getTimestamp("COMPLETIONDATE"));
+				list.add(ea);
+				
+				System.out.println("완료함 : " + ea);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public List<ElectronicApproval> selectRequestApproval(Connection conn, String empId, String searchType,	String searchWord, int cPage, int numPerPage, String fromDate, String toDate) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectRequestApproval");
+		switch(searchType) {
+		case "searchUser" : sql += " AND EMP_NAME LIKE ?";  break;
+		case "searchTitle" : sql += " AND draft_name LIKE ?"; break;
+		case "searchTContents" : sql += " AND draft_content LIKE ?"; break;
+		}
+		
+		if(fromDate !="" && fromDate != null && toDate !="" && toDate != null) {
+			sql+= "and draft_date between ? and ?";
+			fromDate = transForm(fromDate);
+			toDate = transForm(toDate);
+		}
+		
+		
+		ArrayList<ElectronicApproval> list = new ArrayList();
+		ElectronicApproval ea;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, empId);
+			pstmt.setInt(2, (cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
+			pstmt.setString(4, "%"+searchWord+"%");
+			if(fromDate !="" && fromDate != null && toDate !="" && toDate != null) {
+				pstmt.setString(5, fromDate);
+				pstmt.setString(6, toDate);
+			}
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ea = new ElectronicApproval();
+				ea.setPageNo(rs.getInt("rnum"));
+				ea.setEmpName(rs.getString("emp_name"));
+				ea.setDraftNo(rs.getString("draft_no"));
+				ea.setDraftDate(rs.getTimestamp("draft_date"));
+				ea.setEmpId(rs.getString("emp_id"));
+				ea.setDraftDept(rs.getString("draft_dept"));
+				ea.setDraftName(rs.getString("draft_name"));
+				ea.setDraftContent(rs.getString("draft_content"));
+				ea.setDraftState(rs.getString("draft_state"));
+				
+				list.add(ea);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public List<ElectronicApproval> selectCompletionApproval(Connection conn, String empId, String searchType,
+			String searchWord, int cPage, int numPerPage, String fromDate, String toDate) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectCompletionApproval");
+		switch(searchType) {
+		case "searchUser" : sql += " AND EMP_NAME LIKE ?";  break;
+		case "searchTitle" : sql += " AND draft_name LIKE ?"; break;
+		case "searchTContents" : sql += " AND draft_content LIKE ?"; break;
+		}
+		if(fromDate !="" && fromDate != null && toDate !="" && toDate != null) {
+			sql+= "and draft_date between ? and ?";
+			fromDate = transForm(fromDate);
+			toDate = transForm(toDate);
+		}
+
+		System.out.println("sql:"+sql);
+		ArrayList<ElectronicApproval> list = new ArrayList();
+		ElectronicApproval ea;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, empId);
+			pstmt.setString(2, empId);
+			pstmt.setString(3, "종결");
+			pstmt.setInt(4, (cPage-1)*numPerPage+1);
+			pstmt.setInt(5, cPage*numPerPage);
+			pstmt.setString(6, "%"+searchWord+"%");
+			if(fromDate !="" && fromDate != null && toDate !="" && toDate != null) {
+				pstmt.setString(7, fromDate);
+				pstmt.setString(8, toDate);
+			}
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ea = new ElectronicApproval();
+				ea.setPageNo(rs.getInt("rnum"));
+				ea.setEmpName(rs.getString("emp_name"));
+				ea.setDraftNo(rs.getString("draft_no"));
+				ea.setDraftDate(rs.getTimestamp("draft_date"));
+				ea.setEmpId(rs.getString("emp_id"));
+				ea.setDraftDept(rs.getString("draft_dept"));
+				ea.setDraftName(rs.getString("draft_name"));
+				ea.setDraftContent(rs.getString("draft_content"));
+				ea.setDraftState(rs.getString("draft_state"));
+				ea.setCompletionDate(rs.getTimestamp("COMPLETIONDATE"));
+				list.add(ea);
+				
+				System.out.println("완료함 : " + ea);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public List<ElectronicApproval> selectProgressApproval(Connection conn, String empId, String searchType,
+			String searchWord, int cPage, int numPerPage, String fromDate, String toDate) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectProgressApproval");
+		switch(searchType) {
+			case "searchUser" : sql += " AND EMP_NAME LIKE ?";  break;
+			case "searchTitle" : sql += " AND draft_name LIKE ?"; break;
+			case "searchTContents" : sql += " AND draft_content LIKE ?"; break;
+		}
+
+		if(fromDate !="" && fromDate != null && toDate !="" && toDate != null) {
+			sql+= "and draft_date between ? and ?";
+			fromDate = transForm(fromDate);
+			toDate = transForm(toDate);
+		}
+		ArrayList<ElectronicApproval> list = new ArrayList();
+		ElectronicApproval ea;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, empId);
+			pstmt.setString(2, "승인");
+			pstmt.setString(3, "진행");
+			pstmt.setInt(4, (cPage-1)*numPerPage+1);
+			pstmt.setInt(5, cPage*numPerPage);
+			pstmt.setString(6, "%"+searchWord+"%");
+			if(fromDate !="" && fromDate != null && toDate !="" && toDate != null) {
+				pstmt.setString(7, fromDate);
+				pstmt.setString(8, toDate);
+			}
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ea = new ElectronicApproval();
+				ea.setPageNo(rs.getInt("rnum"));
+				ea.setEmpName(rs.getString("emp_name"));
+				ea.setDraftNo(rs.getString("draft_no"));
+				ea.setDraftDate(rs.getTimestamp("draft_date"));
+				ea.setEmpId(rs.getString("emp_id"));
+				ea.setDraftDept(rs.getString("draft_dept"));
+				ea.setDraftName(rs.getString("draft_name"));
+				ea.setDraftContent(rs.getString("draft_content"));
+				ea.setDraftState(rs.getString("draft_state"));
+				
+				list.add(ea);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public List<ElectronicApproval> selectReturnApproval(Connection conn, String empId, String searchType,
+			String searchWord, int cPage, int numPerPage, String fromDate, String toDate) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectReturnApproval");
+		switch(searchType) {
+		case "searchUser" : sql += " AND EMP_NAME LIKE ?";  break;
+		case "searchTitle" : sql += " AND draft_name LIKE ?"; break;
+		case "searchTContents" : sql += " AND draft_content LIKE ?"; break;
+	}
+
+	if(fromDate !="" && fromDate != null && toDate !="" && toDate != null) {
+		sql+= "and draft_date between ? and ?";
+		fromDate = transForm(fromDate);
+		toDate = transForm(toDate);
+	}
+		ArrayList<ElectronicApproval> list = new ArrayList();
+		ElectronicApproval ea;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -586,6 +869,11 @@ public class ElectronicDAO {
 			pstmt.setString(4, "반려");
 			pstmt.setInt(5, (cPage-1)*numPerPage+1);
 			pstmt.setInt(6, cPage*numPerPage);
+			pstmt.setString(7, "%"+searchWord+"%");
+			if(fromDate !="" && fromDate != null && toDate !="" && toDate != null) {
+				pstmt.setString(8, fromDate);
+				pstmt.setString(9, toDate);
+			}
 			
 			rs = pstmt.executeQuery();
 			
@@ -594,13 +882,13 @@ public class ElectronicDAO {
 				ea.setPageNo(rs.getInt("rnum"));
 				ea.setEmpName(rs.getString("emp_name"));
 				ea.setDraftNo(rs.getString("draft_no"));
-				ea.setDraftDate(rs.getDate("draft_date"));
+				ea.setDraftDate(rs.getTimestamp("draft_date"));
 				ea.setEmpId(rs.getString("emp_id"));
 				ea.setDraftDept(rs.getString("draft_dept"));
 				ea.setDraftName(rs.getString("draft_name"));
 				ea.setDraftContent(rs.getString("draft_content"));
 				ea.setDraftState(rs.getString("draft_state"));
-				ea.setCompletionDate(rs.getDate("MATERIAL_DATE"));
+				ea.setCompletionDate(rs.getTimestamp("MATERIAL_DATE"));
 				list.add(ea);
 			}
 		} catch (SQLException e) {
@@ -609,5 +897,220 @@ public class ElectronicDAO {
 		}
 		return list;
 	}
+
+	public List<ElectronicApproval> selectWaitingApproval(Connection conn, String empId, String searchType,
+			String searchWord, int cPage, int numPerPage, String fromDate, String toDate) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectWaitApproval");
+		switch(searchType) {
+		case "searchUser" : sql += " AND EMP_NAME LIKE ?";  break;
+		case "searchTitle" : sql += " AND draft_name LIKE ?"; break;
+		case "searchTContents" : sql += " AND draft_content LIKE ?"; break;
+	}
+
+	if(fromDate !="" && fromDate != null && toDate !="" && toDate != null) {
+		sql+= "and draft_date between ? and ?";
+		fromDate = transForm(fromDate);
+		toDate = transForm(toDate);
+	}
+		ArrayList<ElectronicApproval> list = new ArrayList();
+		ElectronicApproval ea;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, empId);
+			pstmt.setString(2, "진행");
+			pstmt.setInt(3, (cPage-1)*numPerPage+1);
+			pstmt.setInt(4, cPage*numPerPage);
+			pstmt.setString(5, "%"+searchWord+"%");
+			if(fromDate !="" && fromDate != null && toDate !="" && toDate != null) {
+				pstmt.setString(6, fromDate);
+				pstmt.setString(7, toDate);
+			}
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ea = new ElectronicApproval();
+				ea.setPageNo(rs.getInt("rnum"));
+				ea.setEmpName(rs.getString("emp_name"));
+				ea.setDraftNo(rs.getString("draft_no"));
+				ea.setDraftDate(rs.getTimestamp("draft_date"));
+				ea.setEmpId(rs.getString("emp_id"));
+				ea.setDraftDept(rs.getString("draft_dept"));
+				ea.setDraftName(rs.getString("draft_name"));
+				ea.setDraftContent(rs.getString("draft_content"));
+				ea.setDraftState(rs.getString("draft_state"));
+				list.add(ea);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public int deleteCommentByEmpId(Connection conn, String draftNo, String empId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteCommentByEmpId");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, draftNo);
+			pstmt.setString(2, empId);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close(pstmt);
+		
+		return result;
+	}
+
+	public int updateMaterial(Connection conn, String draftNo, String empId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateMaterial");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "진행");
+			pstmt.setString(2, empId);
+			pstmt.setString(3, draftNo);
+			pstmt.setString(4, empId);
+			pstmt.setString(5, draftNo);
+			pstmt.setString(6, draftNo);
+			pstmt.setString(7, draftNo);
+			pstmt.setString(8, empId);
+			pstmt.setString(9, draftNo);
+			pstmt.setString(10, "진행");
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close(pstmt);
+		
+		return result;
+	}
+
+	public int deleteMaterial(Connection conn, String draftNo, String empId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteMaterial");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, draftNo);
+			pstmt.setString(2, draftNo);
+			pstmt.setString(3, empId);
+			pstmt.setString(4, draftNo);
+			pstmt.setString(5, "진행");
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close(pstmt);
+		
+		return result;
+	}
+
+	public int deleteElectronicApproval(Connection conn, String draftNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteElectronicApproval");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, draftNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close(pstmt);
+		
+		return result;
+	}
+
+	public int selectReturnCount(Connection conn, String empId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectReturnCount");
+		int approvalcnt = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, empId);
+			pstmt.setString(2, "반려");
+			pstmt.setString(3, "승인");
+			pstmt.setString(4, "반려");
+			pstmt.setString(5, empId);
+			pstmt.setString(6, empId);
+			pstmt.setString(7, "승인");
+			pstmt.setString(8, "반려");
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				approvalcnt = rs.getInt("returncnt");//APPROVALCNT
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return approvalcnt;
+	}
+
+	public ArrayList<ElectronicApproval> selectRequestApprovalSort(Connection conn, String empId, String sortchk,
+			int cPage, int numPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql;
+		if(sortchk.equals("1")) {
+			sql = prop.getProperty("selectRequestApprovalSortDesc");
+		}else {
+			sql = prop.getProperty("selectRequestApprovalSortAsc");
+		}
+		ArrayList<ElectronicApproval> list = new ArrayList();
+		ElectronicApproval ea;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, empId);
+			pstmt.setInt(2, (cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ea = new ElectronicApproval();
+				ea.setPageNo(rs.getInt("rnum"));
+				ea.setEmpName(rs.getString("emp_name"));
+				ea.setDraftNo(rs.getString("draft_no"));
+				ea.setDraftDate(rs.getTimestamp("draft_date"));
+				ea.setEmpId(rs.getString("emp_id"));
+				ea.setDraftDept(rs.getString("draft_dept"));
+				ea.setDraftName(rs.getString("draft_name"));
+				ea.setDraftContent(rs.getString("draft_content"));
+				ea.setDraftState(rs.getString("draft_state"));
+				
+				list.add(ea);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	
 }

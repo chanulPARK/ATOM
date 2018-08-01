@@ -12,6 +12,8 @@
 	ElectronicApproval ea = (ElectronicApproval)request.getAttribute("ea");
 	ArrayList<MaterialLine> materialList = (ArrayList)request.getAttribute("materialline");
 	ArrayList<AuthoriaztionComment> commentList = (ArrayList)request.getAttribute("commentList");
+	SimpleDateFormat sd = new SimpleDateFormat("YYYY-MM-dd");
+	SimpleDateFormat sd2 = new SimpleDateFormat("HH:mm:ss");
 	System.out.println("결재선 : ?" + materialList);
 	System.out.println("커맨트 : ?" + commentList.size());
 	
@@ -195,10 +197,15 @@ ul{
               <hr>
           </div>
           <div class="row" >
+          	          <form action="<%=request.getContextPath()%>/electronic/approvalBack">
+          
 	          <div id="formButtonDiv" class="btn-wrap pull-right">
-	      	    <button id="" class="btn btn-primary" type="button">결재회수</button>
-	      	    <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button>
-	      		<button id="" type="reset"  onclick="history.go(-1)" class="btn btn-default">목록</button>
+	          	<input type='hidden' name = "draftNo" value="<%=ea.getDraftNo()%>">
+	      	    <button id="" class="btn btn-primary" type="submit" ">결재회수</button>
+<!-- 	      	    <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button>
+ -->	      		<button id="" type="reset"  onclick="history.go(-1)" class="btn btn-default">목록</button>
+	      			      	  </form>
+	      		
 	      	  </div>
 
             <!-- Modal -->
@@ -356,7 +363,7 @@ ul{
 				                      <td>
 					                      <span style="font-size:0.9em"><%=m.getEmpName()%><br></span>
 					                      <span style="font-size:1em"><%=m.getMaterialState() %><br></span>
-					                      <span style="font-size:0.8em"><%if(m.getMaterialDate()!=null){%><%=m.getMaterialDate()%><%}%></span>
+					                      <span style="font-size:0.8em"><%if(m.getMaterialDate()!=null){%><%=sd.format(m.getMaterialDate())%><br><%=sd2.format(m.getMaterialDate())%><%}%></span>
 				                      </td>
 				                    <%}%>
 				                    </tr>
@@ -411,12 +418,12 @@ ul{
 	      		</div>
 	      	</div> <!-- content-wrap approval responsive -->
 
-	      	<div id="formButtonDiv" class="btn-wrap pull-right">
-	      	   <button id="" class="btn btn-primary" type="button">결재회수</button>
+	      	<!-- <div id="formButtonDiv" class="btn-wrap pull-right">
+	      	   <button id="" class="btn btn-primary" type="button" onclick="fn_apprBack();">결재회수</button>
 	      	    <button id="addApprLineButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">결재선</button>
-	      		<!-- <button id="createApprDocTemporayButton" type="button" class="btn btn-default">임시저장</button> -->
+	      		<button id="createApprDocTemporayButton" type="button" class="btn btn-default">임시저장</button>
 	      		<button id="" type="reset"  onclick="history.go(-1)" class="btn btn-default">목록</button>
-	      	</div>
+	      	</div> -->
       </div> <%--row--%>
       <%if(commentList.size()!=0){ %>
       <div class="row">
@@ -479,6 +486,10 @@ ul{
         dropdownContent.style.display = "block";
       }
     });
+    }
+    
+    function fn_apprBack(){
+    	location.href="<%=request.getContextPath()%>/electronic/approvalBack";
     }
 
     //TAB javascript

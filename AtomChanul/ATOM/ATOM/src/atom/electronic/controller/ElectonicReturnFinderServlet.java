@@ -15,16 +15,16 @@ import atom.electronic.model.vo.ElectronicApproval;
 import atom.employee.model.vo.Employee;
 
 /**
- * Servlet implementation class ElectronicReturnBoxServlet
+ * Servlet implementation class ElectonicReturnFinderServlet
  */
-@WebServlet("/electronic/electronicReturnBox")
-public class ElectronicReturnBoxServlet extends HttpServlet {
+@WebServlet("/electronic/electonicReturnFinder")
+public class ElectonicReturnFinderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ElectronicReturnBoxServlet() {
+    public ElectonicReturnFinderServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,10 +33,11 @@ public class ElectronicReturnBoxServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String searchType = request.getParameter("searchType");
+		String searchWord=request.getParameter("searchWord");
+
 		HttpSession session = request.getSession();
 		Employee e = (Employee)session.getAttribute("empLoggedIn");
-		
-		
 		
 		//페이징 처리
 		int numPerPage;
@@ -50,12 +51,14 @@ public class ElectronicReturnBoxServlet extends HttpServlet {
 			numPerPage = 10;
 		}
 		
-		List<ElectronicApproval> list = new ElectronicService().selectReturnApproval(e.getEmpId(), cPage, numPerPage);
-
+		String FromDate = request.getParameter("FromDate");
+		String ToDate = request.getParameter("ToDate");
+		
+		List<ElectronicApproval> list = new ElectronicService().selectReturnApproval(e.getEmpId(),searchType, searchWord, cPage, numPerPage, FromDate, ToDate);
 		
 		//pageBar만들기!! 만들어 볼까요?!
 				//전체 자료수
-				int totalContent=new ElectronicService().selectReturnCount(e.getEmpId());
+				int totalContent=new ElectronicService().selectRequestApprovalCount(e.getEmpId());
 				String pageBar="";
 
 				//전체 page수
@@ -77,9 +80,9 @@ public class ElectronicReturnBoxServlet extends HttpServlet {
 					}
 					else
 					{
-//						pageBar+="<a href='"+request.getContextPath()+"/electronic/electronicWaitingBox?cPage="+(pageNo-1)+"&numPerPage="+numPerPage+"'>[이전]</a>";
+//						pageBar+="<a href='"+request.getContextPath()+"/electronic/electronicReturnBox?cPage="+(pageNo-1)+"&numPerPage="+numPerPage+"'>[이전]</a>";
 						pageBar+="<li>\r\n" + 
-									"<a href='"+request.getContextPath()+"/electronic/electronicWaitingBox?cPage="+(pageNo-1)+"&numPerPage="+numPerPage+"' aria-label='Previous'>" + 
+									"<a href='"+request.getContextPath()+"/electronic/electronicReturnBox?cPage="+(pageNo-1)+"&numPerPage="+numPerPage+"' aria-label='Previous'>" + 
 										"<span aria-hidden='true'>&lsaquo;</span>" + 
 									"</a>" + 
 								"</li>";
@@ -94,8 +97,8 @@ public class ElectronicReturnBoxServlet extends HttpServlet {
 						}
 						else
 						{
-//							pageBar+="<a href='"+request.getContextPath()+"/electronic/electronicWaitingBox?cPage="+pageNo+"'>["+pageNo+"]</a>";
-							pageBar+="<li><a href='"+request.getContextPath()+"/electronic/electronicWaitingBox?cPage="+pageNo+"&numPerPage="+numPerPage+"'>"+pageNo+"</a></li>";
+//							pageBar+="<a href='"+request.getContextPath()+"/electronic/electronicReturnBox?cPage="+pageNo+"'>["+pageNo+"]</a>";
+							pageBar+="<li><a href='"+request.getContextPath()+"/electronic/electronicReturnBox?cPage="+pageNo+"&numPerPage="+numPerPage+"'>"+pageNo+"</a></li>";
 	
 						}
 						pageNo++;
@@ -111,9 +114,9 @@ public class ElectronicReturnBoxServlet extends HttpServlet {
 					}
 					else
 					{
-//						pageBar+="<a href='"+request.getContextPath()+"/electronic/electronicWaitingBox?cPage="+pageNo+"'>[다음]</a>";
+//						pageBar+="<a href='"+request.getContextPath()+"/electronic/electronicReturnBox?cPage="+pageNo+"'>[다음]</a>";
 						pageBar+="<li>\r\n" + 
-								"<a href='"+request.getContextPath()+"/electronic/electronicWaitingBox?cPage="+pageNo+"&numPerPage="+numPerPage+"' aria-label='Next'>" + 
+								"<a href='"+request.getContextPath()+"/electronic/electronicReturnBox?cPage="+pageNo+"&numPerPage="+numPerPage+"' aria-label='Next'>" + 
 									"<span aria-hidden='true'>&rsaquo;</span>" + 
 								"</a>" + 
 							"</li>";
@@ -129,7 +132,7 @@ public class ElectronicReturnBoxServlet extends HttpServlet {
 		
 		request.setAttribute("list", list);		
 		
-		request.getRequestDispatcher("/views/ElectronicApprovalManagement/electronicReturnBox.jsp").forward(request, response);		
+		request.getRequestDispatcher("/views/ElectronicApprovalManagement/electronicReturnBox.jsp").forward(request, response);	
 	}
 
 	/**

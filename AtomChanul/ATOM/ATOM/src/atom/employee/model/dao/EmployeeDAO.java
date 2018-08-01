@@ -1,5 +1,7 @@
 package atom.employee.model.dao;
 
+import static common.JDBCTemplate.close;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -10,8 +12,6 @@ import java.util.List;
 import java.util.Properties;
 
 import atom.employee.model.vo.Employee;
-
-import static common.JDBCTemplate.*;
 
 public class EmployeeDAO {
 	private Properties prop;
@@ -62,6 +62,68 @@ public class EmployeeDAO {
 		close(rs);
 		close(pstmt);
 		return e;
+	}
+	
+	public ArrayList<Employee> selectEmployeeAll(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Employee> list = new ArrayList();
+		Employee e;
+		String sql = prop.getProperty("selectEmployeeAll");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				e = new Employee();
+				e.setEmpId(rs.getString("emp_id"));
+				e.setEmpPw(rs.getString("emp_pw"));
+				e.setEmpName(rs.getString("emp_name"));
+				e.setEmpRrn(rs.getString("emp_rrn"));
+				e.setEmail(rs.getString("email"));
+				e.setPhone(rs.getString("phone"));
+				e.setAddr(rs.getString("addr"));
+				e.setDeptCode(rs.getString("dept_code"));
+				e.setDeptName(rs.getString("dept_name"));
+				e.setJobCode(rs.getString("job_code"));
+				e.setJobName(rs.getString("job_name"));
+				e.setAdminCode(rs.getString("admin_code"));
+				e.setManagerId(rs.getString("manager_id"));
+				e.setHireDate(rs.getDate("hire_date"));
+				e.setEntDate(rs.getDate("ent_date"));
+				e.setEntYn(rs.getString("ent_yn"));
+				e.setEmpPr(rs.getString("emp_pr"));
+				e.setEmpImg(rs.getString("emp_img"));
+				
+				list.add(e);
+			}
+		} catch(Exception ee) {
+			ee.printStackTrace();
+		}
+		close(rs);
+		close(pstmt);
+		return list;
+	}
+
+	public ArrayList<String> selectDept(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<String> list = new ArrayList<String>();
+		String s = "";
+		String sql = prop.getProperty("selectDept");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				s = rs.getString("dept_name");
+				
+				list.add(s);
+			}
+		} catch(Exception ee) {
+			ee.printStackTrace();
+		}
+		close(rs);
+		close(pstmt);
+		return list;
 	}
 	
 	public List<Employee> selectAll(Connection conn) {

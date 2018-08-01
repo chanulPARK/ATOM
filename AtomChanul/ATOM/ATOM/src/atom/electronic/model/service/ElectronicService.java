@@ -13,6 +13,7 @@ import atom.electronic.model.dao.ElectronicDAO;
 import atom.electronic.model.vo.AuthoriaztionComment;
 import atom.electronic.model.vo.ElectronicApproval;
 import atom.electronic.model.vo.MaterialLine;
+import atom.employee.model.vo.Employee;
 
 public class ElectronicService {
 
@@ -180,6 +181,95 @@ public class ElectronicService {
 	public List<ElectronicApproval> selectReturnApproval(String empId, int cPage, int numPerPage) {
 		Connection conn = getConnection();
 		ArrayList<ElectronicApproval> list = new ElectronicDAO().selectReturnApproval(conn,empId,cPage,numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<ElectronicApproval> selectRequestApproval(String empId, String searchType, String searchWord, int cPage,int numPerPage, String fromDate, String toDate) {
+		Connection conn = getConnection();
+		List<ElectronicApproval> list = new ElectronicDAO().selectRequestApproval(conn,empId, searchType,searchWord, cPage, numPerPage,fromDate,toDate);
+		close(conn);
+		return list;
+	}
+
+	public List<ElectronicApproval> selectCompletionApproval(String empId, String searchType, String searchWord,int cPage, int numPerPage, String fromDate, String toDate) {
+		Connection conn = getConnection();
+		List<ElectronicApproval> list = new ElectronicDAO().selectCompletionApproval(conn,empId, searchType,searchWord, cPage, numPerPage,fromDate,toDate);
+		close(conn);
+		return list;
+	}
+
+	public List<ElectronicApproval> selectProgressApproval(String empId, String searchType, String searchWord,
+			int cPage, int numPerPage, String fromDate, String toDate) {
+		Connection conn = getConnection();
+		List<ElectronicApproval> list = new ElectronicDAO().selectProgressApproval(conn,empId, searchType,searchWord, cPage, numPerPage,fromDate,toDate);
+		close(conn);
+		return list;
+	}
+
+	public List<ElectronicApproval> selectReturnApproval(String empId, String searchType, String searchWord, int cPage,
+			int numPerPage, String fromDate, String toDate) {
+		Connection conn = getConnection();
+		List<ElectronicApproval> list = new ElectronicDAO().selectReturnApproval(conn,empId, searchType,searchWord, cPage, numPerPage,fromDate,toDate);
+		close(conn);
+		return list;
+	}
+
+	public List<ElectronicApproval> selectWaitingApproval(String empId, String searchType, String searchWord, int cPage,
+			int numPerPage, String fromDate, String toDate) {
+		Connection conn = getConnection();
+		List<ElectronicApproval> list = new ElectronicDAO().selectWaitingApproval(conn,empId, searchType,searchWord, cPage, numPerPage,fromDate,toDate);
+		close(conn);
+		return list;
+	}
+
+	public int deleteCommentByEmpId(String draftNo, String empId) {
+		Connection conn = getConnection();
+		int result = new ElectronicDAO().deleteCommentByEmpId(conn,draftNo, empId);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int updateMaterial(String draftNo, String empId) {
+		// TODO Auto-generated method stub
+		Connection conn = getConnection();
+		int result = new ElectronicDAO().updateMaterial(conn,draftNo, empId);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int deleteMaterial(String draftNo, String empId) {
+		Connection conn = getConnection();
+		int result = new ElectronicDAO().deleteMaterial(conn,draftNo,empId);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int deleteElectronicApproval(String draftNo) {
+		Connection conn = getConnection();
+		int result = new ElectronicDAO().deleteElectronicApproval(conn,draftNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int selectReturnCount(String empId) {
+		Connection conn = getConnection();
+		int approvalprogressCnt= new ElectronicDAO().selectReturnCount(conn,empId);
+		close(conn);
+		return approvalprogressCnt;
+	}
+
+	public List<ElectronicApproval> selectRequestApprovalSort(String empId, String sortchk, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		ArrayList<ElectronicApproval> list = new ElectronicDAO().selectRequestApprovalSort(conn,empId,sortchk,cPage,numPerPage);
 		close(conn);
 		return list;
 	}

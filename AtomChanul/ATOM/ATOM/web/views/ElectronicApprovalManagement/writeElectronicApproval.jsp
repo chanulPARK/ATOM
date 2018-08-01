@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -7,8 +8,15 @@
 <%
 	Date date = new Date();
 	SimpleDateFormat sd = new SimpleDateFormat("YYYY.MM.dd");
+	ArrayList<Employee> empList = (ArrayList<Employee>)request.getAttribute("empList");
+	ArrayList<String> deptList = (ArrayList<String>)request.getAttribute("deptList");
+	for(Employee s : empList){
+		System.out.println(s.getEmpName());
+	}
 %>
 <head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/dist/css/jstree/style.min.css" />
+
 <style>
 
 /* Style the sidenav links and the dropdown button */
@@ -137,7 +145,7 @@ h4{
 	display:none;
 }
 
-ul{
+.apprline ul{
 	list-style:none;
 	 text-align:center;
 	 padding : 0px;
@@ -170,13 +178,6 @@ ul{
 
 
     </style>
-
-    <!-- niceidt -->
-
-    <script type="text/javascript" src="<%=request.getContextPath()%>/dist/js/nicEdita.js"></script>
-    <script type="text/javascript">
-      bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
-    </script>
    </head>
     <section>
         <div class="content">
@@ -215,7 +216,9 @@ ul{
 						<!-- Tab content -->
 						<div id="organization" class="tabcontent">
 						  <h3>조직도</h3>
-						  <p>London is the capital city of England.</p>
+  						 <!-- 3 setup a container element -->
+						  <div id="jstree">
+ 						 </div>
 						</div>
 						<div id="search" class="tabcontent tabcontentsecond">
 						  <h3>검색</h3>
@@ -225,8 +228,7 @@ ul{
 	                  <div class="col-md-1" style="margin-top:20%;">
 	                  	<div class="apprline" >
 							<ul>
-								<li><a href="#" id="btnItemAdd" style="color:red"><i class="fa fa-plus-square"></i></a></li>
-								<li><a href="#" id="btnItemRemove"><i class="fa fa-minus-square"></i></a></li>
+ 								<li><a href="#" id="btnItemRemove"><i class="fa fa-minus-square"></i></a></li>
 								<li><a id="btnItemRemoveAll" href="#a"><i class="fa fa-rotate-left"></i></a></li>
 							</ul>						
 						</div>
@@ -234,64 +236,16 @@ ul{
 	                  <div class="col-md-6">
 						<div class="appr-info">
 							<h5>결재선 정보</h5>
-							<div class="userApprSave Load">
-								<strong>사용자 결재선</strong>									
-								<select title="사용자 결재선" id="userLineId" class="" style="width:55%; margin:2% 5%;">
-									<option value="">-- 선택  --</option>
-									<option value="21263699">결재선저장</option>
-								</select>		
-								<button class="btn btn-xs" type="button" id="btnRemove">삭제</button>
-							</div>
 							<div class="apprlinelist" style="height:77%; overflow-y:scroll;">
 								<div class="fleft" style="width:100% !important; overflow-y:auto;">
-								<ul id="ulResult" class="list-selectable ui-sortable" style="width:98%; font-size:1em;">
-									<li class="ui-state-default important nomove" title="박메카 기안 인사팀">
+								<ul id="ulResult" class="list-selectable ui-sortable" style="width:98%; font-size:1em; list-style:none; padding:0;">
+									<li id="<%=empLoggedIn.getEmpId()%>chk" class="ui-state-default important nomove" title="">
 										<div class="liDiv">
 											<table cellspacing="1" cellpadding="1" border="0" style="width: 100%; table-layout:fixed; border:1px solid #eee">
 												<tbody>
 													<tr>
-														<td style="padding:10px 5px; width: 3em; text-align: center;"></td>
 														<td id="apprTypeTd" style="padding:10px 5px; text-align: center; border-left:1px solid #F0F3F7; width: 70px;">결재</td>
-														<td class="textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;">박메카 기안 인사팀</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</li>
-									<li class="ui-state-default important move" title="김이지 회장 인사팀">
-										<div class="liDiv">
-											<table cellspacing="1" cellpadding="1" border="0" style="width: 100%; table-layout:fixed; border:1px solid #eee">
-												<tbody>
-													<tr>
-														<td style="padding:10px 5px; width: 3em; text-align: center;"><i class="fa fa-arrows-v fa-lg text-point-b"></i></td>
-														<td id="apprTypeTd" style="padding:10px 5px; text-align: center; border-left:1px solid #F0F3F7; width: 70px;">결재</td>
-														<td class="textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;text-align:center">김이지 회장 인사팀</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</li>
-									<li class="ui-state-default important move" title="송한국 이사 회계팀">
-										<div class="liDiv">
-											<table cellspacing="1" cellpadding="1" border="0" style="width: 100%; table-layout:fixed; border:1px solid #eee">
-												<tbody>
-													<tr>
-														<td style="padding:10px 5px; width: 3em; text-align: center;"><i class="fa fa-arrows-v fa-lg"></i></td>
-														<td id="apprTypeTd" style="padding:10px 5px; text-align: center; border-left:1px solid #F0F3F7; width: 70px;">결재</td>
-														<td class="textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;">송한국 이사 회계팀</td>
-													</tr>
-												</tbody>
-										</table>
-										</div>
-									</li>
-									<li class="ui-state-default important move ui-selected" title="최나라 사원 회계팀">
-										<div class="liDiv">
-											<table cellspacing="1" cellpadding="1" border="0" style="width: 100%; table-layout:fixed; border:1px solid #eee">
-												<tbody>
-													<tr>
-														<td style="padding:10px 5px; width: 3em; text-align: center;">최종</td>
-														<td id="apprTypeTd" style="padding:10px 5px; text-align: center; border-left:1px solid #F0F3F7; width: 70px;">결재</td>
-														<td class="textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;">최나라 사원 회계팀</td>
+														<td id="tdchange1"  class="tdchange textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;"><%=empLoggedIn.getEmpName() + " " + empLoggedIn.getJobName() + " " + empLoggedIn.getDeptName()%></td>
 													</tr>
 												</tbody>
 											</table>
@@ -299,17 +253,6 @@ ul{
 									</li>
 								</ul>
 							</div>
-							</div>
-							<div class="userApprSave" style = "display:inline-block;">
-								<div class="col-xs-4" >
-									<strong style="font-size:1em;">사용자 결재선명</strong>	
-								</div>								
-								<div class="col-xs-6">
-									<input type="text" class="form-control input-sm">	
-								</div>								
-								<div class="col-xs-2">
-									<button class="btn btn-xs" type="button" id="btnRemove">저장</button>
-								</div>								
 							</div>
 						</div>
 						
@@ -319,59 +262,34 @@ ul{
                   </div> <!-- modal-body -->
                   
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">적용</button>
+                    <button id='aprrbutton' type="button" class="btn btn-primary" data-dismiss="modal">적용</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
                   </div>
                 </div>
 
               </div> <%-- modal-dialog --%>
             </div>
-
-
-
 	      	  <div class="content-wrap approval responsive">
 	      		<div class="content-write">
-	      			<form id="apprDocForm" name="apprDocForm" method="post" action="<%=request.getContextPath()%>/approval/createApprDoc.do">
+	      			<form id="apprDocForm" name="apprDocForm" method="post"  onsubmit="return check()" action="<%=request.getContextPath()%>/approval/createApprDoc.do">
 	      				<h3 style="margin: 2% 45%">기안용지</h3>
 	      				<div class="appline-wrap pull-right">
 	                		<table border="1" style="text-align:center">
 	                  			<tbody>
-				                    <tr>
+				                    <tr id="apprhead">
 				                      <td id="first-td" rowspan="2">결<br><br>재</td>
-				                      <td>기안</td>
-				                      <td>대리</td>
- 				                      <td>사장</td>
+				                      <td id="not">기안</td>
+				                      <!-- <td>결재</td>
+ 				                      <td>결재</td> -->
  				                </tr>
-				                    <tr>
-				                      <td>
+				                    <tr id='apprbody'>
+				                      <td id = 'not'>
 					                      <span style="font-size:0.9em"><%=empLoggedIn.getEmpName()%><br></span>
 					                      <input type="hidden" name="material_id" value="<%=empLoggedIn.getEmpId()%>">
 					                      <input type="hidden" name="material_squence" value="1">
 					                      <!-- <span style="font-size:1em">반려<br></span>
 					                      <span style="font-size:0.8em">07.27 12:00</span> -->
 				                      </td>
-				                      <td>
-					                      <span style="font-size:0.9em">요기요<br></span>
-					                      <input type="hidden" name="material_id" value="USER2">
-					                      <input type="hidden" name="material_squence" value="2">
-					                      					                      
-					                      <!-- <span style="font-size:1em">대기<br></span>
-					                      <span style="font-size:0.8em">07.27 12:00</span> -->
-				                      </td>
-				                      <td>
-					                      <span style="font-size:0.9em">길리슛<br></span>
-					                      <input type="hidden" name="material_id" value="U">
-					                      <input type="hidden" name="material_squence" value="3">
-					                  </td>
-					                  <!--    					                      
-					                      <span style="font-size:1em">대기<br></span>
-					                      <span style="font-size:0.8em">07.27 12:00</span>
-				                      </td>
-				                      <td>
-					                      <span style="font-size:0.9em">김올레<br></span>
-					                      <span style="font-size:1em">승인<br></span>
-					                      <span style="font-size:0.8em">07.27 12:00</span>
-				                      </td> -->
 				                    </tr>
 				                </tbody>
 	                		</table>
@@ -399,25 +317,16 @@ ul{
 	      								<td><%=empLoggedIn.getDeptName() %></td>
 	      							</tr>
 	      							<tr>
-	      								<th>참조자</th>
-	      								<td colspan='3'>
-		      								<div class="input-group" >
-											  <input style="width:95%" type="text" class="form-control">
-											  <span style="width:5%;height:2.45em" class="input-group-addon" id="basic-addon2"><i class="fa fa-user-plus"></i></span>
-											</div>
-	      								</td>
-	      							</tr>
-	      							<tr>
 	      								<th><span style="color: red">* </span>문서제목</th>
 	      								<td colspan="3">
-	                       					 <input type="text" title="문서제목"  name="apprTitle" value="" class="form-control inputbox w100p" maxlength="100" placeholder="문서제목을 입력하세요. " />
+	                       					 <input type="text" title="문서제목"  name="apprTitle" value="" class="form-control inputbox w100p" maxlength="100" placeholder="문서제목을 입력하세요. " required/>
 	      								</td>
 	      							</tr>
 	      						</tbody>
 	      					</table>
 	      				</div>
 	              		<div class="">
-	              			<textarea id="apprContent" name="apprContent" rows="25" cols="80" style="width:100%"></textarea>
+	              			<textarea id="apprContent" name ="apprContent" rows="25" cols="80" style="width:100%;resize:none;overflow-y: scroll;" ></textarea>
 	              		</div>
 
 	      		</div>
@@ -435,6 +344,67 @@ ul{
     </section>
 
     <script>
+    var squencechk= 2;
+    $('#addApprLineButton').click(function(){
+    	console.log('gd');
+    	$('.nicEdit-main').attr('required',true);
+	});
+	
+    $(function () {
+    	
+    	$('#jstree').jstree({
+    		"core" : {
+    			'data' : [
+    				<%for(String s : deptList){%>
+    				{
+    				
+    				"id" : "<%=s%>",
+    				"text" : "<%=s%>",
+					'icon' : '<%=request.getContextPath()%>/dist/img/hierarchical-structure.png',
+    				'children' : [    				
+	    				<%for(Employee e : empList){
+	    					if(e.getDeptName().equals(s)){
+	    				%>
+	    				{
+	    					'id' : '<%=e.getEmpId()%>',
+	    					'text' : '<%=e.getEmpName()+" "+ e.getJobName()%>',
+	    					'dept' : '<%=e.getDeptName()%>',
+	    					'icon' : '<%=request.getContextPath()%>/dist/img/user-shape.png',
+	    				},
+	    				<%}
+	    				}%>
+    				]},
+    				<%}%>
+    			]
+    		}
+    	}).bind('select_node.jstree', function(event, data){
+    	    var id = data.instance.get_node(data.selected).id;        //id 가져오기
+    	    var parent = data.instance.get_node(data.selected).parent;    //type 가져오기
+			var chk = 0;
+			if(parent != "#"){
+				$('#ulResult').find('li').each(function(){
+					if(this.id.slice(0,-3) == id){
+						alert('이미 있음');
+						chk=1;
+						return false;
+					}		
+				});
+				if(chk == 0){
+					console.log(parent);
+					$('#ulResult').append('<li id=litemp class="ui-state-default important nomove" title=""><div class="liDiv"><table cellspacing="1" cellpadding="1" border="0" style="width: 100%; table-layout:fixed; border:1px solid #eee"><tbody><tr><td id="apprTypeTd" style="padding:10px 5px; text-align: center; border-left:1px solid #F0F3F7; width: 70px;">결재</td><td id="tdchange'+squencechk+'" class="tdchange textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;"></td>	</tr></tbody></table></div></li>');
+					$('#litemp').attr('id',id+'chk');
+					$('#'+id+'chk #tdchange'+squencechk++).html($('#'+id).text() +" "+ parent);
+				}
+				
+			}
+    	});
+    });
+    $('button').on('click', function () {
+        $('#jstree').jstree(true).select_node('child_node_1');
+       $('#jstree').jstree('select_node', 'child_node_1');
+       // $.jstree.reference('#jstree').select_node('child_node_1');
+/*         $.jstree.reference('#jstree').select_node('child_node_2');
+ */      });
     var dropdown = document.getElementsByClassName("dropdown-btn");
     var i;
 
@@ -471,8 +441,50 @@ ul{
         document.getElementById(cityName).style.display = "block";
         evt.currentTarget.className += " active";
     }
-    </script>
     
+    $('#btnItemRemove').click(function(){
+    	if($('#ulResult li').length != 1){
+    		$('#ulResult li:last').remove();
+   		 }
+    })
+    
+    $('#btnItemRemoveAll').click(function(){
+    	$('#ulResult li').remove();
+		$('#ulResult').append('<li id=<%=empLoggedIn.getEmpId()%>chk class="ui-state-default important nomove" title=""><div class="liDiv"><table cellspacing="1" cellpadding="1" border="0" style="width: 100%; table-layout:fixed; border:1px solid #eee"><tbody><tr><td id="apprTypeTd" style="padding:10px 5px; text-align: center; border-left:1px solid #F0F3F7; width: 70px;">결재</td><td class="textLeft ellipsis" style="border-left:1px solid #F0F3F7; padding-left: 3px;"><%=empLoggedIn.getEmpName() + " " + empLoggedIn.getJobName() + " " + empLoggedIn.getDeptName()%></td>	</tr></tbody></table></div></li>');
+    })
+    
+    $('#aprrbutton').click(function(){
+    	var squence = 1;
+    	$('#apprhead td:not(#first-td)').remove();
+    	$('#apprhead').append("<td>기안</td>");
+    	
+    	for(var i=1;i<$('#ulResult li').length;i++)
+	    	$('#apprhead').append('<td>결재</td>');
+    	
+    	$('#apprbody td').remove();
+    	
+    	
+    	$('#ulResult li').each(function(){
+    		var a = $('#'+this.id + " td:last").text().split(" ");
+        	$('#apprbody').append('<td><span style="font-size:0.9em">'+a[0]+'<br></span><input type="hidden" name="material_id" value='+this.id.slice(0,-3)+'><input type="hidden" name="material_squence" value='+squence++ +'></td>');
+    	});
+    })
+    
+    function check(){
+    	if($('#ulResult li').length==1){
+    		alert('결재선을 지정해주세요.');
+    		return false;
+    	}else{
+    		return true;
+    	}
+    }
+    </script>
+    <!-- niceidt -->
+
+  <script type="text/javascript">
+  bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
+
+  </script> 
 
 
 <%@ include file="/views/common/footer.jsp"%>

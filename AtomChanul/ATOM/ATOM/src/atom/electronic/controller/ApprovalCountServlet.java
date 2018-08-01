@@ -1,29 +1,27 @@
 package atom.electronic.controller;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import atom.electronic.model.service.ElectronicService;
-import atom.employee.model.service.EmployeeService;
 import atom.employee.model.vo.Employee;
 
 /**
- * Servlet implementation class ElectronicApprovalFormServlet
+ * Servlet implementation class ApprovalCountServlet
  */
-@WebServlet("/electronic/electronicApprovalForm")
-public class ElectronicApprovalFormServlet extends HttpServlet {
+@WebServlet("/electronic/approvalCountServlet")
+public class ApprovalCountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ElectronicApprovalFormServlet() {
+    public ApprovalCountServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,13 +30,20 @@ public class ElectronicApprovalFormServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Employee> empList = new EmployeeService().selectEmployeeAll();
-		List<String> deptList = new EmployeeService().selectDept();
+		HttpSession session = request.getSession();
+		Employee e = (Employee)session.getAttribute("empLoggedIn");
+		int requestCount=new ElectronicService().selectRequestApprovalCount(e.getEmpId());
+		int waitCount = new ElectronicService().selectApproavalCount(e.getEmpId());
+		int completionCount=new ElectronicService().selectCompletionCount(e.getEmpId());
+		int progressCount=new ElectronicService().selectProgressApprovalCount(e.getEmpId());
+		int returnCount=new ElectronicService().selectReturnCount(e.getEmpId());
 		
-		request.setAttribute("empList",empList);
-		request.setAttribute("deptList",deptList);
-		
-		request.getRequestDispatcher("/views/ElectronicApprovalManagement/writeElectronicApproval.jsp").forward(request, response);	
+		response.setContentType("application/x-json; charset=UTF-8");
+		  response.getWriter().print(requestCount);
+		  response.getWriter().print(" "+waitCount);
+		  response.getWriter().print(" "+progressCount);
+		  response.getWriter().print(" "+completionCount);
+		  response.getWriter().print(" "+returnCount);
 	}
 
 	/**

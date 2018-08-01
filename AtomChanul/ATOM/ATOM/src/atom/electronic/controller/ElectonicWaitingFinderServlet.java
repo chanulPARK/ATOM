@@ -15,16 +15,16 @@ import atom.electronic.model.vo.ElectronicApproval;
 import atom.employee.model.vo.Employee;
 
 /**
- * Servlet implementation class ElectronicReturnBoxServlet
+ * Servlet implementation class ElectonicWaitingFinderServlet
  */
-@WebServlet("/electronic/electronicReturnBox")
-public class ElectronicReturnBoxServlet extends HttpServlet {
+@WebServlet("/electronic/electonicWaitingFinder")
+public class ElectonicWaitingFinderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ElectronicReturnBoxServlet() {
+    public ElectonicWaitingFinderServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,10 +33,11 @@ public class ElectronicReturnBoxServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String searchType = request.getParameter("searchType");
+		String searchWord=request.getParameter("searchWord");
+
 		HttpSession session = request.getSession();
 		Employee e = (Employee)session.getAttribute("empLoggedIn");
-		
-		
 		
 		//페이징 처리
 		int numPerPage;
@@ -50,12 +51,13 @@ public class ElectronicReturnBoxServlet extends HttpServlet {
 			numPerPage = 10;
 		}
 		
-		List<ElectronicApproval> list = new ElectronicService().selectReturnApproval(e.getEmpId(), cPage, numPerPage);
-
+		String FromDate = request.getParameter("FromDate");
+		String ToDate = request.getParameter("ToDate");
 		
+		List<ElectronicApproval> list = new ElectronicService().selectWaitingApproval(e.getEmpId(),searchType, searchWord, cPage, numPerPage, FromDate, ToDate);
 		//pageBar만들기!! 만들어 볼까요?!
 				//전체 자료수
-				int totalContent=new ElectronicService().selectReturnCount(e.getEmpId());
+				int totalContent=new ElectronicService().selectRequestApprovalCount(e.getEmpId());
 				String pageBar="";
 
 				//전체 page수
@@ -129,7 +131,7 @@ public class ElectronicReturnBoxServlet extends HttpServlet {
 		
 		request.setAttribute("list", list);		
 		
-		request.getRequestDispatcher("/views/ElectronicApprovalManagement/electronicReturnBox.jsp").forward(request, response);		
+		request.getRequestDispatcher("/views/ElectronicApprovalManagement/electronicWaitingBox.jsp").forward(request, response);	
 	}
 
 	/**

@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="atom.electronic.model.vo.ElectronicApproval"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -6,6 +7,8 @@
 <%@ include file="/views/common/approvalAside.jsp"%>
 <%
 	ArrayList<ElectronicApproval> list = (ArrayList)request.getAttribute("list");
+SimpleDateFormat sd = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+
 	int cPage=(int)request.getAttribute("cPage");
 	int numPerPage=(int)request.getAttribute("numPerPage");
 	int totalContent=(int)request.getAttribute("totalContent");
@@ -13,6 +16,8 @@
 %>
 
 <head>
+<!-- 데이트피커 -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>\dist\css\datepicker.css">
 	<style>
 	/* Style the sidenav links and the dropdown button */
 .sidenav a, .dropdown-btn {
@@ -155,16 +160,16 @@ aside .fa-caret-down {
                         </div>
                         <div class="col-md-1" style="margin: 0 0 0 10px;"><p style="font-size: 12px; color: rgb(160, 160, 160); margin: 6px 0px;">전체 <%=totalContent%></p></div>
 						<div class="col-md-10 pull-right">
-	                        <form class="form-inline pull-right" style="margin-right:15px" action="">
-                                <input class="form-control input-sm" placeholder="From" value=""><button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+	                        <form class="form-inline pull-right" style="margin-right:15px" action="<%=request.getContextPath()%>/electronic/electonicProgressFinder">
+                                <input id="FromDate" name="FromDate" class="form-control input-sm" placeholder="From" value=""><button  type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
                                 &nbsp;~&nbsp;
-                                <input class="form-control input-sm" placeholder="To"><button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
-                                <select class="form-control input-sm" style="padding: 0">
+                                <input id="ToDate" name="ToDate" class="form-control input-sm" placeholder="To"><button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+                                <select id="searchSelectBox" name="searchType" class="form-control input-sm" style="padding: 0">
                                     <option value="searchUser">기안자</option>
                                     <option value="searchTitle">제목</option>
                                     <option value="searchTContents">기안내용</option>
                                 </select>
-                                <input type="text" class="form-control input-sm" placeholder="검색어">
+                                <input id="searchWord" name="searchWord" type="text" class="form-control input-sm" value="<%if(request.getParameter("searchWord")!=null){%><%=request.getParameter("searchWord")%><%}%>" placeholder="검색어">
                                 <button type="submit" class="btn btn-primary btn-sm floa">검색</button>
 	                        </form>
                         </div>
@@ -175,32 +180,32 @@ aside .fa-caret-down {
                 <colgroup>
                    <col width="1%"/>
                       <col width="2%"/>
-                      <col width="5%"/>
+                      <col width="10%"/>
                       <col width="2%"/>
                       <col width="25%"/>
                       <col width="4%"/>
                       <col width="5%"/>
-                      <col width="5%"/>
+                      <col width="6%"/>
                 </colgroup>
                 <thead>
                     <tr>
                         <th scope="col"><input id="checkAll" name="" onclick="selectAllTodo()" type="checkbox" value="" title="checkAll" aria-invalid="false"></th>
                         <th scope="col">번호</th>
                         <th scope="col">
-                            <a data-sortcolumn="FOLDER" href="#">문서 번호<i class="glyphicon glyphicon-triangle-top"></i></a>
+                            	문서 번호
                         </th>
                         <th scope="col">유형</th>
                         <th scope="col">
-                            <a data-sortcolumn="REGISTERNAME" href="#">제목<i class="glyphicon glyphicon-triangle-top"></i></a>
+                           	 제목
                         </th>
                         <th scope="col">
-                            <a data-sortcolumn="INSERTDATE" href="#">기안자<i class="glyphicon glyphicon-triangle-top"></i></a>
+                          	 기안자
                         </th>
                         <th scope="col">
-                            <a data-sortcolumn="DUEDATE" href="#">기안부서<i class="glyphicon glyphicon-triangle-top"></i></a>
+                         	   기안부서
                         </th>
                         <th scope="col">
-                            <a data-sortcolumn="DUEDATE" href="#">기안날짜<i class="glyphicon glyphicon-triangle-top"></i></a>
+                            	기안날짜
                         </th>
                     </tr>
                 </thead>
@@ -215,7 +220,7 @@ aside .fa-caret-down {
 		                <td><a href="<%=request.getContextPath()%>/electronic/electronicProgressView?draftNo=<%=ea.getDraftNo()%>"><%=ea.getDraftName() %></a></td>
 						<td><%=ea.getEmpName() %></td>
 		                <td><%=ea.getDraftDept() %></td>
-		                <td><%=ea.getDraftDate() %></td>                	
+		                <td><%=sd.format(ea.getDraftDate()) %></td>                	
 		            </tr>
 	                    <!-- <tr>
 	                      <td colspan="10" class="emptyRecord">검색 결과가 존재하지 않습니다.</td>
@@ -240,8 +245,11 @@ aside .fa-caret-down {
     </section>
     <script>
     $(function(){
+    	$('#FromDate').datepicker();
+    	$('#ToDate').datepicker();
     	$('#numperPage').val('<%=numPerPage%>');
-    });
+    	if(<%=request.getParameter("searchType")%> != null)
+    	$('#searchSelectBox').val('<%=request.getParameter("searchType")%>').attr('selected',true);    });
     
     
     var dropdown = document.getElementsByClassName("dropdown-btn");
@@ -265,6 +273,8 @@ for (i = 0; i < dropdown.length; i++) {
   });
   
     </script>
+        <script src="<%=request.getContextPath()%>/dist/js/datepicker.js"></script>
+    
 
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
 <!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

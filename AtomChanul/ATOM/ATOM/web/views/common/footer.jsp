@@ -18,8 +18,8 @@
 
 
 
-<script src="http://js.nicedit.com/nicEdit-latest.js"></script>
-
+<!-- <script src="http://js.nicedit.com/nicEdit-latest.js"></script>
+ -->
 
 
 </body>

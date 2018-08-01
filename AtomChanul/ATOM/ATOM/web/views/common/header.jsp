@@ -4,7 +4,7 @@
 <%
    	Employee empLoggedIn = (Employee)session.getAttribute("empLoggedIn");
 %>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html> -->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
@@ -37,6 +37,10 @@
 
 <!-- style css -->
 <link href="<%=request.getContextPath()%>/dist/css/style.css" rel="stylesheet">
+
+<!-- nicEdit -->
+<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+
 
 </head>
 
