@@ -233,7 +233,7 @@ ul{
                       			<tr>
                               <th style="vertical-align:middle;background-color:#f9f9f9;">결재의견</th>
                               <td>
-                                <textarea style="resize: none;" name="apprComment" class="form-Control"rows="10" cols="60" placeholder="결재의견을 입력하세요."></textarea>
+                                <textarea style="resize: none;" name="apprComment" class="form-Control"rows="10" cols="60" placeholder="결재의견을 입력하세요." required></textarea>
                               </td>
                       			</tr>
                       		</table>
