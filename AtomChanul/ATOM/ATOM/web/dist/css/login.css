@@ -1,3 +1,10 @@
+@font-face {
+	font-family: 'NANUMSQUAREEB';
+	src: url(../fonts/NANUMSQUAREEB.ttf) format('truetype');
+}
+
+* {box-sizing: border-box; font-family: NANUMSQUAREEB, sans-serif;}
+
 body{
     margin: 0;
     padding: 0;

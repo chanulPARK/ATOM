@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/views/common/header.jsp" %>
+<%@ include file="/views/common/taskAside.jsp" %>
 <div class="content">
     <div class="col-md-6">
         <h3>새 게시판 생성</h3>

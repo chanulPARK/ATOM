@@ -28,9 +28,45 @@
     	.fc-sun .fc-day-number {color:#e31b23}
     	.fc-sat {color:#0100FF}
     	.fc-sat .fc-day-number {color:#0100FF}
+   		aside div.leftmenu_top {
+	       background: #53b5e6;
+	       color: #fff;
+	       text-align: center;
+	       height: 50px;
+	   }
+	   aside div.leftmenu_top h3{
+	       padding-top: 10px;
+	       margin: 0;
+	   }
+	   aside div.leftmenu_top h3 a{
+	       font-size: 20px;
+	       text-decoration: none;
+	       padding: 0 10px;
+	   }
+	   aside div.leftmenu_top h3 a:hover{
+	       text-decoration: none;
+	       color: #fff;
+	   }
+	   aside div.leftmenu_top h3 a:active{
+	       text-decoration: none;
+	       color: #fff;
+	   }
+	   aside div.leftmenu_top h3 a:visited{
+	       text-decoration: none;
+	       color: #fff;
+	   }
+	   aside div.leftmenu_top h3 a:link{
+	       text-decoration: none;
+	       color: #fff;
+	   }
     </style>
     <aside>
-      <div class="sidebar" style="margin: 0px 10px">
+		<div class="leftmenu_top">
+		    <h3>
+		        <a href="<%=request.getContextPath()%>/task/taskList">일정</a>
+		    </h3>
+		</div>
+      <div class="sidebar" style="margin: 10px 10px">
         <div class="create-schedule">
           <a href="<%=request.getContextPath()%>/calendar/calendarRegistrationForm" class="btn btn-primary btn-block ">일정 등록</a>
         </div>

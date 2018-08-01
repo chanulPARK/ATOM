@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import='java.util.*, atom.board.model.vo.Board'%>
+<%@ include file="/views/common/taskAside.jsp" %>
 <%
 	Board b = (Board)request.getAttribute("board");
 %>
@@ -8,7 +9,6 @@
 		background-color:beige;
 	}
 </style>
-<%@ include file="/views/common/header.jsp"%>
 		<div class="content">
             <div class="col-md-8">
                 <table>

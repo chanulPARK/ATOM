@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 	<footer>
-	    <p>COPYRIGHT @ ATOM ALL RIGHTS RESERVED</p>
+	    <p>Copyright © 2018 Team ATOM. All rights reserved.</p>
 	</footer>
 	
 

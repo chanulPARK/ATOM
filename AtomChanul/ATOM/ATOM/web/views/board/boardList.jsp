@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import='java.util.*, atom.board.model.vo.Board'%>
-<%@ include file="/views/common/header.jsp"%>
 <%@ include file="/views/common/taskAside.jsp" %>
 <%
 	List<Board> list = (List<Board>)request.getAttribute("list");

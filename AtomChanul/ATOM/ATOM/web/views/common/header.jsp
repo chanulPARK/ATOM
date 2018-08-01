@@ -21,8 +21,6 @@
 <!-- awesome font -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/dist/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 
-<!-- style css -->
-<link href="<%=request.getContextPath()%>/dist/css/style.css" rel="stylesheet">
 
 <!-- jstree css -->
 <link href="<%=request.getContextPath()%>/dist/css/jstree/style.min.css" rel="stylesheet">
@@ -37,15 +35,14 @@
 <!-- tablesorter -->
 <link href="<%=request.getContextPath()%>/dist/css/blue/style.css" rel="stylesheet">
 
-<!-- rsc-user -->
-<link href='<%=request.getContextPath()%>/dist/css/rsc-user.css' rel='stylesheet'>
-
+<!-- style css -->
+<link href="<%=request.getContextPath()%>/dist/css/style.css" rel="stylesheet">
 
 </head>
 
 <body>
 	<header>
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-inverse navbar-fixed-top" style="border: 0; border-radius: 0; margin: 0;">
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
@@ -63,7 +60,7 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li><a href="<%=request.getContextPath()%>/login.jsp"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+						<li><a href="<%=request.getContextPath()%>/views/main.jsp"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
 						<li><a href="<%=request.getContextPath()%>/electronic/electronicWaitingBox">전자결재</a></li>
 	                    <li><a href="<%=request.getContextPath()%>/schedule/scheduleList">일정</a></li>
 						<li><a href="<%=request.getContextPath()%>/task/taskList?empId=<%=empLoggedIn.getEmpId()%>">업무관리</a></li>
@@ -90,7 +87,7 @@
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><h5 style='color: #777; margin-top: 15px;'><%=empLoggedIn.getEmpId().equals("admin")?"":"00부 인턴"%>
+						<li><h5 style='color: #f6f6f6; margin-top: 17px;'><%=empLoggedIn.getEmpId().equals("admin")?"":"00부 인턴"%>
 								<%=empLoggedIn.getEmpName()%>님 안녕하세요&nbsp;
 							</h5>
 						</li>

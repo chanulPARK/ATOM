@@ -15,9 +15,6 @@
 	<!-- 부트스트랩 파일 -->
 	 <link href="../resource/css/bootstrap.min.css" rel="stylesheet">
      <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700" rel="stylesheet">
-    
-	  <!--   외부 css 파일 -->
-	  <link rel = "stylesheet" type="text/css" href="../resource/css/rsc-user.css">
 	  
 	  <!--   날짜 및 시간 설정 -->
 	  <link rel = "stylesheet" href="../resource/css/jquery.datetimepicker.min.css">

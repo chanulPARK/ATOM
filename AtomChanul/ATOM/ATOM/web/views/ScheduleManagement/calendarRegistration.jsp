@@ -18,7 +18,7 @@
 
     <aside>
       <div class="sidebar">
-        <div class="" style="margin: 0px 10px">
+        <div class="" style="margin: 10px 10px">
           <a href="<%=request.getContextPath()%>/schedule/scheduleList" class="btn btn-primary btn-block ">돌아가기</a>
         </div>
       </div>

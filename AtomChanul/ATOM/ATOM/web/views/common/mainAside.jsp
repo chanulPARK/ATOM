@@ -34,7 +34,11 @@
         text-decoration: none;
         color: #fff;
     }
+    .btn-default{
+    	border-radius: 0;
+    }
 </style>
+
 <script>
 	function printClock() {
 	    var clock = document.getElementById("clock");		// 출력할 장소 선택
@@ -75,17 +79,30 @@
 	}
 
 </script>
-<aside>
-	<div class="leftmenu_top">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<aside style="height: 100%; min-height: 900px; background: #eaeaea;">
+	<!-- <div class="leftmenu_top">
         <h3>
             <a href="#">근태관리</a>
         </h3>
-    </div>
-    <div class="leftmenu_attr">
+    </div> -->
+    <div class="leftmenu_emp" style="margin: 9px;">
         <div class="panel panel-default">
-			<div class="panel-heading">근태관리</div>
+			<div class="panel-heading"><i class="far fa-id-card"></i> 사용자정보</div>
 			<div class="panel-body" style="text-align: center">
-				<div style="margin: 10px; border:5px solid #79a5e7; border-radius:50px; width:200px; height:90px; line-height:30px; color:#666; font-size:30px; text-align:center;" id="clock"></div>
+				<img class="img-circle" alt="" src="<%=request.getContextPath()%>/dist/img/profile.jpg">
+				<h3 class="profile-username text-center">한예슬</h3>
+                <p class="text-muted text-center">Software Engineer</p>
+				
+			</div>
+		</div>
+    </div>
+    <div class="leftmenu_attr" style="margin: 9px;">
+        <div class="panel panel-default">
+			<div class="panel-heading"><i class="far fa-check-circle"></i> 근태관리</div>
+			<div class="panel-body" style="text-align: center">
+				<div style="margin: auto; margin-bottom:10px;
+				border:5px solid #53b5e6; border-radius:50px; width:200px; height:90px; line-height:30px; color:#666; font-size:30px; text-align:center;" id="clock"></div>
 				<button class="btn btn-default">출근하기</button>
 				<button class="btn btn-default">퇴근하기</button>
 			</div>

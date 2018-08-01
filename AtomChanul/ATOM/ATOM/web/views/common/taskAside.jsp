@@ -3,7 +3,7 @@
 <%@ include file="/views/common/header.jsp" %>
 <style>
 	aside div.leftmenu_top {
-        background: #353b47;
+        background: #53b5e6;
         color: #fff;
         text-align: center;
         height: 50px;

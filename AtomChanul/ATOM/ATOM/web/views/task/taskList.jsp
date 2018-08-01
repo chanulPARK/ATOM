@@ -23,9 +23,11 @@
 		float: right;
 	}
 	.btn-task {
-		background: #353b47;
+		background: #53b5e6;
         color: #fff;
+        border-color: #53b5e6;
 	}
+	
 </style>
 
 
@@ -120,8 +122,17 @@
 	};
 	
 </script>
+<style>
+<!--
+section.task_section{
+	position: absolute;
+	top: 50px;
+}
 
-<section>
+-->
+</style>
+
+<section class="task_section">
     <div class="content task-content">
         <div class="col-md-12" style="min-width: 900px;">
            	<%-- <%
@@ -226,7 +237,7 @@
                    		<button class="btn btn-default btn-xs"><%=t.getTaskStatus() %></button>
                    		<%} %>
                      	</td>
-                     <td><button class="btn btn-info btn-xs"><%=t.getTaskCheck()==null?"읽지 않음":"읽음" %></button></td>
+                     <td><button class="btn btn-default btn-xs"><%=t.getTaskCheck()==null?"읽지 않음":"읽음" %></button></td>
                  </tr>
                 	<%} %>
              </tbody>
