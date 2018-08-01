@@ -105,7 +105,7 @@ public class AdminResourceHomeServlet extends HttpServlet {
 		request.setAttribute("list", list);
 		
 		//페이지 이동
-		request.getRequestDispatcher("/views/rsc_admin_home.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/resource/rsc_admin_home.jsp").forward(request, response);
 		
 	}
 

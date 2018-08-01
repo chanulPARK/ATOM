@@ -25,7 +25,7 @@ public class AdminReservationDAO {
 		
 		try
 		{
-			String file = ReservationDAO.class.getResource("/sql/resource-sql.properties").getPath();
+			String file = ReservationDAO.class.getResource("/sql/resource/resource-sql.properties").getPath();
 			prop.load(new FileReader(file));
 		}
 		catch(IOException e)
@@ -40,7 +40,7 @@ public class AdminReservationDAO {
 	{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = prop.getProperty("selectResourceList");
+		String sql = prop.getProperty("selectAdminResourceList");
 		
 		ArrayList<ResourceList> list = new ArrayList<>();
 		ResourceList rl = null;
@@ -58,6 +58,7 @@ public class AdminReservationDAO {
 			{
 				rl = new ResourceList();
 				
+				rl.setRscCatecode(rs.getString("rsc_cate_code"));
 				rl.setRscCatename(rs.getString("rsc_cate_name"));
 				rl.setRscCode(rs.getInt("rsc_code")); 
 				rl.setRscName(rs.getString("rsc_name"));
@@ -130,6 +131,7 @@ public class AdminReservationDAO {
 			{
 				rl = new ResourceList();
 				
+				rl.setEmpId(rs.getString("emp_id")); //
 				rl.setRscCatename(rs.getString("rsc_cate_name"));
 				rl.setRscCode(rs.getInt("rsc_code")); 
 				rl.setRscName(rs.getString("rsc_name"));
@@ -153,4 +155,152 @@ public class AdminReservationDAO {
 		return list;		
 	}
 
+	//자원 검색
+	public List<ResourceList> selectAdminSearchResource(Connection conn, String adminSearchResource) 
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("selectAdminSearchResource");
+		
+		ArrayList<ResourceList> list = new ArrayList<>();
+		ResourceList rl = null;
+		
+		try
+		{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+adminSearchResource+"%");
+			rs = pstmt.executeQuery();
+			
+			while(rs.next())
+			{
+				rl = new ResourceList();
+				
+				rl.setRscCatecode(rs.getString("rsc_cate_code"));
+				rl.setRscCatename(rs.getString("rsc_cate_name"));
+				rl.setRscCode(rs.getInt("rsc_code")); 
+				rl.setRscName(rs.getString("rsc_name"));
+				rl.setRscCondition(rs.getString("rsc_condition"));
+				
+				list.add(rl);
+			}
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+		close(rs);
+		close(pstmt);
+		
+		return list;
+	}
+
+	//자원 추가하기
+	public int insertResource(Connection conn, ResourceList rl) 
+	{
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("insertResource");
+		
+		try
+		{
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, rl.getRscName());
+			pstmt.setString(2, rl.getRscCatecode());
+			pstmt.setString(3, rl.getRscCondition());
+			
+			result = pstmt.executeUpdate();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		close(pstmt);
+		
+		return result;
+	}
+
+	//승인 처리
+	public int updateAccept(Connection conn, ResourceList rl) 
+	{
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("updateAccept");
+		
+		try
+		{
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, rl.getStartTime());
+			pstmt.setString(2, rl.getEmpId());
+			result = pstmt.executeUpdate();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		System.out.println(rl.toString()+"여기 DAO입니당");
+		
+		close(pstmt);
+		return result;
+	}
+	
+	//자원 수정하기 
+	public int editResource(Connection conn, ResourceList rl) 
+	{
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("editResource");
+		
+		try
+		{
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, rl.getRscName());
+			pstmt.setString(2, rl.getRscCondition());
+			pstmt.setInt(3, rl.getRscCode());
+
+			
+			result = pstmt.executeUpdate();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		System.out.println(rl.toString()+"여기 업데이트  DAO입니당");
+		
+		close(pstmt);
+		return result;
+	}
+	
+	//자원 삭제하기 
+	public int deleteResource(Connection conn, int rscCode) 
+	{
+		PreparedStatement pstmt=null;
+		int result = 0;
+		String sql=prop.getProperty("deleteResource");
+		
+		try
+		{
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, rscCode);
+	
+			result = pstmt.executeUpdate();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	
+		
+		close(pstmt);
+		return result;
+	}
+
+	
 }

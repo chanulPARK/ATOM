@@ -52,17 +52,8 @@ public class ReservationService {
 		return list;
 	}
 
-	public boolean checkReturn(int userInputCode) 
-	{
-		Connection conn = getConnection();
-		boolean istrue = new ReservationDAO().checkReturn(conn,userInputCode);
-		
-		close(conn);
-		
-		return istrue;
-	}
-
-	public List<ResourceList> selectMyReservationList(String empId, int cPage, int numPerPage) 
+	//예약 리스트 출력
+	public List<ResourceList> selectMyReservationList(String empId,int cPage, int numPerPage ) //int cPage, int numPerPage 
 	{
 		Connection conn=getConnection();
 		List<ResourceList> list = new ReservationDAO().selectMyReservationList(conn,empId,cPage,numPerPage);
@@ -72,15 +63,58 @@ public class ReservationService {
 		return list;
 	}
 
-	public boolean checkReturn(String empId, int recheckCode) 
+
+	//예약리스트 정보 출력(새)
+	public List<ResourceList> selectReservationView(int rscCode) 
 	{
-		Connection conn = getConnection();
-		boolean istrue = new ReservationDAO().checkId(conn,empId,recheckCode);
-	
+		Connection conn=getConnection();
+		List<ResourceList> list=  new ReservationDAO().selectReservationView(conn,rscCode);
+		
 		close(conn);
 		
-		return istrue;
+		return list;
 	}
+
+	//자원 예약하기 
+	public int insertRent(ResourceList rl) 
+	{
+		Connection conn=getConnection();
+		int result = new ReservationDAO().insertRent(conn,rl);
+		
+		if(result>0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		return result;
+	}
+
+	//유저 예약페이지 예약 시간 따로 출력
+	public List<ResourceList> selectTimeView(int rscCode) 
+	{
+		Connection conn=getConnection();
+		List<ResourceList> timelist=  new ReservationDAO().selectTimeView(conn,rscCode);
+		
+		close(conn);
+		
+		return timelist;
+	}
+
+	//자원반납 
+	public int returnResource(ResourceList rl) 
+	{
+		Connection conn=getConnection();
+		int result = new ReservationDAO().returnResource(conn,rl);
+		
+		if(result>0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		return result;
+		
+		
+	}
+
+	
 
 	
 }

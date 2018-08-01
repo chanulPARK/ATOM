@@ -1,12 +1,14 @@
+<%@page import="atom.attendance.model.vo.Time"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="atom.attendance.model.vo.Attendance"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp" %>
 <%@ include file="/views/common/attendanceAside.jsp" %>
-
+<%-- 
 <link href="<%=request.getContextPath()%>/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="<%=request.getContextPath()%>/dist/js/bootstrap.min.js"></script>
+ --%>
 <link href="<%=request.getContextPath() %>/dist/css/datepicker.css" rel="stylesheet" >
 <script src="<%=request.getContextPath()%>/dist/js/datepicker.js"></script>
 
@@ -16,8 +18,9 @@
 	String day = (String)request.getAttribute("dayofweek"); // 입력 요일
 	String dday = (String)request.getAttribute("dday"); // 오늘 요일
 	Attendance att = (Attendance)request.getAttribute("attendance");
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-// 정상/지각/조퇴/결근/휴가..
+	Time t = (Time)request.getAttribute("time");
+	String late = (String)request.getAttribute("late");
+	String add = (String)request.getAttribute("add");
 %>
 
     <script>
@@ -32,23 +35,41 @@
     });
     </script>
     <script>
-    $(function(){
-        $('.startdate').datepicker({
-            calendarWeeks: false,
-            todayHighlight: true,
-            autoclose: true,
-            format: "yyyy-mm-dd",
-            language: "kr"
-        });
-        $('.enddate').datepicker({
-            calendarWeeks: false,
-            todayHighlight: true,
-            autoclose: true,
-            format: "yyyy-mm-dd",
-            language: "kr"
-        });
-    });
+	    function onedaycheck(){
+	    	var date=$('#searchDay').val().trim();
+	    	var chk=/^(19[7-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+			if(!chk.test(date)) {
+				alert("날짜는 YYYY-MM-DD 형식으로 입력해야합니다.");
+				return false;
+			} 
+			return true;
+	    }
+	    function twodaycheck(){
+	    	var sdate=$('#startdate').val().trim();
+	    	var edate=$('#enddate').val().trim();
+	    	var chk=/^(19[7-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+			if(!chk.test(sdate)) {
+				alert("날짜는 YYYY-MM-DD 형식으로 입력해야합니다.");
+				return false;
+			} else if(!chk.test(edate)) {
+				alert("날짜는 YYYY-MM-DD 형식으로 입력해야합니다.");
+				return false;
+			}
+
+			var c1=sdate.split("-");
+			var c2=edate.split("-");
+			var d1=new Date(c1[0],c1[1],c1[2]).getTime();
+			var d2=new Date(c2[0],c2[1],c2[2]).getTime();
+			if(d1>d2){
+				alert("시작 날짜보다 끝 날짜가 빠를 수 없습니다.");
+				return false;
+			}
+			
+			return true;
+	    }
     </script>
+
+
 
     <section>
         <div class="content">
@@ -56,7 +77,7 @@
                 <h3 class="page-header">일일근태등록</h3>
                 <!-- 일자 검색 -->
                 <div class='col-md-12 well'>
-                	<form action="<%=request.getContextPath()%>/attendance/searchUserDay">
+                	<form action="<%=request.getContextPath()%>/attendance/searchUserDay" onsubmit='return onedaycheck()'>
 	                   <div class='col-md-8'>
 	                        <h5 class='col-md-4'>날짜 조회</h5>
 	                        <!-- 날짜 선택 -->
@@ -84,6 +105,9 @@
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1">출근</button>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">퇴근</button>
                         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal3">부재등록</button>
+	                    <div class='col-md-4' style='float:right'>
+	                        <h5>출근시간 : <%=t.getStAtt() %> / 퇴근시간 : <%=t.getStLeave() %></h5>
+	                    </div>
                     </div>
                     <div class="panel-body table-responsive">
                         <table class="table table-hover">
@@ -119,8 +143,8 @@
                                     <td><%=att.getLeaveTime()==null?"-":att.getLeaveTime() %></td>
                                     <td><%=att.getWorkTime()==null?"-":att.getWorkTime() %></td>
                                     <td><%=att.getAttType() %></td>
-                                    <td>-</td>
-                                    <td>-</td>
+                                    <td><%=late.contains("0시간 0분")?"-":late %></td>
+                                    <td><%=add.contains("0시간 0분")?"-":add %></td>
                                     <td><%=att.getAttNote()==null?"":att.getAttNote() %></td>
                                 </tr>
                             </tbody>
@@ -129,6 +153,7 @@
                     </div>
                     <div class="panel-footer"></div>
                 </div>
+                
     <!-- 모달 2 (부재) -->
     <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -137,7 +162,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h3 class="modal-title" id="myModalLabel">부재 작성</h3>
                 </div>
-                <form action="<%=request.getContextPath()%>/attendance/abRecode">
+                <form action="<%=request.getContextPath()%>/attendance/abRecode" onsubmit='return twodaycheck()'>
 	                <div class="modal-body">
 	                    <div class="panel panel-default">
 	                        <div class="table-responsive">
@@ -145,10 +170,6 @@
 	                            	<colgroup>
 	                            		<col style="width:20%">
 	                            	</colgroup>
-	                                <tr>
-	                                    <th>부서</th>
-	                                    <td><%=empLoggedIn.getDeptCode() %></td>
-	                                </tr>
 	                                <tr>
 	                                    <th>사원명</th>
 	                                    <td><%=empLoggedIn.getEmpName() %></td>
@@ -215,10 +236,6 @@
 	                            		<col style="width:20%">
 	                            	</colgroup>
 	                                <tr>
-	                                    <th>부서</th>
-	                                    <td><%=empLoggedIn.getDeptCode() %></td>
-	                                </tr>
-	                                <tr>
 	                                    <th>사원명</th>
 	                                    <td><%=empLoggedIn.getEmpName() %></td>
 	                                </tr>
@@ -232,8 +249,6 @@
 	                                        <select class='form-control' name="atttype" id="atttype">
 	                                            <option value="출근">출근</option>
 	                                            <option value="지각">지각</option>
-	                                            <!-- <option value="조퇴">조퇴</option>
-	                                            <option value="퇴근">퇴근</option> -->
 	                                        </select>
 	                                    </td>
 	                                </tr>
@@ -271,10 +286,6 @@
 	                            		<col style="width:20%">
 	                            	</colgroup>
 	                                <tr>
-	                                    <th>부서</th>
-	                                    <td><%=empLoggedIn.getDeptCode() %></td>
-	                                </tr>
-	                                <tr>
 	                                    <th>사원명</th>
 	                                    <td><%=empLoggedIn.getEmpName() %></td>
 	                                </tr>
@@ -286,8 +297,6 @@
 	                                    <th>유형</th>
 	                                    <td>
 	                                        <select class='form-control' name="atttype" id="atttype">
-	                                            <!-- <option value="출근">출근</option>
-	                                            <option value="지각">지각</option> -->
 	                                            <option value="퇴근">퇴근</option>
 	                                            <option value="조퇴">조퇴</option>
 	                                        </select>

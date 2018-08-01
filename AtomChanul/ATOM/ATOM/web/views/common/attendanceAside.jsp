@@ -34,6 +34,7 @@
         color: #fff;
     }
 </style>
+
 <aside>
 	<div class="leftmenu_top">
         <h3>
@@ -43,16 +44,10 @@
     <div class='sidebar-nav navbar-default'>
         <ul class="nav list-group" id="side-menu">
             <li>
-                <a class="list-group-item" href="<%=request.getContextPath() %>/views/attendance/att_day.jsp" style="font-size: 17px">일별사원근태</a>
+                <a class="list-group-item" href="<%=request.getContextPath() %>/attendance/userDay" style="font-size: 17px">일별근태등록</a>
             </li>
             <li>
-                <a class="list-group-item" href="<%=request.getContextPath() %>/views/attendance/att_month.jsp" style="font-size: 17px">월별사원근태</a>
-            </li>
-            <li>
-                <a class="list-group-item" href="<%=request.getContextPath() %>/views/attendance/holi_set.jsp" style="font-size: 17px">휴일 설정</a>
-            </li>
-            <li>
-                <a class="list-group-item" href="<%=request.getContextPath() %>/views/attendance/time_set.jsp" style="font-size: 17px">기준시간 설정</a>
+                <a class="list-group-item" href="<%=request.getContextPath() %>/attendance/userMonth" style="font-size: 17px">월별근태현황</a>
             </li>
         </ul>
     </div>

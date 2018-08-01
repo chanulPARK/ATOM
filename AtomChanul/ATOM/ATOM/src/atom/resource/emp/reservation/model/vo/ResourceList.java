@@ -20,6 +20,51 @@ public class ResourceList {
 	
 	public ResourceList() {}
 
+	public ResourceList(int rscCode,String startTime)
+	{
+		super();
+		this.rscCode = rscCode;
+		this.startTime = startTime;
+	}
+	
+	public ResourceList(String rscCatecode, String rscName, String rscCondition)
+	{
+		super();
+		this.rscCatecode = rscCatecode;
+		this.rscName = rscName;
+		this.rscCondition = rscCondition;
+	}
+	
+	public ResourceList(int rscCode,String rscName, String rscCondition)
+	{
+		super();
+		this.rscCode = rscCode;
+		this.rscName = rscName;
+		this.rscCondition = rscCondition;
+	}
+	
+	public ResourceList(String empId,String rscCatecode,int rscCode,String startTime,String endTime)
+	{
+		super();
+		this.empId = empId;
+		this.rscCatecode = rscCatecode;
+		this.rscCode = rscCode;
+		this.startTime = startTime;
+		this.endTime = endTime;
+	}
+	
+	public ResourceList(String empId, String rscCatename, int rscCode, String rscName, String startTime, String endTime) 
+	{
+		super();
+		this.empId = empId;
+		this.rscCatename = rscCatename;
+		this.rscCode = rscCode;
+		this.rscName = rscName;
+		this.startTime = startTime;
+		this.endTime = endTime;
+	}
+	
+
 	public ResourceList(String empId, String empName, String rscCatecode, String rscCatename, int rscCode,
 			String rscName, String rscCondition, String rscRent, String startTime, String endTime, String rscReturn,
 			String returnMsg, Date requestDate) 
@@ -39,6 +84,8 @@ public class ResourceList {
 		this.returnMsg = returnMsg;
 		this.requestDate = requestDate;
 	}
+
+
 
 	public String getEmpId() {
 		return empId;

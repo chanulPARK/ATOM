@@ -14,33 +14,27 @@
 
 <!-- 부트스트랩 -->
 <link href="<%=request.getContextPath()%>/dist/css/bootstrap.min.css" rel="stylesheet">
-
 <!-- font -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700" rel="stylesheet">
-
 <!-- awesome font -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/dist/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-
-
 <!-- jstree css -->
 <link href="<%=request.getContextPath()%>/dist/css/jstree/style.min.css" rel="stylesheet">
-
-<!-- jquery -->
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
 <!-- datepicker css -->
 <link href="<%=request.getContextPath()%>/dist/css/datepicker.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/dist/css/daterangepicker-bs3.css" rel="stylesheet">
-
+<link href="<%=request.getContextPath()%>/dist/css/daterangepicker-bs3.css" rel="stylesheet">
 <!-- tablesorter -->
 <link href="<%=request.getContextPath()%>/dist/css/blue/style.css" rel="stylesheet">
-
 <!-- style css -->
 <link href="<%=request.getContextPath()%>/dist/css/style.css" rel="stylesheet">
 
+<!-- script -->
 <!-- nicEdit -->
 <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
 
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 </head>
 
@@ -57,7 +51,7 @@
    				</button>
 					<!-- <a class="navbar-brand" href="#">Brand</a> -->
 					<a class="navbar-brand" href="<%=request.getContextPath()%>">
-						<img src="<%=request.getContextPath()%>/dist/img/login.png">
+						<img src="<%=request.getContextPath()%>/dist/img/main.png" style="margin-top: -2px">
 					</a>
 				</div>
 
@@ -69,11 +63,15 @@
 	                    <li><a href="<%=request.getContextPath()%>/schedule/scheduleList">일정</a></li>
 						<li><a href="<%=request.getContextPath()%>/task/taskList?empId=<%=empLoggedIn.getEmpId()%>">업무관리</a></li>
 						<li><a href="<%=request.getContextPath()%>/board/boardList">게시판</a></li>
+						<%if(empLoggedIn.getAdminCode().trim().equals("1")){ %>
+						<li id= 'resourcehome'><a href='<%=request.getContextPath() %>/admin/resourcehome'>자원관리</a></li>
+						<%} else { %>
 						<li id= 'resourcehome'><a href='<%=request.getContextPath() %>/user/resourseHome'>자원관리</a></li>
+						<%} %>
 						<li><a href="<%=request.getContextPath()%>/emp/selectAll">조직도</a></li>
 	                    <!-- 근태관리 -->
 						<%if(empLoggedIn.getAdminCode().trim().equals("1")){ %>
-	                    <li><a href="<%=request.getContextPath()%>/views/attendance/att_day.jsp">근태관리</a></li>
+	                    <li><a href="<%=request.getContextPath()%>/attendance/dayList">근태관리</a></li>
 	                    <%} else { %>
 	                    <li><a href="<%=request.getContextPath()%>/attendance/userDay">근태관리</a></li>
 	                    <%} %>

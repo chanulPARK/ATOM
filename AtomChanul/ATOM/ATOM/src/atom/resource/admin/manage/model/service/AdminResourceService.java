@@ -43,5 +43,70 @@ public class AdminResourceService
 		
 		return list;
 	}
+	
+	//관리자 자원 검색하기
+	public List<ResourceList> selectAdminSearchResource(String adminSearchResource) 
+	{
+		Connection conn=getConnection();
+		List<ResourceList> list = new AdminReservationDAO().selectAdminSearchResource(conn,adminSearchResource);
+		close(conn);
+		
+		return list;
+	}
+
+	//자원 추가하기
+	public int insertResource(ResourceList rl) 
+	{
+		Connection conn=getConnection();
+		int result = new AdminReservationDAO().insertResource(conn,rl);
+		
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		
+		return result;
+		
+	}
+
+	//승인처리 
+	public int updateAccept(ResourceList rl) 
+	{
+		Connection conn=getConnection();
+		int result = new AdminReservationDAO().updateAccept(conn,rl);
+		
+		System.out.println(rl.toString()+"service임당");
+		
+		if(result>0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		return result;
+	}
+
+	//자원 수정 
+	public int editResource(ResourceList rl) 
+	{
+		Connection conn=getConnection();
+		int result = new AdminReservationDAO().editResource(conn,rl);
+		
+		if(result>0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		return result;
+	}
+
+	//자원 삭제하기 
+	public int deleteResource(int rscCode) 
+	{
+		Connection conn=getConnection();
+		int result = new AdminReservationDAO().deleteResource(conn,rscCode);
+		
+		if(result>0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		return result;
+	}
 
 }

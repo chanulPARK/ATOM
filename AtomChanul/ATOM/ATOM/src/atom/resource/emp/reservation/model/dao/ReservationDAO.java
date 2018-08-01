@@ -24,7 +24,7 @@ public class ReservationDAO {
 		
 		try
 		{
-			String file = ReservationDAO.class.getResource("/sql/resource-sql.properties").getPath();
+			String file = ReservationDAO.class.getResource("/sql/resource/resource-sql.properties").getPath();
 			prop.load(new FileReader(file));
 		}
 		catch(IOException e)
@@ -117,7 +117,7 @@ public class ReservationDAO {
 	}
 
 	//자원 검색
-	public List<ResourceList> selectSearchResource(Connection conn, String searchResource) 
+	public List<ResourceList> selectSearchResource(Connection conn,String searchResource) 
 	{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -203,42 +203,8 @@ public class ReservationDAO {
 		return list;		
 	}
 
-	public boolean checkReturn(Connection conn, int userInputCode) 
-	{
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		boolean istrue = false;
-		String sql = prop.getProperty("selectReturn");
-		
-		try
-		{
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, userInputCode);
-			
-			rs = pstmt.executeQuery();
-			
-			if(rs.next())
-			{
-				istrue = false;
-			}
-			else
-			{
-				istrue = true;
-			}
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-		close(rs);
-		close(pstmt);
-		
-		return istrue;
-	}
-
 	//새로 만드는 유저 예약 리스트 
-	public List<ResourceList> selectMyReservationList(Connection conn, String empId, int cPage, int numPerPage) 
+	public List<ResourceList> selectMyReservationList(Connection conn, String empId,int cPage, int numPerPage) // int cPage, int numPerPage 
 	{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -261,7 +227,6 @@ public class ReservationDAO {
 				rl = new ResourceList();
 				
 				rl.setEmpId(rs.getString("emp_id"));
-				
 				rl.setRscCatename(rs.getString("rsc_cate_name"));
 				rl.setRscCode(rs.getInt("rsc_code")); 
 				rl.setRscName(rs.getString("rsc_name"));
@@ -270,8 +235,8 @@ public class ReservationDAO {
 				rl.setEndTime(rs.getString("end_time"));
 				rl.setRequestDate(rs.getDate("request_date"));
 				rl.setRscReturn(rs.getString("rsc_return"));
-			//	rl.setReturnMsg(rs.getString("return_msg"));
-				
+				rl.setReturnMsg(rs.getString("return_msg"));
+			
 				list.add(rl);
 			}
 		}	
@@ -279,7 +244,8 @@ public class ReservationDAO {
 		{
 			e.printStackTrace();
 		}
-		System.out.println(list);
+		
+
 		close(rs);
 		close(pstmt);
 		
@@ -287,44 +253,146 @@ public class ReservationDAO {
 		
 	}
 
-	public boolean checkId(Connection conn, String empId, int recheckCode) 
+	//자원 예약 홈에서 버튼 클릭하면 예약 자원 폼이 쓰여져있는 리스트 정보 출력
+	public List<ResourceList> selectReservationView(Connection conn, int rscCode) 
 	{
-
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		boolean istrue = false;
-		String sql = prop.getProperty("selectOne");
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
 		
+		String sql = prop.getProperty("selectReservationView"); //수정
+		
+		ArrayList<ResourceList> list = new ArrayList<>();
+		ResourceList rl = null;
+		
+		try 
+		{
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, rscCode);
+			
+			rs=pstmt.executeQuery();
+		
+			while(rs.next())
+			{
+				rl = new ResourceList();
+				
+				rl.setRscCatecode(rs.getString("rsc_cate_code"));
+				rl.setRscCatename(rs.getString("rsc_cate_name"));
+				rl.setRscCode(rs.getInt("rsc_code"));
+				rl.setRscName(rs.getString("rsc_name"));
+//				rl.setStartTime(rs.getString("start_time")); 
+//				rl.setEndTime(rs.getString("end_time")); 
+
+				list.add(rl);
+			}
+		}	
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		
+
+		close(rs);
+		close(pstmt);
+		
+		return list;		
+		
+	}
+
+	//자원 예약
+	public int insertRent(Connection conn, ResourceList rl) 
+	{
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql=prop.getProperty("insertRent");
+
 		try
 		{
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, recheckCode);
-			pstmt.setString(2, empId);
-						
-			rs = pstmt.executeQuery();
 			
-			if(rs.next())
-			{
-				istrue = false;
-			}
-			else 
-			{
-				istrue = true;
-			}
- 		}
-		
+			pstmt.setString(1, rl.getEmpId());
+			pstmt.setString(2, rl.getRscCatecode().trim());
+			pstmt.setInt(3, rl.getRscCode());
+			pstmt.setString(4, rl.getStartTime());
+			pstmt.setString(5, rl.getEndTime());
+			
+			result = pstmt.executeUpdate();
+			
+		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 		
-		close(rs);
 		close(pstmt);
 		
-		return istrue;
-		
-		
+		return result;
 		
 	}
 
+	//예약 페이지에서 시간 새로 출력	
+	public List<ResourceList> selectTimeView(Connection conn, int rscCode) 
+	{
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		String sql = prop.getProperty("selectTimeView"); //수정
+		
+		ArrayList<ResourceList> list = new ArrayList<>();
+		ResourceList rl = null;
+		
+		try 
+		{
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, rscCode);
+			
+			rs=pstmt.executeQuery();
+		
+			while(rs.next())
+			{
+				rl = new ResourceList();
+			
+				rl.setRscName(rs.getString("rsc_name"));
+				rl.setStartTime(rs.getString("start_time")); 
+				rl.setEndTime(rs.getString("end_time")); 
+
+				list.add(rl);
+			}
+		}	
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+	
+		close(rs);
+		close(pstmt);
+		
+		return list;		
+	}
+
+	//자원 반납
+	public int returnResource(Connection conn, ResourceList rl) 
+	{
+		PreparedStatement pstmt=null;
+		String sql=prop.getProperty("returnResource");
+		int result=0;
+	
+		try
+		{
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, rl.getRscCode());
+			pstmt.setString(2, rl.getStartTime());
+			
+			result = pstmt.executeUpdate();
+		}	
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		close(pstmt);
+		
+		return result;
+	}
+	
 }

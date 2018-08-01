@@ -7,13 +7,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import atom.employee.model.vo.Employee;
 import atom.resource.emp.reservation.model.service.ReservationService;
 import atom.resource.emp.reservation.model.vo.ResourceList;
 
 /**
  * Servlet implementation class UserResourceReturnServlet
  */
-@WebServlet("/checkRscCodeDuplicateFrm")
+@WebServlet("/user/return")
 public class UserResourceReturnServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -29,23 +30,40 @@ public class UserResourceReturnServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 
+	
 		request.setCharacterEncoding("UTF-8");
 		
-		//유저 아이디 가져오기
-		String empId = request.getParameter("empId");
+		int rscCode = Integer.parseInt(request.getParameter("userInputCode"));
+		String startTime = request.getParameter("returnStartTime");
 		
-		//사용자가 입력한 코드 받아오기
-		int recheckCode = Integer.parseInt(request.getParameter("recheckCode"));
+		System.out.println(rscCode+startTime+"여기 서블릿인데");
 		
-		boolean istrue = new ReservationService().checkReturn(empId,recheckCode);
+		ResourceList rl = new ResourceList(rscCode,startTime);
+		int result = new ReservationService().returnResource(rl);
 		
-		request.setAttribute("istrue", istrue);
-		request.setAttribute("empId", empId);
-		request.setAttribute("recheckCode", recheckCode);
+	   	
+		String msg = "";
+		String loc = "/user/reservationList";
+		String view = "/views/common/msg.jsp";
 		
-		request.getRequestDispatcher("/views/resource/rsc_user_checkReturn").forward(request, response);
-				
+		if(result>0)
+		{
+			msg="선택한 자원이 반납 되었습니다.";
+		}
+		else
+		{
+			msg="자원 반납이 실패하였습니다.";
+			
+		}
+		
+    	request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		
+		request.getRequestDispatcher(view).forward(request, response);
+		
+		
+		
+		
 	}
 
 	/**

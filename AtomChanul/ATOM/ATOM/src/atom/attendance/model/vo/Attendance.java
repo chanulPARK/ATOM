@@ -11,7 +11,9 @@ public class Attendance {
 	private String workTime;
 	private String attNote;
 	private String attType;
-	private int holiCnt;
+	private String empName;
+	private String deptName;
+	private String jobName;
 	
 	public Attendance() {}
 
@@ -40,7 +42,7 @@ public class Attendance {
 	}
 
 	public Attendance(String empId, Date attDate, String attYn, String attTime, String leaveTime, String workTime,
-			String attNote, String attType, int holiCnt) {
+			String attNote, String attType) {
 		super();
 		this.empId = empId;
 		this.attDate = attDate;
@@ -50,7 +52,22 @@ public class Attendance {
 		this.workTime = workTime;
 		this.attNote = attNote;
 		this.attType = attType;
-		this.holiCnt = holiCnt;
+	}
+
+	public Attendance(String empId, Date attDate, String attYn, String attTime, String leaveTime, String workTime,
+			String attNote, String attType, String empName, String deptName, String jobName) {
+		super();
+		this.empId = empId;
+		this.attDate = attDate;
+		this.attYn = attYn;
+		this.attTime = attTime;
+		this.leaveTime = leaveTime;
+		this.workTime = workTime;
+		this.attNote = attNote;
+		this.attType = attType;
+		this.empName = empName;
+		this.deptName = deptName;
+		this.jobName = jobName;
 	}
 
 	public String getEmpId() {
@@ -117,19 +134,35 @@ public class Attendance {
 		this.attType = attType;
 	}
 
-	public int getHoliCnt() {
-		return holiCnt;
+	public String getEmpName() {
+		return empName;
 	}
 
-	public void setHoliCnt(int holiCnt) {
-		this.holiCnt = holiCnt;
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+	public String getJobName() {
+		return jobName;
+	}
+
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
 	}
 
 	@Override
 	public String toString() {
 		return "Attendance [empId=" + empId + ", attDate=" + attDate + ", attYn=" + attYn + ", attTime=" + attTime
 				+ ", leaveTime=" + leaveTime + ", workTime=" + workTime + ", attNote=" + attNote + ", attType="
-				+ attType + ", holiCnt=" + holiCnt + "]";
+				+ attType + "]";
 	}
 	
 }

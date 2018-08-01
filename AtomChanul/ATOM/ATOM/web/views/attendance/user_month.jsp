@@ -1,16 +1,35 @@
+<%@page import="java.util.List"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="atom.attendance.model.vo.Attendance"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp" %>
+<%@ include file="/views/common/attendanceAside.jsp" %>
 
     <script src="<%=request.getContextPath() %>/dist/lib/moment.min.js"></script>
     <script src="<%=request.getContextPath() %>/dist/js/fullcalendar.min.js"></script>
     <link href="<%=request.getContextPath() %>/dist/css/fullcalendar.min.css" rel="stylesheet" >
     <link href="<%=request.getContextPath() %>/dist/css/fullcalendar.print.css" rel="stylesheet" media="print">
-    <link href="<%=request.getContextPath()%>/dist/css/bootstrap.min.css" rel="stylesheet">
+<%--     <link href="<%=request.getContextPath()%>/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <script src="<%=request.getContextPath()%>/dist/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/dist/js/bootstrap.min.js"></script> --%>
     <link href="<%=request.getContextPath() %>/dist/css/datepicker.css" rel="stylesheet" >
 	<script src="<%=request.getContextPath()%>/dist/js/datepicker.js"></script>
+
+<%
+	String month = (String)request.getAttribute("month"); // 이번 달
+	String totalTime = (String)request.getAttribute("totalTime"); // 총 근무시간
+	int attcnt = (int)request.getAttribute("attcnt");
+	int latecnt = (int)request.getAttribute("latecnt");
+	int earlycnt = (int)request.getAttribute("earlycnt");
+	int abcnt = (int)request.getAttribute("abcnt");
+	int nocnt = (int)request.getAttribute("nocnt");
+	Attendance att = (Attendance)request.getAttribute("attendance");
+	List<Attendance> list = (List)request.getAttribute("aList");
+	int count = (int)request.getAttribute("count");
+	String totalavg = (String)request.getAttribute("totalavg");
+	System.out.println(list);
+%>
 
     <script>
     $(function(){
@@ -18,25 +37,24 @@
             calendarWeeks: false,
             todayHighlight: true,
             autoclose: true,
-            format: "yyyy/mm",
+            format: "yyyy-mm",
             language: "kr",
             /* 기본값 설정 */
         });
     });
+    function onedaycheck(){
+    	var date=$('#searchMonth').val().trim();
+    	var chk=/^(19[7-9][0-9]|20\d{2})-(0[0-9]|1[0-2])$/;
+		if(!chk.test(date)) {
+			alert("날짜는 YYYY-MM 형식으로 입력해야합니다.");
+			return false;
+		} 
+		return true;
+    }
     </script>
     
-       <aside>
-        <div class='sidebar-nav navbar-default'>
-            <ul class="nav" id="side-menu">
-                <li>
-                    <a href="<%=request.getContextPath() %>/attendance/userDay" style="font-size: 17px">일일근태등록</a>
-                </li>
-                <li>    
-                    <a href="<%=request.getContextPath() %>/views/attendance/user_month.jsp" style="font-size: 17px">월별근태현황</a>
-                </li>
-            </ul>
-        </div>
-    </aside>
+
+
 
     <section>
         <div class="content">
@@ -52,20 +70,24 @@
                 <!-- 월별 출석 통계 조회 -->
                 <div class="panel panel-default">
                     <div class='panel-heading' style="display: inline-flex">
-                        <h5>날짜 조회</h5>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <!-- 년 월 입력받아 조회 -->
-                        <div class='input-group col-md-2'>
-                            <span class='input-group-addon' id='basic-addon2'>
-                                <i class="fa fa-calendar" aria-hidden="true"></i>
-                            </span>
-                            <!-- 날짜 입력 -->
-                            <input type="text" id='dateday' class='input-date dateday form-control' placeholder="조회할 날짜 선택">
-                        </div>
-                        <div class='col-md-4'>
-                            <button type='button' id='searchDate' class='btn btn-color5'>
-                                <i class='fa fa-search fa-fw'></i>검색
-                            </button>
-                        </div>
+                        <form action='<%=request.getContextPath() %>/attendance/searchUserMonth' onsubmit='return onedaycheck()'>
+                        	<div class='col-md-8'>
+		                        <h5 class='col-md-2'>날짜 조회</h5>
+		                        <!-- 년 월 입력받아 조회 -->
+		                        <div class='input-group col-md-4'>
+		                            <span class='input-group-addon' id='basic-addon2'>
+		                                <i class="fa fa-calendar" aria-hidden="true"></i>
+		                            </span>
+		                            <!-- 날짜 입력 -->
+		                            <input type="text" id='searchMonth' name='searchMonth' class='input-date dateday form-control' placeholder="조회할 날짜 선택">
+		                        </div>
+	                        </div>
+	                        <div class='col-md-4'>
+	                            <button type='submit' id='searchDate' class='btn btn-color5' style='float: left'>
+	                                <i class='fa fa-search fa-fw'></i>검색
+	                            </button>
+	                        </div>
+                        </form>
                     </div>
                     <div class="panel-body table-responsive">
                         <table class="table table-hover">
@@ -73,33 +95,32 @@
                                 <tr>
                                     <th>사원명</th>
                                     <th>날짜</th>
-                                    <th>실 근무일수</th>
+                                    <th>총 근무일수</th>
                                     <th>출근일수</th>
                                     <th>지각횟수</th>
                                     <th>조퇴횟수</th>
+                                    <th>부재횟수</th>
                                     <th>결근일수</th>
                                     <th>총 근무시간</th>
                                     <th>출근률</th>
-                                    <th>남은 휴가 수</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>영진</td>
-                                    <td>2018년 7월</td>
-                                    <td>20일</td>
-                                    <td>19일</td>
-                                    <td>1일</td>
-                                    <td>0일</td>
-                                    <td>0일</td>
-                                    <td>50:21</td>
-                                    <td>98.2%</td>
-                                    <td>13일</td>
+                                    <td><%=empLoggedIn.getEmpName() %></td>
+                                    <td><%=month %></td>
+                                    <td><%=count %>일</td>
+                                    <td><%=attcnt %>일</td>
+                                    <td><%=latecnt %>일</td>
+                                    <td><%=earlycnt %>일</td>
+                                    <td><%=abcnt %>일</td>
+                                    <td><%=nocnt %>일</td>
+                                    <td><%=totalTime %></td>
+                                    <td><%=totalavg %>%</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div class="panel-footer"></div>
                 </div>
             </div>
         </div>
@@ -107,33 +128,73 @@
 
 
 
-    <footer>
-        <p>COPYRIGHT @ ATOM ALL RIGHTS RESERVED</p>
-    </footer>
-
-
-
-
+<style>
+	.fc-sun {color:#e31b23;}
+	.fc-sat {color:#007dc3;}
+</style>
 
     <script>
         $(function(){
             $('#calendar').fullCalendar({
             header    : {
-                left  : 'prev,next, today',
+                left  : 'prev, next',
                 center: 'title',
-                right : 'month'
-            },
-            buttonText: {
-                today: '오늘',
-                month: '월간',
+                right : 'today'
             },
             lang : 'ko',
-            defaultDate: new Date(), // 디폴트 날짜 설정
+            defaultDate: new Date('<%=month%>'), // 디폴트 날짜 설정
+            /* weekends:false, */
             navLinks : false, // 날짜 클릭시 일간목록 설정
             editable : false, // 일정 드래그 설정
             events: [
-                
-                
+            	<% for(Attendance a : list) { %>
+	            	<% if(a.getAttType()!=null){ %>
+	            	{
+		                title:'<%=a.getAttType()%>',
+		                start:'<%=a.getAttDate()%>',
+		                color:'rgba(0, 0, 0, 0)',
+		                textColor:'black',
+		                
+	            	},
+	            	<%}%>
+	            	<% if(a.getAttTime()!=null){ %>
+	            	{
+		                title:'출근 : <%=a.getAttTime()%>',
+		                start:'<%=a.getAttDate()%>',
+		                backgroundColor : "rgba(0, 0, 0, 0)",
+		                borderColor : "rgba(0, 0, 0, 0)",
+		                textColor:'black'
+	            	},
+	            	<%}%>
+	            	<% if(a.getLeaveTime()!=null){ %>
+	            	{
+		                title:'퇴근 : <%=a.getLeaveTime()%>',
+		                start:'<%=a.getAttDate()%>',
+		                backgroundColor : "rgba(0, 0, 0, 0)",
+		                borderColor : "rgba(0, 0, 0, 0)",
+		                textColor:'black'
+	            	},
+	            	<%}%>
+	                <% if(a.getAttType().equals("정상")) { %>
+	                {
+	                	backgroundColor : "#B2CCFF", 
+	                	rendering : "background",
+	                	start:'<%=a.getAttDate()%>'
+	                },
+	                <%} else if(a.getAttType().contains("조퇴")||a.getAttType().contains("지각")) { %>
+	                {
+	                	backgroundColor : "#FFA7A7", 
+	                	rendering : "background",
+	                	start:'<%=a.getAttDate()%>'
+	                },
+	                <%} else { %>
+	                {
+	                	backgroundColor : "#CEF279", 
+	                	rendering : "background",
+	                	start:'<%=a.getAttDate()%>'
+	                },
+	                <%}%>
+	        	<%}%>
             ]
 
         });
