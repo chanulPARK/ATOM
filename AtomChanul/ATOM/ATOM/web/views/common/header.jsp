@@ -91,7 +91,7 @@
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><h5 style='color: #f6f6f6; margin-top: 17px;'><%=empLoggedIn.getEmpId().equals("admin")?"":"00부 인턴"%>
+						<li><h5 style='color: #f6f6f6; margin-top: 17px;'><%=empLoggedIn.getEmpId().equals("A000001")?" ":empLoggedIn.getDeptName()%>
 								<%=empLoggedIn.getEmpName()%>님 안녕하세요&nbsp;
 							</h5>
 						</li>

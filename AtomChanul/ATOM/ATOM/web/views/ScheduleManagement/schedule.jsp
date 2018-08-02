@@ -30,7 +30,7 @@
     	.fc-sat {color:#0100FF}
     	.fc-sat .fc-day-number {color:#0100FF}
     	aside div.leftmenu_top {
-            background: #353b47;
+            background: #53b5e6;
             color: #fff;
             text-align: center;
             height: 50px;
@@ -87,9 +87,6 @@
       </div>
     </section>
 
-    <footer>
-        <p>COPYRIGHT @ ATOM ALL RIGHTS RESERVED</p>
-    </footer>
 
 <!-- jQuery -->
     <script>
@@ -255,7 +252,7 @@
         var noticeSchedule = new Array();
 		
         <%
-        if(!empLoggedIn.getAdminCode().trim().equals("N")){
+        if(!empLoggedIn.getAdminCode().equals("N")){
 	        for(Calendar s : noticeLists){
 	          if(s.getRepeatCategory().equals("매일")){%>
 	              noticeSchedule.push({color : "#d9534f",

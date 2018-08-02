@@ -29,7 +29,7 @@
     	.fc-sat {color:#0100FF}
     	.fc-sat .fc-day-number {color:#0100FF}
     	aside div.leftmenu_top {
-            background: #353b47;
+            background: #53b5e6;
             color: #fff;
             text-align: center;
             height: 50px;
@@ -109,19 +109,6 @@
                     <tr id='repeat-cycle' hidden>
                       <td>반복주기</td>
                       <td>
-                        <!-- <select id="repeat-cycle" name="repeat-cycle" class="form-control" style="width:10%;display:inline">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                          <option>6</option>
-                          <option>7</option>
-                          <option>8</option>
-                          <option>9</option>
-                          <option>10</option>
-                        </select>
-                        주/개월/년 &nbsp; -->
                         <span id="day-checkbox" name="day-checkbox" hidden>
                         <label for="sunday"><input type="checkbox" name="dayOfWeek" value="2" id="sunday">일</label>&nbsp;
                         <label for="monday"><input type="checkbox" name="dayOfWeek" value="3" id="monday">월</label>&nbsp;
@@ -280,4 +267,10 @@
 
 
 
-<%@ include file="/views/common/footer.jsp"%>
+
+<!-- <script src="http://js.nicedit.com/nicEdit-latest.js"></script>
+ -->
+
+
+</body>
+</html>

@@ -22,7 +22,7 @@
     	.fc-sat {color:#0100FF}
     	.fc-sat .fc-day-number {color:#0100FF}
     	aside div.leftmenu_top {
-            background: #353b47;
+            background: #53b5e6;
             color: #fff;
             text-align: center;
             height: 50px;
@@ -219,5 +219,12 @@
 
     </script>
     
-<%@ include file="/views/common/footer.jsp" %>
+    
 
+
+<!-- <script src="http://js.nicedit.com/nicEdit-latest.js"></script>
+ -->
+
+
+</body>
+</html>

@@ -122,10 +122,50 @@
 		<div class="list-group panel panel-default">
 			<div class="panel-heading"><i class="far fa-file"></i> 전자결재</div>
 			<div class="panel-body" style="text-align: center">
-				<a href="#" class="list-group-item">박찬울 사원 휴가 신청</a>
-				<a href="#" class="list-group-item">김성조 대리 휴직 신청</a>
-				<a href="#" class="list-group-item">김영진 퇴사</a>
+				<a href="<%=request.getContextPath()%>/electronic/electronicRequestBox" class="list-group-item" >결재요청함
+					<span id="requestCount" class="badge"></span>
+				</a>
+				<a href="<%=request.getContextPath()%>/electronic/electronicWaitingBox" class="list-group-item" >결재대기함
+                            <span id="waitCount" class="badge"></span>
+				</a>
+				<a href="<%=request.getContextPath()%>/electronic/electronicProgressBox" class="list-group-item" >결재진행함
+                            <span id="progressCount" class="badge"></span>
+				</a>
+				<a href="<%=request.getContextPath()%>/electronic/electronicCompletionBox" class="list-group-item" >완료문서함
+                            <span id="completionCount" class="badge"></span>
+				</a>
+				<a href="<%=request.getContextPath()%>/electronic/electronicReturnBox" class="list-group-item" >반려문서함
+                            <span id="returnCount" class="badge"></span>
+				</a>
 			</div>
 		</div>
 	</div>
 </div>
+ <script type="text/javascript" language="javascript">
+ 
+    $(document).ready(function(){
+         
+         
+        $.ajax({
+             
+            type : "GET",
+            url : "<%=request.getContextPath()%>/electronic/approvalCountServlet",
+            dataType : "text",
+            error : function(){
+                alert('통신실패!!');
+            },
+            success : function(data){
+            	var temp = data.split(" ");
+            	$('#requestCount').text(temp[0]);
+            	$('#waitCount').text(temp[1]);
+            	$('#progressCount').text(temp[2]);
+            	$('#completionCount').text(temp[3]);
+            	$('#returnCount').text(temp[4]);
+            }
+             
+        });
+         
+ 
+    });
+ 
+	</script>

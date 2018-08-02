@@ -210,11 +210,10 @@ h4{
 	                  	<!-- Tab links -->
 						<div class="tab">
 						  <button class="tablinks" onclick="openCity(event, 'organization')">조직도</button>
-						  <button class="tablinks" onclick="openCity(event, 'search')">검색</button>
 						</div>
 						
 						<!-- Tab content -->
-						<div id="organization" class="tabcontent">
+						<div id="organization" class="tabcontent" style='overflow-y:scroll;'>
 						  <h3>조직도</h3>
   						 <!-- 3 setup a container element -->
 						  <div id="jstree">
@@ -487,4 +486,20 @@ h4{
   </script> 
 
 
-<%@ include file="/views/common/footer.jsp"%>
+<script src="<%=request.getContextPath()%>/dist/js/jstree/jstree.min.js"></script>
+
+<script src="<%=request.getContextPath()%>/dist/js/bootstrap.min.js"></script>
+
+<script src="<%=request.getContextPath()%>/dist/js/datepicker.js"></script>
+
+<!-- tablesorter -->
+<script src="<%=request.getContextPath()%>/dist/js/jquery.tablesorter.min.js"></script>
+
+
+
+<!-- <script src="http://js.nicedit.com/nicEdit-latest.js"></script>
+ -->
+
+
+</body>
+</html>
