@@ -1,77 +1,86 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import='java.util.*, atom.board.model.vo.Board'%>
-
+    pageEncoding="UTF-8" import="java.util.*, atom.board.model.vo.*"%>
 <style>
-	aside{
-	    text-decoration: none;
-	    color:black;
-	}
+	aside div.leftmenu_top {
+        background: #353b47;
+        color: #fff;
+        text-align: center;
+        height: 50px;
+    }
+    aside div.leftmenu_top h3{
+        padding-top: 10px;
+        margin: 0;
+    }
+    aside div.leftmenu_top h3 a{
+        font-size: 20px;
+        text-decoration: none;
+        padding: 0 10px;
+    }
+    aside div.leftmenu_top h3 a:hover{
+        text-decoration: none;
+        color: #fff;
+    }
+    aside div.leftmenu_top h3 a:active{
+        text-decoration: none;
+        color: #fff;
+    }
+    aside div.leftmenu_top h3 a:visited{
+        text-decoration: none;
+        color: #fff;
+    }
+    aside div.leftmenu_top h3 a:link{
+        text-decoration: none;
+        color: #fff;
+    }
 </style>
-<script type="text/javascript">
-<% 
-	String[] items = {"공지사항", "자유게시판", "자료실", "설문조사", "게시판 관리"};
-	String[] homes = {"notice", "collapse1", "data", "question", "collapse2"};
-	List<Board> lBoard = (List<Board>)request.getAttribute("board");
-	/* 	Employee e= (Employee)request.getAttribute("empLoggedIn"); */
-%>
-</script>
-<aside id='show'>
-    <div class="content-fluid">
-        <div class="panel-group">
-            <div class="panel panel-default">
-            	<%for(int i=0;i<items.length;i++){%>
-            		<div class='panel-heading'>
-            			<h4 class='panel-title'>
-            				<%if(i==1 || i==4){%>
-            					<a data-toggle='collapse' href='#<%=homes[i]%>'>
-            						<%=items[i]%>
-            					</a>
-            				<%}else{%>
-            					<a href='<%=request.getContextPath()%>/board/boardList.jsp?<%=homes[i]%>'>
-            						<%=items[i]%>
-            					</a>
-            				<%}%>
-            			</h4>
-            		</div>
-            		<%if(i==1){%>
-              	<div id='<%=homes[i]%>' class='panel-collapse collapse'>
-              		<div class='panel1'>
-              			<a href='<%=request.getContextPath()%>/board/boardList.jsp?dept1'>
-              				부서 1팀
-              			</a>
-              		</div>
-              		<div class='panel2'>
-              			<a href='<%=request.getContextPath()%>/board/boardList.jsp?dept2'>
-              				부서 2팀
-              			</a>
-              		</div>
-              	</div>
-              <%}else if(i==4){%>
-              	<div id='<%=homes[i]%>' class='panel-collapse collapse'>
-              		<div class='panel1'>
-              			<a href='<%=request.getContextPath()%>/board/createboard.jsp'>
-              				게시판 생성
-              			</a>
-              		</div>
-              		<div class='panel2'>
-              			<a href='<%=request.getContextPath()%>/board/dropboard.jsp'>
-              				게시판 삭제
-              			</a>
-              		</div>
-              	</div>
-              <%} %>
-              <%} %>
-              <script>
-              	$('#collapse1').click(function(){
-              		$('.panel1').toggle("slow");
-              		$('.panel2').toggle("slow");
-              	});
-              	$('#collapse2').click(function(){
-              		$('.panel1').toggle("slow");
-              		$('.panel2').toggle("slow");
-              	});
-              </script>
+<%@include file='/views/common/header.jsp'%>
+<aside>
+	<div class="leftmenu_top">
+        <h3>
+            <a href="<%=request.getContextPath()%>/board/boardList">게시판</a>
+        </h3>
+    </div>
+    <!-- ./leftmenu_top -->
+    <div class="leftmenu_area">
+	    <div class="list-group">
+	        <a class="list-group-item"
+	        href="<%=request.getContextPath()%>/board/boardList?&menu=NOTICE&cPage=1"
+	        aria-expanded="true">
+	        	공지사항
+	        </a>
+            <!-- ./list-item_1 -->
+            <a class="list-group-item" data-toggle="collapse" href='#collapse1' aria-expanded="true">자유게시판</a>
+            <div id="collapse1" class="panel-collapse collapse in list-group">
+	            <div class="panel-footer">
+	                 <a href="<%=request.getContextPath()%>/board/boardList?&menu=DEPT01&cPage=1"
+	                    class="list-group-item">
+	                                             영업 1팀
+					 </a>
+	                 <a href="<%=request.getContextPath()%>/board/boardList?&menu=DEPT02&cPage=1"
+	                    class="list-group-item">
+	                                             영업 2팀
+					 </a>
+	            </div>
+	        </div>
+	        <a class="list-group-item"
+	        href="<%=request.getContextPath()%>/board/boardList?&menu=DATA&cPage=1"
+	        aria-expanded="true">
+	        	자료실
+	        </a>
+            <a class="list-group-item" data-toggle="collapse" href='#collapse2' aria-expanded="true">게시판 관리</a>
+            <div id="collapse2" class="panel-collapse collapse in list-group">
+            	<div class="panel-footer">
+		             <a href="<%=request.getContextPath()%>/board/createboard"
+		                class="list-group-item">
+		                                    게시판 생성
+		             </a>
+		             <a href="<%=request.getContextPath()%>/board/dropboard"
+		                   class="list-group-item">
+		                                    게시판 삭제
+		             </a>
+                </div>
             </div>
         </div>
     </div>
+    <!-- /.leftmenu_area -->
 </aside>

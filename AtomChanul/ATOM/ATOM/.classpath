@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="atom/task/controller/TaskListServlet2.java" kind="src" path="src"/>
+	<classpathentry excluding="atom/task/controller/TaskListServlet2.java|atom/task/controller/TaskListServlet.java|atom/task/controller/TaskViewServlet.java" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>

@@ -7,7 +7,7 @@ import javax.servlet.http.*;
 /**
  * Servlet implementation class BoardFormServlet
  */
-@WebServlet("/board/boardForm.jsp")
+@WebServlet("/board/boardForm")
 public class BoardFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -23,7 +23,6 @@ public class BoardFormServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("BoardFormServlet 실행");
 		request.getRequestDispatcher("/views/board/boardForm.jsp").forward(request, response);
 	}
 

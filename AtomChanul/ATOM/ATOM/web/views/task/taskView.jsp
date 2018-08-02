@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- <%@ include file="/views/common/header.jsp" %> --%>
+<%@ include file="/views/common/header.jsp" %>
 <%@ include file="/views/common/taskAside.jsp" %>
 <%@ page import='java.util.*, atom.task.model.vo.Task, atom.task.model.vo.TaskProcess' %>
 <%
 	Task t = (Task)request.getAttribute("task");
 	List<TaskProcess> processList = (List)request.getAttribute("list");
+	String taskType = (String)request.getAttribute("taskType");
 %>
 <style>
 	.tableTR {

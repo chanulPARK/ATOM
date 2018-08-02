@@ -64,7 +64,7 @@ public class EmployeeInsertServlet extends HttpServlet {
 		int result= new EmployeeService().insertEmployee(e);
 		
 		String msg="";
-		String loc="/";
+		String loc="/emp/selectAll";
 		String view="/views/common/msg.jsp";
 		if(result>0)
 		{

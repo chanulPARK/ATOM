@@ -3,12 +3,21 @@
 <%@ include file="/views/common/header.jsp"%>
 <%@ include file="/views/common/mainAside.jsp"%>
 <%@ include file="/views/common/rightAside.jsp"%>
+<%@ page import='java.util.*, atom.task.model.vo.Task' %>
+<%
+	List<Task> demandedlist = (List)request.getAttribute("demandedlist");
+	List<Task> reportedlist = (List)request.getAttribute("reportedlist");
+
+%>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 <style>
 	.panel {
 		border-radius: 0;
 	}
 </style>
+
+
+
 <section class="dashboard" style="height: 100%; min-height: 900px; margin-right: 250px; padding-top:9px; border: 0; background: #eaeaea;">
 	<div class="content">
 		<div class="row">
@@ -63,41 +72,71 @@
 		<div class="row">
 			<div class="col-md-6">
 				<div class="panel panel-default">
-					<div class="panel-heading"><i class="fas fa-tasks"></i> 수신 업무</div>
+					<div class="panel-heading"><i class="fas fa-tasks"></i> 수신 업무요청</div>
 					<div class="panel-body" style="height: 200px">
-						
+						<table class="table table-condensed" style="font-size: 13px; margin: 0;" id="table1">
+							<% if(demandedlist!=null) {
+								for(Task t : demandedlist) { %>
+								<tr>
+									<td><%=t.getTaskTitle() %></td>
+									<td><%=t.getEmpName() %></td>
+									<td><%=t.getTaskStatus() %></td>
+									<td><%=t.getDeadline() %></td>
+								</tr>
+					        	<% }
+				        	} %>
+						</table>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="panel panel-default">
-					<div class="panel-heading"><i class="fas fa-tasks"></i> 발신 업무</div>
+					<div class="panel-heading"><i class="fas fa-tasks"></i> 수신 업무보고</div>
 					<div class="panel-body" style="height: 200px">
-						
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-6">
-				<div class="panel panel-default">
-					<div class="panel-heading"><i class="fas fa-tasks"></i> 새로운 동료</div>
-					<div class="panel-body" style="height: 200px">
-						
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="panel panel-default">
-					<div class="panel-heading"><i class="fas fa-tasks"></i> 오늘의 일정</div>
-					<div class="panel-body" style="height: 200px">
-						
+						<table class="table table-condensed" style="font-size: 13px; margin: 0;" id="table1">
+							<% if(reportedlist!=null) {
+								for(Task t : reportedlist) { %>
+								<tr>
+									<td><%=t.getTaskTitle() %></td>
+									<td><%=t.getEmpName() %></td>
+									<td><%=t.getTaskStatus() %></td>
+									<td><%=t.getDeadline() %></td>
+								</tr>
+					        	<% }
+				        	} %>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+<%-- <script type="text/javascript" language="javascript">
 
+	$(document).ready(function(){
+	    $.ajax({
+	        type : "GET",
+	        url : "<%=request.getContextPath()%>/task/mainTaskList",
+	        dataType : "json",
+	        error : function(){
+	            alert('통신실패!!');
+	        },
+	        success : function(data){
+	        	alert(date);
+	        	console.log(data.length);
+	        	/* var temp = "<table><tr>";
+				for(Task t : demandedlist) {
+					temp += "<td>"+t.getTaskTitle()+"</td>";
+					temp += "<td>"+t.getEmpName()+"</td>";
+					temp += "<td>"+t.getTaskStatus()+"</td>";
+					temp += "<td>"+t.getDeadline()+"</td>";
+	        	}
+	        	temp += "</tr></table>";
+	        	$('#table1').html(temp); */
+	        }
+	    });
+	});
+
+</script> --%>
 
 <%@ include file="/views/common/footer.jsp"%>

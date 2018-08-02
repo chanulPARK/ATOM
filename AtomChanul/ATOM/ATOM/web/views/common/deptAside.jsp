@@ -8,7 +8,7 @@
     <div class="col-sm-2 sidenav">	<!-- 네비게이션 시작 -->
 		<h3>관리자페이지</h3>
 	
-		<a href="<%=request.getContextPath()%>/views/orgchat/admin/employeeList.jsp">조직도</a>
+	
     	
      <!-- 시험테스트  아코디언 적용 해보기--> <!-- 아코디언 시작 -->
      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -27,8 +27,8 @@
       <div class="panel-body"> <!-- 기본은 panel-body -->
 			<ul>
 			<li><a href="<%=request.getContextPath()%>/emp/selectAll">직원관리페이지 </a></li>
-			<li><a href="<%=request.getContextPath()%>/views/orgchat/admin/departmentList.jsp">부서관리페이지 </a></li>
-			<li><a href="<%=request.getContextPath()%>/views/orgchat/admin/jobList.jsp">직급관리페이지 </a></li>
+			<li><a href="<%=request.getContextPath()%>/deptlist">부서관리페이지 </a></li>
+			<li><a href="<%=request.getContextPath()%>/jobList">직급관리페이지 </a></li>
 			</ul>
       </div>
     

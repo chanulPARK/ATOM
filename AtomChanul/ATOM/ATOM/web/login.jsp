@@ -18,8 +18,6 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>login page</title>
 <link rel="stylesheet" href="./dist/css/login.css" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
 <script src='http://code.jquery.com/jquery-latest.min.js'></script>
 <style>
     input[id="saveId"] {   /*체크박스*/
@@ -38,12 +36,28 @@
 	   margin-bottom:0;
 	   bottom:20px;
 	}
+	.loginbox input[type='submit']{
+    border: none;
+    outline: none;
+    height: 40px;
+    /* background: #53b5e6; */
+    background: #48a5d4;
+    /* background: #3996c4; */
+    color: white;
+    font-size: 18px;
+    border-radius: 20px;
+	}
+	.loginbox input[type='submit']:hover{
+	    cursor: pointer;
+	    background: #2a8ab0;
+	    color: white;
+	}
 </style>
 </head>
 <body>
     <div class="loginbox">
-        <img src="./dist/img/login_icon.png" class='logicon' ondragstart="return false">
-        <h1><img src="./dist/img/login_logo.png" width="250px" ondragstart="return false"></h1>
+        <img src="./dist/img/login_icon2.png" class='logicon' ondragstart="return false">
+        <h1><img src="./dist/img/login_logo2.png" width="250px" ondragstart="return false"></h1>
         <form action="<%=request.getContextPath()%>/login" method="post" id='loginFrm' onsubmit='return validate()'>
 	        <script>
 				function validate(){
@@ -65,9 +79,9 @@
             <input id='userId' type="text" name="userId" placeholder="Enter User ID" value='<%=saveId!=null?saveId:"" %>'>
             <p>PW</p>
             <input id='userPw' type="password" name="userPw" placeholder="Enter Password">
-            <label for="saveId">save ID</label><input type="checkbox" id="saveId" name='saveId' <%=saveId!=null?"checked":"" %>>
+            <label for="saveId">SAVE ID</label><input type="checkbox" id="saveId" name='saveId' style="margin-top: 10px;" <%=saveId!=null?"checked":"" %>>
             <input type="submit" value="Login">
-            <h5 style="font-family: Gothic+A1;margin-top:0px;">※ ATOM 인트라넷 접속을 위한 로그인 화면입니다. </h5>
+            <h5 style="margin-top:0px;">※ ATOM 인트라넷 접속을 위한 로그인 화면입니다. </h5>
             
         </form>
     </div>

@@ -2,8 +2,9 @@
     pageEncoding="UTF-8"%>
 <%-- <%@ include file="/views/common/header.jsp" %> --%>
 <%@ include file="/views/common/taskAside.jsp" %>
-<%@ page import='java.util.*, atom.task.model.vo.Task' %>
+<%@ page import='java.util.*, atom.task.model.vo.Task, atom.employee.model.vo.Employee' %>
 <%
+	Employee empLoggedIn = (Employee)session.getAttribute("empLoggedIn");
 	Task t = (Task)request.getAttribute("task");
 %>
 <style>
@@ -49,6 +50,40 @@
             autoHide: true
         });
 	});
+    
+    // 기한없음
+    $(function() {
+	    $("#isTermless").change(function() {
+	        if($("#isTermless").is(":checked")){
+	            $("#isTermless").val(1);
+	            $("input[name=deadline]").prop("disabled", true);
+	        } else{
+	            $("#isTermless").val(0);
+	            $("input[name=deadline]").prop("disabled", false);
+	        }
+	    });
+	    
+	    $("#taskUpdateSubmit").on("click",function() {
+		    if($("#isTermless").is(":checked")) {
+		        $("input[name=deadline]").val();
+		    }
+	    });
+    });
+    
+    /* function fn_checkDuplicate()
+	 {
+		 var userId=document.getElementById("userId").value.trim();
+		 if(!userId||userId.length<4)
+		{
+			alert("아이디는 4글자 이상 가능합니다.");
+			return;
+		}
+		checkDuplicateFrm.userId.value=userId;
+		checkDuplicateFrm.submit();
+		 
+	 } */
+    
+
 </script>
 
 <style>
@@ -74,11 +109,12 @@
     <div class="content">
         <div class="col-md-12">
             <h4>업무 수정</h4>
-        	<form action="<%=request.getContextPath()%>/task/taskWriteEnd" method="post" enctype="multipart/form-data">
+        	<form action="<%=request.getContextPath()%>/task/taskUpdateEnd" method="post" enctype="multipart/form-data">
         		<input type="hidden" name="userId" value="<%=empLoggedIn.getEmpId() %>">
         		<input type="hidden" name="userName" value="<%=empLoggedIn.getEmpName() %>">
         		<input type="hidden" name="deptCode" value="<%=empLoggedIn.getDeptCode() %>">
         		<input type="hidden" name="jopCode" value="<%=empLoggedIn.getJobCode() %>">
+        		<input type="hidden" name="taskNo" value="<%=t.getTaskNo() %>">
         		
 	            <table class="tableTR table table-condensed">
 	                <tbody>
@@ -155,12 +191,13 @@
 	                </tbody>
 	            </table>
 	            <div>
-		            <textarea name="area2" style="width: 100%; height: 250px"><%=t.getTaskContent() %></textarea>
+		            <textarea name="area2" style="width: 100%; height: 250px" required><%=t.getTaskContent() %></textarea>
 	            </div>
 	            
 				<div class="btn-wrap float-right">
-		            <button type="submit" class="btn btn-sm btn-primary">저장</button>
-		            <button type="reset" class="btn btn-sm btn-default">취소</button>
+				
+		            <button type="submit" class="btn btn-sm btn-primary" id="taskUpdateSubmit">저장</button>
+		            <button type="button" class="btn btn-sm btn-default" onclick="history.back()">취소</button>
 				</div>
 			</form>
        	</div>

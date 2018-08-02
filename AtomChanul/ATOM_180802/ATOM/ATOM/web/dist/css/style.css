@@ -1,0 +1,253 @@
+@CHARSET "UTF-8";
+/************* Common *************/
+
+@font-face {
+	font-family: 'NANUMSQUAREEB';
+	src: url(../fonts/NANUMSQUAREEB.ttf) format('truetype');
+}
+
+* {box-sizing: border-box; font-family: NANUMSQUAREEB, sans-serif;}
+body ,header{margin: 0px;}
+header{
+	font-size: 17px;
+    color: #fff!important;
+    height: 50px;
+    position: relative;
+    display: block;
+    z-index: 50;
+    margin: 0;
+}
+aside{
+    left: 0px;
+    width: 250px;
+    height: 300px;
+    display: block;
+    position: absolute;
+    border-bottom: solid 1px rgb(222, 226, 230);
+}
+section{
+    padding: 20px;
+    background: rgb(255, 255, 255);
+    border-left: 1px solid rgb(222, 226, 230);
+    margin-left: 250px;
+    min-height: 675px;
+    display: block;
+}
+footer{
+    width: 100%;
+    height: 40px;
+    background: #363636;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid rgb(222, 226, 230);
+    display: block;
+    z-index: 50;
+    vertical-align: middle;
+}
+footer p{
+	display: table;
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+    font-size: 12px;
+    color: #fff;
+}
+
+/* 찬울 */
+.leftmenu-btn{
+    padding: 10px;
+}
+.tableTL{
+	table-layout: fixed;
+	display: table;
+    margin: 0;
+}
+.tableTL thead tr th{
+    font-weight: bold;
+    font-size: 13px;
+    text-align: center;
+}
+.tableTL tbody tr td{
+    font-size: 13px;
+    text-align: center;
+}
+.table-header{
+    border-top: 1px solid rgb(192, 192, 192);
+    padding-top: 8px;
+    border-bottom: 2px solid rgb(192, 192, 192);
+    padding-bottom: 8px;
+}
+.table-header div.row div{
+    padding: 1px;
+}
+.tableCM{
+	table-layout: fixed;
+	display: table;
+    margin: 0;
+}
+.pagination_wrap{
+    text-align: center;
+    border-top: 1px solid rgb(192, 192, 192);
+    padding-top: 8px;
+    border-bottom: 1px solid rgb(192, 192, 192);
+    padding-bottom: 8px;
+}
+.pagination{
+    margin: 0;
+    vertical-align: middle;
+}
+.tableTR tbody tr th {
+    background: rgb(245, 245, 245);
+    width: 150px; height: 40px;
+    vertical-align: middle!important;
+    padding-left: 15px!important;
+}
+.tableTR tbody tr td {
+    vertical-align: middle!important;
+}
+.tableTR tbody tr td * {
+    font-weight: 100!important;
+    font-size: 13px;
+}
+.btn-wrap {
+    margin: 10px 0;
+    text-align: right;
+}
+.float-right {
+	float: right;
+}
+       
+        
+/* 형석 css */
+div.floatright>*{
+    float:right;
+}
+div.floatleft>*{
+	float:left;
+}
+.floatleft>button>a{
+    color:black;
+    text-decoration:none;
+}
+h4>a{
+	text-decoration:none;
+}
+div.commit{
+    float: left;
+}
+/* input:not(#submit){
+    width:400px;
+} */
+textarea.boardTextarea{
+    width:400px;
+    resize: none;
+}
+.panel-title>a{
+    text-decoration: none;
+}
+.panel-collapse .panel1 a,
+.panel-collapse .panel2 a{
+    text-decoration:none;
+}
+.txtcenter{text-align: center;}
+.floatleft{float : left;}
+.floatright{float : right;}
+.marginzero{margin : 0px;}
+.kbdfont{font-family: 'Nanum Gothic'}
+.rsclist{
+        	border : 1px solid lightgray;
+        	margin : 0px;
+        	height : 400px;
+        	width : 1000px;
+}
+.pagingbtn{color: black;}
+ 
+ 
+/* 주리 css */
+.txtcenter
+{
+	text-align: center;
+}
+
+.floatleft
+{
+	float : left;
+}
+
+.floatright
+{
+	float : right;
+}
+
+.marginzero
+{
+	margin : 0px;
+}
+
+
+/* modal position(center)*/
+.modal 
+{
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) 
+{
+  .modal:before 
+  {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog 
+{
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.kbdfont
+{
+	font-family: 'Nanum Gothic'
+}
+
+.rsclist
+{
+	border : 1px solid lightgray;
+	margin : 0px;
+	
+	height : 400px;
+	width : 1000px;
+}
+
+.pagingbtn
+{
+	color: black;
+}
+
+.small
+{
+	width: 40px;
+}
+
+/* 로그인 페이지  css*/
+ .schedule-group
+ {
+   style=padding-bottom: 10px;
+   display: block;
+   text-align:left;
+   width: 100%;
+
+}
+.schedule-group > input
+{
+  /* vertical-align: middle; */
+}
+
+.input-group
+{
+  display: inline;
+}

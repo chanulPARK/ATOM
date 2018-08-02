@@ -1,16 +1,16 @@
 package atom.board.controller;
 import java.io.IOException;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-
 import atom.board.model.service.BoardService;
-import atom.board.model.vo.Board;
+import atom.board.model.vo.*;
 
 /**
  * Servlet implementation class BoardViewServlet
  */
-@WebServlet("/board/boardView.jsp")
+@WebServlet("/board/boardView")
 public class BoardViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -27,7 +27,6 @@ public class BoardViewServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int boardNo = Integer.parseInt(request.getParameter("board_no"));
-		System.out.println(boardNo);
 		
 		// 클라이언트가 보낸 쿠키를 확인한다.
 		Cookie[] cookies = request.getCookies();
@@ -54,7 +53,9 @@ public class BoardViewServlet extends HttpServlet {
 			response.addCookie(boardCookie);
 		}
 		Board b = new BoardService().selectOne(boardNo, hasRead);
-		
+		int visits = new BoardService().insertBoardCount(boardNo);
+		b.setBoardNo(boardNo);
+		b.setVisits(visits);
 		String view = "";
 		if(b!=null) {
 			request.setAttribute("board", b);

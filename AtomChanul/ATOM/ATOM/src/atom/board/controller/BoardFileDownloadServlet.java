@@ -8,7 +8,7 @@ import javax.servlet.http.*;
 /**
  * Servlet implementation class BoardFileDownloadServlet
  */
-@WebServlet("/board/boardFileDownload.jsp")
+@WebServlet("/board/boardFileDownload")
 public class BoardFileDownloadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

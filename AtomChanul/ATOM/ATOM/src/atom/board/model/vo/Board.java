@@ -1,5 +1,6 @@
 package atom.board.model.vo;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 
 public class Board {
 	private int boardNo;		// 게시글 번호
@@ -8,20 +9,41 @@ public class Board {
 	private String writer;		// 작성자
 	private Date writeDate;		// 작성일
 	private int visits;			// 조회수
+	private String boardCode;	// 게시판 코드
+	private String boardName;  // 게시판 이름
 	
 	public Board() {
 		
 	}
 	
-	public Board(int boardNo, String title, String content,
-			String writer, Date writeDate, int visits) {
+
+
+	public Board(int boardNo, String title, String content, String writer, Date writeDate, int visits, String boardCode,
+			String boardName) {
+		super();
 		this.boardNo = boardNo;
 		this.title = title;
 		this.content = content;
 		this.writer = writer;
 		this.writeDate = writeDate;
 		this.visits = visits;
+		this.boardCode = boardCode;
+		this.boardName = boardName;
 	}
+
+
+
+	public String getBoardName() {
+		return boardName;
+	}
+
+
+
+	public void setBoardName(String boardName) {
+		this.boardName = boardName;
+	}
+
+
 
 	public int getBoardNo() {
 		return boardNo;
@@ -71,10 +93,22 @@ public class Board {
 		this.visits = visits;
 	}
 
+	public String getBoardCode() {
+		return boardCode;
+	}
+
+	public void setBoardCode(String boardCode) {
+		this.boardCode = boardCode;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "번호:" + boardNo + ", 제목:" + title
-			+ ", 내용: " + content + ", 작성자:" + writer
-			+ ", 작성일:" + writeDate + ", 조회수:" + visits;
+		return "Board [boardNo=" + boardNo + ", title=" + title + ", content=" + content + ", writer=" + writer
+				+ ", writeDate=" + writeDate + ", visits=" + visits + ", boardCode=" + boardCode + ", boardName="
+				+ boardName + "]";
 	}
+
+
 }

@@ -39,8 +39,6 @@ public class TaskListServlet extends HttpServlet {
 		System.out.println(emp);
 		System.out.println(empId);
 		
-		String taskType = request.getParameter("taskType");
-		
 		// 페이징 처리
 		int cPage;
 		int numPerPage;
@@ -59,25 +57,10 @@ public class TaskListServlet extends HttpServlet {
 		
 		List<Task> list = null;
 		int totalContent = 0;
-		if(taskType==null) {
 			list = new TaskService().selectTaskList(empId, cPage, numPerPage);
 			totalContent = new TaskService().selectTaskCount(empId);
-		}
-		else {
-			if(taskType=="1" || taskType=="2") {
-				list = new TaskService().selectTaskList(empId, cPage, numPerPage, taskType);	
-				totalContent = new TaskService().selectTaskCount(empId, taskType);
-			}
-			else if(taskType=="1-1" || taskType=="2-1") {
-				list = new TaskService().selectTaskListReceiver(empId, cPage, numPerPage, taskType);	
-				totalContent = new TaskService().selectTaskCountReceiver(empId, taskType);
-			}
-			else {
-				list = new TaskService().selectTaskList(empId, cPage, numPerPage, taskType);	
-				totalContent = new TaskService().selectTaskCount(empId, taskType);
-			}
-		}
-		
+
+			
 		// 전체 page
 		int totalPage =  (int)Math.ceil((double)totalContent/numPerPage);
 		int barSiza = 3;
@@ -123,7 +106,7 @@ public class TaskListServlet extends HttpServlet {
 		request.setAttribute("cPage", cPage);
 		request.setAttribute("totalContent", totalContent);
 		request.setAttribute("numPerPage", numPerPage);
-		request.setAttribute("taskType", taskType);
+		request.setAttribute("emp", emp);
 		request.getRequestDispatcher("/views/task/taskList.jsp").forward(request, response);
 	}
 

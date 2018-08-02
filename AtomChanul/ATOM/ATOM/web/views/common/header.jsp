@@ -51,7 +51,7 @@
    				</button>
 					<!-- <a class="navbar-brand" href="#">Brand</a> -->
 					<a class="navbar-brand" href="<%=request.getContextPath()%>">
-						<img src="<%=request.getContextPath()%>/dist/img/main.png" style="margin-top: -2px">
+						<img src="<%=request.getContextPath()%>/dist/img/main.png" style="margin-top: -4px">
 					</a>
 				</div>
 
@@ -61,8 +61,10 @@
 						<li><a href="<%=request.getContextPath()%>/views/main.jsp"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
 						<li><a href="<%=request.getContextPath()%>/electronic/electronicWaitingBox">전자결재</a></li>
 	                    <li><a href="<%=request.getContextPath()%>/schedule/scheduleList">일정</a></li>
-						<li><a href="<%=request.getContextPath()%>/task/taskList?empId=<%=empLoggedIn.getEmpId()%>">업무관리</a></li>
-						<li><a href="<%=request.getContextPath()%>/board/boardList">게시판</a></li>
+						<%-- <li><a href="<%=request.getContextPath()%>/task/taskRequest">업무관리</a></li> --%>
+						<li><a href="<%=request.getContextPath()%>/task/taskList">업무관리</a></li>
+						<li><a href="<%=request.getContextPath()%>/board/boardList?menu=NOTICE&cPage=1">게시판</a></li>
+						<%-- <li><a href="<%=request.getContextPath()%>/common/notice">게시판</a></li> --%>
 						<%if(empLoggedIn.getAdminCode().trim().equals("1")){ %>
 						<li id= 'resourcehome'><a href='<%=request.getContextPath() %>/admin/resourcehome'>자원관리</a></li>
 						<%} else { %>

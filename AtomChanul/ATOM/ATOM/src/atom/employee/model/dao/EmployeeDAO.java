@@ -143,8 +143,8 @@ public class EmployeeDAO {
 	            e.setEmail(rs.getString("email"));
 	            e.setPhone(rs.getString("phone"));
 	            e.setAddr(rs.getString("addr"));
-	            e.setDeptCode(rs.getString("dept_code"));
-	            e.setJobCode(rs.getString("job_code"));
+	            e.setDeptName(rs.getString("dept_name"));
+	            e.setJobName(rs.getString("job_name"));
 	            e.setManagerId(rs.getString("manager_id"));
 	            e.setAdminCode(rs.getString("admin_code"));
 	            e.setHireDate(rs.getDate("hire_date"));
@@ -175,17 +175,15 @@ public class EmployeeDAO {
 		try 
 		{
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, e.getEmpId());
-			pstmt.setString(2, e.getEmpPw());
-			pstmt.setString(3, e.getEmpName());
-			pstmt.setString(4, e.getEmpRrn());
-			pstmt.setString(5, e.getEmail());
-			pstmt.setString(6, e.getPhone());
-			pstmt.setString(7, e.getAddr());
-			pstmt.setString(8, e.getDeptCode());
-			pstmt.setString(9, e.getJobCode());
-			pstmt.setString(10,e.getManagerId());
-			pstmt.setString(11,e.getEmpPr());
+			pstmt.setString(1, e.getEmpPw());
+			pstmt.setString(2, e.getEmpName());
+			pstmt.setString(3, e.getEmpRrn());
+			pstmt.setString(4, e.getEmail());
+			pstmt.setString(5, e.getPhone());
+			pstmt.setString(6, e.getAddr());
+			pstmt.setString(7, e.getDeptCode());
+			pstmt.setString(8, e.getJobCode());
+			pstmt.setString(9,e.getEmpPr());
 			result=pstmt.executeUpdate();
 			
 		} 

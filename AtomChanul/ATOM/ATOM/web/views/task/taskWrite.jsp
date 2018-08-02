@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- <%@ include file="/views/common/header.jsp" %> --%>
+<%@ include file="/views/common/header.jsp" %>
 <%@ include file="/views/common/taskAside.jsp" %>
 
 <script>
@@ -16,6 +16,25 @@
 			}
 		});
 	});
+	
+	// 기한없음
+    $(function() {
+	    $("#isTermless").change(function() {
+	        if($("#isTermless").is(":checked")){
+	            $("#isTermless").val(1);
+	            $("input[name=deadline]").prop("disabled", true);
+	        } else{
+	            $("#isTermless").val(0);
+	            $("input[name=deadline]").prop("disabled", false);
+	        }
+	    });
+	    
+	    $("#taskWriteSubmit").on("click",function() {
+		    if($("#isTermless").is(":checked")) {
+		        $("input[name=deadline]").val();
+		    }
+	    });
+    });
 </script>
 
 <script type="text/javascript">
@@ -139,12 +158,13 @@
 	            </div>
 	            
 				<div class="btn-wrap float-right">
-		            <button type="submit" class="btn btn-sm btn-primary">저장</button>
-		            <button type="reset" class="btn btn-sm btn-default">취소</button>
+		            <button type="submit" id="taskWriteSubmit" class="btn btn-sm btn-primary">저장</button>
+		            <button type="button" class="btn btn-sm btn-default" onclick="history.back()">취소</button>
 				</div>
 			</form>
        	</div>
     </div>
 </section>
+
 
 <%@ include file="/views/common/footer.jsp" %>

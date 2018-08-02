@@ -1,5 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+
+ <%@page import="atom.dept.model.vo.Dept"%>
+ <%@page import="atom.job.model.vo.Job"%>
+ 	 <%@page import="atom.employee.model.vo.Employee"%>
+<%@page import="java.util.*"%>
+
+<%
+	List<Dept>dept = (List)request.getAttribute("Dept");
+	List<Job>job = (List)request.getAttribute("Job");
+	List<Employee>emp = (List)request.getAttribute("Employee");
+%>
+
+
+
+
+
+
 <%@ include file="/views/common/header.jsp" %> <!-- 정적 처리방식 -->
  <%@ include file="/views/common/deptAside.jsp" %>
 
@@ -7,27 +25,26 @@
 
 <script>
 
- $(document).ready(function() {
-
-  $("#birthday").datepicker({
-
-   changeMonth : true,
-
-   changeYear : true,
-
-   dateFormat : "yy-mm-dd"
-
-  });
-
- });
-
+/*  //사진미리보기 
+ function getThumbnailPrivew(input, targetId) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var element = window.document.getElementById(targetId);
+            element.setAttribute("src", e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+ */
+ 
 </script>
 
 
 
  
 
- <div class="col-sm-8 text-left"> <!-- container 영역  --> 
+<div class="col-sm-8 text-left"> <!-- container 영역  --> 
 
      <div class="container">
 	
@@ -43,8 +60,8 @@
 
     <ul class="nav nav-pills nav-justified">
 
-     <li><a href="employeeList.jsp">전체직원정보</a></li>
- 	 <li class="active"><a href="employeeInsertForm.jsp">직원 추가</a></li>
+     <li><a href="<%=request.getContextPath() %>/emp/selectAll">전체직원정보</a></li>
+ 	 <li class="active"><a href="<%=request.getContextPath() %>/EndServlet">직원 추가</a></li>
      <li><a href="#">직원수정</a></li>
      <li><a href="#">직원삭제</a></li>
 
@@ -80,9 +97,9 @@
 
         class="form-control " id="empId" name="empId"
 
-        placeholder="a1800001 a는 약자 18은 입사년도 00000은 입사순서" 
+        placeholder="입사순으로 부여" 
 
-        required="required">
+        required="required" disabled>
 
       </div>
      
@@ -173,30 +190,29 @@
 
       <div class="form-group">
 
-       <label for="deptCode">부서:</label> <select
+       <label for="deptCode">부서:</label> 
+       <select
 
         class="form-control" id="deptCode" name="deptCode">
-
-        <option value="1">개발부</option>
-
+			
+		<%for(Dept d : dept){ %>
+        <option value=<%=d.getDeptCode()%>><%=d.getDeptName() %></option>
+		<%}%>
 
        </select>
 
       </div>
 
       <div class="form-group">
-
-       <label for="jobCode">직위:</label> <select class="form-control"
+       <label for="jobCode">직위:</label> 
+       
+       <select class="form-control"
 
         id="jobCode" name="jobCode">
 
-        <option value="1">인턴</option>
-        <option value="2">사원</option>
-        <option value="3">주임</option>
-        <option value="4">대리</option>
-        <option value="5">과장</option>
-        <option value="6">차장</option>
-        
+		<%for(Job j: job){%>
+        <option value=<%=j.getJobCode() %>><%=j.getJobName() %></option>
+        <%}%>
         
         
 
@@ -204,32 +220,50 @@
 
       </div>
 
-        <div class="form-group">
+       <%--  <div class="form-group">
 
-       <label for="managerId">매니저 등급:</label> <select class="form-control"
+       <label for="managerId">매니저 등급:</label> 
+       
+       <select class="form-control"
 
         id="managerId" name="managerId">
 
-		<option value="1">해당사항없음</option>
-        <option value="2">개발본부장</option>
-		<option value="3">총무본부장</option>
-		<option value="4">인사본부장</option>
+		<%for(Employee e: emp) {%>
+		<option value=<%=e.getManagerId()%>><%=e.getManagerId()%></option>
+        <%}%>
        </select>
 
       </div>
-
+ --%>
      
 
 	
 		<div class="form-group">
 
-       <label for="empPr">자기소개:</label> <input type="text"
+       <label for="empPr">자기소개:</label> 
+       
+       <input type="text"
 
         class="form-control" id="empPr" name="empPr"
 
         placeholder="자기소개 (300자 이내)" maxlength="300" required="required">
 
       </div>
+
+<!-- <div class="form-group">
+
+<label for="empImg">이미지 업로드:</label>
+	<img alt="프로필 사진" src="/image/user-empty.png" id="avatar_image" class="img-circle" width="100px" height="100px">
+<input type="file" name="file" id="file" accept=".bmp, .gif, .jpg, .png" onchange="getThumbnailPrivew(this, 'avatar_image');">
+
+
+
+
+</div> -->
+
+
+	
+		
 
 
 

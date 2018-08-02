@@ -30,6 +30,11 @@ public class DeptInsertServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		
+		
+		
+		
 		String deptName = (String)request.getParameter("deptName");	//이거는 jsp에서 연결고리
 		System.out.println("부서명 : "+deptName);
 		
@@ -37,7 +42,7 @@ public class DeptInsertServlet extends HttpServlet {
 		int result=new DeptService().insertDept(deptName);
 		
 		String msg="";
-		String loc="/views/main.jsp";	//일단 메인으로
+		String loc="/deptlist";	//해당 리스트 서블릿으로 go
 		String view="/views/common/msg.jsp";
 		
 		if(result>0)

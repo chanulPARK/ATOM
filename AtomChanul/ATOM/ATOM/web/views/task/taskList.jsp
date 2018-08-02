@@ -1,12 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- <%@ include file="/views/common/header.jsp" %> --%>
+<%@ include file="/views/common/header.jsp" %>
 <%@ include file="/views/common/taskAside.jsp" %>
 <%@ page import='java.util.*, atom.task.model.vo.Task' %>
 <%
 	List<Task> list = (List<Task>)request.getAttribute("list");
-
-	String taskType = (String)request.getAttribute("taskType");
 
 	// 페이징 처리
 	int cPage = (int)request.getAttribute("cPage");
@@ -24,6 +22,11 @@
 	}
 	.btn-task {
 		background: #53b5e6;
+        color: #fff;
+        border-color: #53b5e6;
+	}
+	.btn-task:hover {
+		background: #2a8ab0;
         color: #fff;
         border-color: #53b5e6;
 	}
@@ -135,16 +138,6 @@ section.task_section{
 <section class="task_section">
     <div class="content task-content">
         <div class="col-md-12" style="min-width: 900px;">
-           	<%-- <%
-            switch(text) {
-            case "1" : text = "발신 업무 요청";
-            case "1-1" : text = "수신 업무 요청";
-            case "2" : text = "발신 업무 보고";
-            case "2-1" : text = "수신 업무 보고";
-            case "3" : text = "업무 일지";
-            }
-            %>
-            <h5><%=text %></h5> --%>
             <h4>업무관리</h4>
             <div class="table-header">
                 <div class="row">
@@ -164,7 +157,6 @@ section.task_section{
                     <form action="<%=request.getContextPath() %>/task/taskSearch" class="search-form form-inline col-md-7 float-right" method="post" >
 	                    <input type="hidden" name="cPage" value="<%=cPage %>"/>
 						<input type="hidden" name="numPerPage" value="<%=numPerPage %>"/>
-						<input type="hidden" name="taskType" value="<%=taskType %>"/>
 						<input type="hidden" name="empId" value="<%=empLoggedIn.getEmpId() %>"/>
                         <div class="input-group">
                             <input type="text" class="form-control input-sm reservation" id="reservation1" name="searchFrom"  placeholder="From">
@@ -332,6 +324,7 @@ section.task_section{
 	<%} %>
     
 </section>
+
 
 
 <%@ include file="/views/common/footer.jsp" %>

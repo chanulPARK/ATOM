@@ -80,6 +80,51 @@ public class TaskDAO {
 		return list;
 	}
 	
+	public List<Task> mainTaskList(Connection conn, String userId, String taskType){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		String sql = prop.getProperty("mainTaskList");
+		Task t = null;
+		ArrayList<Task> list = new ArrayList();
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userId);
+			pstmt.setString(2, taskType);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				t = new Task();
+				t.setEmpId(rs.getString("EMP_ID"));
+				t.setEmpName(rs.getString("EMP_NAME"));
+				t.setDeptName(rs.getString("DEPT_NAME"));
+				t.setJobName(rs.getString("JOB_NAME"));
+				t.setTaskNo(rs.getInt("TASK_NO"));
+				t.setTaskType(rs.getString("TASK_TYPE"));
+				t.setTaskTitle(rs.getString("TASK_TITLE"));
+				t.setTaskContent(rs.getString("TASK_CONTENT"));
+				t.setReceiver(rs.getString("RECEIVER"));
+				t.setOriginalFile(rs.getString("ORIGINAL_FILE"));
+				t.setRenamedFile(rs.getString("RENAMED_FILE"));
+				t.setEnrollDate(rs.getDate("ENROLL_DATE"));
+				t.setDeadline(rs.getDate("DEADLINE"));
+				t.setTaskStatus(rs.getString("TASK_STATUS"));
+				t.setTaskCheck(rs.getString("TASK_CHECK"));
+				
+				list.add(t);
+			}	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		close(rs);
+		close(pstmt);
+		
+		return list;
+	}
+	
 	
 	public int selectTaskCount(Connection conn, String empId) {
 		PreparedStatement pstmt = null;
@@ -184,7 +229,7 @@ public class TaskDAO {
 	}
 	
 	// 수신자인 경우
-	public List<Task> selectTaskListReceiver(Connection conn, String userId, int cPage, int numPerPage, String taskType){
+	public List<Task> selectTaskListTypeReceiver(Connection conn, String userId, int cPage, int numPerPage, String taskType){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = prop.getProperty("selectTaskListTypeReceiver");
@@ -341,6 +386,40 @@ public class TaskDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, taskNo);
+			result = pstmt.executeUpdate();
+		} 
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		close(pstmt);
+		
+		return result;
+	}
+	
+	public int updateTask(Connection conn, Task t) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateTask");
+		System.out.println(sql);
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+//			pstmt.setString(1, t.getEmpId());
+//			pstmt.setString(2, t.getEmpName());
+//			pstmt.setString(3, t.getDeptName());
+//			pstmt.setString(4, t.getJobName());
+			pstmt.setString(1, t.getTaskType());
+			pstmt.setString(2, t.getTaskTitle());
+			pstmt.setString(3, t.getTaskContent());
+			pstmt.setString(4, t.getReceiver());
+			pstmt.setString(5, t.getOriginalFile());
+			pstmt.setString(6, t.getRenamedFile());
+			pstmt.setDate(7, t.getEnrollDate());
+			pstmt.setDate(8, t.getDeadline());
+			
+			pstmt.setInt(9, t.getTaskNo());
+			
 			result = pstmt.executeUpdate();
 		} 
 		catch(SQLException e) {
@@ -551,5 +630,27 @@ public class TaskDAO {
 		close(pstmt);
 		
 		return list;
+	}
+	
+	public int requestCount(Connection conn, String empId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = prop.getProperty("requestCount");
+		int cnt = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, empId);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				cnt = rs.getInt("cnt");//APPROVALCNT
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cnt;
 	}
 }

@@ -1,22 +1,23 @@
 package atom.dept.model.vo;
 
-public class Dept {
-	private int deptCode;
+
+public class Dept{
+	private String deptCode;
 	private String deptName;
 	
 	public Dept(){}	//디폴트 생성
 
-	public Dept(int deptCode, String deptName) {
+	public Dept(String deptCode, String deptName) {
 		super();
 		this.deptCode = deptCode;
 		this.deptName = deptName;
 	}
 
-	public int getDeptCode() {
+	public String getDeptCode() {
 		return deptCode;
 	}
 
-	public void setDeptCode(int deptCode) {
+	public void setDeptCode(String deptCode) {
 		this.deptCode = deptCode;
 	}
 

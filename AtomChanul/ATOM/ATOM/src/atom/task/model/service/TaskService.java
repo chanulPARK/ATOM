@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
 
+import atom.electronic.model.dao.ElectronicDAO;
 import atom.task.model.dao.TaskDAO;
 import atom.task.model.vo.Task;
 import atom.task.model.vo.TaskProcess;
@@ -17,6 +18,13 @@ public class TaskService {
 	public List<Task> selectTaskList(String empId, int cPage, int numPerPage){
 		Connection conn = getConnection();
 		List<Task> list = new TaskDAO().selectTaskList(conn, empId, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+	
+	public List<Task> mainTaskList(String empId, String taskType){
+		Connection conn = getConnection();
+		List<Task> list = new TaskDAO().mainTaskList(conn, empId, taskType);
 		close(conn);
 		return list;
 	}
@@ -42,9 +50,9 @@ public class TaskService {
 		return result;
 	}
 	
-	public List<Task> selectTaskListReceiver(String empId, int cPage, int numPerPage, String taskType){
+	public List<Task> selectTaskListTypeReceiver(String empId, int cPage, int numPerPage, String taskType){
 		Connection conn = getConnection();
-		List<Task> list = new TaskDAO().selectTaskListReceiver(conn, empId, cPage, numPerPage, taskType);
+		List<Task> list = new TaskDAO().selectTaskListTypeReceiver(conn, empId, cPage, numPerPage, taskType);
 		close(conn);
 		return list;
 	}
@@ -84,6 +92,18 @@ public class TaskService {
 		
 		return result;
 	}
+	
+	public int updateTask(Task t) {
+		Connection conn = getConnection();
+		int result = new TaskDAO().updateTask(conn, t);
+		
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		
+		return result;
+	}
+	
 	public List<Task> searchTask(Date searchFrom, Date searchTo, String empId, String taskType) {
 		Connection conn = getConnection();
 		List<Task> list = new TaskDAO().searchTask(conn, searchFrom, searchTo, empId, taskType);
@@ -123,4 +143,32 @@ public class TaskService {
 		close(conn);
 		return list;
 	}
+	
+	public int requestCount(String empId) {
+		Connection conn = getConnection();
+		int cnt = new TaskDAO().requestCount(conn, empId);
+		close(conn);
+		return cnt;
+	}
+	
+	/*public int requestReceiveCount(String empId) {
+		Connection conn = getConnection();
+		int cnt = new TaskDAO().requestReceiveCount(conn, empId);
+		close(conn);
+		return cnt;
+	}
+	
+	public int reportCount(String empId) {
+		Connection conn = getConnection();
+		int cnt = new TaskDAO().reportCount(conn, empId);
+		close(conn);
+		return cnt;
+	}
+	
+	public int reportReceiveCount(String empId) {
+		Connection conn = getConnection();
+		int cnt = new TaskDAO().reportReceiveCount(conn, empId);
+		close(conn);
+		return cnt;
+	}*/
 }

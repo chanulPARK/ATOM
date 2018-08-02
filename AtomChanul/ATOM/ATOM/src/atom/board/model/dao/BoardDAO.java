@@ -1,11 +1,17 @@
 package atom.board.model.dao;
+
+import static common.JDBCTemplate.close;
+
 import java.io.FileReader;
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 import atom.board.model.vo.Board;
-
-import static common.JDBCTemplate.*;
+import atom.board.model.vo.BoardCode;
 
 public class BoardDAO {
 	private	PreparedStatement pstmt = null;
@@ -16,7 +22,7 @@ public class BoardDAO {
 	
 	public BoardDAO() {
 		try {
-			String file = BoardDAO.class.getResource("/sql/common/board-sql.properties").getPath();
+			String file = BoardDAO.class.getResource("/sql/board/board-sql.properties").getPath();
 			prop.load(new FileReader(file));
 		}
 		catch(Exception e) {
@@ -25,17 +31,16 @@ public class BoardDAO {
 	}
 	public Board selectOne(Connection conn, int boardNo) {
 		String sql = prop.getProperty("boardSelectOne");
-		b = new Board();
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, boardNo);
 			rset = pstmt.executeQuery();
-			while(rset.next()) {
-				b.setBoardNo(rset.getInt("board_no"));
+			if(rset.next()) {
+				b = new Board();
 				b.setTitle(rset.getString("title"));
 				b.setContent(rset.getString("content"));
-				b.setWriter(rset.getString("writer"));
 				b.setWriteDate(rset.getDate("write_date"));
+				b.setWriter(rset.getString("writer"));
 				b.setVisits(rset.getInt("visits"));
 			}
 		}
@@ -55,13 +60,13 @@ public class BoardDAO {
 			pstmt.setString(1, b.getTitle());
 			pstmt.setString(2, b.getContent());
 			pstmt.setString(3, b.getWriter());
+			pstmt.setString(4, b.getBoardCode());
 			result = pstmt.executeUpdate();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
 		close(pstmt);
-		System.out.println("insertBoard 결과 : "+result);
 		return result;
 	}
 	
@@ -79,7 +84,6 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 		close(pstmt);
-		System.out.println("updateBoard 결과 : "+result);
 		return result;
 	}
 	
@@ -95,17 +99,20 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 		close(pstmt);
-		System.out.println("deleteBoard 결과 : "+result);
 		return result;
 	}
 	
-	public List<Board> selectBoardList(Connection conn, int cPage, int numPerPage){
+	public List<Board> selectBoardList(Connection conn, int cPage, int numPerPage, String menu){			// 게시판 공개
 		String sql = prop.getProperty("selectBoardList");
-		ArrayList<Board> list = new ArrayList<Board>();
+		List<Board> list = new ArrayList<Board>();
+		System.out.println("menu"+sql);
+		System.out.println("menu1"+((cPage-1)*numPerPage+1));
+		System.out.println("menu2"+(cPage*numPerPage));
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, (cPage-1)*numPerPage+1);
-			pstmt.setInt(2, cPage*numPerPage);
+			pstmt.setString(1, menu);
+			pstmt.setInt(2, (cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				b = new Board();
@@ -123,15 +130,16 @@ public class BoardDAO {
 		}
 		close(rset);
 		close(pstmt);
-		System.out.println("selectBoardList 결과:"+list);
+		System.out.println(list);
 		return list;
 	}
 	
-	public int selectBoardCount(Connection conn) {
+	public int selectBoardCount(Connection conn, String menu) {
 		String sql = prop.getProperty("selectBoardCount");
 		result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, menu);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				result = rset.getInt("cnt");
@@ -142,13 +150,12 @@ public class BoardDAO {
 		}
 		close(rset);
 		close(pstmt);
-		System.out.println("selectBoardCount 결과 : "+result);
 		return result;
 	}
 	
 	public int insertBoardCount(Connection conn, int boardNo) {
-		PreparedStatement pstmt = null;
-		int result = 0;
+		pstmt = null;
+		result = 0;
 		String sql = prop.getProperty("insertBoardCount");
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -159,7 +166,63 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 		close(pstmt);
-		System.out.println("insertBoardCount 결과 : "+result);
+		return result;
+	}
+	
+	public List<BoardCode> selectBoardCodeList(Connection conn, String boardName, String menu)
+	{
+		String sql = prop.getProperty("selectBoardCodeList");
+		ArrayList<BoardCode> list = new ArrayList<BoardCode>();
+		BoardCode bc=null;
+		try {	
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				bc = new BoardCode();
+				menu = rset.getString("board_code");
+				boardName = rset.getString("board_name");
+				bc.setBoardCode(menu);
+				bc.setBoardName(boardName);
+				list.add(bc);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		close(rset);
+		close(pstmt);
+		return list;
+	}
+	
+	public int insertBoardCodeList(Connection conn, BoardCode bc) {	// 중간에 새로 추가해야할 게시판이 있기 때문에
+		pstmt = null;
+		result = 0;
+		String sql = prop.getProperty("insertBoardCodeList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, bc.getBoardCode());
+			pstmt.setString(2, bc.getBoardName());
+			result = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		close(pstmt);
+		return result;
+	}
+	
+	public int deleteBoardCodeList(Connection conn, BoardCode bc) {	// 게시판 자체를 삭제하기 위한 메소드
+		pstmt = null;
+		result = 0;
+		String sql = prop.getProperty("deleteBoardCodeList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, bc.getBoardName());
+			result = pstmt.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		close(pstmt);
 		return result;
 	}
 }

@@ -19,16 +19,30 @@
  <script src='<%=request.getContextPath()%>/dist/js/bootstrap.min.js'></script>    --%>
     
     
-    
+ <script>
+ $(function(){
+     $(".propen").click("on",function(){
+      
+        var data = $(this).attr('value');
+        
+        $('[name=inputPr]').val(data);
+        $(this).attr("data-toggle","modal");
+        $(this).attr("data-target","#myModal");
+     });
+  });
  
-   <div class="col-sm-8 text-left"> <!-- container 영역  --> 
+ </script>  
+    
+    
+    
+ <div class="col-sm-8 text-left"> <!-- container 영역  --> 
 
      <div class="container">
 		 <div style="margin-bottom: 1%;">
 
    <h2>
 
-    직원정보<small>ATOM</small>
+    	직원정보<small>ATOM</small>
 	
    </h2>
 
@@ -39,7 +53,7 @@
     <%-- <%=request.getContextPath() %> --%>
      
      <li id='emplist' class="active"><a href="<%=request.getContextPath() %>/emp/selectAll">전체직원정보</a></li>
- 	 <li><a href="employeeInsertForm.jsp">직원 추가</a></li>
+ 	 <li><a href="<%=request.getContextPath()%>/EndServlet">직원 추가</a></li>
      <li><a href="#">직원수정</a></li>
      <li><a href="#">직원삭제</a></li>
     
@@ -54,7 +68,7 @@
 
    
    
-    <section class="content">
+    <!-- <section class="content"> -->
   <div class="panel-group">
 
    <div class="panel panel-default">
@@ -118,13 +132,11 @@
 
         <th>직위명</th>
 
-        <th>관리자번호</th>
+       <!--  <th>관리자번호</th> -->
 
         <th>입사일</th>
 
         <th>재직여부</th>
-
-        <th>사진등록</th>
 
         <th>자기소개</th>
 		
@@ -135,8 +147,8 @@
       </thead>
 
       <tbody>
-
 		<%for(Employee e: emp){%>
+
        <tr>
 		
 		 
@@ -148,9 +160,7 @@
 
         <td><%=e.getEmpName() %>
 
-         <button type="button" class="btn btn-default btn-xs"
-
-          data-toggle="modal" data-target="#myModal">사진</button>
+        
 
         </td>
 
@@ -162,46 +172,64 @@
 
         <td><%=e.getAddr() %></td>
 
-        <td><%=e.getDeptCode() %></td>
+        <td><%=e.getDeptName() %></td>
 		
-        <td><%=e.getJobCode() %></td>
+        <td><%=e.getJobName() %></td>
 
-        <td><%=e.getAdminCode() %></td>
+       <%--  <td><%=e.getAdminCode() %></td> --%>
 
         <td><%=e.getHireDate() %></td>
 
         <td><%=e.getEntYn() %></td>
 
-        <td><button type="button" class="btn btn-default btn-xs">사진등록</button></td>
+        
 
        <td>
 
-         <button type="button" class="btn btn-default btn-xs"
+         <button type="button" id="propen" class="btn btn-default btn-xs propen"
 
-          data-toggle="modal" data-target="#PR" value="<%=e.getEmpRrn() %>">보기</button>
+          data-toggle="" data-target="" value="<%=e.getEmpPr() %>">보기</button>
 
         </td>
        
        </tr>
+
+
 <%}%>       
-
-
       </tbody>
 
      </table>
+
+	<hr/>
+	
+		<!--페이징 -->
+<nav>
+  <ul class="pagination">
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
 
 
 
      <form class="form-inline" role="form" method="post">
 
-      <a href="<%=request.getContextPath()%>/views/orgchat/admin/employeeInsertForm.jsp" class="btn btn-default">Add</a>
+      
 	
 
-      <button type="button" class="btn btn-default">
-
-       Count <span class="badge">1</span>
-
-      </button>
 
      </form>
 
@@ -215,12 +243,15 @@
 
 
 
-</section>
+<!-- </section> -->
 </div>  <!-- 위에 두개 뭐지 -->
 
 </div>
 </div>
 
+
+
+<!-- 자기소개 모달 적용하기-->
 
   <div id="myModal" class="modal fade" role="dialog">
 
@@ -244,54 +275,13 @@
 
       <div style="text-align: center;">
 
-       <img src="images/hong.jpg" width="100%">
-
-      </div>
-
-     </div>
-
-     <div class="modal-footer">
-
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-     </div>
-
-    </div>
-
-   </div>
-
-  </div>
-
-
-<!-- 자기소개 모달 적용하기-->
-
-  <div id="PR" class="modal fade" role="dialog">
-
-   <div class="modal-dialog modal-sm">
-
-
-
-    <!-- Modal content-->
-
-    <div class="modal-content">
-
-     <div class="modal-header">
-
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-      <h4 class="modal-title"></h4>
-
-     </div>
-
-     <div class="modal-body">
-
-      <div style="text-align: center;">
-
       	<!-- 자기소개 양식 넣기 -->
       <!--  <img src="images/hong.jpg" width="100%"> -->
-      <p><mark>자기 소개를 입력하세요</mark><br>
-      	 이건 일단..
-      </p>
+      
+	 	<textarea name="inputPr" rows="7" style="resize: none;width:100%">
+	 		
+	 	</textarea>
+
 
       </div>
 
@@ -309,15 +299,8 @@
   </div>
 
 
-    
-
-
-
-
-
-   
-
       <%@ include file="/views/common/footer.jsp" %>
 
 
 
+ 
